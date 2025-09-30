@@ -29,7 +29,7 @@ characters in the quoted sequence except for $ (dollar sign).
 Handle environment variables ($ followed by a sequence of characters) which
 should expand to their values.
 
-## Redirection
+### Redirection
 Implement the following redirections:
 ◦< should redirect input.
 ◦> should redirect output.

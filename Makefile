@@ -8,13 +8,14 @@ CFLAGS		= -Wall -Werror -Wextra
 # Directories
 SRC_DIR		= src
 OBJ_DIR		= obj
+INC_DIR		= inc
 LIBFT_DIR	= lib/libft
 
 # Source files
-SRCS		= $(wildcard $(SRC_DIR)/*.c)
+SRCS		= $(shell find $(SRC_DIR) -name "*.c")
 
 # Object files
-OBJS		= $(SRCS:$(SRC_DIR)/%.c=$(OBJ_DIR)/%.o)
+OBJS		= $(patsubst $(SRC_DIR)/%.c,$(OBJ_DIR)/%.o,$(SRCS))
 
 # Libft
 LIBFT		= $(LIBFT_DIR)/libft.a
@@ -23,11 +24,11 @@ LIBFT		= $(LIBFT_DIR)/libft.a
 all: $(NAME)
 
 $(NAME): $(LIBFT) $(OBJS)
-	$(CC) $(CFLAGS) $(OBJS) -L$(LIBFT_DIR) -lft -o $(NAME)
+	$(CC) $(CFLAGS) $(OBJS) -L$(LIBFT_DIR) -lft -lreadline -o $(NAME)
 
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c
-	@mkdir -p $(OBJ_DIR)
-	$(CC) $(CFLAGS) -c $< -o $@
+	@mkdir -p $(dir $@)
+	$(CC) $(CFLAGS) -I$(INC_DIR) -I$(LIBFT_DIR) -c $< -o $@
 
 $(LIBFT):
 	@make -C $(LIBFT_DIR)

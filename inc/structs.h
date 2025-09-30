@@ -1,29 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.h                                        :+:      :+:    :+:   */
+/*   structs.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: elie <elie@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/09/30 15:08:30 by ebelle            #+#    #+#             */
-/*   Updated: 2025/09/30 19:33:39 by elie             ###   ########.fr       */
+/*   Created: 2025/09/30 18:14:03 by elie              #+#    #+#             */
+/*   Updated: 2025/09/30 19:21:56 by elie             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINISHELL_H
-# define MINISHELL_H
+#ifndef STRUCTS_H
+# define STRUCTS_H
 
-// headers
-# include "../lib/libft/inc/libft.h"
-# include "structs.h"
-# include "definitions.h"
+typedef struct s_data
+{
+	char	*current_directory;
+	char	*input;
+	char	**tokens;
+}	t_data;
 
-// standard libs
-# include <stdio.h>
-# include <readline/readline.h>
-# include <stdlib.h>
-
-// Debug
-void	debug(t_data *data);
 
 #endif

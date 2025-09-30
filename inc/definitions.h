@@ -1,29 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.h                                        :+:      :+:    :+:   */
+/*   definitions.h                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: elie <elie@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/09/30 15:08:30 by ebelle            #+#    #+#             */
-/*   Updated: 2025/09/30 19:33:39 by elie             ###   ########.fr       */
+/*   Created: 2025/09/30 19:00:22 by elie              #+#    #+#             */
+/*   Updated: 2025/09/30 19:01:10 by elie             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINISHELL_H
-# define MINISHELL_H
+#ifndef DEFINITIONS_H
+# define DEFINITIONS_H
 
-// headers
-# include "../lib/libft/inc/libft.h"
-# include "structs.h"
-# include "definitions.h"
-
-// standard libs
-# include <stdio.h>
-# include <readline/readline.h>
-# include <stdlib.h>
-
-// Debug
-void	debug(t_data *data);
+# define FAIL 0
+# define SUCCESS 1
 
 #endif
