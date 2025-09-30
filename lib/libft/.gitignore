@@ -1,7 +1,4 @@
 a.out
 .vscode
-libft.a
 *.o
-libftTester
-.claude
-.vscode
+*.a
