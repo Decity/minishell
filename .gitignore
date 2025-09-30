@@ -1,3 +1,9 @@
+# IDE
+.vscode
+
+# AI
+.claude
+
 # Prerequisites
 *.d
 
