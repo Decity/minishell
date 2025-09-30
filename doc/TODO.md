@@ -1,0 +1,1 @@
+Remove wildcard from makefile
