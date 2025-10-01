@@ -3,7 +3,7 @@ NAME		= minishell
 
 # Compiler and flags
 CC			= cc
-CFLAGS		= -Wall -Werror -Wextra
+CFLAGS		= -Wall -Werror -Wextra -g -fsanitize=address
 
 # Directories
 SRC_DIR		= src
@@ -39,6 +39,8 @@ clean:
 
 fclean: clean
 	@rm -f $(NAME)
+
+ffclean: fclean
 	@make -C $(LIBFT_DIR) fclean
 
 re: fclean all

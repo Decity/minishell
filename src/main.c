@@ -3,22 +3,13 @@
 void	run(t_data *data)
 {
 	// Get input
-	data->input = readline(">");
+	data->input = readline("> ");
 
-	// // Tokenize
-	// set_tokens(data);
-
-	// // Parse tokens to commands
-	// set_commands(data);
-
-	// // Shell expansions
-	// set_shell_expansions(data)
-
-	// // Redirections
-	// set_redirections(data);
-
-	// // Execute
-	// execute(data);
+	set_tokens(data);
+	set_commands(data);
+	set_shell_expansions(data);
+	set_redirections(data);
+	execute(data);
 	debug(data);
 }
 
@@ -33,6 +24,5 @@ int	main(void)
 		run(&data);
 	}
 
-	// exit_cleanup();
 	return (0);
 }

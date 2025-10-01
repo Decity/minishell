@@ -1,6 +1,6 @@
 #include "../../inc/minishell.h"
 
-void	exit(void)
+void	minishell_exit(void)
 {
 	exit(0);
 }
