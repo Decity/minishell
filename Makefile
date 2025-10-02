@@ -3,7 +3,8 @@ NAME		= minishell
 
 # Compiler and flags
 CC			= cc
-CFLAGS		= -Wall -Werror -Wextra -g -fsanitize=address
+# CFLAGS		= -Wall -Werror -Wextra -g -fsanitize=address
+CFLAGS = -Wall -Wextra
 
 # Directories
 SRC_DIR		= src
@@ -32,6 +33,9 @@ $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c
 
 $(LIBFT):
 	@make -C $(LIBFT_DIR)
+
+debug:
+	
 
 clean:
 	@rm -rf $(OBJ_DIR)

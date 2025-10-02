@@ -6,8 +6,12 @@
  * @brief Parse commands
  *
  * Example usage:
- * - Data->tokens: ["echo", "\"hello\" ${TERM}", ">", "test.txt"]
- * commands: command 1 {command: }
+ * - Data->tokens: ["echo", "\"hello\", ${TERM}", ">", "test.txt"]
+ * 
+ * - command->arguments: ["echo", "\"hello\", ${TERM}"]
+ * - command->redirection: ">"
+ * - command->inpput: stdin
+ * - command->output: "test.txt"
  */
 void	set_commands(t_data *data)
 {

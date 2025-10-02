@@ -6,12 +6,17 @@
 /*   By: ebelle <ebelle@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 12:08:00 by ebelle            #+#    #+#             */
-/*   Updated: 2025/04/29 12:21:41 by ebelle           ###   ########.fr       */
+/*   Updated: 2025/10/02 12:17:24 by ebelle           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
+/**
+ * @brief Copy `size` bytes from `src` to `dest`
+ * 
+ * dfghdfhgdfhdgfhdf
+ */
 size_t	ft_strlcpy(char *dst, const char *src, size_t size)
 {
 	size_t	i;

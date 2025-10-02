@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   execution.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ebelle <ebelle@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/10/02 12:02:01 by ebelle            #+#    #+#             */
+/*   Updated: 2025/10/02 15:35:25 by ebelle           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../inc/minishell.h"
 #include <sys/wait.h>
 #include <unistd.h>
@@ -19,6 +31,7 @@ void	execute(t_data *data)
 		dup2(fd, STDOUT_FILENO);
 		close(fd);
 
+		// execve(X, data->command->arguments[0], data->command->arguments);
 		execvp(data->command->arguments[0], data->command->arguments);
 	}
 	else

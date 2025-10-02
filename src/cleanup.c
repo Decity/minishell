@@ -3,7 +3,7 @@
 /**
  * @brief Cleans up and frees all allocated memory in t_data structure
  *
- * @param data Pointer to t_data structure to clean up
+ * @param[out] data Pointer to t_data structure to clean up
  */
 void	cleanup_data(t_data *data)
 {
