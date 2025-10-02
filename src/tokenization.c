@@ -7,8 +7,8 @@
  * @brief Sets tokens from data->input to data->tokens
  *
  * Example usage:
- * - data->input: 'echo "hello" ${TERM} > test.txt'
- * - Tokenized array: ["echo", "\"hello\"", "${TERM}", ">", "test.txt"]
+ * - in: data->input: 'echo "hello" ${TERM} > test.txt'
+ * - out: Tokenized array: ["echo", "\"hello\"", "${TERM}", ">", "test.txt"]
  */
 void	set_tokens(t_data *data)
 {

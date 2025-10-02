@@ -13,8 +13,7 @@ void	run(t_data *data)
 	debug(data);
 }
 
-
-int	main(void)
+int	main(int argc, char **argv, char **envp)
 {
 	t_data	data;
 
