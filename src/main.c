@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   main.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: elie <elie@student.42.fr>                  +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/10/03 15:32:47 by elie              #+#    #+#             */
+/*   Updated: 2025/10/03 15:47:43 by elie             ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../inc/minishell.h"
 
 void	run(t_data *data)
@@ -7,9 +19,10 @@ void	run(t_data *data)
 
 	set_tokens(data);
 	set_commands(data);
-	set_shell_expansions(data);
-	set_redirections(data);
-	execute(data);
+	// set_shell_expansions(data);
+	// set_redirections(data);
+	// execute(data);
+	// cleanup();
 	debug(data);
 }
 
