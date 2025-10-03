@@ -5,6 +5,7 @@ NAME		= minishell
 CC			= cc
 # CFLAGS		= -Wall -Werror -Wextra -g -fsanitize=address
 CFLAGS = -Wall -Wextra
+MAKEFLAGS += --no-print-directory
 
 # Directories
 SRC_DIR		= src
@@ -25,27 +26,34 @@ LIBFT		= $(LIBFT_DIR)/libft.a
 all: $(NAME)
 
 $(NAME): $(LIBFT) $(OBJS)
-	$(CC) $(CFLAGS) $(OBJS) -L$(LIBFT_DIR) -lft -lreadline -o $(NAME)
+	@$(CC) $(CFLAGS) $(OBJS) -L$(LIBFT_DIR) -lft -lreadline -o $(NAME)
+	@echo "\e[93mFinished Compiling Minishell\e[0m"
 
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c
 	@mkdir -p $(dir $@)
-	$(CC) $(CFLAGS) -I$(INC_DIR) -I$(LIBFT_DIR) -c $< -o $@
+	@$(CC) $(CFLAGS) -I$(INC_DIR) -I$(LIBFT_DIR) -c $< -o $@
 
 $(LIBFT):
 	@make -C $(LIBFT_DIR)
 
-debug:
-	
+# debug rule to add a define flag which will set debug mode to true
+debug: CFLAGS += -D DEBUG=true
+debug: $(LIBFT) $(OBJS)
+	@$(CC) $(CFLAGS) $(OBJS) -L$(LIBFT_DIR) -lft -lreadline -o $(NAME)
+	@echo "\e[93mCompiled in debug mode\e[0m"
 
 clean:
 	@rm -rf $(OBJ_DIR)
 	@make -C $(LIBFT_DIR) clean
+	@echo "\e[93mCleaned\e[0m"
 
 fclean: clean
 	@rm -f $(NAME)
+	@echo "\e[93mThoroughly cleaned\e[0m"
 
 ffclean: fclean
 	@make -C $(LIBFT_DIR) fclean
+	@echo "\e[93mVERY thoroughly cleaned\e[0m"
 
 re: fclean all
 

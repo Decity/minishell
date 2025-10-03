@@ -41,31 +41,31 @@ OBJS = $(addprefix $(OBJ_DIR), $(SRCS:.c=.o)) $(addprefix $(OBJ_DIR), $(notdir $
 # Rules
 all: $(NAME)
 
-# Create obj directory if it doesn't exist
-$(OBJ_DIR):
-	mkdir -p $(OBJ_DIR)
-
 # Compile libft source files
-$(OBJ_DIR)%.o: $(SRC_DIR)%.c | $(OBJ_DIR)
-	$(CC) $(CFLAGS) -I$(INC_DIR) -c $< -o $@
+$(OBJ_DIR)%.o: $(SRC_DIR)%.c Makefile
+	@mkdir -p $(dir $@)
+	@$(CC) $(CFLAGS) -I$(INC_DIR) -c $< -o $@
 
 # Compile GNL source files
-$(OBJ_DIR)%.o: $(GNL_DIR)%.c | $(OBJ_DIR)
-	$(CC) $(CFLAGS) -I$(INC_DIR) -c $< -o $@
+$(OBJ_DIR)%.o: $(GNL_DIR)%.c Makefile
+	@mkdir -p $(dir $@)
+	@$(CC) $(CFLAGS) -I$(INC_DIR) -c $< -o $@
 
 # Compile Printf source files
-$(OBJ_DIR)%.o: $(PRINTF_DIR)%.c | $(OBJ_DIR)
-	$(CC) $(CFLAGS) -I$(INC_DIR) -c $< -o $@
+$(OBJ_DIR)%.o: $(PRINTF_DIR)%.c Makefile
+	@mkdir -p $(dir $@)
+	@$(CC) $(CFLAGS) -I$(INC_DIR) -c $< -o $@
 
 $(NAME): $(OBJS)
-	$(AR) $(NAME) $(OBJS)
+	@$(AR) $(NAME) $(OBJS)
+	@echo "\e[93mFinished Compiling libft\e[0m"
 
 clean:
-	$(RM) $(OBJS)
-	$(RM) -r $(OBJ_DIR)
+	@$(RM) $(OBJS)
+	@$(RM) -r $(OBJ_DIR)
 
 fclean: clean
-	$(RM) $(NAME)
+	@$(RM) $(NAME)
 
 re: fclean all
 

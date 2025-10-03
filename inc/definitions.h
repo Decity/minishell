@@ -13,7 +13,9 @@
 #ifndef DEFINITIONS_H
 # define DEFINITIONS_H
 
-# define DEBUG true
+# ifndef DEBUG
+#  define DEBUG false
+# endif
 
 # define FAILURE 0
 # define SUCCESS 1
