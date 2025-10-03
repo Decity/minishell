@@ -6,7 +6,7 @@
 /*   By: elie <elie@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/03 15:32:52 by elie              #+#    #+#             */
-/*   Updated: 2025/10/03 16:14:44 by elie             ###   ########.fr       */
+/*   Updated: 2025/10/03 19:04:34 by elie             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@ void	set_commands(t_data *data)
 	if (example_command == NULL)
 		exit(2); // TODO: What to actually do when malloc fails here?
 
+	ft_bzero(example_command, sizeof(t_commands));
 	example_command->arguments = copy_array(data->tokens); // TODO: Consider storing tokens len, and using copy_narray instead()
 	data->command = example_command;
 
