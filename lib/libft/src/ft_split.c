@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_split.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ebelle <ebelle@student.42.fr>              +#+  +:+       +#+        */
+/*   By: elie <elie@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 12:07:43 by ebelle            #+#    #+#             */
-/*   Updated: 2025/04/29 12:17:04 by ebelle           ###   ########.fr       */
+/*   Updated: 2025/10/03 15:43:49 by elie             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,18 +32,6 @@ static size_t	ft_count_words(const char *str, char delimiter)
 		}
 	}
 	return (word_count);
-}
-
-static char	*ft_strndup(const char *s, size_t len)
-{
-	char	*sub_str;
-
-	sub_str = ft_calloc(len + 1, sizeof(char));
-	if (!sub_str)
-		return (NULL);
-	ft_memcpy(sub_str, s, len);
-	sub_str[len] = '\0';
-	return (sub_str);
 }
 
 static void	ft_free_n_strs(size_t n, char ***array)

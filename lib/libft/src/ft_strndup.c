@@ -1,40 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_strndup.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: elie <elie@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/10/03 15:32:47 by elie              #+#    #+#             */
-/*   Updated: 2025/10/03 15:47:43 by elie             ###   ########.fr       */
+/*   Created: 2025/10/03 15:18:20 by elie              #+#    #+#             */
+/*   Updated: 2025/10/03 15:18:33 by elie             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../inc/minishell.h"
+#include "../inc/libft.h"
 
-void	run(t_data *data)
+char	*ft_strndup(const char *s, size_t len)
 {
-	// Get input
-	data->input = readline("> ");
+	char	*sub_str;
 
-	set_tokens(data);
-	set_commands(data);
-	// set_shell_expansions(data);
-	// set_redirections(data);
-	// execute(data);
-	// cleanup();
-	debug(data);
-}
-
-int	main(int argc, char **argv, char **envp)
-{
-	t_data	data;
-
-	ft_bzero(&data, sizeof(data));
-	while (42)
-	{
-		run(&data);
-	}
-
-	return (0);
+	sub_str = ft_calloc(len + 1, sizeof(char));
+	if (!sub_str)
+		return (NULL);
+	ft_memcpy(sub_str, s, len);
+	sub_str[len] = '\0';
+	return (sub_str);
 }

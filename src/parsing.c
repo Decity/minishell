@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   parsing.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: elie <elie@student.42.fr>                  +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/10/03 15:32:52 by elie              #+#    #+#             */
+/*   Updated: 2025/10/03 16:14:44 by elie             ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../inc/minishell.h"
 
 // Parses the tokens into simple and compound commands (see Shell Commands).
@@ -8,6 +20,7 @@
  * Example usage:
  * - Data->tokens: ["echo", "\"hello\", ${TERM}", ">", "test.txt"]
  *
+ *
  * - command->arguments: ["echo", "\"hello\", ${TERM}"]
  * - command->redirection: ">"
  * - command->inpput: stdin
@@ -15,56 +28,18 @@
  */
 void	set_commands(t_data *data)
 {
+	t_commands	*example_command;
+
 	if (DEBUG)
 		printf("=== set_commands() ===\n\n");
 
-	t_commands *example_command;
-
 	example_command = malloc(sizeof(t_commands));
+	if (example_command == NULL)
+		exit(2); // TODO: What to actually do when malloc fails here?
 
-	example_command->arguments = malloc(sizeof(char *) * 3);
-	if (example_command->arguments == NULL)
-		return ;
-
-	example_command->arguments[0] = ft_strdup("ls");
-	example_command->arguments[1] = ft_strdup("-la");
-	example_command->arguments[2] = NULL;
-	example_command->redirection = ft_strdup(">");
-	example_command->input = NULL;
-	example_command->output = ft_strdup("test.txt");
-
+	example_command->arguments = copy_array(data->tokens); // TODO: Consider storing tokens len, and using copy_narray instead()
 	data->command = example_command;
+
+	if (DEBUG)
+		printf("=== +++ ===\n\n");
 }
-
-// /**
-//  * @brief Parse commands
-//  *
-//  * Example usage:
-//  * - Data->tokens: ["echo", "\"hello\", ${TERM}", ">", "test.txt"]
-//  *
-//  * - command->arguments: ["echo", "\"hello\", ${TERM}"]
-//  * - command->redirection: ">"
-//  * - command->inpput: stdin
-//  * - command->output: "test.txt"
-//  */
-// void	set_commands(t_data *data)
-// {
-// 	if (DEBUG)
-// 		printf("=== set_commands() ===\n\n");
-
-// 	t_commands *example_command;
-
-// 	example_command = malloc(sizeof(t_commands));
-
-// 	example_command->arguments = malloc(sizeof(char *) * 4);
-
-// 	example_command->arguments[0] = ft_strdup("echo");
-// 	example_command->arguments[1] = ft_strdup("\"hello\"");
-// 	example_command->arguments[2] = ft_strdup("${TERM}");
-// 	example_command->arguments[3] = NULL;
-// 	example_command->redirection = ft_strdup(">");
-// 	example_command->input = NULL;
-// 	example_command->output = ft_strdup("test.txt");
-
-// 	data->command = example_command;
-// }
