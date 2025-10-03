@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ebelle <ebelle@student.42.fr>              +#+  +:+       +#+        */
+/*   By: elie <elie@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 12:08:45 by ebelle            #+#    #+#             */
-/*   Updated: 2025/04/29 15:11:49 by ebelle           ###   ########.fr       */
+/*   Updated: 2025/10/03 15:19:48 by elie             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,4 +80,5 @@ void		free_array(char ***array);
 void		free_and_null(char **str);
 char		**copy_array(char **array);
 int			is_whitespace(char c);
+char		*ft_strndup(const char *s, size_t len);
 #endif
