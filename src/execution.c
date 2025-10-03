@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ebelle <ebelle@student.42.fr>              +#+  +:+       +#+        */
+/*   By: dbakker <dbakker@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/02 12:02:01 by ebelle            #+#    #+#             */
-/*   Updated: 2025/10/02 15:35:25 by ebelle           ###   ########.fr       */
+/*   Updated: 2025/10/03 13:39:49 by dbakker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void	execute(t_data *data)
 	int		fd;
 
 	if (DEBUG)
-		printf("=== execute_command() ===\n");
+		printf("=== execute_command() ===\n\n");
 
 	pid = fork();
 	if (pid == 0)
@@ -31,8 +31,8 @@ void	execute(t_data *data)
 		dup2(fd, STDOUT_FILENO);
 		close(fd);
 
-		// execve(X, data->command->arguments[0], data->command->arguments);
-		execvp(data->command->arguments[0], data->command->arguments);
+		execve("/usr/bin/ls", &data->command->arguments[0], data->command->arguments);
+		// execvp(data->command->arguments[0], data->command->arguments);
 	}
 	else
 	{

@@ -8,7 +8,7 @@
 void	cleanup_data(t_data *data)
 {
 	if (DEBUG)
-		printf("=== cleanup_data() ===\n");
+		printf("=== cleanup_data() ===\n\n");
 
 	// Clean up input
 	if (data->input)
@@ -37,5 +37,5 @@ void	cleanup_data(t_data *data)
 	}
 
 	if (DEBUG)
-		printf("=== cleanup complete ===\n");
+		printf("=== cleanup complete ===\n\n");
 }
