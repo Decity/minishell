@@ -6,7 +6,7 @@
 /*   By: elie <elie@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/03 15:32:52 by elie              #+#    #+#             */
-/*   Updated: 2025/10/03 15:32:53 by elie             ###   ########.fr       */
+/*   Updated: 2025/10/03 16:14:44 by elie             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@
  *
  * Example usage:
  * - Data->tokens: ["echo", "\"hello\", ${TERM}", ">", "test.txt"]
+ *
  *
  * - command->arguments: ["echo", "\"hello\", ${TERM}"]
  * - command->redirection: ">"
