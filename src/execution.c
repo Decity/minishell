@@ -16,50 +16,36 @@
 #include <fcntl.h>
 
 /**
- * @brief Find @p `name` in the environment @p `envp`.
+ * @brief Return the absolute path for @p `exec` from the PATH environment.
  *
- * The function will only check each line of @p `envp` equal to the length
- * of @p `name`. So truncating the NAME may return unexpected results.
+ * It will additionally verify if @p `exec` has execution rights.
  *
- * @param[in]	name	The NAME to find.
- * @param[in]	envp	The environment.
+ * @param[in] exec The binary to find.
  *
- * @return Pointer to the first occurrence of NAME found in @p `envp`,
- * @return or NULL on failure.
+ * @return Path to the binary, or NULL if not found.
  */
-char	*get_env_name(const char *name, const char **envp)
-{
-	size_t	i;
-	size_t	name_len;
-
-	i = 0;
-	if (name == NULL)
-	{
-		return (NULL);
-	}
-	name_len = ft_strlen(name);
-	while (envp[i])
-	{
-		if (ft_strnstr(envp[i], name, name_len))
-		{
-			return (envp[i]);
-		}
-		i++;
-	}
-	return (NULL);
-}
-
-
-char	*get_path(char *path)
+char	*get_executable_path(const char *exec)
 {
 	char	**paths;
+	char	*abs_path;
+	char	*slashed_path;
+	size_t	i;
 
-
-	paths = ft_split(path, ':');
-	// How do we error handle if NULL? Should we exit()?
-	for (size_t i = 0; paths[i]; i++)
+	paths = ft_split(getenv("PATH"), ':');
+	i = 0;
+	// TODO: handle malloc fails. Do we return NULL? Do we do exit()?
+	while (paths[i])
 	{
-		printf("%s\n", paths[i]);
+		slashed_path = ft_strjoin(paths[i], "/");
+		abs_path = ft_strjoin(slashed_path, exec);
+		// TODO: handle malloc fails. Also maybe a better method to add slashes at the end?
+		free(slashed_path);
+		if (access(abs_path, X_OK) == 0)
+		{
+			return (abs_path);
+		}
+		free(abs_path);
+		i++;
 	}
 	return (NULL);
 }
@@ -72,12 +58,7 @@ void	execute(t_data *data)
 	if (DEBUG)
 		printf("=== execute_command() ===\n\n");
 
-	char *test = get_env_name("PATH", data->envp);
-	if (test == NULL)
-	{
-		return ;
-	}
-	get_path(test);
+	get_executable_path("blap");
 	pid = fork();
 	if (pid == 0)
 	{
