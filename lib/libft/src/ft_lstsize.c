@@ -1,27 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_putendl_fd.c                                    :+:      :+:    :+:   */
+/*   ft_lstsize.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ebelle <ebelle@student.42.fr>              +#+  +:+       +#+        */
+/*   By: dbakker <dbakker@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/29 12:07:36 by ebelle            #+#    #+#             */
-/*   Updated: 2025/04/29 15:22:37 by ebelle           ###   ########.fr       */
+/*   Created: 2025/04/29 16:00:03 by dbakker           #+#    #+#             */
+/*   Updated: 2025/10/06 16:47:26 by dbakker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	ft_putendl_fd(char *s, int fd)
+/**
+ * @brief	Return the size of the linked list.
+ *
+ * @param[in]	list	Pointer to the head pointer.
+ */
+int	ft_lstsize(t_list *list)
 {
-	if (s)
-	{
-		ft_putstr_fd(s, fd);
-		ft_putchar_fd('\n', fd);
-	}
-}
+	size_t	list_count;
 
-// int main()
-// {
-// 	ft_putendl_fd("123 abcDEF	!@$", 1);
-// }
+	list_count = 0;
+	while (list)
+	{
+		list_count++;
+		list = list->next;
+	}
+	return (list_count);
+}

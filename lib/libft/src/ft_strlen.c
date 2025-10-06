@@ -3,32 +3,24 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strlen.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ebelle <ebelle@student.42.fr>              +#+  +:+       +#+        */
+/*   By: dbakker <dbakker@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/29 12:08:02 by ebelle            #+#    #+#             */
-/*   Updated: 2025/04/29 12:34:55 by ebelle           ###   ########.fr       */
+/*   Created: 2025/04/22 12:55:06 by dbakker           #+#    #+#             */
+/*   Updated: 2025/10/06 16:47:26 by dbakker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
+/**
+ * @brief	Return the length of the string @p s.
+ */
 size_t	ft_strlen(const char *s)
 {
-	size_t	i;
+	size_t	length;
 
-	i = 0;
-	while (s[i])
-		i++;
-	return (i);
+	length = 0;
+	while (*s++ != '\0')
+		length++;
+	return (length);
 }
-
-// #include <string.h>
-// #include <stdio.h>
-// int main()
-// {
-// 	char *tests[] = {"", "1", "22", "\n", "123456789", "\t	\t"};
-
-// 	for (int i = 0; tests[i]; i++)
-// 		printf("strlen: [%zu] ft_strlen: [%zu]\n", strlen(tests[i]),
-//  ft_strlen(tests[i]));
-// }

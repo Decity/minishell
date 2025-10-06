@@ -3,34 +3,23 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.h                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ebelle <ebelle@student.42.fr>              +#+  +:+       +#+        */
+/*   By: dbakker <dbakker@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/13 12:09:33 by ebelle            #+#    #+#             */
-/*   Updated: 2025/05/13 12:09:34 by ebelle           ###   ########.fr       */
+/*   Created: 2025/06/02 10:48:34 by dbakker           #+#    #+#             */
+/*   Updated: 2025/10/06 16:53:10 by dbakker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef GET_NEXT_LINE_H
 # define GET_NEXT_LINE_H
-
 # ifndef BUFFER_SIZE
-#  define BUFFER_SIZE 42
+#  define BUFFER_SIZE 128
 # endif
-
-# include <limits.h>
-# include <stddef.h>
-# include <stdlib.h>
-# include <stdint.h>
-# include <unistd.h>
+# ifndef MAX_FD
+#  define MAX_FD 1024
+# endif
+# include "libft.h"
+# include <stdint.h> // SIZE_MAX
 
 char	*get_next_line(int fd);
-char	*read_to_buffer(int fd, char *buffer);
-char	*get_line_from_buffer(char *buffer);
-char	*trim_buffer(char *buffer);
-size_t	gnl_strlen(char *str);
-void	*gnl_calloc(size_t n);
-void	gnl_free_and_null(char **ptr);
-char	*gnl_strjoin(char *old_buffer, char *tmp);
-char	*gnl_strchr(const char *s, int c);
-char	*gnl_strndup(char *s, size_t n);
 #endif

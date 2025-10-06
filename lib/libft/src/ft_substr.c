@@ -3,65 +3,47 @@
 /*                                                        :::      ::::::::   */
 /*   ft_substr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ebelle <ebelle@student.42.fr>              +#+  +:+       +#+        */
+/*   By: dbakker <dbakker@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/29 12:08:15 by ebelle            #+#    #+#             */
-/*   Updated: 2025/04/29 12:10:50 by ebelle           ###   ########.fr       */
+/*   Created: 2025/04/24 14:28:23 by dbakker           #+#    #+#             */
+/*   Updated: 2025/10/06 16:47:26 by dbakker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-char	*ft_substr(char const *s, unsigned int start, size_t len)
+/**
+ * @brief	Return a substring from @p str starting at @p start with a maximum
+ * 			length of @p len.
+ *
+ * @param[in]	str		String to create the substring from.
+ * @param[in]	start	Starting index within @p str.
+ * @param[in]	len		Maximum length of the substring.
+ *
+ * @returns	Pointer to the substring, or NULL on failure.
+ *
+ * @warning	The caller owns free() when done.
+ */
+char	*ft_substr(char const *str, unsigned int start, size_t len)
 {
-	char	*sub_str;
+	char	*ptr;
 	size_t	i;
-	size_t	s_len;
 
-	if (!s)
-		return (NULL);
-	s_len = ft_strlen(s);
-	if (start >= s_len)
-		return (ft_strdup(""));
-	if (len > s_len - start)
-		len = s_len - start;
-	sub_str = ft_calloc(len + 1, sizeof(char));
-	if (!sub_str)
-		return (NULL);
-	i = 0;
-	while (i < len && s[start + i])
+	if (start > ft_strlen(str))
 	{
-		sub_str[i] = s[start + i];
-		i++;
+		ptr = ft_calloc(1, sizeof(char));
+		if (ptr == NULL)
+			return (NULL);
+		return (ptr);
 	}
-	sub_str[i] = '\0';
-	return (sub_str);
+	i = 0;
+	if (len > ft_strlen(str + start))
+		len = ft_strlen(str + start);
+	ptr = malloc(len + 1);
+	if (ptr == NULL)
+		return (NULL);
+	while (i < len)
+		ptr[i++] = str[start++];
+	ptr[len] = '\0';
+	return (ptr);
 }
-
-// int main(void)
-// {
-//     char *s = "0123456789ABCDEFGHIJKLNOP";
-//     char *result;
-
-//     result = ft_substr(s, 7, 5);
-//     printf("start: 7, len: 5: %s\n", result);
-//     free(result);
-
-//     result = ft_substr(s, 20, 5);
-//     printf("start: 20, len: 5: %s\n", result);
-//     free(result);
-
-//     result = ft_substr(s, 7, 50);
-//     printf("start: 7, len: 50: %s\n", result);
-//     free(result);
-
-//     result = ft_substr("", 0, 5);
-//     printf("start: 0, len: 5: %s\n", result);
-//     free(result);
-
-//     result = ft_substr(s, 7, 0);
-//     printf("start: 7, len: 0: %s\n", result);
-//     free(result);
-
-//     return 0;
-// }

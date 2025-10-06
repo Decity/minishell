@@ -8,29 +8,46 @@ RM = rm -f
 SRC_DIR = src/
 INC_DIR = inc/
 OBJ_DIR = obj/
-GNL_DIR = $(SRC_DIR)get_next_line/
-PRINTF_DIR = $(SRC_DIR)ft_printf/
 
 # Source files
-SRCS = ft_atoi.c ft_bzero.c ft_calloc.c ft_isalnum.c ft_isalpha.c ft_isascii.c \
-	ft_isdigit.c ft_isprint.c ft_itoa.c ft_memchr.c ft_memcmp.c ft_memcpy.c \
-	ft_memmove.c ft_memset.c ft_putchar_fd.c ft_putendl_fd.c ft_putnbr_fd.c \
-	ft_putstr_fd.c ft_split.c ft_strchr.c ft_strdup.c ft_striteri.c ft_strjoin.c \
-	ft_strlcat.c ft_strlcpy.c ft_strlen.c ft_strmapi.c ft_strncmp.c ft_strnstr.c \
-	ft_strrchr.c ft_strtrim.c ft_substr.c ft_tolower.c ft_toupper.c ft_atol.c \
-	free_array.c free_and_null.c copy_array.c is_whitespace.c	ft_strndup.c
-
-# Get Next Line files
-GNL_SRCS = get_next_line.c get_next_line_utils.c
-
-# Printf files
-PRINTF_SRCS = ft_printf.c print_char.c print_str.c print_ptr.c print_int.c \
-	print_uint.c print_hex.c
+SRCS = \
+	copy_array.c \
+	free_and_null.c \
+	free_array.c \
+	ft_atoi.c \
+	ft_bzero.c \
+	ft_calloc.c \
+	ft_caseconvert.c \
+	ft_isthing1.c \
+	ft_isthing2.c \
+	ft_itoa.c \
+	ft_lstadd.c \
+	ft_lstdel.c \
+	ft_lstfunc.c \
+	ft_lstlast.c \
+	ft_lstnew.c \
+	ft_lstsize.c \
+	ft_mem.c \
+	ft_printf.c \
+	ft_putnum.c \
+	ft_putstr.c \
+	ft_puttype_fd.c \
+	ft_split.c \
+	ft_strdup.c \
+	ft_strfnd.c \
+	ft_strfunc.c \
+	ft_strjoin.c \
+	ft_strlc.c \
+	ft_strlen.c \
+	ft_strncmp.c \
+	ft_strndup.c \
+	ft_strnstr.c \
+	ft_strtrim.c \
+	ft_substr.c \
+	get_next_line.c
 
 # Full paths for all source files
 SRC_PATHS = $(addprefix $(SRC_DIR), $(SRCS))
-GNL_PATHS = $(addprefix $(GNL_DIR), $(GNL_SRCS))
-PRINTF_PATHS = $(addprefix $(PRINTF_DIR), $(PRINTF_SRCS))
 
 # All source files combined
 ALL_SRCS = $(SRC_PATHS) $(GNL_PATHS) $(PRINTF_PATHS)
@@ -43,16 +60,6 @@ all: $(NAME)
 
 # Compile libft source files
 $(OBJ_DIR)%.o: $(SRC_DIR)%.c Makefile
-	@mkdir -p $(dir $@)
-	@$(CC) $(CFLAGS) -I$(INC_DIR) -c $< -o $@
-
-# Compile GNL source files
-$(OBJ_DIR)%.o: $(GNL_DIR)%.c Makefile
-	@mkdir -p $(dir $@)
-	@$(CC) $(CFLAGS) -I$(INC_DIR) -c $< -o $@
-
-# Compile Printf source files
-$(OBJ_DIR)%.o: $(PRINTF_DIR)%.c Makefile
 	@mkdir -p $(dir $@)
 	@$(CC) $(CFLAGS) -I$(INC_DIR) -c $< -o $@
 

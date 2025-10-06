@@ -1,31 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_toupper.c                                       :+:      :+:    :+:   */
+/*   ft_caseconvert.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ebelle <ebelle@student.42.fr>              +#+  +:+       +#+        */
+/*   By: dbakker <dbakker@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/29 12:08:20 by ebelle            #+#    #+#             */
-/*   Updated: 2025/04/29 12:08:21 by ebelle           ###   ########.fr       */
+/*   Created: 2025/04/22 13:46:55 by dbakker           #+#    #+#             */
+/*   Updated: 2025/07/08 15:17:46 by dbakker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
-
-int	ft_toupper(int c)
+/**
+ * @brief Convert a letter from uppercase to lowercase.
+ */
+int	ft_tolower(int c)
 {
-	if (c >= 'a' && c <= 'z')
-		return (c - ' ');
+	if (c >= 'A' && c <= 'Z')
+		c = c + 32;
 	return (c);
 }
 
-// int main()
-// {
-// 	char str[] = "abcDEF 123	!@#\n";
-
-// 	for (int i = 0; str[i]; i++)
-// 	{
-// 		printf("%c", ft_toupper(str[i]));
-// 	}
-// 	printf("\n");
-// }
+/**
+ * @brief Convert a letter from lowercase to uppercase.
+ */
+int	ft_toupper(int c)
+{
+	if (c >= 'a' && c <= 'z')
+		c = c - 32;
+	return (c);
+}

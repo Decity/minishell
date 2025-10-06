@@ -1,66 +1,62 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_itoa copy.c                                     :+:      :+:    :+:   */
+/*   ft_strfunc.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dbakker <dbakker@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/28 10:09:08 by dbakker           #+#    #+#             */
+/*   Created: 2025/04/28 14:42:31 by dbakker           #+#    #+#             */
 /*   Updated: 2025/10/06 16:47:26 by dbakker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-static int	ft_length_of_int(int n)
+/**
+ * @brief	Apply function @p func to each character of @p str.
+ *
+ * @param[in,out]	str		String to iterate.
+ * @param[in]		func	Function to apply to each character.
+ */
+void	ft_striteri(char *str, void (*func)(unsigned int, char*))
 {
-	size_t	len;
+	size_t	i;
 
-	len = 0;
-	if (n == 0)
-		return (1);
-	if (n < 0)
-		len++;
-	while (n != 0)
+	i = 0;
+	while (str[i] != '\0')
 	{
-		n /= 10;
-		len++;
+		func(i, &str[i]);
+		i++;
 	}
-	return (len);
 }
 
 /**
- * @brief	Convert an integer to a string.
+ * @brief	Apply function @p func to each character of @p str.
  *
- * @param[in]	num	Integer to be converted.
+ * @param[in]	str		String to iterate.
+ * @param[in]	func	Function to apply to each character.
  *
- * @returns	The converted string, or NULL on failure.
+ * @returns	The pointer to the new string from the successive applications of
+ * 			@p func, or NULL on Failure.
  *
  * @warning	The caller owns free() when done.
  */
-char	*ft_itoa(int num)
+char	*ft_strmapi(char const *str, char (*func)(unsigned int, char))
 {
 	char	*ptr;
-	long	nbr;
+	size_t	i;
 	size_t	len;
 
-	len = ft_length_of_int(num);
-	nbr = num;
+	i = 0;
+	len = ft_strlen(str);
 	ptr = malloc(len + 1);
 	if (ptr == NULL)
 		return (NULL);
+	while (i < len)
+	{
+		ptr[i] = func(i, str[i]);
+		i++;
+	}
 	ptr[len] = '\0';
-	if (num == 0)
-		ptr[0] = '0';
-	if (num < 0)
-	{
-		ptr[0] = '-';
-		nbr *= -1;
-	}
-	while (nbr > 0)
-	{
-		ptr[--len] = nbr % 10 + '0';
-		nbr /= 10;
-	}
 	return (ptr);
 }

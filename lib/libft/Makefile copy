@@ -1,0 +1,77 @@
+# **************************************************************************** #
+#                                                                              #
+#                                                         :::      ::::::::    #
+#    Makefile                                           :+:      :+:    :+:    #
+#                                                     +:+ +:+         +:+      #
+#    By: dbakker <dbakker@student.42.fr>            +#+  +:+       +#+         #
+#                                                 +#+#+#+#+#+   +#+            #
+#    Created: 2025/05/08 15:26:04 by dbakker           #+#    #+#              #
+#    Updated: 2025/07/08 16:05:22 by dbakker          ###   ########.fr        #
+#                                                                              #
+# **************************************************************************** #
+
+NAME = libft.a
+
+SRCDIR	:= src
+OBJDIR	:= obj
+SRCEXT	:= c
+OBJEXT	:= o
+
+CC		:= cc
+CFLAGS	:= -Wall -Werror -Wextra
+
+SRCS	:= \
+	ft_atoi.c \
+	ft_bzero.c \
+	ft_calloc.c \
+	ft_caseconvert.c \
+	ft_isthing.c \
+	ft_itoa.c \
+	ft_lstadd.c \
+	ft_lstdel.c \
+	ft_lstfunc.c \
+	ft_lstlast.c \
+	ft_lstnew.c \
+	ft_lstsize.c \
+	ft_mem.c \
+	ft_printf.c \
+	ft_putnum.c \
+	ft_putstr.c \
+	ft_puttype_fd.c \
+	ft_split.c \
+	ft_strdup.c \
+	ft_strfnd.c \
+	ft_strfunc.c \
+	ft_strjoin.c \
+	ft_strlc.c \
+	ft_strlen.c \
+	ft_strncmp.c \
+	ft_strnstr.c \
+	ft_strtrim.c \
+	ft_substr.c \
+	get_next_line.c
+
+SRCPATH	:= $(addprefix $(SRCDIR)/,$(SRCS))
+OBJS	:= $(patsubst $(SRCDIR)/%,$(OBJDIR)/%,$(SRCPATH:.$(SRCEXT)=.$(OBJEXT)))
+
+$(OBJDIR)/%.o: $(SRCDIR)/%.c
+	@$(CC) $(CFLAGS) -c $< -o $@
+
+all: $(NAME)
+
+$(NAME): directories $(OBJS)
+	@ar rcs $(NAME) $(OBJS)
+	@echo "\033[32m"Libft Compiled"\033[0m"
+
+directories:
+	@mkdir -p $(OBJDIR); \
+
+clean:
+	@$(RM) -rf $(OBJDIR)
+
+fclean: clean
+	@$(RM) -f $(NAME)
+
+re: fclean all
+
+.PHONY: all directories clean fclean re

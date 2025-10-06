@@ -1,11 +1,11 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strdup.c                                        :+:      :+:    :+:   */
+/*   ft_lstadd.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dbakker <dbakker@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/24 10:48:56 by dbakker           #+#    #+#             */
+/*   Created: 2025/04/30 09:15:10 by dbakker           #+#    #+#             */
 /*   Updated: 2025/10/06 16:47:26 by dbakker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
@@ -13,22 +13,36 @@
 #include "libft.h"
 
 /**
- * @brief	Return a pointer to the new string duplicated from @p str.
+ * @brief	Prepend a node to a linked list.
  *
- * @param[in]	str String to duplicate.
- *
- * @returns	Pointer to the duplicated string, or NULL on failure.
- *
- * @warning	The caller owns free() when done.
+ * @param[out]	list List to prepend to.
+ * @param[in]	new	Node to be prepended.
  */
-char	*ft_strdup(const char *str)
+void	ft_lstadd_front(t_list **list, t_list *new)
 {
-	size_t	slen;
-	char	*sdup;
+	if (list == NULL || new == NULL)
+		return ;
+	new->next = *list;
+	*list = new;
+}
 
-	slen = ft_strlen(str) + 1;
-	sdup = malloc(slen);
-	if (sdup == NULL)
-		return (NULL);
-	return (ft_memcpy(sdup, str, slen));
+/**
+ * @brief	Append a node to a linked list.
+ *
+ * @param[out]	list List to append to.
+ * @param[in]	new	Node to be appended.
+ */
+void	ft_lstadd_back(t_list **list, t_list *new)
+{
+	t_list	*node;
+
+	node = *list;
+	if (*list == NULL)
+	{
+		*list = new;
+		return ;
+	}
+	while (node->next != NULL)
+		node = node->next;
+	node->next = new;
 }

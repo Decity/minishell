@@ -1,11 +1,11 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strdup.c                                        :+:      :+:    :+:   */
+/*   ft_lstlast.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dbakker <dbakker@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/24 10:48:56 by dbakker           #+#    #+#             */
+/*   Created: 2025/04/30 09:17:04 by dbakker           #+#    #+#             */
 /*   Updated: 2025/10/06 16:47:26 by dbakker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
@@ -13,22 +13,30 @@
 #include "libft.h"
 
 /**
- * @brief	Return a pointer to the new string duplicated from @p str.
- *
- * @param[in]	str String to duplicate.
- *
- * @returns	Pointer to the duplicated string, or NULL on failure.
- *
- * @warning	The caller owns free() when done.
+ * @brief	Return the pointer to the last node in @p list.
  */
-char	*ft_strdup(const char *str)
+t_list	*ft_lstlast(t_list *list)
 {
-	size_t	slen;
-	char	*sdup;
-
-	slen = ft_strlen(str) + 1;
-	sdup = malloc(slen);
-	if (sdup == NULL)
+	if (list == NULL)
 		return (NULL);
-	return (ft_memcpy(sdup, str, slen));
+	while (list->next != NULL)
+		list = list->next;
+	return (list);
+}
+
+/**
+ * @brief	Return the second-to-last node in a singly linked list.
+ *
+ * @param[in]	list	Pointer to the head of the list.
+ *
+ * @returns	Pointer to the second-to-last node,
+ * 			or NULL if list has fewer than two nodes.
+ */
+t_list	*ft_lstbefore_last(t_list *list)
+{
+	if (list == NULL)
+		return (NULL);
+	while (list->next && list->next->next)
+		list = list->next;
+	return (list);
 }

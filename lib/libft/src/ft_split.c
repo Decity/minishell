@@ -3,126 +3,96 @@
 /*                                                        :::      ::::::::   */
 /*   ft_split.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: elie <elie@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: dbakker <dbakker@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/29 12:07:43 by ebelle            #+#    #+#             */
-/*   Updated: 2025/10/03 15:43:49 by elie             ###   ########.fr       */
+/*   Created: 2025/04/28 10:06:58 by dbakker           #+#    #+#             */
+/*   Updated: 2025/10/06 16:47:26 by dbakker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
-#include <stdlib.h>
+#include <stdio.h>
 
-static size_t	ft_count_words(const char *str, char delimiter)
+static size_t	ft_count_words(char const *s, char c)
 {
-	size_t	word_count;
+	size_t	words_counted;
 	size_t	i;
+	int		is_word;
 
-	word_count = 0;
+	words_counted = 0;
 	i = 0;
-	while (str[i])
+	is_word = 0;
+	while (s[i])
 	{
-		while (str[i] == delimiter)
-			i++;
-		if (str[i])
+		if (is_word == 0 && s[i] != c)
 		{
-			word_count++;
-			while (str[i] && str[i] != delimiter)
-				i++;
+			words_counted++;
+			is_word = 1;
 		}
-	}
-	return (word_count);
-}
-
-static void	ft_free_n_strs(size_t n, char ***array)
-{
-	while (n--)
-	{
-		free((*array)[n]);
-		(*array)[n] = NULL;
-	}
-	free(*array);
-	*array = NULL;
-}
-
-static int	split(const char *s, char c, char **array, size_t word_count)
-{
-	size_t	start;
-	size_t	end;
-	size_t	i;
-
-	start = 0;
-	end = 0;
-	i = 0;
-	while (i < word_count)
-	{
-		while (s[start] && s[start] == c)
-			start++;
-		end = start;
-		while (s[end] && s[end] != c)
-			end++;
-		array[i] = ft_strndup(&s[start], end - start);
-		if (!array[i])
-		{
-			ft_free_n_strs(i, &array);
-			return (0);
-		}
+		if (s[i] == c)
+			is_word = 0;
 		i++;
-		start = end;
 	}
-	array[i] = NULL;
-	return (1);
+	return (words_counted);
 }
 
-char	**ft_split(const char *s, char c)
+static char	**ft_free_all(char **ptr, size_t i)
 {
-	char	**array;
-	size_t	word_count;
-
-	if (!s)
-		return (NULL);
-	word_count = ft_count_words(s, c);
-	array = ft_calloc((word_count + 1), sizeof(char *));
-	if (!array)
-		return (NULL);
-	if (!split(s, c, array, word_count))
-		return (free(array), NULL);
-	return (array);
+	while (ptr[i])
+		free(ptr[i--]);
+	free(ptr);
+	return (NULL);
 }
 
-// #include <stdio.h>
+static size_t	ft_word_length(const char *s, char c)
+{
+	size_t	length;
 
-// int main(void)
-// {
-// 	char	**result;
-// 	const char *test_cases[] = {
-// 		"Hello world this is dog",
-// 		"   Leading spaces",
-// 		"Trailing spaces   ",
-// 		"   Both leading and trailing spaces   ",
-// 		"Spaces   between   words",
-// 		"  Spaces   leading, between, and trailing    words   ",
-// 		"HelloThisIsDog",
-// 		"",
-// 		"   ",
-// 		NULL
-// 	};
+	length = 0;
+	while (s[length] && s[length] != c)
+		length++;
+	return (length);
+}
 
-// 	for (size_t i = 0; test_cases[i]; i++)
-// 	{
-// 		printf("Test case %zu: \"%s\"\n", i + 1, test_cases[i]);
-// 		result = ft_split(test_cases[i], ' ');
-// 		if (!result)
-// 			printf("Error: returned NULL\n");
-// 		size_t j = 0;
-// 		while (result[j])
-// 		{
-// 			printf("  Word %zu: %s\n", j + 1, result[j]);
-// 			j++;
-// 		}
-// 		ft_free_n_strs(j, &result);
-// 		printf("\n");
-// 	}
+static const char	*ft_skip_delimiters(const char *s, char c)
+{
+	while (*s == c)
+		s++;
+	return (s);
+}
 
-// 	return (0);
-// }
+/**
+ * @brief	Split the string @p str using character @p c as the delimiter.
+ *
+ * @param[in]	str	The string to split.
+ * @param[in]	c	The delimiter character.
+ *
+ * @returns	An array of strings resulting from the split, or NULL on failure.
+ *
+ * @warning	The caller owns free() when done.
+ */
+char	**ft_split(char const *str, char c)
+{
+	char	**ptr;
+	size_t	words_counted;
+	size_t	word_length;
+	size_t	i;
+
+	i = 0;
+	words_counted = ft_count_words(str, c);
+	ptr = ft_calloc((words_counted + 1), sizeof(char *));
+	if (ptr == NULL)
+		return (NULL);
+	while (i < words_counted)
+	{
+		str = ft_skip_delimiters(str, c);
+		word_length = ft_word_length(str, c);
+		ptr[i] = ft_calloc(word_length + 1, sizeof(char));
+		if (ptr[i] == NULL)
+			return (ft_free_all(ptr, i));
+		ft_memcpy(ptr[i], str, word_length);
+		ptr[i++][word_length] = '\0';
+		str += word_length;
+	}
+	return (ptr);
+}

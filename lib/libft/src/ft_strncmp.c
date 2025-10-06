@@ -3,45 +3,37 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strncmp.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ebelle <ebelle@student.42.fr>              +#+  +:+       +#+        */
+/*   By: dbakker <dbakker@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/29 12:08:07 by ebelle            #+#    #+#             */
-/*   Updated: 2025/04/29 12:35:47 by ebelle           ###   ########.fr       */
+/*   Created: 2025/04/22 14:33:33 by dbakker           #+#    #+#             */
+/*   Updated: 2025/10/06 16:47:26 by dbakker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-int	ft_strncmp(const char *s1, const char *s2, size_t n)
+/**
+ * @brief	Compare the first @p n bytes of the strings @p str1 and @p str2.
+ *
+ * @param[in]	str1	String to compare to @p str2.
+ * @param[in]	str2	String to compare to @p str1.
+ * @param[in]	n		Characters to read in bytes.
+ *
+ * @returns	Nonzero value by the sign of the difference between the first pair
+ * 			of bytes that differ in @p str1 and @p str2, or 0 if no difference.
+ *
+ * @retval	0 if @p n is zero, or there is no difference found in @p n bytes.
+ * @retval	A positive value if @p str1 is greater than @p str2.
+ * @retval	A negative value if @p str1 is less than @p str2.
+ */
+int	ft_strncmp(const char *str1, const char *str2, size_t n)
 {
-	size_t	i;
-
-	i = 0;
-	while (i < n && (s1[i] || s2[i]))
+	if (n == 0)
+		return (0);
+	while (*str1 && *str2 && *str1 == *str2 && --n > 0)
 	{
-		if ((unsigned char)s1[i] != (unsigned char)s2[i])
-			return ((unsigned char)s1[i] - (unsigned char)s2[i]);
-		i++;
+		str1++;
+		str2++;
 	}
-	return (0);
+	return ((unsigned char)*str1 - (unsigned char)*str2);
 }
-/*
-int main()
-{
-    int n;
-    char *tests[] = {"abc", "abd", "aba", "abc", "xyz", "", ""};
-    size_t num_tests = sizeof(tests) / sizeof(tests[0]);
-
-    n = 3;
-    for (size_t i = 0; i < num_tests - 1; i++)
-    {
-        printf("[%s] - [%s]\n", tests[i], tests[i+1]);
-        printf("strncmp:	%i\n", strncmp(tests[i], tests[i+1], n));
-        printf("ft_strncmp:	%i\n\n", ft_strncmp(tests[i], tests[i+1], n));
-			
-		if (strncmp(tests[i], tests[i+1], n) != ft_strncmp(tests[i],
-		 tests[i+1], n))
-			printf("\n\n###oopsie daisy\n\n");
-	}
-}
-*/

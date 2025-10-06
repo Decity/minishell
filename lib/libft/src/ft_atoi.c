@@ -3,133 +3,45 @@
 /*                                                        :::      ::::::::   */
 /*   ft_atoi.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: elie <elie@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: dbakker <dbakker@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/29 12:06:39 by ebelle            #+#    #+#             */
-/*   Updated: 2025/09/18 11:19:28 by elie             ###   ########.fr       */
+/*   Created: 2025/04/22 15:52:08 by dbakker           #+#    #+#             */
+/*   Updated: 2025/10/06 16:46:56 by dbakker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
-#include <limits.h>
-#include <stdbool.h>
-
-static int	iswhitespace(int c)
+/**
+ * @brief	Convert a string to an integer.
+ *
+ * @param[in]	str	String to be converted.
+ *
+ * @returns		Converted integer value or 0 if conversion fails.
+ *
+ * @note	No error handling. Returns 0 for both the error aswell as the string.
+ */
+int	ft_atoi(const char *str)
 {
-	if ((c >= 9 && c <= 13) || (c == ' '))
-		return (true);
-	return (false);
-}
+	int	index;
+	int	number;
+	int	sign;
 
-int	ft_atoi(const char *nptr)
-{
-	int		i;
-	long	num;
-	int		sign;
-
-	num = 0;
+	index = 0;
+	number = 0;
 	sign = 1;
-	i = 0;
-	while (iswhitespace(nptr[i]))
-		i++;
-	if (nptr[i] == '+' || nptr[i] == '-')
+	while ((str[index] >= '\t' && str[index] <= '\r') || str[index] == ' ')
 	{
-		if (nptr[i] == '-')
-			sign = -1;
-		i++;
+		index++;
 	}
-	while (ft_isdigit(nptr[i]))
+	if (str[index] == '-' || str[index] == '+')
 	{
-		num = (num * 10) + (nptr[i] - '0');
-		i++;
+		if (str[index++] == '-')
+		{
+			sign *= -1;
+		}
 	}
-	return (num * sign);
+	while (str[index] >= '0' && str[index] <= '9')
+	{
+		number = number * 10 + (str[index++] - '0');
+	}
+	return (number * sign);
 }
-
-// int	ft_atoi(const char *nptr)
-// {
-// 	int		i;
-// 	long	num;
-// 	int		sign;
-
-// 	num = 0;
-// 	sign = 1;
-// 	i = 0;
-// 	while (iswhitespace(nptr[i]))
-// 		i++;
-// 	if (nptr[i] == '+' || nptr[i] == '-')
-// 	{
-// 		if (nptr[i] == '-')
-// 			sign = -1;
-// 		i++;
-// 	}
-// 	while (ft_isdigit(nptr[i]))
-// 	{
-// 		if (num > (LONG_MAX - (nptr[i] - '0')) / 10)
-// 		{
-// 			if (sign == 1)
-// 				return (-1);
-// 			return (0);
-// 		}
-// 		num = (num * 10) + (nptr[i] - '0');
-// 		i++;
-// 	}
-// 	return (num * sign);
-// }
-
-// void test(const char *str)
-// {
-// 	int result = ft_atoi(str);
-// 	int comparison = atoi(str);
-// 	if (result == comparison)
-// 		printf("Pass: ");
-// 	else
-// 		printf("Fail: ");
-// 	printf("atoi: [%d] ft_atoi: [%d]\n", comparison, result);
-// }
-
-// int main()
-// {
-// 	test("0");
-// 	test("123");
-// 	test("-123");
-// 	test("+123");
-// 	printf("\n");
-
-// 	test("   123");
-// 	test("   +123");
-// 	test("   ++++123");
-// 	test("   +++-123");
-// 	test("   -+++123");
-// 	test("   -123");
-// 	test("   --123");
-// 	test("   ---123");
-// 	printf("\n");
-
-// 	test("123abc");
-// 	test("abc123");
-
-// 	test(" ");
-// 	test("	"); // tab
-// 	test("");
-// 	printf("\n");
-
-// 	test("-2147483648");
-// 	test("2147483647");
-// 	test("-2147483649");
-// 	test("2147483648");
-
-// 	test("−2147483648"); // long min
-// 	test("−2147483649"); // ^ - 1
-// 	test("2147483648"); // long max
-// 	test("2147483649"); // ^ + 1
-
-// 	test("−9223372036854775807"); // long long min
-// 	test("−9223372036854775817"); // ^ - 10
-// 	test("9223372036854775807"); // long long max
-// 	test("9223372036854775817"); // ^ + 10
-
-// 	test("18446744073709551615"); // unsigned long long max (size_max)
-// 	test("18446744073709551625"); // ^ + 10
-// 	return (0);
-// }

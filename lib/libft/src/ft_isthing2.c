@@ -1,18 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   print_char.c                                       :+:      :+:    :+:   */
+/*   ft_isthing2.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: elie <elie@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: dbakker <dbakker@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/09/18 11:20:23 by elie              #+#    #+#             */
-/*   Updated: 2025/09/18 11:20:30 by elie             ###   ########.fr       */
+/*   Created: 2025/04/22 12:41:29 by dbakker           #+#    #+#             */
+/*   Updated: 2025/10/06 16:47:26 by dbakker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_printf.h"
+#include "libft.h"
 
-int	print_char(int c)
+/**
+ * @brief	Return 1 if @p c is a whitespace, 0 otherwise.
+ */
+int	ft_isspace(int c)
 {
-	return (write(1, &c, 1));
+	return (c == ' ' || (c >= '\t' && c <= '\r'));
 }

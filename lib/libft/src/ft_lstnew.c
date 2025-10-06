@@ -1,11 +1,11 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strdup.c                                        :+:      :+:    :+:   */
+/*   ft_lstnew.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dbakker <dbakker@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/24 10:48:56 by dbakker           #+#    #+#             */
+/*   Created: 2025/04/29 11:52:25 by dbakker           #+#    #+#             */
 /*   Updated: 2025/10/06 16:47:26 by dbakker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
@@ -13,22 +13,22 @@
 #include "libft.h"
 
 /**
- * @brief	Return a pointer to the new string duplicated from @p str.
+ * @brief	Content to store the new node.
  *
- * @param[in]	str String to duplicate.
+ * @param[in]	content Content to add.
  *
- * @returns	Pointer to the duplicated string, or NULL on failure.
+ * @returns	Pointer to the new node.
  *
  * @warning	The caller owns free() when done.
  */
-char	*ft_strdup(const char *str)
+t_list	*ft_lstnew(void *content)
 {
-	size_t	slen;
-	char	*sdup;
+	t_list	*node;
 
-	slen = ft_strlen(str) + 1;
-	sdup = malloc(slen);
-	if (sdup == NULL)
+	node = malloc(sizeof(t_list));
+	if (node == NULL)
 		return (NULL);
-	return (ft_memcpy(sdup, str, slen));
+	node->content = content;
+	node->next = NULL;
+	return (node);
 }

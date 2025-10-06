@@ -3,27 +3,33 @@
 /*                                                        :::      ::::::::   */
 /*   ft_printf.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: elie <elie@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: dbakker <dbakker@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/09/18 11:20:19 by elie              #+#    #+#             */
-/*   Updated: 2025/09/18 11:20:20 by elie             ###   ########.fr       */
+/*   Created: 2025/05/06 16:59:02 by dbakker           #+#    #+#             */
+/*   Updated: 2025/10/06 16:53:14 by dbakker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef FT_PRINTF_H
 # define FT_PRINTF_H
+# ifndef HEX_UPPER
+#  define HEX_UPPER "0123456789ABCDEF"
+# endif
+# ifndef HEX_LOWER
+#  define HEX_LOWER "0123456789abcdef"
+# endif
+# include "libft.h"
+# include <unistd.h> // write()
+# include <stdarg.h> // va_
+# include <limits.h> // INT_MAX && INT_MIN
+# include <stdint.h> // uintptr_t
 
-# include <stdarg.h>
-# include <unistd.h>
-
-int		ft_printf(const char *s, ...);
-int		parse(int c, va_list args);
-int		print_str(char *s);
-int		print_char(int c);
-int		print_ptr(void *ptr);
-int		print_int(int n);
-int		print_uint(unsigned int n);
-int		print_hex(unsigned long long int n);
-int		print_uhex(unsigned long long int n);
+int	ft_printf(const char *format, ...);
+int	ft_puthex(unsigned int hex, char specifier);
+int	ft_putchar(int c);
+int	ft_putnbr(int num);
+int	ft_putptr(uintptr_t ptr);
+int	ft_putstr(char *str);
+int	ft_putunbr(unsigned int num);
 
 #endif
