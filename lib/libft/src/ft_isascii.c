@@ -6,14 +6,14 @@
 /*   By: ebelle <ebelle@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 12:07:13 by ebelle            #+#    #+#             */
-/*   Updated: 2025/04/29 12:07:14 by ebelle           ###   ########.fr       */
+/*   Updated: 2025/10/02 16:21:13 by ebelle           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 #include <stdbool.h>
 
-int	ft_isascii(int c)
+bool	ft_isascii(int c)
 {
 	if (c >= 0 && c <= 127)
 		return (true);

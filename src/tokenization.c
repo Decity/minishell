@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tokenization.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: elie <elie@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: ebelle <ebelle@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/03 15:20:17 by elie              #+#    #+#             */
-/*   Updated: 2025/10/03 16:17:18 by elie             ###   ########.fr       */
+/*   Updated: 2025/10/06 14:25:21 by ebelle           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,10 +46,10 @@ void	set_tokens(t_data *data)
  */
 void	tokenize(t_data *data, int token_count)
 {
-	int	i;
-	int	start;
-	int	end;
-	int	quote;
+	int		i;
+	int		start;
+	int		end;
+	char	quote;
 
 	const char *input = data->input;
 
@@ -99,9 +99,9 @@ bool	is_quote(int c)
  */
 int		count_tokens(char *input)
 {
-	int	i;
-	int	quote;
-	int	token_count;
+	int		i;
+	char	quote;
+	int		token_count;
 
 	quote = 0;
 	token_count = 0;
@@ -123,14 +123,13 @@ int		count_tokens(char *input)
 			while (input[i] && input[i] != quote)
 				i++;
 			i++;
-			token_count++;
 		}
 		else
 		{
-			token_count++;
 			while (input[i] && is_whitespace(input[i]) == false)
 				i++;
 		}
+		token_count++;
 	}
 	if (DEBUG)
 		printf("Token count: %i\n", token_count);
