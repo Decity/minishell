@@ -3,22 +3,26 @@
 /*                                                        :::      ::::::::   */
 /*   structs.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: elie <elie@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: dbakker <dbakker@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/30 18:14:03 by elie              #+#    #+#             */
-/*   Updated: 2025/10/03 17:02:29 by elie             ###   ########.fr       */
+/*   Updated: 2025/10/06 15:39:43 by dbakker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef STRUCTS_H
 # define STRUCTS_H
 
+typedef struct s_commands	t_commands;
+
 typedef struct s_commands
 {
-	char	**arguments;
-	char	*redirection;
-	char	*input;
-	char	*output;
+	char		**arguments;
+	char		*redirection;
+	char		*input;
+	char		*output;
+	t_commands	*next;
+	t_commands	*prev;
 }	t_commands;
 
 typedef struct s_data
