@@ -57,4 +57,12 @@ ffclean: fclean
 
 re: fclean all
 
+red: fclean debug
+
+rerun: fclean all
+	./minishell
+
+rerund: fclean debug
+	./minishell
+
 .PHONY: all clean fclean re
