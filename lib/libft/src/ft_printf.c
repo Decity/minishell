@@ -6,15 +6,15 @@
 /*   By: dbakker <dbakker@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/06 16:57:51 by dbakker           #+#    #+#             */
-/*   Updated: 2025/10/06 16:51:04 by dbakker          ###   ########.fr       */
+/*   Updated: 2025/10/06 22:20:22 by dbakker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-static int	ft_conversions(char specifier, va_list args)
+static int32_t	ft_conversions(char specifier, va_list args)
 {
-	int	i;
+	int32_t	i;
 
 	i = 1;
 	if (specifier == 'c')
@@ -24,24 +24,43 @@ static int	ft_conversions(char specifier, va_list args)
 	else if (specifier == 'p')
 		i = ft_putptr((uintptr_t)va_arg(args, uintptr_t));
 	else if (specifier == 'i' || specifier == 'd')
-		i = ft_putnbr((int)va_arg(args, int));
+		i = ft_putnum((int32_t)va_arg(args, int32_t));
 	else if (specifier == 'u')
-		i = ft_putunbr((unsigned int)va_arg(args, unsigned int));
+		i = ft_putunum((uint32_t)va_arg(args, uint32_t));
 	else if (specifier == 'x' || specifier == 'X')
-		i = ft_puthex((unsigned int)va_arg(args, unsigned int), specifier);
+		i = ft_puthex((uint32_t)va_arg(args, uint32_t), specifier);
 	else if (specifier == '%')
 		write(1, "%", 1);
 	return (i);
 }
 
-/*
-- Print format
-*/
-int	ft_printf(const char *format, ...)
+/**
+ * @brief Print a simplified formatted string to the standard output.
+ *
+ * Unsupported formats are undefined behaviour.
+ *
+ * @param[in]	format	String to print to the standard output.
+ * @param[in]	...		Formatted types to print.
+ *
+ * @return The length of the printed string, or -1 on failure.
+ *
+ * @note Supported format specifiers
+ * @note | Specifier | Description                                        |
+ * @note |-----------|----------------------------------------------------|
+ * @note | `%d`/`%i` | Signed 32-bit integer                              |
+ * @note | `%u`      | Unsigned 32-bit integer                            |
+ * @note | `%x`      | Unsigned 32-bit integer (printed as lowercase hex) |
+ * @note | `%X`      | Unsigned 32-bit integer (printed as uppercase hex) |
+ * @note | `%c`      | Single character                                   |
+ * @note | `%s`      | Null-terminated string                             |
+ * @note | `%p`      | Pointer (printed as lowercase hex)                 |
+ * @note | `%%`      | Literal percent sign (`%`)                         |
+ */
+int32_t	ft_printf(const char *format, ...)
 {
 	va_list	args;
-	int		string_length;
-	int		i;
+	int32_t	string_length;
+	int32_t	i;
 
 	i = 0;
 	string_length = 0;
@@ -54,7 +73,7 @@ int	ft_printf(const char *format, ...)
 			string_length += ft_conversions(format[++i], args);
 		else
 		{
-			write(1, &format[i], 1);
+			ft_putchar(format[i]);
 			string_length++;
 		}
 		i++;

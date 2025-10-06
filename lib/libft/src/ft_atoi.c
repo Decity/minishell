@@ -10,38 +10,40 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-/**
- * @brief	Convert a string to an integer.
- *
- * @param[in]	str	String to be converted.
- *
- * @returns		Converted integer value or 0 if conversion fails.
- *
- * @note	No error handling. Returns 0 for both the error aswell as the string.
- */
-int	ft_atoi(const char *str)
-{
-	int	index;
-	int	number;
-	int	sign;
+#include "libft.h"
 
-	index = 0;
+/**
+ * @brief Convert @p `str` to a signed 32-bit integer.
+ *
+ * @param[in] str The String to convert.
+ *
+ * @return The converted value.
+ *
+ * @note ft_atoi() does not detect overflow.
+ */
+int32_t	ft_atoi(const char *str)
+{
+	int32_t	number;
+	int32_t	i;
+	int8_t	sign;
+
 	number = 0;
+	i = 0;
 	sign = 1;
-	while ((str[index] >= '\t' && str[index] <= '\r') || str[index] == ' ')
+	while (ft_isspace(str[i]))
 	{
-		index++;
+		i++;
 	}
-	if (str[index] == '-' || str[index] == '+')
+	if (str[i] == '-' || str[i] == '+')
 	{
-		if (str[index++] == '-')
+		if (str[i++] == '-')
 		{
-			sign *= -1;
+			sign = -sign;
 		}
 	}
-	while (str[index] >= '0' && str[index] <= '9')
+	while (ft_isdigit(str[i]))
 	{
-		number = number * 10 + (str[index++] - '0');
+		number = number * 10 + (str[i++] - '0');
 	}
 	return (number * sign);
 }

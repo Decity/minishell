@@ -6,7 +6,7 @@
 /*   By: dbakker <dbakker@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/08 15:33:28 by dbakker           #+#    #+#             */
-/*   Updated: 2025/10/06 16:51:04 by dbakker          ###   ########.fr       */
+/*   Updated: 2025/10/06 22:41:32 by dbakker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,39 +15,36 @@
 static int	ft_int_to_hex(unsigned int hex, char *base)
 {
 	char	array[8];
-	int		index;
+	int		i;
 	int		string_length;
 
-	index = 0;
+	i = 0;
 	while (hex != 0)
 	{
-		array[index++] = base[hex % 16];
+		array[i++] = base[hex % 16];
 		hex /= 16;
 	}
-	string_length = index;
-	while (index--)
-		write(1, &array[index], 1);
+	string_length = i;
+	while (i--)
+		write(1, &array[i], 1);
 	return (string_length);
 }
 
-int	ft_putchar(int c)
+int	ft_putchar(int character)
 {
-	return (write(1, &c, 1));
+	return (write(STDOUT_FILENO, &character, 1));
 }
 
 int	ft_putstr(char *str)
 {
-	size_t	string_length;
-
-	string_length = 0;
 	if (str == NULL)
-		return (write(1, "(null)", 6));
-	return (write(1, str, ft_strlen(str)));
+		return (write(STDOUT_FILENO, "(null)", 6));
+	return (write(STDOUT_FILENO, str, ft_strlen(str)));
 }
 
 int	ft_puthex(unsigned int hex, char specifier)
 {
-	int				string_length;
+	int32_t	string_length;
 
 	string_length = 1;
 	if (hex == 0)
@@ -63,21 +60,21 @@ int	ft_putptr(uintptr_t ptr)
 {
 	char		buffer[16];
 	char		*base;
-	size_t		index;
+	size_t		i;
 	int			string_length;
 
-	index = 0;
+	i = 0;
 	base = HEX_LOWER;
 	if ((void *)ptr == NULL)
 		return (write(1, "(nil)", 5));
 	while (ptr)
 	{
-		buffer[index++] = base[ptr % 16];
+		buffer[i++] = base[ptr % 16];
 		ptr /= 16;
 	}
-	string_length = (int)index;
+	string_length = (int)i;
 	write(1, "0x", 2);
-	while (index--)
-		write(1, &buffer[index], 1);
+	while (i--)
+		write(1, &buffer[i], 1);
 	return (string_length + 2);
 }

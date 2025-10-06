@@ -17,7 +17,8 @@ SRCS = \
 	ft_atoi.c \
 	ft_bzero.c \
 	ft_calloc.c \
-	ft_caseconvert.c \
+	ft_tocase.c \
+	ft_intlen.c \
 	ft_isthing1.c \
 	ft_isthing2.c \
 	ft_itoa.c \

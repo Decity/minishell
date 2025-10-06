@@ -6,16 +6,16 @@
 /*   By: dbakker <dbakker@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/22 12:41:29 by dbakker           #+#    #+#             */
-/*   Updated: 2025/10/06 16:47:26 by dbakker          ###   ########.fr       */
+/*   Updated: 2025/10/06 22:29:05 by dbakker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
 /**
- * @brief	Return 1 if @p c is a whitespace, 0 otherwise.
+ * @return `true` if @p `c` is a whitespace, `false` otherwise.
  */
-int	ft_isspace(int c)
+bool	ft_isspace(int c)
 {
 	return (c == ' ' || (c >= '\t' && c <= '\r'));
 }

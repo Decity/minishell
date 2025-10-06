@@ -13,14 +13,17 @@
 #include "libft.h"
 
 /**
- * @brief	Allocate memory and initialize it to zero.
+ * @brief Allocate @p `num` times @p `size` bytes of memory.
  *
- * @param[in]	nmemb	Number of members.
- * @param[in]	size	Size of each member in bytes.
+ * If @p `num` or @p `size` is 0, it will instead return a unique pointer value that can
+ * be freed later.
  *
- * @returns	Pointer to the allocated memory or NULL on failure.
+ * @param[in]	num		Number of members.
+ * @param[in]	size	Size of each member
  *
- * @warning	The caller owns free() when done.
+ * @return Pointer to the allocated memory, or NULL on failure.
+ *
+ * @warning Caller owns free().
  */
 void	*ft_calloc(size_t nmemb, size_t size)
 {
@@ -29,7 +32,7 @@ void	*ft_calloc(size_t nmemb, size_t size)
 	if (nmemb == 0 || size == 0)
 		return (malloc(0));
 	ptr = malloc(nmemb * size);
-	if (ptr == NULL || size > __SIZE_MAX__ / nmemb)
+	if (ptr == NULL || size > SIZE_MAX / nmemb)
 		return (NULL);
 	ft_bzero(ptr, nmemb * size);
 	return (ptr);

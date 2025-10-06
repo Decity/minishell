@@ -15,11 +15,9 @@
 # ifndef BUFFER_SIZE
 #  define BUFFER_SIZE 128
 # endif
-# ifndef MAX_FD
-#  define MAX_FD 1024
-# endif
+# define MAX_FD 1024
+
 # include "libft.h"
-# include <stdint.h> // SIZE_MAX
 
 char	*get_next_line(int fd);
 #endif

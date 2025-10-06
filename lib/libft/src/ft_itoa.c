@@ -1,61 +1,43 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_itoa copy.c                                     :+:      :+:    :+:   */
+/*   ft_itoa.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dbakker <dbakker@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/28 10:09:08 by dbakker           #+#    #+#             */
-/*   Updated: 2025/10/06 16:47:26 by dbakker          ###   ########.fr       */
+/*   Updated: 2025/10/06 22:17:19 by dbakker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-static int	ft_length_of_int(int n)
-{
-	size_t	len;
-
-	len = 0;
-	if (n == 0)
-		return (1);
-	if (n < 0)
-		len++;
-	while (n != 0)
-	{
-		n /= 10;
-		len++;
-	}
-	return (len);
-}
-
 /**
- * @brief	Convert an integer to a string.
+ * @brief Convert a 32-bit integer to a string.
  *
- * @param[in]	num	Integer to be converted.
+ * @param[in] num The integer to convert.
  *
- * @returns	The converted string, or NULL on failure.
+ * @return The converted string, or NULL on failure.
  *
- * @warning	The caller owns free() when done.
+ * @warning Caller owns free().
  */
-char	*ft_itoa(int num)
+char	*ft_itoa(int32_t num)
 {
 	char	*ptr;
-	long	nbr;
+	int64_t	nbr;
 	size_t	len;
 
-	len = ft_length_of_int(num);
+	len = ft_intlen(num);
 	nbr = num;
-	ptr = malloc(len + 1);
+	ptr = ft_calloc(len + 1, sizeof(char));
 	if (ptr == NULL)
 		return (NULL);
-	ptr[len] = '\0';
 	if (num == 0)
 		ptr[0] = '0';
 	if (num < 0)
 	{
 		ptr[0] = '-';
-		nbr *= -1;
+		nbr = -nbr;
 	}
 	while (nbr > 0)
 	{

@@ -6,7 +6,7 @@
 /*   By: dbakker <dbakker@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/06 16:59:02 by dbakker           #+#    #+#             */
-/*   Updated: 2025/10/06 16:53:14 by dbakker          ###   ########.fr       */
+/*   Updated: 2025/10/06 22:20:22 by dbakker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,17 +19,14 @@
 #  define HEX_LOWER "0123456789abcdef"
 # endif
 # include "libft.h"
-# include <unistd.h> // write()
 # include <stdarg.h> // va_
-# include <limits.h> // INT_MAX && INT_MIN
-# include <stdint.h> // uintptr_t
 
 int	ft_printf(const char *format, ...);
 int	ft_puthex(unsigned int hex, char specifier);
 int	ft_putchar(int c);
-int	ft_putnbr(int num);
+int	ft_putnum(int num);
 int	ft_putptr(uintptr_t ptr);
 int	ft_putstr(char *str);
-int	ft_putunbr(unsigned int num);
+int	ft_putunum(unsigned int num);
 
 #endif

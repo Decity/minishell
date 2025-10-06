@@ -13,41 +13,41 @@
 #include "libft.h"
 
 /**
- * @brief	Return 1 if @p c is alphabetic, 0 otherwise.
+ * @return `true` if @p `c` is alphabetic, `false` otherwise.
  */
-int	ft_isalpha(int c)
+bool	ft_isalpha(int c)
 {
 	return ((c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z'));
 }
 
 /**
- * @brief	Return 1 if @p c is standard ASCII, 0 otherwise.
+ * @return `true` if @p `c` is standard ASCII, `false` otherwise.
  */
-int	ft_isascii(int c)
+bool	ft_isascii(int c)
 {
 	return (c >= 0 && c <= 127);
 }
 
 /**
- * @brief	Return 1 if @p c is a digit, 0 otherwise.
+ * @return `true` if @p `c` is a digit, `false` otherwise.
  */
-int	ft_isdigit(int c)
+bool	ft_isdigit(int c)
 {
 	return (c >= '0' && c <= '9');
 }
 
 /**
- * @brief	Return 1 if @p c is a printable character, 0 otherwise.
+ * @return `true` if @p `c` is a printable character, `false` otherwise.
  */
-int	ft_isprint(int c)
+bool	ft_isprint(int c)
 {
 	return (c >= ' ' && c <= '~');
 }
 
 /**
- * @brief	Return 1 if @p c is alphanumeric, 0 otherwise.
+ * @return `true` if @p `c` is alphanumeric, `false` otherwise.
  */
-int	ft_isalnum(int c)
+bool	ft_isalnum(int c)
 {
 	return (ft_isalpha(c) || ft_isdigit(c));
 }

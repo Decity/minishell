@@ -13,12 +13,12 @@
 #include "libft.h"
 
 /**
- * @brief	Fill zeroes to the memory area.
+ * @brief Write @p `num` bytes of zeros pointed to by @p `buffer`.
  *
- * @param[out]	s	The memory area.
- * @param[in]	n	Amount of bytes set to 0.
+ * @param[out]	buffer	Pointed area to fill.
+ * @param[in]	num		Amount of zeros to write.
  */
-void	ft_bzero(void *s, size_t n)
+void	ft_bzero(void *buffer, size_t num)
 {
-	ft_memset(s, 0, n);
+	ft_memset(buffer, 0, num);
 }

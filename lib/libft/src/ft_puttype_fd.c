@@ -6,7 +6,7 @@
 /*   By: dbakker <dbakker@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/25 14:11:35 by dbakker           #+#    #+#             */
-/*   Updated: 2025/10/06 16:47:26 by dbakker          ###   ########.fr       */
+/*   Updated: 2025/10/06 22:20:15 by dbakker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ void	ft_putendl_fd(char *str, int fd)
 /**
  * @brief Writes integer @p num to the specified file descriptor @p fd
  */
-void	ft_putnbr_fd(int num, int fd)
+void	ft_putnum_fd(int num, int fd)
 {
 	if (num == -2147483648)
 	{
@@ -54,7 +54,7 @@ void	ft_putnbr_fd(int num, int fd)
 		num = -num;
 	}
 	if (num >= 10)
-		ft_putnbr_fd(num / 10, fd);
+		ft_putnum_fd(num / 10, fd);
 	num = num % 10 + '0';
 	write(fd, &num, 1);
 }
