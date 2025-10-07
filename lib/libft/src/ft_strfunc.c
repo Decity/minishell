@@ -6,7 +6,7 @@
 /*   By: dbakker <dbakker@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/28 14:42:31 by dbakker           #+#    #+#             */
-/*   Updated: 2025/10/06 16:47:26 by dbakker          ###   ########.fr       */
+/*   Updated: 2025/10/07 14:56:30 by dbakker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
  * @param[in,out]	str		String to iterate.
  * @param[in]		func	Function to apply to each character.
  */
-void	ft_striteri(char *str, void (*func)(unsigned int, char*))
+void	ft_striteri(char *str, void (*func)(uint32_t, char*))
 {
 	size_t	i;
 
@@ -41,22 +41,21 @@ void	ft_striteri(char *str, void (*func)(unsigned int, char*))
  *
  * @warning	The caller owns free() when done.
  */
-char	*ft_strmapi(char const *str, char (*func)(unsigned int, char))
+char	*ft_strmapi(const char *str, char (*func)(uint32_t, char))
 {
 	char	*ptr;
 	size_t	i;
-	size_t	len;
+	size_t	strlen;
 
 	i = 0;
-	len = ft_strlen(str);
-	ptr = malloc(len + 1);
+	strlen = ft_strlen(str);
+	ptr = ft_calloc(strlen + 1, sizeof(char));
 	if (ptr == NULL)
 		return (NULL);
-	while (i < len)
+	while (i < strlen)
 	{
 		ptr[i] = func(i, str[i]);
 		i++;
 	}
-	ptr[len] = '\0';
 	return (ptr);
 }

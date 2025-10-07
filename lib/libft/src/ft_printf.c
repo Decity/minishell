@@ -6,7 +6,7 @@
 /*   By: dbakker <dbakker@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/06 16:57:51 by dbakker           #+#    #+#             */
-/*   Updated: 2025/10/06 22:20:22 by dbakker          ###   ########.fr       */
+/*   Updated: 2025/10/07 11:56:19 by dbakker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,17 +18,17 @@ static int32_t	ft_conversions(char specifier, va_list args)
 
 	i = 1;
 	if (specifier == 'c')
-		i = ft_putchar((char)va_arg(args, int));
+		i = ft_putchar(va_arg(args, int));
 	else if (specifier == 's')
-		i = ft_putstr((char *)va_arg(args, char *));
+		i = ft_putstr(va_arg(args, char *));
 	else if (specifier == 'p')
-		i = ft_putptr((uintptr_t)va_arg(args, uintptr_t));
+		i = ft_putptr(va_arg(args, uintptr_t));
 	else if (specifier == 'i' || specifier == 'd')
-		i = ft_putnum((int32_t)va_arg(args, int32_t));
+		i = ft_putnum(va_arg(args, int32_t));
 	else if (specifier == 'u')
-		i = ft_putunum((uint32_t)va_arg(args, uint32_t));
+		i = ft_putunum(va_arg(args, uint32_t));
 	else if (specifier == 'x' || specifier == 'X')
-		i = ft_puthex((uint32_t)va_arg(args, uint32_t), specifier);
+		i = ft_puthex(va_arg(args, uint32_t), specifier);
 	else if (specifier == '%')
 		write(1, "%", 1);
 	return (i);
@@ -65,7 +65,7 @@ int32_t	ft_printf(const char *format, ...)
 	i = 0;
 	string_length = 0;
 	if (format == NULL)
-		return (-1);
+		return (ft_putstr(format), -1);
 	va_start(args, format);
 	while (format[i])
 	{

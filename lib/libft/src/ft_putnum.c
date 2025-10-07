@@ -6,7 +6,7 @@
 /*   By: dbakker <dbakker@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/08 10:05:49 by dbakker           #+#    #+#             */
-/*   Updated: 2025/10/06 22:37:13 by dbakker          ###   ########.fr       */
+/*   Updated: 2025/10/07 12:15:33 by dbakker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,16 +21,17 @@
  */
 int32_t	ft_putnum(int32_t num)
 {
-	static const char	s_int32_min[] = "-2147483648";
-	int32_t				digit = 11;
-	int32_t				write_size;
-	char				array[11];
-	bool				is_negative;
+	int32_t	position;
+	int32_t	writesize;
+	char	array[INT32_LENGTH];
+	bool	is_negative;
 
+	position = INT32_LENGTH;
+	is_negative = false;
 	if (num < 0)
 	{
 		if (num == INT32_MIN)
-			return (write(STDOUT_FILENO, s_int32_min, sizeof(s_int32_min) - 1));
+			return (ft_putstr(S_INT32_MIN));
 		ft_putchar('-');
 		num = -num;
 		is_negative = true;
@@ -39,27 +40,27 @@ int32_t	ft_putnum(int32_t num)
 		return (ft_putchar('0'));
 	while (num != 0)
 	{
-		array[--digit] = num % 10 + '0';
+		array[--position] = num % 10 + '0';
 		num /= 10;
 	}
-	write_size = write(STDOUT_FILENO, &array[digit], 11 - digit);
-	return (write_size + is_negative);
+	writesize = write(STDOUT_FILENO, &array[position], INT32_LENGTH - position);
+	return (writesize + is_negative);
 }
 
 int32_t	ft_putunum(uint32_t num)
 {
-	static const char	decimal[] = "0123456789";
-	char				array[11];
-	int32_t				write_size;
-	size_t				position = 11;
+	char				array[INT32_LENGTH];
+	int32_t				writesize;
+	size_t				position;
 
+	position = INT32_LENGTH;
 	if (num == 0)
 		return (ft_putchar('0'));
 	while (num != 0)
 	{
-		array[--position] = decimal[num % 10];
-		num /= 10;
+		array[--position] = DECIMAL[num % BASE_10];
+		num /= BASE_10;
 	}
-	write_size = write(STDOUT_FILENO, &array[position], 11 - position);
-	return (write_size);
+	writesize = write(STDOUT_FILENO, &array[position], INT32_LENGTH - position);
+	return (writesize);
 }

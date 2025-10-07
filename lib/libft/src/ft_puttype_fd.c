@@ -6,10 +6,11 @@
 /*   By: dbakker <dbakker@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/25 14:11:35 by dbakker           #+#    #+#             */
-/*   Updated: 2025/10/06 22:20:15 by dbakker          ###   ########.fr       */
+/*   Updated: 2025/10/07 12:25:01 by dbakker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "ft_printf.h"
 #include "libft.h"
 
 /**
@@ -34,27 +35,39 @@ void	ft_putstr_fd(char *str, int fd)
  */
 void	ft_putendl_fd(char *str, int fd)
 {
+	static const char	newline[] = "\n";
+
 	write(fd, str, ft_strlen(str));
-	write(fd, "\n", 1);
+	write(fd, newline, sizeof(newline) - 1);
 }
 
 /**
  * @brief Writes integer @p num to the specified file descriptor @p fd
  */
-void	ft_putnum_fd(int num, int fd)
+void	ft_putnum_fd(int32_t num, int fd)
 {
-	if (num == -2147483648)
-	{
-		write(fd, "-2147483648", 11);
-		return ;
-	}
+	int32_t				digit;
+	char				array[INT32_LENGTH];
+	bool				is_negative;
+
+	digit = INT32_LENGTH;
+	is_negative = false;
 	if (num < 0)
 	{
-		write(fd, "-", 1);
+		if (num == INT32_MIN)
+		{
+			ft_putstr_fd(S_INT32_MIN, fd);
+			return ;
+		}
+		ft_putchar('-');
 		num = -num;
+		is_negative = true;
 	}
-	if (num >= 10)
-		ft_putnum_fd(num / 10, fd);
-	num = num % 10 + '0';
-	write(fd, &num, 1);
+	if (num == 0)
+		ft_putchar('0');
+	while (num != 0)
+	{
+		array[--digit] = num % BASE_10 + '0';
+		num /= BASE_10;
+	}
 }

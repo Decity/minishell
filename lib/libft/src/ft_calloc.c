@@ -6,7 +6,7 @@
 /*   By: dbakker <dbakker@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 10:39:19 by dbakker           #+#    #+#             */
-/*   Updated: 2025/10/06 16:47:26 by dbakker          ###   ########.fr       */
+/*   Updated: 2025/10/07 10:20:05 by dbakker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,8 @@
 /**
  * @brief Allocate @p `num` times @p `size` bytes of memory.
  *
- * If @p `num` or @p `size` is 0, it will instead return a unique pointer value that can
- * be freed later.
+ * If @p `num` or @p `size` is 0, it will instead return a unique pointer value
+ * that can be freed later.
  *
  * @param[in]	num		Number of members.
  * @param[in]	size	Size of each member

@@ -6,7 +6,7 @@
 /*   By: dbakker <dbakker@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 10:48:56 by dbakker           #+#    #+#             */
-/*   Updated: 2025/10/06 16:47:26 by dbakker          ###   ########.fr       */
+/*   Updated: 2025/10/07 14:34:40 by dbakker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,12 +23,27 @@
  */
 char	*ft_strdup(const char *str)
 {
-	size_t	slen;
-	char	*sdup;
+	char	*ptr;
+	size_t	strlen;
 
-	slen = ft_strlen(str) + 1;
-	sdup = malloc(slen);
-	if (sdup == NULL)
+	strlen = ft_strlen(str);
+	ptr = ft_calloc(strlen + 1, sizeof(char));
+	if (ptr == NULL)
 		return (NULL);
-	return (ft_memcpy(sdup, str, slen));
+	return (ft_memcpy(ptr, str, strlen));
+}
+
+char	*ft_strndup(const char *str, size_t num)
+{
+	char	*ptr;
+	size_t	strlen;
+
+	strlen = ft_strlen(str);
+	if (ft_strlen(str) < num)
+		ptr = ft_calloc(strlen + 1, sizeof(char));
+	else
+		ptr = ft_calloc(num + 1, sizeof(char));
+	if (ptr == NULL)
+		return (NULL);
+	return (ft_memcpy(ptr, str, num));
 }

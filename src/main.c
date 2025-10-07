@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: elie <elie@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: dbakker <dbakker@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/03 15:32:47 by elie              #+#    #+#             */
-/*   Updated: 2025/10/03 19:07:27 by elie             ###   ########.fr       */
+/*   Updated: 2025/10/07 15:09:22 by dbakker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,9 @@ int	main(int argc, char **argv)
 	extern char **environ;
 
 	ft_bzero(&data, sizeof(data));
+	char dest[100] = "Hello";
+	char *src = " World";
+	printf("%i%s\n", ft_strlcat(dest, src, 4), dest);
 	data.envp = environ;
 	while (42)
 	{

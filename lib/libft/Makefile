@@ -41,7 +41,6 @@ SRCS = \
 	ft_strlc.c \
 	ft_strlen.c \
 	ft_strncmp.c \
-	ft_strndup.c \
 	ft_strnstr.c \
 	ft_strtrim.c \
 	ft_substr.c \

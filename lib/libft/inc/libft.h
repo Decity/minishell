@@ -6,7 +6,7 @@
 /*   By: dbakker <dbakker@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/22 12:24:41 by dbakker           #+#    #+#             */
-/*   Updated: 2025/10/06 22:28:45 by dbakker          ###   ########.fr       */
+/*   Updated: 2025/10/07 15:04:46 by dbakker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,8 @@
 # include <stdint.h>
 # include <limits.h>
 
+size_t	ft_strnlen(const char *str, size_t maxlen);
+void	ft_free2d(void **ptr, size_t size);
 size_t	ft_intlen(int32_t number);
 char	**copy_array(char **array);
 void	free_and_null(char **str);

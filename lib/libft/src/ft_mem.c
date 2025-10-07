@@ -6,7 +6,7 @@
 /*   By: dbakker <dbakker@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/22 13:27:22 by dbakker           #+#    #+#             */
-/*   Updated: 2025/10/06 22:36:32 by dbakker          ###   ########.fr       */
+/*   Updated: 2025/10/07 12:34:15 by dbakker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,19 +48,20 @@ void	*ft_memchr(const void *ptr, int character, size_t size)
  */
 int32_t	ft_memcmp(const void *ptr1, const void *ptr2, size_t num)
 {
-	size_t	i = 0;
+	size_t	i;
 
+	i = 0;
 	if (num == 0)
 	{
 		return (0);
 	}
-	while (((const uint8_t *)ptr1)[i] == ((const uint8_t *)ptr2)[i] && --num > 0)
+	while (((const uint8_t *)ptr1)[i] == ((const uint8_t *)ptr2)[i]
+	&& --num > 0)
 	{
 		i++;
 	}
 	return (((uint8_t *)ptr1)[i] - ((uint8_t *)ptr2)[i]);
 }
-
 
 /**
  * @brief Copy @p `num` bytes pointed from @p `src` to @p `dest`.
@@ -123,7 +124,7 @@ void	*ft_memset(void *ptr, int32_t character, size_t num)
 	i = 0;
 	while (i < num)
 	{
-		((uint8_t *)ptr)[i] = character;
+		((uint8_t *)ptr)[i++] = character;
 	}
 	return (ptr);
 }

@@ -6,7 +6,7 @@
 /*   By: dbakker <dbakker@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 14:38:07 by dbakker           #+#    #+#             */
-/*   Updated: 2025/10/06 17:17:26 by dbakker          ###   ########.fr       */
+/*   Updated: 2025/10/07 10:21:22 by dbakker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@
  *
  * @warning	The caller owns free() when done.
  */
-char	*ft_strjoin(const char *dest, const char* src)
+char	*ft_strjoin(const char *dest, const char *src)
 {
 	char	*str;
 	size_t	srclen;

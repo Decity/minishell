@@ -6,7 +6,7 @@
 /*   By: dbakker <dbakker@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/02 12:02:01 by ebelle            #+#    #+#             */
-/*   Updated: 2025/10/06 17:09:01 by dbakker          ###   ########.fr       */
+/*   Updated: 2025/10/07 14:19:19 by dbakker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,12 @@ void	execute(t_data *data)
 		printf("=== execute_command() ===\n\n");
 
 	path = get_executable_path(data->command->arguments[0]);
+	if (path == NULL)
+	{
+		printf("NULL\n");
+		return ;
+	}
+	printf("%s\n", path);
 	pid = fork();
 	if (pid == 0)
 	{

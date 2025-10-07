@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: elie <elie@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: dbakker <dbakker@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/30 15:08:30 by ebelle            #+#    #+#             */
-/*   Updated: 2025/10/03 15:48:06 by elie             ###   ########.fr       */
+/*   Updated: 2025/10/07 11:50:05 by dbakker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,8 @@
 
 // headers
 # include "../lib/libft/inc/libft.h"
+# include "../lib/libft/inc/ft_printf.h"
+# include "../lib/libft/inc/get_next_line.h"
 # include "structs.h"
 # include "definitions.h"
 

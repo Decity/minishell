@@ -6,7 +6,7 @@
 /*   By: dbakker <dbakker@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/22 13:48:26 by dbakker           #+#    #+#             */
-/*   Updated: 2025/10/06 16:47:26 by dbakker          ###   ########.fr       */
+/*   Updated: 2025/10/07 14:52:35 by dbakker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,16 +24,17 @@
  *
  * @note	The terminating null byte is considered part of the string.
  */
-char	*ft_strchr(const char *str, int c)
+char	*ft_strchr(const char *str, int character)
 {
-	while (*str != '\0')
-	{
-		if (*str == (unsigned char)c)
-			return ((char *)str);
-		str++;
-	}
-	if (*str == (unsigned char)c)
-		return ((char *)str);
+	size_t	i;
+	char	*cpystr;
+
+	i = 0;
+	cpystr = (char *)str;
+	while (cpystr[i] != '\0' && cpystr[i] != character)
+		i++;
+	if (cpystr[i] == character)
+		return (cpystr + i);
 	return (NULL);
 }
 
@@ -51,16 +52,18 @@ char	*ft_strchr(const char *str, int c)
  */
 char	*ft_strrchr(const char *str, int c)
 {
-	const char	*strs;
+	const char	*cpystr;
+	size_t	i;
 
-	strs = NULL;
-	while (*str)
+	cpystr = NULL;
+	i = 0;
+	while (str[i])
 	{
-		if (*str == (unsigned char)c)
-			strs = str;
-		str++;
+		if (str[i] == (unsigned char)c)
+			cpystr = &str[i];
+		i++;
 	}
-	if (*str == (unsigned char)c)
-		return ((char *)str);
-	return ((char *)strs);
+	if (str[i] == (unsigned char)c)
+		return ((char *)str + i);
+	return ((char *)cpystr);
 }
