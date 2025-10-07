@@ -6,7 +6,7 @@
 /*   By: elie <elie@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/03 15:32:47 by elie              #+#    #+#             */
-/*   Updated: 2025/10/07 11:25:20 by elie             ###   ########.fr       */
+/*   Updated: 2025/10/07 17:52:46 by elie             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,8 @@ int	main(int argc, char **argv)
 	t_data	data;
 	extern char **environ;
 
+	(void)argc;
+	(void)argv;
 	ft_bzero(&data, sizeof(data));
 	data.envp = environ;
 	while (42)
