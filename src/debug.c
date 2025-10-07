@@ -36,5 +36,22 @@ void	debug(t_data *data)
 	else
 		printf("NULL\n");
 
+	// Print command arguments
+	printf("Command Arguments: ");
+	if (data->command && data->command->arguments)
+	{
+		printf("[\n");
+		i = 0;
+		while (data->command->arguments[i])
+		{
+			printf("  [%d]: '%s'\n", i, data->command->arguments[i]);
+			i++;
+		}
+		printf("]\n");
+		printf("Total arguments: %d\n", i);
+	}
+	else
+		printf("NULL\n");
+
 	printf("=== END DEBUG ===\n");
 }
