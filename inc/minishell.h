@@ -6,7 +6,7 @@
 /*   By: elie <elie@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/30 15:08:30 by ebelle            #+#    #+#             */
-/*   Updated: 2025/10/07 17:24:28 by elie             ###   ########.fr       */
+/*   Updated: 2025/10/08 18:18:38 by elie             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@
 // Shell operations
 void	set_tokens(t_data *data);
 void	set_commands(t_data *data);
-void	set_shell_expansions(t_data *data);
+void	apply_shell_expansions(t_data *data);
 void	set_redirections(t_data *data);
 void	execute(t_data *data);
 
@@ -37,13 +37,15 @@ void	set_tokens(t_data *data);
 bool	is_quote(int c);
 int		count_tokens(char *input);
 
+
 // Shell expansion utilities
-bool	is_valid_parameter(const char *str);
 char	*get_parameter_name(const char *str);
 char	*get_parameter_var(const char *str);
-size_t	do_the_actual_expansion(char **str);
+
+size_t	expand_single_variable(char **str, size_t index);
 void	expand_tilde(char **str);
-void	expand_env_parameter(char **str);
+void	expand_env_variables(char **str);
+
 void	remove_quotation(char **str);
 
 // TEMP, MOVE TO LIBFT
