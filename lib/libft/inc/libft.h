@@ -6,7 +6,7 @@
 /*   By: dbakker <dbakker@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/22 12:24:41 by dbakker           #+#    #+#             */
-/*   Updated: 2025/10/07 15:04:46 by dbakker          ###   ########.fr       */
+/*   Updated: 2025/10/08 23:05:06 by dbakker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,48 +19,64 @@
 # include <stdint.h>
 # include <limits.h>
 
-size_t	ft_strnlen(const char *str, size_t maxlen);
-void	ft_free2d(void **ptr, size_t size);
+int32_t	ft_atoi(const char *str);
+
+void	ft_bzero(void *buffer, size_t num);
+
+void	*ft_calloc(size_t num, size_t size);
+
 size_t	ft_intlen(int32_t number);
-char	**copy_array(char **array);
-void	free_and_null(char **str);
-void	free_array(char ***array);
-int		ft_atoi(const char *nptr);
-void	ft_bzero(void *s, size_t n);
-void	*ft_calloc(size_t nmemb, size_t size);
+
 bool	ft_isalpha(int c);
 bool	ft_isascii(int c);
 bool	ft_isdigit(int c);
 bool	ft_isprint(int c);
 bool	ft_isalnum(int c);
+
 bool	ft_isspace(int c);
-char	*ft_itoa(int n);
-void	*ft_memchr(const void *s, int c, size_t n);
-int		ft_memcmp(const void *s1, const void *s2, size_t n);
-void	*ft_memcpy(void *dest, const void *src, size_t n);
-void	*ft_memmove(void *dest, const void *src, size_t n);
-void	*ft_memset(void *s, int c, size_t n);
-void	ft_putchar_fd(char c, int fd);
-void	ft_putendl_fd(char *s, int fd);
-void	ft_putnum_fd(int n, int fd);
-void	ft_putstr_fd(char *s, int fd);
+
+char	*ft_itoa(int32_t num);
+
+void	*ft_memchr(const void *ptr, int character, size_t size);
+int32_t	ft_memcmp(const void *ptr1, const void *ptr2, size_t num);
+void	*ft_memcpy(void *dest, const void *src, size_t num);
+void	*ft_memmove(void *dest, const void *src, size_t num);
+void	*ft_memset(void *ptr, int character, size_t num);
+
+int32_t	ft_putchar_fd(char character, int fd);
+int32_t	ft_putstr_fd(const char *str, int fd);
+int32_t	ft_putendl_fd(const char *str, int fd);
+int32_t	ft_putnum_fd(int32_t num, int fd);
+
+char	*ft_strdup(const char *str);
+char	*ft_strndup(const char *str, size_t num);
+
+char	*ft_strchr(const char *str, int character);
+char	*ft_strrchr(const char *str, int character);
+
+void	ft_striteri(char *str, void (*func)(uint32_t, char*));
+char	*ft_strmapi(const char *str, char (*func)(uint32_t, char));
+
+char	*ft_strjoin(const char *dest, const char *src);
+
+size_t	ft_strlcpy(char *dest, const char *src, size_t num);
+size_t	ft_strlcat(char *dest, const char *src, size_t num);
+
+size_t	ft_strlen(const char *str);
+size_t	ft_strnlen(const char *str, size_t maxlen);
+
+void	ft_free2d(void **ptr, size_t size);
+char	**copy_array(char **array);
+void	free_and_null(char **str);
+void	free_array(char ***array);
+
 char	**ft_split(char const *s, char c);
-char	*ft_strchr(const char *s, int c);
-char	*ft_strdup(const char *s);
-void	ft_striteri(char *s, void (*f)(unsigned int, char*));
-char	*ft_strjoin(char const *s1, char const *s2);
-size_t	ft_strlcat(char *dst, const char *src, size_t size);
-size_t	ft_strlcpy(char *dst, const char *src, size_t size);
-size_t	ft_strlen(const char *s);
-char	*ft_strmapi(char const *s, char (*f)(unsigned int, char));
 int		ft_strncmp(const char *s1, const char *s2, size_t n);
 char	*ft_strnstr(const char *big, const char *little, size_t len);
-char	*ft_strrchr(const char *s, int c);
 char	*ft_strtrim(char const *s1, char const *set);
 char	*ft_substr(char const *s, unsigned int start, size_t len);
 int		ft_tolower(int character);
 int		ft_toupper(int character);
-char	*ft_strndup(const char *s, size_t len);
 
 typedef struct s_list
 {

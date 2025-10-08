@@ -6,7 +6,7 @@
 /*   By: dbakker <dbakker@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/06 22:13:09 by dbakker           #+#    #+#             */
-/*   Updated: 2025/10/06 22:16:56 by dbakker          ###   ########.fr       */
+/*   Updated: 2025/10/08 16:58:59 by dbakker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,11 @@
 /**
  * @brief Count the amount of digits in @p `number`.
  *
- * @param[in] number The amount of digits to count.
+ * This includes the negative sign character.
  *
- * @return The length of @p `number`, including the sign character if negative.
+ * @param[in] number The number to count the digits.
+ *
+ * @return The length of @p `number`.
  */
 size_t	ft_intlen(int32_t number)
 {

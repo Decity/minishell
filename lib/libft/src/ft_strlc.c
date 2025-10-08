@@ -6,20 +6,21 @@
 /*   By: dbakker <dbakker@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 10:36:10 by dbakker           #+#    #+#             */
-/*   Updated: 2025/10/07 15:29:12 by dbakker          ###   ########.fr       */
+/*   Updated: 2025/10/08 23:02:58 by dbakker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
 /**
- * @brief	Copy @p src to @p dest by @p size bytes and null terminates @p dest.
+ * @brief Copy @p `num` - 1 bytes from @p `src` to @p `dest` and null
+ * @brief terminate the result.
  *
- * @param[in,out]	dest	String to copy to.
- * @param[in]		src		NUL-terminated string to copy from.
- * @param[in]		size	Amount to copy in bytes.
+ * @param[out]	dest	String to copy to.
+ * @param[in]	src		Null terminated string to copy from.
+ * @param[in]	size	Amount in bytes to copy.
  *
- * @returns	The length of the string @p src.
+ * @return The length of @p `src`.
  */
 size_t	ft_strlcpy(char *dest, const char *src, size_t num)
 {
@@ -32,7 +33,7 @@ size_t	ft_strlcpy(char *dest, const char *src, size_t num)
 		return (srclen);
 	}
 	i = 0;
-	while (i < num - 1 && src[i] != '\0')
+	while (src[i] && i < num - 1)
 	{
 		dest[i] = src[i];
 		i++;
@@ -42,14 +43,14 @@ size_t	ft_strlcpy(char *dest, const char *src, size_t num)
 }
 
 /**
- * @brief	Append string @p src to @p dest by size bytes with size-bound safety.
+ * @brief Append @p `num` - 1 bytes of @p `str` to @p `dest`.
  *
- * @param[in,out]	dest	Destination buffer. Must be null terminated.
- * @param[in]		src		String to append.
- * @param[in]		size	Total size of the destination buffer.
+ * @param[in,out]	dest	Null terminated string to append to.
+ * @param[in]		src		Null terminated string to copy from.
+ * @param[in]		size	Total byte size of @p `dest`.
  *
- * @returns	The total length of the string it tried to create and the
- * 			concatented result.
+ * @return The total length of the string it tried to create and the
+ * @return concatented result.
  */
 size_t	ft_strlcat(char *dest, const char *src, size_t num)
 {
@@ -61,8 +62,10 @@ size_t	ft_strlcat(char *dest, const char *src, size_t num)
 	srclen = ft_strlen(src);
 	i = 0;
 	if (destlen == num)
-		return (srclen + num);
-	while (i < num - 1 && src[i])
+	{
+		return (num + srclen);
+	}
+	while (src[i] && destlen + i < num - 1)
 	{
 		dest[destlen + i] = src[i];
 		i++;

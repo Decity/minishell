@@ -6,7 +6,7 @@
 /*   By: dbakker <dbakker@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/22 13:27:22 by dbakker           #+#    #+#             */
-/*   Updated: 2025/10/07 12:34:15 by dbakker          ###   ########.fr       */
+/*   Updated: 2025/10/08 22:06:44 by dbakker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,22 +15,24 @@
 /**
  * @brief	Find the first matching instance of @p `character` in @p `ptr`.
  *
- * @param[in]	ptr			Memory area to read.
+ * @param[in]	ptr			Pointer to the memory area.
  * @param[in]	character	Instance to find.
- * @param[in]	size		Characters to read in bytes.
+ * @param[in]	size		Amount to read in bytes.
  *
- * @returns	Pointer to the matching byte, or NULL if it does not occur.
+ * @returns	Pointer to the matching byte, or `NULL` if it does not occur.
  */
 void	*ft_memchr(const void *ptr, int character, size_t size)
 {
-	unsigned char	*strp;
+	size_t	i;
 
-	strp = (unsigned char *)ptr;
-	while (size-- > 0)
+	i = 0;
+	while (i < size)
 	{
-		if (*strp == (unsigned char)character)
-			return (strp);
-		strp++;
+		if (((uint8_t*)ptr)[i] == (uint8_t)character)
+		{
+			return ((void *)ptr + i);
+		}
+		i++;
 	}
 	return (NULL);
 }
@@ -55,8 +57,8 @@ int32_t	ft_memcmp(const void *ptr1, const void *ptr2, size_t num)
 	{
 		return (0);
 	}
-	while (((const uint8_t *)ptr1)[i] == ((const uint8_t *)ptr2)[i]
-	&& --num > 0)
+	num--;
+	while (((const uint8_t *)ptr1)[i] == ((const uint8_t *)ptr2)[i] && i < num)
 	{
 		i++;
 	}
@@ -72,9 +74,7 @@ int32_t	ft_memcmp(const void *ptr1, const void *ptr2, size_t num)
  *
  * @return Pointer to @p `dest`.
  *
- * @note Behaviour is undefined if the copying happens between memory areas
- * @note that overlap.
- * @note Use ft_memmove if this is not intended.
+ * @note Beware of overlapping memory areas.
  */
 void	*ft_memcpy(void *dest, const void *src, size_t num)
 {
@@ -96,14 +96,21 @@ void	*ft_memcpy(void *dest, const void *src, size_t num)
  * @param[in]	src		Pointer to the source memory area.
  * @param[in]	num		Amount of bytes to copy from @p `src`.
  *
- * @return Pointer to @p dest.
+ * @return Pointer to @p `dest`.
  */
 void	*ft_memmove(void *dest, const void *src, size_t num)
 {
-	while (num > 0)
+	if (((uint8_t *)dest) < ((const uint8_t *)src))
 	{
-		((uint8_t *)dest)[num] = ((const uint8_t *)src)[num];
-		num--;
+		ft_memcpy(dest, src, num);
+	}
+	else
+	{
+		while (num > 0)
+		{
+			num--;
+			((uint8_t *)dest)[num] = ((const uint8_t *)src)[num];
+		}
 	}
 	return (dest);
 }
@@ -115,16 +122,17 @@ void	*ft_memmove(void *dest, const void *src, size_t num)
  * @param[in]	character	Character to fill @p `ptr` with.
  * @param[in]	num			Amount of @p `character` to write.
  *
- * @return Pointer to the ptr filled with @p `character` characters.
+ * @return Pointer to @p `ptr` with written @p `characters`.
  */
-void	*ft_memset(void *ptr, int32_t character, size_t num)
+void	*ft_memset(void *ptr, int character, size_t num)
 {
 	size_t	i;
 
 	i = 0;
 	while (i < num)
 	{
-		((uint8_t *)ptr)[i++] = character;
+		((uint8_t *)ptr)[i] = character;
+		i++;
 	}
 	return (ptr);
 }

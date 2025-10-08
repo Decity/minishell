@@ -6,7 +6,7 @@
 /*   By: dbakker <dbakker@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 10:39:19 by dbakker           #+#    #+#             */
-/*   Updated: 2025/10/07 10:20:05 by dbakker          ###   ########.fr       */
+/*   Updated: 2025/10/08 22:07:23 by dbakker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,21 +19,25 @@
  * that can be freed later.
  *
  * @param[in]	num		Number of members.
- * @param[in]	size	Size of each member
+ * @param[in]	size	Size of each member.
  *
- * @return Pointer to the allocated memory, or NULL on failure.
+ * @return Pointer to the allocated memory, or `NULL` on failure.
  *
  * @warning Caller owns free().
  */
-void	*ft_calloc(size_t nmemb, size_t size)
+void	*ft_calloc(size_t num, size_t size)
 {
 	void	*ptr;
 
-	if (nmemb == 0 || size == 0)
+	if (num == 0 || size == 0)
+	{
 		return (malloc(0));
-	ptr = malloc(nmemb * size);
-	if (ptr == NULL || size > SIZE_MAX / nmemb)
+	}
+	ptr = malloc(num * size);
+	if (ptr == NULL || size > SIZE_MAX / num)
+	{
 		return (NULL);
-	ft_bzero(ptr, nmemb * size);
+	}
+	ft_bzero(ptr, num * size);
 	return (ptr);
 }

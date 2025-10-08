@@ -6,7 +6,7 @@
 /*   By: dbakker <dbakker@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/22 15:37:29 by dbakker           #+#    #+#             */
-/*   Updated: 2025/10/06 16:47:26 by dbakker          ###   ########.fr       */
+/*   Updated: 2025/10/08 22:06:49 by dbakker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@
  * @param[in]		len		Amount to read in bytes.
  *
  * @returns	Pointer to the first character of the first occurrence of
- * 			@p little, NULL if there is no occurrence, or pointer to @p big if
+ * 			@p little, `NULL` if there is no occurrence, or pointer to @p big if
  * 			@p little is an empty string.
  */
 char	*ft_strnstr(const char *big, const char *little, size_t len)

@@ -6,7 +6,7 @@
 /*   By: dbakker <dbakker@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/06 16:57:51 by dbakker           #+#    #+#             */
-/*   Updated: 2025/10/07 11:56:19 by dbakker          ###   ########.fr       */
+/*   Updated: 2025/10/08 18:56:05 by dbakker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,10 +27,12 @@ static int32_t	ft_conversions(char specifier, va_list args)
 		i = ft_putnum(va_arg(args, int32_t));
 	else if (specifier == 'u')
 		i = ft_putunum(va_arg(args, uint32_t));
-	else if (specifier == 'x' || specifier == 'X')
-		i = ft_puthex(va_arg(args, uint32_t), specifier);
+	else if (specifier == 'x')
+		i = ft_puthex_lower(va_arg(args, uint32_t));
+	else if (specifier == 'X')
+		i = ft_puthex_upper(va_arg(args, uint32_t));
 	else if (specifier == '%')
-		write(1, "%", 1);
+		ft_putchar('%');
 	return (i);
 }
 

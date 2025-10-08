@@ -35,7 +35,7 @@ SRCS = \
 	ft_puttype_fd.c \
 	ft_split.c \
 	ft_strdup.c \
-	ft_strfnd.c \
+	ft_strfind.c \
 	ft_strfunc.c \
 	ft_strjoin.c \
 	ft_strlc.c \

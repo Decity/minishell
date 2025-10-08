@@ -6,18 +6,18 @@
 /*   By: dbakker <dbakker@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/28 10:09:08 by dbakker           #+#    #+#             */
-/*   Updated: 2025/10/06 22:17:19 by dbakker          ###   ########.fr       */
+/*   Updated: 2025/10/08 22:07:27 by dbakker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
 /**
- * @brief Convert a 32-bit integer to a string.
+ * @brief Convert a signed 32-bit integer to a string.
  *
  * @param[in] num The integer to convert.
  *
- * @return The converted string, or NULL on failure.
+ * @return The converted string, or `NULL` on failure.
  *
  * @warning Caller owns free().
  */

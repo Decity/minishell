@@ -6,7 +6,7 @@
 /*   By: dbakker <dbakker@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/22 15:52:08 by dbakker           #+#    #+#             */
-/*   Updated: 2025/10/06 16:46:56 by dbakker          ###   ########.fr       */
+/*   Updated: 2025/10/08 16:56:46 by dbakker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,6 @@
  * @param[in] str The String to convert.
  *
  * @return The converted value.
- *
- * @note ft_atoi() does not detect overflow.
  */
 int32_t	ft_atoi(const char *str)
 {

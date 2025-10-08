@@ -6,56 +6,98 @@
 /*   By: dbakker <dbakker@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/08 15:33:28 by dbakker           #+#    #+#             */
-/*   Updated: 2025/10/07 12:11:08 by dbakker          ###   ########.fr       */
+/*   Updated: 2025/10/08 19:54:05 by dbakker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-static int32_t	ft_int_to_hex(uint32_t hex, char *base)
-{
-	size_t	i;
-	int32_t	string_length;
-	char	array[8];
-
-	i = 0;
-	while (hex != 0)
-	{
-		array[i++] = base[hex % BASE_16];
-		hex /= BASE_16;
-	}
-	string_length = i;
-	while (i--)
-		write(STDOUT_FILENO, &array[i], 1);
-	return (string_length);
-}
-
+/**
+ * @brief Write @p `character` to the standard output.
+ *
+ * @param[in] character Character to write.
+ *
+ * @return The size of @p `character` written.
+ */
 int32_t	ft_putchar(int character)
 {
-	return (write(STDOUT_FILENO, &character, 1));
+	return (write(STDOUT_FILENO, &character, sizeof(char)));
 }
 
+/**
+ * @brief Write @p `str` to the standard output.
+ *
+ * @param[in] str String to write.
+ *
+ * @return The length of @p `str`, or `6` if @p `str` is `NULL`.
+ */
 int32_t	ft_putstr(const char *str)
 {
 	static const char	null_str[] = "(null)";
 
 	if (str == NULL)
+	{
 		return (write(STDOUT_FILENO, null_str, sizeof(null_str) - 1));
+	}
 	return (write(STDOUT_FILENO, str, ft_strlen(str)));
 }
 
-int32_t	ft_puthex(uint32_t hex, char specifier)
+/**
+ * @brief Write @p `num` in its uppercase hexadecimal form to the standard
+ * @brief output.
+ *
+ * @param[in] num Unsigned 32-bit integer to write in uppercase hexadecimal.
+ *
+ * @return The length of @p `num` its hexadecimal form.
+ */
+int32_t	ft_puthex_upper(uint32_t num)
 {
-	int32_t	string_length;
+	size_t	position;
+	int32_t	write_size;
+	char	array[HEX_LENGTH];
 
-	string_length = 1;
-	if (hex == 0)
+	position = HEX_LENGTH;
+	if (num == 0)
+	{
 		return (ft_putchar('0'));
-	if (specifier == 'x')
-		string_length = ft_int_to_hex(hex, HEX_LOWER);
-	else if (specifier == 'X')
-		string_length = ft_int_to_hex(hex, HEX_UPPER);
-	return (string_length);
+	}
+	while (num != 0)
+	{
+		array[--position] = HEX_UPPER[num % BASE_16];
+		num /= BASE_16;
+	}
+	array[HEX_LENGTH] = '\0';
+	write_size = ft_putstr(&array[position]);
+	return (write_size);
+}
+
+/**
+ * @brief Write @p `num` in its lowercase hexadecimal form to the standard
+ * @brief output.
+ *
+ * @param[in] num Unsigned 32-bit integer to write in lowercase hexadecimal.
+ *
+ * @return The length of @p `num` its hexadecimal form.
+ */
+int32_t	ft_puthex_lower(uint32_t num)
+{
+	size_t	position;
+	int32_t	write_size;
+	char	array[HEX_LENGTH];
+
+	position = HEX_LENGTH;
+	if (num == 0)
+	{
+		return (ft_putchar('0'));
+	}
+	while (num != 0)
+	{
+		array[--position] = HEX_LOWER[num % BASE_16];
+		num /= BASE_16;
+	}
+	array[HEX_LENGTH] = '\0';
+	write_size = ft_putstr(&array[position]);
+	return (write_size);
 }
 
 /**
@@ -63,20 +105,21 @@ int32_t	ft_puthex(uint32_t hex, char specifier)
  *
  * The alpbabetical characters will be written in lowercase.
  *
- * @param[in]	num	Pointer address to write.
+ * @param[in] num Pointer address to write.
  *
- * @return Length of the written number, or -1 on failure.
+ * @return Length of the pointer address.
  */
 int32_t	ft_putptr(uintptr_t num)
 {
-	int32_t	write_size;
-	size_t	position;
-	char	array[PTR_LENGTH];
+	static const char	nil_str[] = "(nil)";
+	size_t				position;
+	int32_t				write_size;
+	char				array[PTR_LENGTH];
 
 	position = PTR_LENGTH;
 	if ((void *)num == NULL)
 	{
-		return (ft_putstr("(nil)"));
+		return (ft_putstr(nil_str));
 	}
 	if (num == 0)
 	{
@@ -89,6 +132,7 @@ int32_t	ft_putptr(uintptr_t num)
 	}
 	array[--position] = 'x';
 	array[--position] = '0';
-	write_size = write(STDOUT_FILENO, &array[position], PTR_LENGTH - position);
+	array[PTR_LENGTH] = '\0';
+	write_size = ft_putstr(&array[position]);
 	return (write_size);
 }

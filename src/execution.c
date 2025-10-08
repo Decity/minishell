@@ -6,7 +6,7 @@
 /*   By: dbakker <dbakker@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/02 12:02:01 by ebelle            #+#    #+#             */
-/*   Updated: 2025/10/07 14:19:19 by dbakker          ###   ########.fr       */
+/*   Updated: 2025/10/08 22:07:00 by dbakker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@
  *
  * @param[in] exec The binary to find.
  *
- * @return Path to the binary, or NULL if not found.
+ * @return Path to the binary, or `NULL` if not found.
  */
 char	*get_executable_path(const char *exec)
 {
