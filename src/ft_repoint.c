@@ -1,45 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_repoint.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: elie <elie@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/10/03 15:32:47 by elie              #+#    #+#             */
-/*   Updated: 2025/10/08 18:14:03 by elie             ###   ########.fr       */
+/*   Created: 2025/10/07 15:57:34 by elie              #+#    #+#             */
+/*   Updated: 2025/10/07 16:17:44 by elie             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minishell.h"
 
-void	run(t_data *data)
+void	ft_repoint(char **old_str, char *new_str)
 {
-	// Get input
-	data->input = readline("> ");
-
-	set_tokens(data);
-	set_commands(data);
-	apply_shell_expansions(data);
-	// set_redirections(data);
-	if (DEBUG)
-		debug(data);
-	execute(data);
-	// cleanup();
-}
-
-int	main(int argc, char **argv)
-{
-	t_data	data;
-	extern char **environ;
-
-	(void)argc;
-	(void)argv;
-	ft_bzero(&data, sizeof(data));
-	data.envp = environ;
-	while (42)
-	{
-		run(&data);
-	}
-
-	return (0);
+	if (!old_str)
+		return ;
+	if (*old_str)
+		free(*old_str);
+	*old_str = new_str;
 }

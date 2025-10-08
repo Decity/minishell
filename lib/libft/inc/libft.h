@@ -6,7 +6,7 @@
 /*   By: elie <elie@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 12:08:45 by ebelle            #+#    #+#             */
-/*   Updated: 2025/10/03 15:19:48 by elie             ###   ########.fr       */
+/*   Updated: 2025/10/07 12:06:09 by elie             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ char		*ft_itoa(int n);
 /* Chars */
 int			ft_isalnum(int c);
 int			ft_isalpha(int c);
-int			ft_isascii(int c);
+bool		ft_isascii(int c);
 int			ft_isprint(int c);
 int			ft_isdigit(int c);
 
