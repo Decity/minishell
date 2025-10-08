@@ -13,42 +13,42 @@ void	debug(t_data *data)
 	printf("=== DEBUG OUTPUT ===\n");
 
 	// Print input string
-	printf("Input: ");
+	printf("== Input: ");
 	if (data->input)
 		printf("'%s'\n", data->input);
 	else
 		printf("NULL\n");
 
 	// Print tokens array
-	printf("Tokens: ");
+	printf("== Tokens: ");
 	if (data->tokens)
 	{
 		printf("[\n");
 		i = 0;
 		while (data->tokens[i])
 		{
-			printf("  [%d]: '%s'\n", i, data->tokens[i]);
+			printf("=   [%d]: %s\n", i, data->tokens[i]);
 			i++;
 		}
-		printf("]\n");
-		printf("Total tokens: %d\n", i);
+		printf("=  ]\n");
+		printf("== Total tokens: %d\n", i);
 	}
 	else
 		printf("NULL\n");
 
 	// Print command arguments
-	printf("Command Arguments: ");
+	printf("== Command Arguments: ");
 	if (data->command && data->command->arguments)
 	{
 		printf("[\n");
 		i = 0;
 		while (data->command->arguments[i])
 		{
-			printf("  [%d]: '%s'\n", i, data->command->arguments[i]);
+			printf("=   [%d]: %s\n", i, data->command->arguments[i]);
 			i++;
 		}
-		printf("]\n");
-		printf("Total arguments: %d\n", i);
+		printf("=  ]\n");
+		printf("== Total arguments: %d\n", i);
 	}
 	else
 		printf("NULL\n");
