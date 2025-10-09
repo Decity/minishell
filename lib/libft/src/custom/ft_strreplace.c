@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strreplace.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: elie <elie@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: ebelle <ebelle@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/09 10:20:37 by elie              #+#    #+#             */
-/*   Updated: 2025/10/09 10:22:17 by elie             ###   ########.fr       */
+/*   Updated: 2025/10/09 16:17:05 by ebelle           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../inc/minishell.h"
+#include "libft.h"
 
 /**
  * @brief this is where the logic of ft_strreplace is and where the actual replacing happens.

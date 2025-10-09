@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   ft_repoint.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: elie <elie@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: ebelle <ebelle@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/07 15:57:34 by elie              #+#    #+#             */
-/*   Updated: 2025/10/09 10:20:23 by elie             ###   ########.fr       */
+/*   Updated: 2025/10/09 16:16:55 by ebelle           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../inc/minishell.h"
+#include "libft.h"
 
 /**
  * @brief Frees @p `old_str` and assigns the pointer of @p `new_str`. Essentially replacing it.

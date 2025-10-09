@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   shell_expansion.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: elie <elie@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: ebelle <ebelle@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/08 18:09:32 by elie              #+#    #+#             */
-/*   Updated: 2025/10/09 10:13:45 by elie             ###   ########.fr       */
+/*   Updated: 2025/10/09 15:46:46 by ebelle           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,18 +104,21 @@ size_t	expand_single_variable(char **str, size_t index)
 		printf("== expand_single_variable() \n");
 	}
 
+	// $TERM or ${TERM}
 	parameter_var = get_parameter_var(*str + index);
 	if (parameter_var == NULL)
 		return (-1);
 	if (DEBUG)
 		printf("= Parameter_var: %s\n", parameter_var);
 
+	// TERM
 	parameter_name = get_parameter_name(parameter_var);
 	if (parameter_name == NULL)
 		return (free_and_null(&parameter_var), -1);
 	if (DEBUG)
 		printf("= Parameter_name: %s\n", parameter_name);
 
+	// xterm-kitty
 	parameter_value = getenv(parameter_name); // TODO: Replace with own getenv. Can't free system's getenv.
 	if (parameter_value == NULL)
 		return (free_and_null(&parameter_var), free_and_null(&parameter_name), -1);

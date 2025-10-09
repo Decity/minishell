@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dbakker <dbakker@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ebelle <ebelle@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/02 12:02:01 by ebelle            #+#    #+#             */
-/*   Updated: 2025/10/08 22:07:00 by dbakker          ###   ########.fr       */
+/*   Updated: 2025/10/09 16:25:51 by ebelle           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,12 +60,6 @@ void	execute(t_data *data)
 		printf("=== execute_command() ===\n\n");
 
 	path = get_executable_path(data->command->arguments[0]);
-	if (path == NULL)
-	{
-		printf("NULL\n");
-		return ;
-	}
-	printf("%s\n", path);
 	pid = fork();
 	if (pid == 0)
 	{

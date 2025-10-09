@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   ft_count_occurrence.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: elie <elie@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: ebelle <ebelle@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/09 10:20:40 by elie              #+#    #+#             */
-/*   Updated: 2025/10/09 10:20:41 by elie             ###   ########.fr       */
+/*   Updated: 2025/10/09 16:16:34 by ebelle           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../inc/minishell.h"
+#include "libft.h"
 /**
  * @brief Counts  and returns how many time @p `pattern` occurs in @p `base_str`
  *
