@@ -45,6 +45,9 @@ SRCS = \
 	custom/free_and_null.c \
 	custom/free_array.c \
 	custom/ft_intlen.c \
+	custom/ft_count_occurrence.c \
+	custom/ft_repoint.c \
+	custom/ft_strreplace.c \
 
 # Full paths for all source files
 SRC_PATHS = $(addprefix $(SRC_DIR), $(SRCS))

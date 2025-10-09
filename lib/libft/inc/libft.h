@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dbakker <dbakker@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ebelle <ebelle@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/22 12:24:41 by dbakker           #+#    #+#             */
-/*   Updated: 2025/10/09 15:23:22 by dbakker          ###   ########.fr       */
+/*   Updated: 2025/10/09 16:12:54 by ebelle           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -141,4 +141,11 @@ char	*ft_substr(const char *str, uint32_t start, size_t num);
 
 int		ft_tolower(int character);
 int		ft_toupper(int character);
+
+
+// CUSTOM
+
+char	*ft_strreplace(const char *base_str, const char *pattern, const char *replacement);
+void	ft_repoint(char **old_str, char *new_str);
+size_t	ft_count_occurrences(const char *base_str, const char *pattern);
 #endif

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dbakker <dbakker@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ebelle <ebelle@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/30 15:08:30 by ebelle            #+#    #+#             */
-/*   Updated: 2025/10/09 14:23:06 by dbakker          ###   ########.fr       */
+/*   Updated: 2025/10/09 16:10:58 by ebelle           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,11 +49,6 @@ void	expand_tilde(char **str);
 void	expand_env_variables(char **str);
 
 void	remove_quotation(char **str);
-
-// TEMP, MOVE TO LIBFT
-char	*ft_strreplace(const char *base_str, const char *pattern, const char *replacement);
-void	ft_repoint(char **old_str, char *new_str);
-size_t	ft_count_occurrences(const char *base_str, const char *pattern);
 
 // Cleanup
 void	cleanup_data(t_data *data);
