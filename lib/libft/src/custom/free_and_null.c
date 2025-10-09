@@ -1,27 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_putendl_fd.c                                    :+:      :+:    :+:   */
+/*   free_and_null.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ebelle <ebelle@student.42.fr>              +#+  +:+       +#+        */
+/*   By: dbakker <dbakker@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/29 12:07:36 by ebelle            #+#    #+#             */
-/*   Updated: 2025/04/29 15:22:37 by ebelle           ###   ########.fr       */
+/*   Created: 2025/09/18 11:09:47 by elie              #+#    #+#             */
+/*   Updated: 2025/10/09 14:10:00 by dbakker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	ft_putendl_fd(char *s, int fd)
+void	free_and_null(char **str)
 {
-	if (s)
+	if (str == NULL || *str == NULL)
 	{
-		ft_putstr_fd(s, fd);
-		ft_putchar_fd('\n', fd);
+		return ;
 	}
+	free(*str);
+	*str = NULL;
 }
-
-// int main()
-// {
-// 	ft_putendl_fd("123 abcDEF	!@$", 1);
-// }

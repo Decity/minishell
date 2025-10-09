@@ -1,18 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   print_char.c                                       :+:      :+:    :+:   */
+/*   ft_listsize.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: elie <elie@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: dbakker <dbakker@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/09/18 11:20:23 by elie              #+#    #+#             */
-/*   Updated: 2025/09/18 11:20:30 by elie             ###   ########.fr       */
+/*   Created: 2025/04/29 16:00:03 by dbakker           #+#    #+#             */
+/*   Updated: 2025/10/09 13:59:36 by dbakker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_printf.h"
+#include "libft.h"
 
-int	print_char(int c)
+/**
+ * @return Size of the linked list.
+ */
+size_t	ft_listsize(t_list *list)
 {
-	return (write(1, &c, 1));
+	size_t	list_count;
+
+	list_count = 0;
+	while (list)
+	{
+		list_count++;
+		list = list->next;
+	}
+	return (list_count);
 }

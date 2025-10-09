@@ -3,45 +3,39 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strncmp.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ebelle <ebelle@student.42.fr>              +#+  +:+       +#+        */
+/*   By: dbakker <dbakker@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/29 12:08:07 by ebelle            #+#    #+#             */
-/*   Updated: 2025/04/29 12:35:47 by ebelle           ###   ########.fr       */
+/*   Created: 2025/04/22 14:33:33 by dbakker           #+#    #+#             */
+/*   Updated: 2025/10/09 11:04:04 by dbakker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-int	ft_strncmp(const char *s1, const char *s2, size_t n)
+/**
+ * @brief Compare the first @p `num` bytes of @p `str1` and @p `str2`.
+ *
+ * @param[in] str1	First string.
+ * @param[in] str2	Second string.
+ * @param[in] num	Amount of characters to compare.
+ *
+ * @retval 0 if @p `str1` == @p `str2`, or @p `num` is 0.
+ * @retval A positive value if @p `str1` > @p `str2`.
+ * @retval A negative value if @p `str1` < @p `str2`.
+ */
+int32_t	ft_strncmp(const char *str1, const char *str2, size_t num)
 {
 	size_t	i;
 
 	i = 0;
-	while (i < n && (s1[i] || s2[i]))
+	if (num == 0)
 	{
-		if ((unsigned char)s1[i] != (unsigned char)s2[i])
-			return ((unsigned char)s1[i] - (unsigned char)s2[i]);
+		return (0);
+	}
+	num--;
+	while (str1[i] && str2[i] && str1[i] == str2[i] && i < num)
+	{
 		i++;
 	}
-	return (0);
+	return ((uint8_t)str1[i] - (uint8_t)str2[i]);
 }
-/*
-int main()
-{
-    int n;
-    char *tests[] = {"abc", "abd", "aba", "abc", "xyz", "", ""};
-    size_t num_tests = sizeof(tests) / sizeof(tests[0]);
-
-    n = 3;
-    for (size_t i = 0; i < num_tests - 1; i++)
-    {
-        printf("[%s] - [%s]\n", tests[i], tests[i+1]);
-        printf("strncmp:	%i\n", strncmp(tests[i], tests[i+1], n));
-        printf("ft_strncmp:	%i\n\n", ft_strncmp(tests[i], tests[i+1], n));
-			
-		if (strncmp(tests[i], tests[i+1], n) != ft_strncmp(tests[i],
-		 tests[i+1], n))
-			printf("\n\n###oopsie daisy\n\n");
-	}
-}
-*/

@@ -1,47 +1,43 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_atoi.c                                          :+:      :+:    :+:   */
+/*   ft_intlen.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dbakker <dbakker@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/22 15:52:08 by dbakker           #+#    #+#             */
-/*   Updated: 2025/10/08 16:56:46 by dbakker          ###   ########.fr       */
+/*   Created: 2025/10/06 22:13:09 by dbakker           #+#    #+#             */
+/*   Updated: 2025/10/08 16:58:59 by dbakker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
 /**
- * @brief Convert @p `str` to a signed 32-bit integer.
+ * @brief Count the amount of digits in @p `number`.
  *
- * @param[in] str The String to convert.
+ * This includes the negative sign character.
  *
- * @return The converted value.
+ * @param[in] number The number to count the digits.
+ *
+ * @return The length of @p `number`.
  */
-int32_t	ft_atoi(const char *str)
+size_t	ft_intlen(int32_t number)
 {
-	int32_t	number;
-	int32_t	i;
-	int8_t	sign;
+	size_t	lenght;
 
-	number = 0;
-	i = 0;
-	sign = 1;
-	while (ft_isspace(str[i]))
+	lenght = 0;
+	if (number == 0)
 	{
-		i++;
+		return (1);
 	}
-	if (str[i] == '-' || str[i] == '+')
+	if (number < 0)
 	{
-		if (str[i++] == '-')
-		{
-			sign = -sign;
-		}
+		lenght++;
 	}
-	while (ft_isdigit(str[i]))
+	while (number != 0)
 	{
-		number = number * 10 + (str[i++] - '0');
+		number /= 10;
+		lenght++;
 	}
-	return (number * sign);
+	return (lenght);
 }
