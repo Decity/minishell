@@ -6,12 +6,17 @@
 /*   By: elie <elie@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/08 18:05:06 by elie              #+#    #+#             */
-/*   Updated: 2025/10/08 18:05:18 by elie             ###   ########.fr       */
+/*   Updated: 2025/10/09 10:38:17 by elie             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
+/**
+ * @brief Gets the fully formatted variable name in a given @p `str`. Example: "$VAR" or "${VAR}"
+ *
+ * @param str a string that starts with '$'. 
+ */
 char	*get_parameter_var(const char *str)
 {
 	size_t	i;
@@ -54,6 +59,11 @@ char	*get_parameter_var(const char *str)
 	return (result);
 }
 
+/**
+ * @brief Returns a str with the name of a formatted variable. i.e. ($USER or ${USER}) -> USER
+ *
+ * @param str A string that starts with '$'
+ */
 char	*get_parameter_name(const char *str)
 {
 	size_t	i;
