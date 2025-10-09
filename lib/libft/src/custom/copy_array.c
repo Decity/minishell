@@ -6,7 +6,7 @@
 /*   By: dbakker <dbakker@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/18 11:10:22 by elie              #+#    #+#             */
-/*   Updated: 2025/10/09 14:13:11 by dbakker          ###   ########.fr       */
+/*   Updated: 2025/10/09 15:24:03 by dbakker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ char	**copy_array(char **array)
 	len = 0;
 	while (array[len])
 		len++;
-	copy = malloc(sizeof(char *) * (len + 1));
+	copy = ft_calloc((len + 1), sizeof(char *));
 	if (copy == NULL)
 		return (NULL);
 	i = 0;
@@ -37,6 +37,5 @@ char	**copy_array(char **array)
 		}
 		i++;
 	}
-	copy[i] = NULL;
 	return (copy);
 }

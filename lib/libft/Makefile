@@ -11,13 +11,9 @@ OBJ_DIR = obj/
 
 # Source files
 SRCS = \
-	copy_array.c \
-	free_and_null.c \
-	free_array.c \
 	ft_atoi.c \
 	ft_bzero.c \
 	ft_calloc.c \
-	ft_intlen.c \
 	ft_isthing1.c \
 	ft_isthing2.c \
 	ft_itoa.c \
@@ -45,6 +41,10 @@ SRCS = \
 	ft_substr.c \
 	ft_tocase.c \
 	get_next_line.c \
+	custom/copy_array.c \
+	custom/free_and_null.c \
+	custom/free_array.c \
+	custom/ft_intlen.c \
 
 # Full paths for all source files
 SRC_PATHS = $(addprefix $(SRC_DIR), $(SRCS))

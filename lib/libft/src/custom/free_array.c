@@ -6,7 +6,7 @@
 /*   By: dbakker <dbakker@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/18 11:09:57 by elie              #+#    #+#             */
-/*   Updated: 2025/10/09 14:12:48 by dbakker          ###   ########.fr       */
+/*   Updated: 2025/10/09 15:34:00 by dbakker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,10 @@
 
 void	free_array(char ***array)
 {
-	size_t	i;
+	int	i;
 
-	if (array == NULL || *array == NULL)
-	{
+	if (!array || !*array)
 		return ;
-	}
 	i = 0;
 	while ((*array)[i])
 	{
@@ -33,8 +31,8 @@ void	free_array(char ***array)
 /**
  * @brief Free an array of pointers of @p `size` length.
  *
- * @param[out]	ptr		Pointer to the array.
- * @param[in]	size	Size of the array of pointers.
+ * @param[in,out]	ptr		Pointer to the array.
+ * @param[in]		size	Size of the array of pointers.
  */
 void	ft_free2d(void **ptr, size_t size)
 {

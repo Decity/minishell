@@ -6,7 +6,7 @@
 /*   By: dbakker <dbakker@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/22 12:41:29 by dbakker           #+#    #+#             */
-/*   Updated: 2025/10/09 14:26:55 by dbakker          ###   ########.fr       */
+/*   Updated: 2025/10/09 14:55:55 by dbakker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 /**
  * @return `true` if @p `c` is alphabetic, `false` otherwise.
  */
-bool	ft_isalpha(int c)
+int	ft_isalpha(int c)
 {
 	return (ft_islower(c) || ft_isupper(c));
 }
@@ -23,7 +23,7 @@ bool	ft_isalpha(int c)
 /**
  * @return `true` if @p `c` is standard ASCII, `false` otherwise.
  */
-bool	ft_isascii(int c)
+int	ft_isascii(int c)
 {
 	return (c >= 0 && c <= 127);
 }
@@ -31,7 +31,7 @@ bool	ft_isascii(int c)
 /**
  * @return `true` if @p `c` is a digit, `false` otherwise.
  */
-bool	ft_isdigit(int c)
+int	ft_isdigit(int c)
 {
 	return (c >= '0' && c <= '9');
 }
@@ -39,7 +39,7 @@ bool	ft_isdigit(int c)
 /**
  * @return `true` if @p `c` is a printable character, `false` otherwise.
  */
-bool	ft_isprint(int c)
+int	ft_isprint(int c)
 {
 	return (c >= ' ' && c <= '~');
 }
@@ -47,7 +47,7 @@ bool	ft_isprint(int c)
 /**
  * @return `true` if @p `c` is alphanumeric, `false` otherwise.
  */
-bool	ft_isalnum(int c)
+int	ft_isalnum(int c)
 {
 	return (ft_isalpha(c) || ft_isdigit(c));
 }

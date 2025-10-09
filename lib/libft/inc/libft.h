@@ -6,7 +6,7 @@
 /*   By: dbakker <dbakker@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/22 12:24:41 by dbakker           #+#    #+#             */
-/*   Updated: 2025/10/09 14:22:41 by dbakker          ###   ########.fr       */
+/*   Updated: 2025/10/09 15:23:22 by dbakker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,14 +53,14 @@ void	*ft_calloc(size_t num, size_t size);
 size_t	ft_intlen(int32_t number);
 // ft_isthing1/2.c
 
-bool	ft_isalpha(int c);
-bool	ft_isascii(int c);
-bool	ft_isdigit(int c);
-bool	ft_isprint(int c);
-bool	ft_isalnum(int c);
-bool	ft_isspace(int c);
-bool	ft_islower(int c);
-bool	ft_isupper(int c);
+int		ft_isalpha(int c);
+int		ft_isascii(int c);
+int		ft_isdigit(int c);
+int		ft_isprint(int c);
+int		ft_isalnum(int c);
+int		ft_isspace(int c);
+int		ft_islower(int c);
+int		ft_isupper(int c);
 // ft_itoa.c
 
 char	*ft_itoa(int32_t num);
@@ -119,8 +119,8 @@ char	*ft_strmapi(const char *str, char (*func)(uint32_t, char));
 char	*ft_strjoin(const char *dest, const char *src);
 // ft_strlc.c
 
-size_t	ft_strlcpy(char *dest, const char *src, size_t num);
-size_t	ft_strlcat(char *dest, const char *src, size_t num);
+size_t	ft_strlcpy(char *dest, const char *src, size_t size);
+size_t	ft_strlcat(char *dest, const char *src, size_t size);
 // ft_strlen.c
 
 size_t	ft_strlen(const char *str);
