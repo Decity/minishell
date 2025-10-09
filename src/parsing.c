@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: elie <elie@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: dbakker <dbakker@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/03 15:32:52 by elie              #+#    #+#             */
-/*   Updated: 2025/10/03 19:04:34 by elie             ###   ########.fr       */
+/*   Updated: 2025/10/09 17:29:19 by dbakker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ void	set_commands(t_data *data)
 	if (DEBUG)
 		printf("=== set_commands() ===\n\n");
 
+	doubly_linked_list(data->tokens);
 	example_command = malloc(sizeof(t_commands));
 	if (example_command == NULL)
 		exit(2); // TODO: What to actually do when malloc fails here?
