@@ -3,69 +3,52 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strnstr.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ebelle <ebelle@student.42.fr>              +#+  +:+       +#+        */
+/*   By: dbakker <dbakker@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/29 12:08:10 by ebelle            #+#    #+#             */
-/*   Updated: 2025/04/29 12:17:26 by ebelle           ###   ########.fr       */
+/*   Created: 2025/04/22 15:37:29 by dbakker           #+#    #+#             */
+/*   Updated: 2025/10/09 11:04:13 by dbakker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-char	*ft_strnstr(const char *big, const char *little, size_t len)
+/**
+ * @brief Find @p `needle` in @p `haystack` within the first @p `num` bytes.
+ *
+ * `NULL` will be returned if @p `num` is smaller than than the length of
+ * @p `needle`.
+ *
+ * @param[in] haystack	The haystack.
+ * @param[in] needle	The needle to find in @p `haystack`.
+ * @param[in] num		Amount to read in bytes.
+ *
+ * @retval Pointer to @p `haystack` if @p `needle` is empty.
+ * @retval Pointer to the first occurrence of @p `needle` in @p `haystack`.
+ * @retval `NULL` if @p `needle` is not found in @p `haystack`.
+ */
+char	*ft_strnstr(const char *haystack, const char *needle, size_t num)
 {
 	size_t	i;
 	size_t	j;
-	size_t	little_len;
 
-	little_len = ft_strlen(little);
-	if (little_len == 0)
-		return ((char *)big);
-	if (len == 0 || !big[0])
-		return (NULL);
 	i = 0;
-	while (i < len && big[i])
+	j = 0;
+	if (needle[j] == '\0')
+	{
+		return ((char *)haystack);
+	}
+	while (i < num && haystack[i] != '\0')
 	{
 		j = 0;
-		while (i + j < len && big[i + j] == little[j])
+		while (needle[j] && haystack[i + j] == needle[j] && (i + j) < num)
 		{
 			j++;
-			if (j == little_len)
-				return ((char *)&big[i]);
+		}
+		if (needle[j] == '\0')
+		{
+			return ((char *)&haystack[i]);
 		}
 		i++;
 	}
 	return (NULL);
 }
-
-// int main()
-// {
-//     const char big[] = "abab EDFEF 12    !@";
-//     const char *little;
-//     size_t len = 20;
-
-//     little = "EF";
-//     printf("Searching for %s\n", little);
-//     printf("ft_strnstr: %s\n\n", ft_strnstr(big, little, len));
-
-//     little = "ab";
-//     printf("Searching for %s\n", little);
-//     printf("ft_strnstr: %s\n\n", ft_strnstr(big, little, len));
-
-//     little = "!@";
-//     printf("Searching for %s\n", little);
-//     printf("ft_strnstr: %s\n\n", ft_strnstr(big, little, len));
-
-//     little = "42";
-//     printf("Searching for %s\n", little);
-//     printf("ft_strnstr: %s\n\n", ft_strnstr(big, little, len));
-
-//     little = "";
-//     printf("Searching for %s\n", little);
-//     printf("ft_strnstr: %s\n\n", ft_strnstr(big, little, len));
-
-//     const char empty_big[] = "";
-//     little = "ab";
-//     printf("Searching for %s\n", little);
-//     printf("ft_strnstr: %s\n\n", ft_strnstr(empty_big, little, len));
-// }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tokenization.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ebelle <ebelle@student.42.fr>              +#+  +:+       +#+        */
+/*   By: dbakker <dbakker@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/03 15:20:17 by elie              #+#    #+#             */
-/*   Updated: 2025/10/06 14:25:21 by ebelle           ###   ########.fr       */
+/*   Updated: 2025/10/06 16:54:01 by dbakker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ void	tokenize(t_data *data, int token_count)
 	while (i < token_count)
 	{
 		// Skip whitespace
-		while(is_whitespace(input[start]) == true)
+		while(ft_isspace(input[start]) == true)
 			start++;
 
 		end = start;
@@ -73,7 +73,7 @@ void	tokenize(t_data *data, int token_count)
 		}
 		else if (input[end])
 		{
-			while (input[end] && is_whitespace(input[end]) == false)
+			while (input[end] && ft_isspace(input[end]) == false)
 				end++;
 		}
 		// Duplicate str from start to end
@@ -109,7 +109,7 @@ int		count_tokens(char *input)
 	while (input[i])
 	{
 		// Skip whitespace
-		while (is_whitespace(input[i]) == true)
+		while (ft_isspace(input[i]) == true)
 			i++;
 
 		if (!input[i])
@@ -126,7 +126,7 @@ int		count_tokens(char *input)
 		}
 		else
 		{
-			while (input[i] && is_whitespace(input[i]) == false)
+			while (input[i] && ft_isspace(input[i]) == false)
 				i++;
 		}
 		token_count++;

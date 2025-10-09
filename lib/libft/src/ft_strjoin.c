@@ -3,49 +3,43 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strjoin.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ebelle <ebelle@student.42.fr>              +#+  +:+       +#+        */
+/*   By: dbakker <dbakker@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/29 12:07:56 by ebelle            #+#    #+#             */
-/*   Updated: 2025/04/29 12:37:01 by ebelle           ###   ########.fr       */
+/*   Created: 2025/04/24 14:38:07 by dbakker           #+#    #+#             */
+/*   Updated: 2025/10/09 11:03:24 by dbakker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-char	*ft_strjoin(char const *s1, char const *s2)
+/**
+ * @brief Return a new string from joining @p `dest` and @p `src` together.
+ *
+ * @param[in] dest	The prefix string.
+ * @param[in] src	The suffix string.
+ *
+ * @return Pointer to the joined string, or `NULL` on failure.
+ *
+ * @warning Caller owns free().
+ */
+char	*ft_strjoin(const char *dest, const char *src)
 {
-	unsigned int	len;
-	unsigned int	i;
-	unsigned int	j;
-	char			*str;
+	size_t	srclen;
+	size_t	destlen;
+	char	*join;
 
-	if (!s1 || !s2)
-		return (NULL);
-	len = ft_strlen(s1) + ft_strlen(s2);
-	str = ft_calloc((len + 1), sizeof(char));
-	if (!str)
-		return (NULL);
-	i = 0;
-	while (s1[i])
+	if (dest == NULL || src == NULL)
 	{
-		str[i] = s1[i];
-		i++;
+		return (NULL);
 	}
-	j = 0;
-	while (s2[j])
+	destlen = ft_strlen(dest);
+	srclen = ft_strlen(src);
+	join = ft_calloc(destlen + srclen + 1, sizeof(char));
+	if (join == NULL)
 	{
-		str[i + j] = s2[j];
-		j++;
+		return (NULL);
 	}
-	str[i + j] = '\0';
-	return (str);
+	ft_memcpy(join, dest, destlen);
+	ft_memcpy(join + destlen, src, srclen);
+	return (join);
 }
-
-// int	main()
-// {
-// 	printf(ft_strjoin("[42_", "42]\n"));
-// 	printf(ft_strjoin("[42_", ""));
-// 	printf("\n");
-// 	printf(ft_strjoin("", "42]\n"));
-// 	printf(ft_strjoin(NULL, "this one should not appear]\n"));
-// }

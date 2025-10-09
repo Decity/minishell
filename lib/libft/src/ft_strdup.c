@@ -3,36 +3,55 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strdup.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ebelle <ebelle@student.42.fr>              +#+  +:+       +#+        */
+/*   By: dbakker <dbakker@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/29 12:07:50 by ebelle            #+#    #+#             */
-/*   Updated: 2025/04/29 12:19:12 by ebelle           ###   ########.fr       */
+/*   Created: 2025/04/24 10:48:56 by dbakker           #+#    #+#             */
+/*   Updated: 2025/10/09 15:31:04 by dbakker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-char	*ft_strdup(const char *s)
+/**
+ * @brief Copy @p `str` to a new memory address.
+ *
+ * @param[in] str String to duplicate.
+ *
+ * @return Pointer to the duplicated string, or `NULL` on failure.
+ *
+ * @warning Caller owns free().
+ */
+char	*ft_strdup(const char *str)
 {
-	char	*str;
-	size_t	i;
+	const size_t	strlen = ft_strlen(str);
+	char			*ptr;
 
-	str = ft_calloc(ft_strlen(s) + 1, sizeof(char));
-	if (!str)
-		return (NULL);
-	i = 0;
-	while (s[i])
+	ptr = ft_calloc(strlen + 1, sizeof(char));
+	if (ptr == NULL)
 	{
-		str[i] = s[i];
-		i++;
+		return (NULL);
 	}
-	str[i] = '\0';
-	return (str);
+	return (ft_memcpy(ptr, str, strlen));
 }
 
-// int main()
-// {
-//     printf("ft_strdup: %s", ft_strdup("123 abc    DEF !@#\n\n"));
-//     printf("strdup:     %s\n", strdup("42\0 42"));
-//     printf("ft_strdup:  %s\n", ft_strdup("42\0 42"));
-// }
+/**
+ * @brief Copy @p `num` bytes of @p `str` to a new memory address.
+ *
+ * @param[in] str String to duplicate.
+ * @param[in] num Amount of bytes to duplicate.
+ *
+ * @return Pointer to the duplicated string, or `NULL` on failure.
+ *
+ * @warning Callers owns free().
+ */
+char	*ft_strndup(const char *str, size_t num)
+{
+	char			*ptr;
+
+	ptr = ft_calloc(num + 1, sizeof(char));
+	if (ptr == NULL)
+	{
+		return (NULL);
+	}
+	return (ft_memcpy(ptr, str, num));
+}

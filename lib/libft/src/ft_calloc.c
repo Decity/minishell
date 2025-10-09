@@ -3,47 +3,42 @@
 /*                                                        :::      ::::::::   */
 /*   ft_calloc.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ebelle <ebelle@student.42.fr>              +#+  +:+       +#+        */
+/*   By: dbakker <dbakker@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/29 12:07:06 by ebelle            #+#    #+#             */
-/*   Updated: 2025/04/29 12:44:17 by ebelle           ###   ########.fr       */
+/*   Created: 2025/04/24 10:39:19 by dbakker           #+#    #+#             */
+/*   Updated: 2025/10/09 15:29:29 by dbakker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
-#include <stdint.h>
-#include <stdlib.h>
 
-void	*ft_calloc(size_t n, size_t size)
+/**
+ * @brief Allocate @p `num` times @p `size` bytes of memory and initializes the
+ * @brief allocated memory to 0.
+ *
+ * If @p `num` or @p `size` is 0, it will instead return a unique pointer value
+ * that can be freed later.
+ *
+ * @param[in] num	Number of members.
+ * @param[in] size	Size of each member.
+ *
+ * @return Pointer to the allocated memory, or `NULL` on failure.
+ *
+ * @warning Caller owns free().
+ */
+void	*ft_calloc(size_t num, size_t size)
 {
-	void	*array;
+	void	*ptr;
 
-	if (size && n > SIZE_MAX / size)
+	if (num == 0 || size == 0)
+	{
+		return (malloc(0));
+	}
+	ptr = malloc(num * size);
+	if (ptr == NULL || size > SIZE_MAX / num)
+	{
 		return (NULL);
-	array = malloc(n * size);
-	if (!array)
-		return (NULL);
-	ft_bzero(array, n * size);
-	return (array);
+	}
+	ft_bzero(ptr, num * size);
+	return (ptr);
 }
-
-// char	*test(unsigned int n)
-// {
-//     char *str;
-
-// 	str = ft_calloc(n, sizeof(char));
-// 	if (!str)
-// 		return (free(str), NULL);
-// 	return (str);
-// }
-
-// int main(void)
-// {
-
-// 	char *str = test(3);
-// 	str[0] = '4';
-// 	str[1] = '2';
-// 	printf(str);
-// 	printf("\n");
-
-// }

@@ -1,25 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.h                                    :+:      :+:    :+:   */
+/*   free_and_null.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dbakker <dbakker@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/06/02 10:48:34 by dbakker           #+#    #+#             */
-/*   Updated: 2025/10/09 14:08:15 by dbakker          ###   ########.fr       */
+/*   Created: 2025/09/18 11:09:47 by elie              #+#    #+#             */
+/*   Updated: 2025/10/09 14:10:00 by dbakker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef GET_NEXT_LINE_H
-# define GET_NEXT_LINE_H
-# ifndef BUFFER_SIZE
-#  define BUFFER_SIZE 128
-# endif
-# define MAX_FD 1024
+#include "libft.h"
 
-# include "libft.h"
-
-// get_next_line.c
-
-char	*get_next_line(int fd);
-#endif
+void	free_and_null(char **str)
+{
+	if (str == NULL || *str == NULL)
+	{
+		return ;
+	}
+	free(*str);
+	*str = NULL;
+}

@@ -3,32 +3,52 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strlen.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ebelle <ebelle@student.42.fr>              +#+  +:+       +#+        */
+/*   By: dbakker <dbakker@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/29 12:08:02 by ebelle            #+#    #+#             */
-/*   Updated: 2025/04/29 12:34:55 by ebelle           ###   ########.fr       */
+/*   Created: 2025/04/22 12:55:06 by dbakker           #+#    #+#             */
+/*   Updated: 2025/10/09 11:03:44 by dbakker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-size_t	ft_strlen(const char *s)
+/**
+ * @return The length of @p `str`, excluding the null byte.
+ *
+ * @warning ft_strlen() causes the program to segfault if @p `str` is `NULL`.
+ */
+size_t	ft_strlen(const char *str)
 {
-	size_t	i;
+	size_t	strlen;
 
-	i = 0;
-	while (s[i])
-		i++;
-	return (i);
+	strlen = 0;
+	while (str[strlen])
+	{
+		strlen++;
+	}
+	return (strlen);
 }
 
-// #include <string.h>
-// #include <stdio.h>
-// int main()
-// {
-// 	char *tests[] = {"", "1", "22", "\n", "123456789", "\t	\t"};
+/**
+ * @brief Return the number of bytes in @p `str` excluding the null byte,
+ * @brief with at most @p `maxlen`.
+ *
+ * @param[in] str		String to calculate the lenght of.
+ * @param[in] maxlen	Maximum amount of bytes to read.
+ *
+ * @return The length of @p `str` if less than @p `maxlen`, or @p `maxlen` if
+ * @return no null byte has been found.
+ *
+ * @warning ft_strnlen() causes the program to segfault if @p `str` is `NULL`.
+ */
+size_t	ft_strnlen(const char *str, size_t maxlen)
+{
+	size_t	strlen;
 
-// 	for (int i = 0; tests[i]; i++)
-// 		printf("strlen: [%zu] ft_strlen: [%zu]\n", strlen(tests[i]),
-//  ft_strlen(tests[i]));
-// }
+	strlen = 0;
+	while (str[strlen] && strlen < maxlen)
+	{
+		strlen++;
+	}
+	return (strlen);
+}

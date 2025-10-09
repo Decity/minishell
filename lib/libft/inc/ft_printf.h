@@ -3,27 +3,43 @@
 /*                                                        :::      ::::::::   */
 /*   ft_printf.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: elie <elie@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: dbakker <dbakker@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/09/18 11:20:19 by elie              #+#    #+#             */
-/*   Updated: 2025/09/18 11:20:20 by elie             ###   ########.fr       */
+/*   Created: 2025/05/06 16:59:02 by dbakker           #+#    #+#             */
+/*   Updated: 2025/10/09 14:08:56 by dbakker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef FT_PRINTF_H
 # define FT_PRINTF_H
 
+# include "libft.h"
 # include <stdarg.h>
-# include <unistd.h>
 
-int		ft_printf(const char *s, ...);
-int		parse(int c, va_list args);
-int		print_str(char *s);
-int		print_char(int c);
-int		print_ptr(void *ptr);
-int		print_int(int n);
-int		print_uint(unsigned int n);
-int		print_hex(unsigned long long int n);
-int		print_uhex(unsigned long long int n);
+# define DECIMAL "0123456789"
+# define HEX_LOWER "0123456789abcdef"
+# define HEX_UPPER "0123456789ABCDEF"
+# define S_INT32_MIN "-2147483648"
+# define HEX_LENGTH 8
+# define INT32_LENGTH 11
+# define PTR_LENGTH 16
+# define BASE_10 10
+# define BASE_16 16
+
+// ft_printf.c
+
+int32_t	ft_printf(const char *format, ...);
+// ft_putnum.c
+
+int32_t	ft_putnum(int32_t num);
+int32_t	ft_putunum(uint32_t num);
+
+// ft_putstr.c
+
+int32_t	ft_putchar(int character);
+int32_t	ft_putstr(const char *str);
+int32_t	ft_puthex_upper(uint32_t num);
+int32_t	ft_puthex_lower(uint32_t num);
+int32_t	ft_putptr(uintptr_t num);
 
 #endif
