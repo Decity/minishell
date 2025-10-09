@@ -6,7 +6,7 @@
 /*   By: dbakker <dbakker@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 14:38:07 by dbakker           #+#    #+#             */
-/*   Updated: 2025/10/08 22:40:54 by dbakker          ###   ########.fr       */
+/*   Updated: 2025/10/09 11:03:24 by dbakker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,8 @@
 /**
  * @brief Return a new string from joining @p `dest` and @p `src` together.
  *
- * @param[in]	dest	The prefix string.
- * @param[in]	src		The suffix string.
+ * @param[in] dest	The prefix string.
+ * @param[in] src	The suffix string.
  *
  * @return Pointer to the joined string, or `NULL` on failure.
  *

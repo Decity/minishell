@@ -6,7 +6,7 @@
 /*   By: dbakker <dbakker@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/08 10:05:49 by dbakker           #+#    #+#             */
-/*   Updated: 2025/10/08 19:16:25 by dbakker          ###   ########.fr       */
+/*   Updated: 2025/10/09 09:47:28 by dbakker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ int32_t	ft_putnum(int32_t num)
 {
 	size_t	position;
 	int32_t	write_size;
-	char	array[INT32_LENGTH];
+	char	array[INT32_LENGTH + 1];
 	bool	is_negative;
 
 	position = INT32_LENGTH;
@@ -59,7 +59,7 @@ int32_t	ft_putunum(uint32_t num)
 {
 	size_t	position;
 	int32_t	write_size;
-	char	array[INT32_LENGTH];
+	char	array[INT32_LENGTH + 1];
 
 	position = INT32_LENGTH;
 	if (num == 0)

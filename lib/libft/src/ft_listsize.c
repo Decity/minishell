@@ -1,34 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstnew.c                                        :+:      :+:    :+:   */
+/*   ft_listsize.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dbakker <dbakker@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/29 11:52:25 by dbakker           #+#    #+#             */
-/*   Updated: 2025/10/06 16:47:26 by dbakker          ###   ########.fr       */
+/*   Created: 2025/04/29 16:00:03 by dbakker           #+#    #+#             */
+/*   Updated: 2025/10/09 13:59:36 by dbakker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
 /**
- * @brief	Content to store the new node.
- *
- * @param[in]	content Content to add.
- *
- * @returns	Pointer to the new node.
- *
- * @warning	The caller owns free() when done.
+ * @return Size of the linked list.
  */
-t_list	*ft_lstnew(void *content)
+size_t	ft_listsize(t_list *list)
 {
-	t_list	*node;
+	size_t	list_count;
 
-	node = malloc(sizeof(t_list));
-	if (node == NULL)
-		return (NULL);
-	node->content = content;
-	node->next = NULL;
-	return (node);
+	list_count = 0;
+	while (list)
+	{
+		list_count++;
+		list = list->next;
+	}
+	return (list_count);
 }

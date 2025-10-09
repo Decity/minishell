@@ -6,7 +6,7 @@
 /*   By: dbakker <dbakker@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/28 10:06:58 by dbakker           #+#    #+#             */
-/*   Updated: 2025/10/07 14:20:56 by dbakker          ###   ########.fr       */
+/*   Updated: 2025/10/09 12:35:41 by dbakker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ static size_t	ft_count_words(char const *str, char delimiter)
 
 	word_count = 0;
 	i = 0;
-	is_word = 0;
+	is_word = false;
 	while (str[i])
 	{
 		if (is_word == false && str[i] != delimiter)
@@ -30,7 +30,9 @@ static size_t	ft_count_words(char const *str, char delimiter)
 			is_word = true;
 		}
 		if (str[i] == delimiter)
+		{
 			is_word = false;
+		}
 		i++;
 	}
 	return (word_count);
@@ -42,14 +44,18 @@ static size_t	ft_word_length(const char *str, char delimiter)
 
 	length = 0;
 	while (str[length] && str[length] != delimiter)
+	{
 		length++;
+	}
 	return (length);
 }
 
 static const char	*ft_skip_delimiters(const char *str, char delimiter)
 {
 	while (*str == delimiter)
+	{
 		str++;
+	}
 	return (str);
 }
 
@@ -65,16 +71,18 @@ static const char	*ft_skip_delimiters(const char *str, char delimiter)
  */
 char	**ft_split(char const *str, char delimiter)
 {
-	char	**ptr;
 	size_t	words_counted;
 	size_t	word_length;
 	size_t	word;
+	char	**ptr;
 
 	word = 0;
 	words_counted = ft_count_words(str, delimiter);
 	ptr = ft_calloc((words_counted + 1), sizeof(char *));
 	if (ptr == NULL)
+	{
 		return (NULL);
+	}
 	while (word < words_counted)
 	{
 		str = ft_skip_delimiters(str, delimiter);

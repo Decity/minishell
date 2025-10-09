@@ -6,7 +6,7 @@
 /*   By: dbakker <dbakker@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/06 16:59:02 by dbakker           #+#    #+#             */
-/*   Updated: 2025/10/08 19:08:47 by dbakker          ###   ########.fr       */
+/*   Updated: 2025/10/09 14:08:56 by dbakker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,9 +26,16 @@
 # define BASE_10 10
 # define BASE_16 16
 
+// ft_printf.c
+
 int32_t	ft_printf(const char *format, ...);
+// ft_putnum.c
+
 int32_t	ft_putnum(int32_t num);
 int32_t	ft_putunum(uint32_t num);
+
+// ft_putstr.c
+
 int32_t	ft_putchar(int character);
 int32_t	ft_putstr(const char *str);
 int32_t	ft_puthex_upper(uint32_t num);

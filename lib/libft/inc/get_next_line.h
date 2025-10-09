@@ -6,7 +6,7 @@
 /*   By: dbakker <dbakker@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/02 10:48:34 by dbakker           #+#    #+#             */
-/*   Updated: 2025/10/06 16:53:10 by dbakker          ###   ########.fr       */
+/*   Updated: 2025/10/09 14:08:15 by dbakker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,8 @@
 # define MAX_FD 1024
 
 # include "libft.h"
+
+// get_next_line.c
 
 char	*get_next_line(int fd);
 #endif

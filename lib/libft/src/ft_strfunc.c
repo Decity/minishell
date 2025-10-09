@@ -6,7 +6,7 @@
 /*   By: dbakker <dbakker@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/28 14:42:31 by dbakker           #+#    #+#             */
-/*   Updated: 2025/10/08 22:11:18 by dbakker          ###   ########.fr       */
+/*   Updated: 2025/10/09 12:51:17 by dbakker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,10 +31,11 @@ void	ft_striteri(char *str, void (*func)(uint32_t, char*))
 }
 
 /**
- * @brief Apply @p `func` to each character of @p `str`.
+ * @brief Create a new string from @p `str` and apply @p `func` to each
+ * @brief character of the newly created string.
  *
- * @param[in]	str		String to iterate.
- * @param[in]	func	Function to apply to each character.
+ * @param[in] str	String to iterate.
+ * @param[in] func	Function to apply to each character.
  *
  * @return The pointer to the new string from the successive applications of
  * @return @p `func`, or `NULL` on failure.
@@ -43,12 +44,11 @@ void	ft_striteri(char *str, void (*func)(uint32_t, char*))
  */
 char	*ft_strmapi(const char *str, char (*func)(uint32_t, char))
 {
-	char	*ptr;
-	size_t	i;
-	size_t	strlen;
+	const size_t	strlen = ft_strlen(str);
+	size_t			i;
+	char			*ptr;
 
 	i = 0;
-	strlen = ft_strlen(str);
 	ptr = ft_calloc(strlen + 1, sizeof(char));
 	if (ptr == NULL)
 	{

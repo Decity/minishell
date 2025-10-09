@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free_and_null.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: elie <elie@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: dbakker <dbakker@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/18 11:09:47 by elie              #+#    #+#             */
-/*   Updated: 2025/09/18 11:09:51 by elie             ###   ########.fr       */
+/*   Updated: 2025/10/09 14:10:00 by dbakker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,10 @@
 
 void	free_and_null(char **str)
 {
-	if (!str || !*str)
+	if (str == NULL || *str == NULL)
+	{
 		return ;
+	}
 	free(*str);
 	*str = NULL;
 }

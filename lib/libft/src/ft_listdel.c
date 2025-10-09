@@ -1,55 +1,53 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstdel.c                                        :+:      :+:    :+:   */
+/*   ft_listdel.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dbakker <dbakker@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/30 11:45:19 by dbakker           #+#    #+#             */
-/*   Updated: 2025/10/06 16:47:26 by dbakker          ###   ########.fr       */
+/*   Updated: 2025/10/09 14:00:01 by dbakker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
 /**
- * @brief	Free the given node.
+ * @brief Delete the member variable `content` from @p `list` using @p `del`.
  *
  * @param[in,out]	list	Pointer of the node to be freed.
- * @param[in]		del		Used to free the content of the node.
- *
- * @note 	free() for @p del might be the callers preferred choice.
+ * @param[in]		del		Function to delete the node.
  */
-void	ft_lstdelone(t_list *list, void (*del)(void *))
+void	ft_listdelone(t_list *list, void (*del)(void *))
 {
 	if (list == NULL || del == NULL)
+	{
 		return ;
+	}
 	del(list->content);
 	free(list);
 }
 
 /**
- * @brief	Free the given node and all its successors.
- *
- * On return, list is NULL.
+ * @brief Free the given node and all its successors.
  *
  * @param[in,out]	list	Pointer to the head pointer.
- * @param[in]		del		Frees each node in @p list.
- *
- * @note	free() for @p del might be the callers preferred choice.
+ * @param[in]		del		Function to delete each node in @p `list`.
  */
-void	ft_lstclear(t_list **list, void (*del)(void *))
+void	ft_listclear(t_list **list, void (*del)(void *))
 {
 	t_list	*node;
 	t_list	*temp;
 
-	node = *list;
 	if (list == NULL || *list == NULL)
+	{
 		return ;
+	}
+	node = *list;
 	while (node)
 	{
 		temp = node->next;
-		ft_lstdelone(node, del);
+		ft_listdelone(node, del);
 		node = temp;
 	}
 	*list = NULL;

@@ -6,44 +6,47 @@
 /*   By: dbakker <dbakker@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 14:28:23 by dbakker           #+#    #+#             */
-/*   Updated: 2025/10/06 16:47:26 by dbakker          ###   ########.fr       */
+/*   Updated: 2025/10/09 10:59:43 by dbakker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
 /**
- * @brief	Return a substring from @p str starting at @p start with a maximum
- * 			length of @p len.
+ * @brief Return a substring with a maxmimum length of @p `num` bytes
+ * @brief from @p `str` starting at @p `start`.
  *
- * @param[in]	str		String to create the substring from.
- * @param[in]	start	Starting index within @p str.
- * @param[in]	len		Maximum length of the substring.
+ * @param[in] str	String to create the substring from.
+ * @param[in] start	Starting index.
+ * @param[in] num	Maximum length of the substring.
  *
- * @returns	Pointer to the substring, or NULL on failure.
+ * @return Pointer to the substring, or `NULL` on failure.
  *
- * @warning	The caller owns free() when done.
+ * @warning Caller owns free().
  */
-char	*ft_substr(char const *str, unsigned int start, size_t len)
+char	*ft_substr(const char *str, uint32_t start, size_t num)
 {
-	char	*ptr;
-	size_t	i;
+	const size_t	strlen = ft_strlen(str);
+	size_t			i;
+	char			*ptr;
 
-	if (start > ft_strlen(str))
+	if (str == NULL)
 	{
-		ptr = ft_calloc(1, sizeof(char));
-		if (ptr == NULL)
-			return (NULL);
-		return (ptr);
+		return (NULL);
+	}
+	if (start > strlen)
+	{
+		return (ft_calloc(1, sizeof(char)));
 	}
 	i = 0;
-	if (len > ft_strlen(str + start))
-		len = ft_strlen(str + start);
-	ptr = malloc(len + 1);
+	if (num > strlen + start)
+	{
+		num = strlen + start;
+	}
+	ptr = ft_calloc(num + 1, sizeof(char));
 	if (ptr == NULL)
+	{
 		return (NULL);
-	while (i < len)
-		ptr[i++] = str[start++];
-	ptr[len] = '\0';
-	return (ptr);
+	}
+	return (ft_memcpy(ptr, str + start, num));
 }

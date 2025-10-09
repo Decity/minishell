@@ -6,7 +6,7 @@
 /*   By: dbakker <dbakker@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 10:36:10 by dbakker           #+#    #+#             */
-/*   Updated: 2025/10/08 23:02:58 by dbakker          ###   ########.fr       */
+/*   Updated: 2025/10/09 10:59:58 by dbakker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,10 +24,9 @@
  */
 size_t	ft_strlcpy(char *dest, const char *src, size_t num)
 {
-	size_t	srclen;
-	size_t	i;
+	const size_t	srclen = ft_strlen(src);
+	size_t			i;
 
-	srclen = ft_strlen(src);
 	if (num == 0)
 	{
 		return (srclen);
@@ -54,12 +53,10 @@ size_t	ft_strlcpy(char *dest, const char *src, size_t num)
  */
 size_t	ft_strlcat(char *dest, const char *src, size_t num)
 {
-	size_t	destlen;
-	size_t	srclen;
-	size_t	i;
+	const size_t	destlen = ft_strnlen(dest, num);
+	const size_t	srclen = ft_strlen(src);
+	size_t			i;
 
-	destlen = ft_strnlen(dest, num);
-	srclen = ft_strlen(src);
 	i = 0;
 	if (destlen == num)
 	{

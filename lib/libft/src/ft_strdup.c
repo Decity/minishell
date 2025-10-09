@@ -6,7 +6,7 @@
 /*   By: dbakker <dbakker@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 10:48:56 by dbakker           #+#    #+#             */
-/*   Updated: 2025/10/08 21:49:15 by dbakker          ###   ########.fr       */
+/*   Updated: 2025/10/09 10:59:48 by dbakker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,10 +23,9 @@
  */
 char	*ft_strdup(const char *str)
 {
-	size_t	strlen;
-	char	*ptr;
+	const size_t	strlen = ft_strlen(str);
+	char			*ptr;
 
-	strlen = ft_strlen(str);
 	ptr = ft_calloc(strlen + 1, sizeof(char));
 	if (ptr == NULL)
 	{
@@ -47,10 +46,9 @@ char	*ft_strdup(const char *str)
  */
 char	*ft_strndup(const char *str, size_t num)
 {
-	size_t	strlen;
-	char	*ptr;
+	const size_t	strlen = ft_strlen(str);
+	char			*ptr;
 
-	strlen = ft_strlen(str);
 	if (strlen < num)
 	{
 		num = strlen;

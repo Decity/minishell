@@ -6,34 +6,47 @@
 /*   By: dbakker <dbakker@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/25 12:09:28 by dbakker           #+#    #+#             */
-/*   Updated: 2025/10/06 16:47:26 by dbakker          ###   ########.fr       */
+/*   Updated: 2025/10/09 10:30:20 by dbakker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
 /**
- * @brief	Return a new string from @p str with characters removed from the
- * 			start and end of @p set
+ * @brief Return a new string from trimming the start and end of @p `str` with
+ * @brief characters found in @p `set`.
  *
- * @param[in]	str
- * @param[in]	set
+ * @param[in] str String to trim.
+ * @param[in] set Set of characters.
  *
- * @warning	The caller owns free() when done.
+ * @return Pointer to the newly allocated trimmed string, or `NULL` on failure.
+ *
+ * @warning	Caller owns free().
  */
 char	*ft_strtrim(char const *str, char const *set)
 {
-	char	*ptr;
-	size_t	strlen;
+	size_t	end;
+	size_t	start;
+	char	*trim;
 
-	while (*str != '\0' && ft_strchr(set, *str))
-		str++;
-	strlen = ft_strlen(str);
-	while (strlen > 0 && ft_strchr(set, str[strlen - 1]))
-		strlen--;
-	ptr = malloc(strlen + 1);
-	if (ptr == NULL)
+	if (str == NULL || set == NULL)
+	{
 		return (NULL);
-	ft_strlcpy(ptr, str, strlen + 1);
-	return (ptr);
+	}
+	start = 0;
+	end = ft_strlen(str);
+	while (str[start] && ft_strchr(set, str[start]))
+	{
+		str++;
+	}
+	if (start == end)
+		return (ft_calloc(1, sizeof(char)));
+	while (end > 0 && ft_strchr(set, str[end - 1]))
+	{
+		end--;
+	}
+	trim = ft_calloc(end - start + 1, sizeof(char));
+	if (trim == NULL)
+		return (NULL);
+	return (ft_memcpy(trim, str + start, end - start));
 }

@@ -6,7 +6,7 @@
 /*   By: dbakker <dbakker@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/08 15:33:28 by dbakker           #+#    #+#             */
-/*   Updated: 2025/10/08 19:54:05 by dbakker          ###   ########.fr       */
+/*   Updated: 2025/10/09 09:47:52 by dbakker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ int32_t	ft_puthex_upper(uint32_t num)
 {
 	size_t	position;
 	int32_t	write_size;
-	char	array[HEX_LENGTH];
+	char	array[HEX_LENGTH + 1];
 
 	position = HEX_LENGTH;
 	if (num == 0)
@@ -83,7 +83,7 @@ int32_t	ft_puthex_lower(uint32_t num)
 {
 	size_t	position;
 	int32_t	write_size;
-	char	array[HEX_LENGTH];
+	char	array[HEX_LENGTH + 1];
 
 	position = HEX_LENGTH;
 	if (num == 0)
@@ -114,7 +114,7 @@ int32_t	ft_putptr(uintptr_t num)
 	static const char	nil_str[] = "(nil)";
 	size_t				position;
 	int32_t				write_size;
-	char				array[PTR_LENGTH];
+	char				array[PTR_LENGTH + 1];
 
 	position = PTR_LENGTH;
 	if ((void *)num == NULL)

@@ -6,7 +6,7 @@
 /*   By: dbakker <dbakker@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/22 13:27:22 by dbakker           #+#    #+#             */
-/*   Updated: 2025/10/08 22:06:44 by dbakker          ###   ########.fr       */
+/*   Updated: 2025/10/09 11:01:29 by dbakker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,9 @@
 /**
  * @brief	Find the first matching instance of @p `character` in @p `ptr`.
  *
- * @param[in]	ptr			Pointer to the memory area.
- * @param[in]	character	Instance to find.
- * @param[in]	size		Amount to read in bytes.
+ * @param[in] ptr		Pointer to the memory area.
+ * @param[in] character	Instance to find.
+ * @param[in] size		Amount to read in bytes.
  *
  * @returns	Pointer to the matching byte, or `NULL` if it does not occur.
  */
@@ -28,7 +28,7 @@ void	*ft_memchr(const void *ptr, int character, size_t size)
 	i = 0;
 	while (i < size)
 	{
-		if (((uint8_t*)ptr)[i] == (uint8_t)character)
+		if (((uint8_t *)ptr)[i] == (uint8_t)character)
 		{
 			return ((void *)ptr + i);
 		}
@@ -40,9 +40,9 @@ void	*ft_memchr(const void *ptr, int character, size_t size)
 /**
  * @brief Compare the first @p `num` bytes between @p `ptr1` and @p `ptr2`.
  *
- * @param[in]	ptr1	Pointer to the first memory area.
- * @param[in]	ptr2	Pointer to the second memory area.
- * @param[in]	num		Amount of bytes to compare.
+ * @param[in] ptr1	Pointer to the first memory area.
+ * @param[in] ptr2	Pointer to the second memory area.
+ * @param[in] num	Amount of bytes to compare.
  *
  * @retval 0 if @p `ptr1` and @p `ptr2` are equal.
  * @retval A negative value if @p `ptr1` is less than @p `ptr2`.

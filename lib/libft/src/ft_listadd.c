@@ -6,33 +6,35 @@
 /*   By: dbakker <dbakker@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/30 09:15:10 by dbakker           #+#    #+#             */
-/*   Updated: 2025/10/06 16:47:26 by dbakker          ###   ########.fr       */
+/*   Updated: 2025/10/09 13:56:39 by dbakker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
 /**
- * @brief	Prepend a node to a linked list.
+ * @brief Prepend @p `new` to @p `list`.
  *
- * @param[out]	list List to prepend to.
- * @param[in]	new	Node to be prepended.
+ * @param[out]	list	List to prepend to.
+ * @param[in]	new		Node to be prepended.
  */
-void	ft_lstadd_front(t_list **list, t_list *new)
+void	ft_listadd_front(t_list **list, t_list *new)
 {
 	if (list == NULL || new == NULL)
+	{
 		return ;
+	}
 	new->next = *list;
 	*list = new;
 }
 
 /**
- * @brief	Append a node to a linked list.
+ * @brief Append @p `new` to @p `list`.
  *
- * @param[out]	list List to append to.
- * @param[in]	new	Node to be appended.
+ * @param[out]	list	List to append to.
+ * @param[in]	new		Node to be appended.
  */
-void	ft_lstadd_back(t_list **list, t_list *new)
+void	ft_listadd_back(t_list **list, t_list *new)
 {
 	t_list	*node;
 
@@ -42,7 +44,9 @@ void	ft_lstadd_back(t_list **list, t_list *new)
 		*list = new;
 		return ;
 	}
-	while (node->next != NULL)
+	while (node->next)
+	{
 		node = node->next;
+	}
 	node->next = new;
 }

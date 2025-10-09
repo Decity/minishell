@@ -6,7 +6,7 @@
 /*   By: dbakker <dbakker@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/22 13:48:26 by dbakker           #+#    #+#             */
-/*   Updated: 2025/10/08 22:06:33 by dbakker          ###   ########.fr       */
+/*   Updated: 2025/10/09 11:03:13 by dbakker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,8 @@
  *
  * The terminating null byte is part of @p `str`.
  *
- * @param[in]	str			The string to read.
- * @param[in]	character	The character to find.
+ * @param[in] str		The string to read.
+ * @param[in] character	The character to find.
  *
  * @returns	Pointer to the matching @p `character`, or `NULL` if not found.
  */
@@ -45,8 +45,8 @@ char	*ft_strchr(const char *str, int character)
  * The terminating null byte is considered part of the string, but behaves
  * like ft_strchr().
  *
- * @param[in]	str			The string to read.
- * @param[in]	character	The character to find.
+ * @param[in] str		The string to read.
+ * @param[in] character	The character to find.
  *
  * @returns	Pointer to the matching @p `character`, or `NULL` if not found.
  */

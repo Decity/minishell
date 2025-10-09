@@ -6,39 +6,48 @@
 /*   By: dbakker <dbakker@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/22 15:37:29 by dbakker           #+#    #+#             */
-/*   Updated: 2025/10/08 22:06:49 by dbakker          ###   ########.fr       */
+/*   Updated: 2025/10/09 11:04:13 by dbakker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
 /**
- * @brief	Locate the first occurrence of @p little in @p big by @p len bytes.
+ * @brief Find @p `needle` in @p `haystack` within the first @p `num` bytes.
  *
- * @param[in,out]	big		String to read.
- * @param[in]		little	String to find in read.
- * @param[in]		len		Amount to read in bytes.
+ * `NULL` will be returned if @p `num` is smaller than than the length of
+ * @p `needle`.
  *
- * @returns	Pointer to the first character of the first occurrence of
- * 			@p little, `NULL` if there is no occurrence, or pointer to @p big if
- * 			@p little is an empty string.
+ * @param[in] haystack	The haystack.
+ * @param[in] needle	The needle to find in @p `haystack`.
+ * @param[in] num		Amount to read in bytes.
+ *
+ * @retval Pointer to @p `haystack` if @p `needle` is empty.
+ * @retval Pointer to the first occurrence of @p `needle` in @p `haystack`.
+ * @retval `NULL` if @p `needle` is not found in @p `haystack`.
  */
-char	*ft_strnstr(const char *big, const char *little, size_t len)
+char	*ft_strnstr(const char *haystack, const char *needle, size_t num)
 {
 	size_t	i;
 	size_t	j;
 
 	i = 0;
 	j = 0;
-	if (*little == '\0')
-		return ((char *)big);
-	while (i < len && big[i] != '\0')
+	if (needle[j] == '\0')
+	{
+		return ((char *)haystack);
+	}
+	while (i < num && haystack[i] != '\0')
 	{
 		j = 0;
-		while (little[j] != '\0' && big[i + j] == little[j] && (i + j) < len)
+		while (needle[j] && haystack[i + j] == needle[j] && (i + j) < num)
+		{
 			j++;
-		if (little[j] == '\0')
-			return ((char *)&big[i]);
+		}
+		if (needle[j] == '\0')
+		{
+			return ((char *)&haystack[i]);
+		}
 		i++;
 	}
 	return (NULL);

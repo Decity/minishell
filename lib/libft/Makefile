@@ -17,17 +17,16 @@ SRCS = \
 	ft_atoi.c \
 	ft_bzero.c \
 	ft_calloc.c \
-	ft_tocase.c \
 	ft_intlen.c \
 	ft_isthing1.c \
 	ft_isthing2.c \
 	ft_itoa.c \
-	ft_lstadd.c \
-	ft_lstdel.c \
-	ft_lstfunc.c \
-	ft_lstlast.c \
-	ft_lstnew.c \
-	ft_lstsize.c \
+	ft_listadd.c \
+	ft_listdel.c \
+	ft_listfunc.c \
+	ft_listlast.c \
+	ft_listnew.c \
+	ft_listsize.c \
 	ft_mem.c \
 	ft_printf.c \
 	ft_putnum.c \
@@ -44,7 +43,8 @@ SRCS = \
 	ft_strnstr.c \
 	ft_strtrim.c \
 	ft_substr.c \
-	get_next_line.c
+	ft_tocase.c \
+	get_next_line.c \
 
 # Full paths for all source files
 SRC_PATHS = $(addprefix $(SRC_DIR), $(SRCS))

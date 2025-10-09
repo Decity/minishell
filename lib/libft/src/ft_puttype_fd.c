@@ -6,7 +6,7 @@
 /*   By: dbakker <dbakker@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/25 14:11:35 by dbakker           #+#    #+#             */
-/*   Updated: 2025/10/08 20:03:17 by dbakker          ###   ########.fr       */
+/*   Updated: 2025/10/09 11:02:52 by dbakker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,8 @@
 /**
  * @brief Write @p `character` to @p `fd`.
  *
- * @param[in]	character	Character to write.
- * @param[in]	fd			Open file descriptor to write to.
+ * @param[in] character	Character to write.
+ * @param[in] fd		Open file descriptor to write to.
  *
  * @return The size of @p `character` written.
  */
@@ -29,8 +29,8 @@ int32_t	ft_putchar_fd(char character, int fd)
 /**
  * @brief Write @p `str` to @p `fd`.
  *
- * @param[in]	str	String to write.
- * @param[in]	fd	Open file descriptor to write to.
+ * @param[in] str	String to write.
+ * @param[in] fd	Open file descriptor to write to.
  *
  * @return The length of @p `str`, or `6` if @p `str` is `NULL`.
  */
@@ -48,8 +48,8 @@ int32_t	ft_putstr_fd(const char *str, int fd)
 /**
  * @brief Write @p `str` with a newline to @p `fd`.
  *
- * @param[in]	str	String to write.
- * @param[in]	fd	Open file descriptor to write to.
+ * @param[in] str	String to write.
+ * @param[in] fd	Open file descriptor to write to.
  *
  * @return The length of @p `str`, or `6` if @p `str` is `NULL`.
  */
@@ -66,8 +66,8 @@ int32_t	ft_putendl_fd(const char *str, int fd)
 /**
  * @brief Write @p `num` to @p `fd`.
  *
- * @param[in]	num	Signed 32-bit integer to write.
- * @param[in]	fd	Open file descriptor to write to.
+ * @param[in] num	Signed 32-bit integer to write.
+ * @param[in] fd	Open file descriptor to write to.
  *
  * @return The length of @p `num`.
  */
@@ -75,7 +75,7 @@ int32_t	ft_putnum_fd(int32_t num, int fd)
 {
 	size_t	position;
 	int32_t	write_size;
-	char	array[INT32_LENGTH];
+	char	array[INT32_LENGTH + 1];
 	bool	is_negative;
 
 	position = INT32_LENGTH;

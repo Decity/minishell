@@ -6,7 +6,7 @@
 /*   By: dbakker <dbakker@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/22 12:55:06 by dbakker           #+#    #+#             */
-/*   Updated: 2025/10/08 23:17:36 by dbakker          ###   ########.fr       */
+/*   Updated: 2025/10/09 11:03:44 by dbakker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,8 +33,8 @@ size_t	ft_strlen(const char *str)
  * @brief Return the number of bytes in @p `str` excluding the null byte,
  * @brief with at most @p `maxlen`.
  *
- * @param[in]	str		String to calculate the lenght of.
- * @param[in]	maxlen	Maximum amount of bytes to read.
+ * @param[in] str		String to calculate the lenght of.
+ * @param[in] maxlen	Maximum amount of bytes to read.
  *
  * @return The length of @p `str` if less than @p `maxlen`, or @p `maxlen` if
  * @return no null byte has been found.

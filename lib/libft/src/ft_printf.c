@@ -6,7 +6,7 @@
 /*   By: dbakker <dbakker@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/06 16:57:51 by dbakker           #+#    #+#             */
-/*   Updated: 2025/10/08 18:56:05 by dbakker          ###   ########.fr       */
+/*   Updated: 2025/10/09 11:02:19 by dbakker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,8 +41,8 @@ static int32_t	ft_conversions(char specifier, va_list args)
  *
  * Unsupported formats are undefined behaviour.
  *
- * @param[in]	format	String to print to the standard output.
- * @param[in]	...		Formatted types to print.
+ * @param[in] format	String to print to the standard output.
+ * @param[in] ...		Formatted types to print.
  *
  * @return The length of the printed string, or -1 on failure.
  *
