@@ -6,7 +6,7 @@
 /*   By: dbakker <dbakker@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/03 15:32:47 by elie              #+#    #+#             */
-/*   Updated: 2025/10/08 23:17:57 by dbakker          ###   ########.fr       */
+/*   Updated: 2025/10/09 14:20:42 by dbakker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void	run(t_data *data)
 
 	set_tokens(data);
 	set_commands(data);
-	// set_shell_expansions(data);
+	apply_shell_expansions(data);
 	// set_redirections(data);
 	if (DEBUG)
 		debug(data);
@@ -32,6 +32,8 @@ int	main(int argc, char **argv)
 	t_data	data;
 	extern char **environ;
 
+	(void)argc;
+	(void)argv;
 	ft_bzero(&data, sizeof(data));
 	data.envp = environ;
 	while (42)
