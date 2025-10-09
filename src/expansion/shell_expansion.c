@@ -6,7 +6,7 @@
 /*   By: elie <elie@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/08 18:09:32 by elie              #+#    #+#             */
-/*   Updated: 2025/10/08 18:25:14 by elie             ###   ########.fr       */
+/*   Updated: 2025/10/09 10:13:45 by elie             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 // TODO: 'x''x' results into x x instead of xx
 
 /**
- * @brief Performs the shell expansions
+ * @brief Performs the shell expansions by rewriting the argument in @p `data->command->arguments`
  *
  * - Expands the env variables
  * - Expands tilde
@@ -51,6 +51,11 @@ void	apply_shell_expansions(t_data *data)
 	}
 }
 
+/**
+ * @brief Expands a single given argument from data->command->arguments.
+ *
+ * @param str A pointer to the string to perfom expansions on
+ */
 void	expand_env_variables(char **str)
 {
 	size_t	i;
@@ -81,6 +86,12 @@ void	expand_env_variables(char **str)
 	}
 }
 
+/**
+ * @brief Expands a single variable that starts at @p `str[index]`
+ *
+ * @param str the string with the paramater to be expanded
+ * @param index the index of where the variable starts in the given str
+ */
 size_t	expand_single_variable(char **str, size_t index)
 {
 	char *parameter_var;
