@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ebelle <ebelle@student.42.fr>              +#+  +:+       +#+        */
+/*   By: dbakker <dbakker@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/30 15:08:30 by ebelle            #+#    #+#             */
-/*   Updated: 2025/10/09 16:10:58 by ebelle           ###   ########.fr       */
+/*   Updated: 2025/10/13 22:58:38 by dbakker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,5 +55,9 @@ void	cleanup_data(t_data *data);
 
 // Debug
 void	debug(t_data *data);
+
+// Built-ins
+t_list	*envp_to_llist(const char **envp);
+void	env_print(const t_list *envp);
 
 #endif

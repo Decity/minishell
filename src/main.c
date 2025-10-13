@@ -6,7 +6,7 @@
 /*   By: dbakker <dbakker@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/03 15:32:47 by elie              #+#    #+#             */
-/*   Updated: 2025/10/09 14:20:42 by dbakker          ###   ########.fr       */
+/*   Updated: 2025/10/13 23:07:40 by dbakker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ int	main(int argc, char **argv)
 	(void)argc;
 	(void)argv;
 	ft_bzero(&data, sizeof(data));
-	data.envp = environ;
+	data.envp = envp_to_llist((const char **)environ);
 	while (42)
 	{
 		run(&data);
