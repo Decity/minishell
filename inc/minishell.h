@@ -6,7 +6,7 @@
 /*   By: dbakker <dbakker@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/30 15:08:30 by ebelle            #+#    #+#             */
-/*   Updated: 2025/10/09 17:29:03 by dbakker          ###   ########.fr       */
+/*   Updated: 2025/10/12 14:22:20 by dbakker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,6 @@ void	cleanup_data(t_data *data);
 void	debug(t_data *data);
 
 // Parsing
-t_commands	*doubly_linked_list(char **tokens);
+t_cmds	*doubly_linked_list(char **tokens);
 
 #endif

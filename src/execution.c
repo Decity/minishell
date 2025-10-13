@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ebelle <ebelle@student.42.fr>              +#+  +:+       +#+        */
+/*   By: dbakker <dbakker@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/02 12:02:01 by ebelle            #+#    #+#             */
-/*   Updated: 2025/10/09 16:25:51 by ebelle           ###   ########.fr       */
+/*   Updated: 2025/10/12 14:04:34 by dbakker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,16 +59,16 @@ void	execute(t_data *data)
 	if (DEBUG)
 		printf("=== execute_command() ===\n\n");
 
-	path = get_executable_path(data->command->arguments[0]);
+	path = get_executable_path(data->command->content->arguments[0]);
 	pid = fork();
 	if (pid == 0)
 	{
 		// Child process
-		fd = open(data->command->output, O_WRONLY | O_CREAT | O_TRUNC, 0644);
+		fd = open(data->command->content->output, O_WRONLY | O_CREAT | O_TRUNC, 0644);
 		dup2(fd, STDOUT_FILENO);
 		close(fd);
 
-		execve(path, &data->command->arguments[0], data->command->arguments);
+		execve(path, &data->command->content->arguments[0], data->command->content->arguments);
 		// execvp(data->command->arguments[0], data->command->arguments);
 	}
 	else

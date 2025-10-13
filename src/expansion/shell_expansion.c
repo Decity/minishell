@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   shell_expansion.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ebelle <ebelle@student.42.fr>              +#+  +:+       +#+        */
+/*   By: dbakker <dbakker@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/08 18:09:32 by elie              #+#    #+#             */
-/*   Updated: 2025/10/09 15:46:46 by ebelle           ###   ########.fr       */
+/*   Updated: 2025/10/11 22:35:56 by dbakker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ void	apply_shell_expansions(t_data *data)
 		printf("=== apply_shell_expansions ===\n\n");
 
 	i = 0;
-	arguments = data->command->arguments;
+	arguments = data->command->content->arguments;
 	while (arguments[i])
 	{
 		expand_tilde(&arguments[i]);

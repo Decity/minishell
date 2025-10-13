@@ -6,7 +6,7 @@
 /*   By: dbakker <dbakker@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/03 15:32:52 by elie              #+#    #+#             */
-/*   Updated: 2025/10/09 17:29:19 by dbakker          ###   ########.fr       */
+/*   Updated: 2025/10/12 14:23:01 by dbakker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,18 +28,21 @@
  */
 void	set_commands(t_data *data)
 {
-	t_commands	*example_command;
+	t_cmds	*example_command;
 
 	if (DEBUG)
 		printf("=== set_commands() ===\n\n");
 
-	doubly_linked_list(data->tokens);
-	example_command = malloc(sizeof(t_commands));
+	//doubly_linked_list(data->tokens);
+	example_command = malloc(sizeof(t_cmds));
 	if (example_command == NULL)
 		exit(2); // TODO: What to actually do when malloc fails here?
+	ft_bzero(example_command, sizeof(t_cmds));
 
-	ft_bzero(example_command, sizeof(t_commands));
-	example_command->arguments = copy_array(data->tokens); // TODO: Consider storing tokens len, and using copy_narray instead()
+	example_command->content = malloc(sizeof(t_parse));
+	ft_bzero(example_command->content, sizeof(t_parse));
+
+	example_command->content->arguments = copy_array(data->tokens);
 	data->command = example_command;
 
 	if (DEBUG)

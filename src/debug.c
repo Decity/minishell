@@ -38,13 +38,13 @@ void	debug(t_data *data)
 
 	// Print command arguments
 	printf("== Command Arguments: ");
-	if (data->command && data->command->arguments)
+	if (data->command && data->command->content->arguments)
 	{
 		printf("[\n");
 		i = 0;
-		while (data->command->arguments[i])
+		while (data->command->content->arguments[i])
 		{
-			printf("=   [%d]: %s\n", i, data->command->arguments[i]);
+			printf("=   [%d]: %s\n", i, data->command->content->arguments[i]);
 			i++;
 		}
 		printf("=  ]\n");

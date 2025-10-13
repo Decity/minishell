@@ -20,17 +20,17 @@ void	cleanup_data(t_data *data)
 
 	if (data->command)
 	{
-		if (data->command->arguments)
-			free_array(&data->command->arguments);
+		if (data->command->content->arguments)
+			free_array(&data->command->content->arguments);
 
-		if (data->command->redirection)
-			free(data->command->redirection);
+		if (data->command->content->redirection)
+			free(data->command->content->redirection);
 
-		if (data->command->input)
-			free(data->command->input);
+		if (data->command->content->input)
+			free(data->command->content->input);
 
-		if (data->command->output)
-			free(data->command->output);
+		if (data->command->content->output)
+			free(data->command->content->output);
 
 		free(data->command);
 		data->command = NULL;
