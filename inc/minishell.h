@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ebelle <ebelle@student.42.fr>              +#+  +:+       +#+        */
+/*   By: elie <elie@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/30 15:08:30 by ebelle            #+#    #+#             */
-/*   Updated: 2025/10/09 16:10:58 by ebelle           ###   ########.fr       */
+/*   Updated: 2025/10/14 18:05:16 by elie             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,12 @@ void	apply_shell_expansions(t_data *data);
 void	set_redirections(t_data *data);
 void	execute(t_data *data);
 
+// Parsing
+bool	is_redirection(char *str);
+t_cmd	*init_command(void);
+int		get_redirection_type(char *str);
+void	assign_redirection(char **tokens, t_cmd *cmd);
+
 
 // Tokenization
 void	tokenize(t_data *data, int token_count);
@@ -52,6 +58,7 @@ void	remove_quotation(char **str);
 
 // Cleanup
 void	cleanup_data(t_data *data);
+void	cleanup_commands(t_cmd **cmd);
 
 // Debug
 void	debug(t_data *data);
