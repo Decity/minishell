@@ -6,7 +6,7 @@
 /*   By: dbakker <dbakker@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 14:28:23 by dbakker           #+#    #+#             */
-/*   Updated: 2025/10/09 10:59:43 by dbakker          ###   ########.fr       */
+/*   Updated: 2025/10/13 23:16:56 by dbakker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,6 @@
 char	*ft_substr(const char *str, uint32_t start, size_t num)
 {
 	const size_t	strlen = ft_strlen(str);
-	size_t			i;
 	char			*ptr;
 
 	if (str == NULL)
@@ -38,7 +37,6 @@ char	*ft_substr(const char *str, uint32_t start, size_t num)
 	{
 		return (ft_calloc(1, sizeof(char)));
 	}
-	i = 0;
 	if (num > strlen + start)
 	{
 		num = strlen + start;
