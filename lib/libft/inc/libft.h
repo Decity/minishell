@@ -31,6 +31,7 @@ typedef struct s_list
 //copy_array.c
 
 char	**copy_array(char **array);
+char	**copy_narray(char **array, size_t n);
 // free_and_null.c
 
 void	free_and_null(char **str);

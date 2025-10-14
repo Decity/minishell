@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   copy_array.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dbakker <dbakker@student.42.fr>            +#+  +:+       +#+        */
+/*   By: elie <elie@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/18 11:10:22 by elie              #+#    #+#             */
-/*   Updated: 2025/10/09 15:24:03 by dbakker          ###   ########.fr       */
+/*   Updated: 2025/10/14 13:45:55 by elie             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,3 +39,29 @@ char	**copy_array(char **array)
 	}
 	return (copy);
 }
+
+char	**copy_narray(char **array, size_t n)
+{
+	size_t	i;
+	char	**copy;
+
+	if (array == NULL)
+		return (NULL);
+	copy = ft_calloc((n + 1), sizeof(char *));
+	if (copy == NULL)
+		return (NULL);
+	i = 0;
+	while (i < n && array[i])
+	{
+		copy[i] = ft_strdup(array[i]);
+		if (!copy[i])
+		{
+			free_array(&copy);
+			return (NULL);
+		}
+		i++;
+	}
+	return (copy);
+}
+
+
