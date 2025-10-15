@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: elie <elie@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: dbakker <dbakker@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/02 12:02:01 by ebelle            #+#    #+#             */
-/*   Updated: 2025/10/15 10:31:57 by elie             ###   ########.fr       */
+/*   Updated: 2025/10/15 18:30:07 by dbakker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ void	execute(t_data *data)
 		dup2(data->command->redirection.input_fd, STDIN_FILENO);
 		dup2(data->command->redirection.output_fd, STDOUT_FILENO);
 
-		execve(path, data->command->arguments, data->envp);
+		execve(path, data->command->arguments, llist_to_array(data->envp));
 	}
 	else
 	{

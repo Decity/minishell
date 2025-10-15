@@ -6,7 +6,7 @@
 /*   By: dbakker <dbakker@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/30 15:08:30 by ebelle            #+#    #+#             */
-/*   Updated: 2025/10/15 17:59:54 by dbakker          ###   ########.fr       */
+/*   Updated: 2025/10/15 18:29:55 by dbakker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,7 @@ void	debug(t_data *data);
 
 // Built-ins
 t_list	*array_to_llist(const char **array);
+char	**llist_to_array(const t_list *list);
 void	env_print(const t_list *envp);
 void	env_single_print(const t_list *envp);
 void	env_all_print(const t_list *envp);
