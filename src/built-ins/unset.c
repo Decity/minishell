@@ -6,52 +6,64 @@
 /*   By: dbakker <dbakker@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/14 16:59:49 by dbakker           #+#    #+#             */
-/*   Updated: 2025/10/14 17:45:18 by dbakker          ###   ########.fr       */
+/*   Updated: 2025/10/15 17:48:41 by dbakker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 /**
- * @brief Remove @p `name` matching in @p `list`.
- *
- * @p `head` is necessary to move the next pointer if @p `name` is in the
- * first node.
- *
- * @param[out]	head Head of the linked list.
- * @param[out]	list Linked list containing all environmental variables.
- * @param[in]	name Environmental variable to delete.
+ * @return `true` if `content` of @p `head` matches @p `name`, false otherwise.
  */
-void	ft_unset_env(t_list **head, t_list *list, const char *name)
+static bool	check_head_node(t_list **head, const char *name)
 {
-	size_t	namelen;
 	t_list	*last;
 
-	namelen = 0;
-	if (ft_strchr(name, '='))
-	{
-		return ;
-	}
-	namelen = ft_strlen(name);
-	if (ft_memcmp(*head, name, namelen) != 0)
+	if (ft_memcmp((*head)->content, name, env_namelen((*head)->content)) == 0)
 	{
 		last = (*head);
 		*head = (*head)->next;
 		ft_listdelone(last, free);
+		return (true);
+	}
+	return (false);
+}
+
+/**
+ * @brief Remove @p `name` matching in @p `list`.
+ *
+ * @p `head` is necessary to move to the next pointer if @p `name` is in the
+ * first node.
+ *
+ * @param[out]	head Head of the linked list.
+ * @param[in]	name Environmental variable to delete.
+ */
+void	unset_env(t_list **head, const char *name)
+{
+	t_list	*node;
+	t_list	*last;
+
+	if (ft_strchr(name, '='))
+	{
 		return ;
 	}
-	while (list)
+	if (check_head_node(head, name) == true)
 	{
-		last = list;
-		if (list->next)
+		return ;
+	}
+	node = *head;
+	while (node)
+	{
+		last = node;
+		node = node->next;
+		if (node)
 		{
-			list = list->next;
-		}
-		if (ft_memcmp(list, name, namelen) != 0)
-		{
-			last->next = list->next;
-			ft_listdelone(list, free);
+			if (ft_memcmp(node->content, name, env_namelen(node->content)) == 0)
+			{
+				last->next = node->next;
+				ft_listdelone(node, free);
+				return ;
+			}
 		}
 	}
-
 }
