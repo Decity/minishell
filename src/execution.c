@@ -6,7 +6,7 @@
 /*   By: elie <elie@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/02 12:02:01 by ebelle            #+#    #+#             */
-/*   Updated: 2025/10/14 15:34:28 by elie             ###   ########.fr       */
+/*   Updated: 2025/10/15 10:31:57 by elie             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,6 @@ void	execute(t_data *data)
 {
 	pid_t	pid;
 	char	*path;
-	int		fd;
 
 	if (DEBUG)
 		printf("=== execute_command() ===\n\n");
@@ -64,17 +63,19 @@ void	execute(t_data *data)
 	if (pid == 0)
 	{
 		// Child process
-		fd = open(data->command->redirection.output_file_name, O_WRONLY | O_CREAT | O_TRUNC, 0644);
-		dup2(fd, STDOUT_FILENO);
-		close(fd);
+		dup2(data->command->redirection.input_fd, STDIN_FILENO);
+		dup2(data->command->redirection.output_fd, STDOUT_FILENO);
 
-		execve(path, &data->command->arguments[0], data->command->arguments);
-		// execvp(data->command->arguments[0], data->command->arguments);
+		execve(path, data->command->arguments, data->envp);
 	}
 	else
 	{
 		// Parent process
 		wait(NULL);
+		if (data->command->redirection.input_file_name)
+			close(data->command->redirection.input_fd);
+		if (data->command->redirection.output_file_name)
+			close(data->command->redirection.output_fd);
 	}
 
 	// clean up data->input, data->tokens, and data->command

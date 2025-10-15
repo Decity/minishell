@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dbakker <dbakker@student.42.fr>            +#+  +:+       +#+        */
+/*   By: elie <elie@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/03 15:32:47 by elie              #+#    #+#             */
-/*   Updated: 2025/10/09 14:20:42 by dbakker          ###   ########.fr       */
+/*   Updated: 2025/10/15 10:19:06 by elie             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void	run(t_data *data)
 	set_tokens(data);
 	set_commands(data);
 	apply_shell_expansions(data);
-	// set_redirections(data);
+	set_redirections(data);
 	if (DEBUG)
 		debug(data);
 	execute(data);
