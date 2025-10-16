@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: elie <elie@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: dbakker <dbakker@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/30 15:08:30 by ebelle            #+#    #+#             */
-/*   Updated: 2025/10/14 18:05:16 by elie             ###   ########.fr       */
+/*   Updated: 2025/10/15 18:29:55 by dbakker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,5 +62,15 @@ void	cleanup_commands(t_cmd **cmd);
 
 // Debug
 void	debug(t_data *data);
+
+// Built-ins
+t_list	*array_to_llist(const char **array);
+char	**llist_to_array(const t_list *list);
+void	env_print(const t_list *envp);
+void	env_single_print(const t_list *envp);
+void	env_all_print(const t_list *envp);
+void	unset_env(t_list **head, const char *name);
+size_t	env_namelen(const char *name);
+void	*export_env(t_list *list, const char *envvar);
 
 #endif

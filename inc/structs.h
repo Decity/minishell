@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   structs.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: elie <elie@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: dbakker <dbakker@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/30 18:14:03 by elie              #+#    #+#             */
-/*   Updated: 2025/10/14 15:33:42 by elie             ###   ########.fr       */
+/*   Updated: 2025/10/15 18:28:41 by dbakker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,11 +35,11 @@ typedef struct s_commands
 
 typedef struct s_data
 {
-	char	**envp;
 	char	*current_directory;
 	char	*input;
 	char	**tokens;
-	t_cmd *command;
+	t_list	*envp;
+	t_cmd	*command;
 }	t_data;
 
 #endif
