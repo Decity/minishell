@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ebelle <ebelle@student.42.fr>              +#+  +:+       +#+        */
+/*   By: dbakker <dbakker@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/22 12:24:41 by dbakker           #+#    #+#             */
-/*   Updated: 2025/10/09 16:12:54 by ebelle           ###   ########.fr       */
+/*   Updated: 2025/10/16 14:31:13 by dbakker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -149,4 +149,8 @@ int		ft_toupper(int character);
 char	*ft_strreplace(const char *base_str, const char *pattern, const char *replacement);
 void	ft_repoint(char **old_str, char *new_str);
 size_t	ft_count_occurrences(const char *base_str, const char *pattern);
+// ed_convert_list.c
+
+t_list	*array_to_llist(const char **array);
+char	**llist_to_array(const t_list *list);
 #endif

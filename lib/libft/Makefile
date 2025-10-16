@@ -42,6 +42,7 @@ SRCS = \
 	ft_tocase.c \
 	get_next_line.c \
 	custom/copy_array.c \
+	custom/ed_convert_list.c \
 	custom/free_and_null.c \
 	custom/free_array.c \
 	custom/ft_intlen.c \

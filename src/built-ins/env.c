@@ -6,7 +6,7 @@
 /*   By: dbakker <dbakker@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/13 22:47:22 by dbakker           #+#    #+#             */
-/*   Updated: 2025/10/15 17:53:16 by dbakker          ###   ########.fr       */
+/*   Updated: 2025/10/16 14:30:41 by dbakker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,82 +25,6 @@ size_t	env_namelen(const char *name)
 		namelen++;
 	}
 	return (namelen);
-}
-
-/**
- * @brief Convert the array of strings into a linked list.
- *
- * Each ->next is equivalent of iterating through an array.
- *
- * @param[in] array Array of strings.
- *
- * @return Pointer to the linked list, or `NULL` on failure.
- *
- * @warning Caller owns free().
- */
-t_list	*array_to_llist(const char **array)
-{
-	t_list	*list;
-	size_t	i;
-	char	*str;
-
-	if (array == NULL)
-	{
-		return (NULL);
-	}
-	list = NULL;
-	i = 0;
-	while (array[i])
-	{
-		str = ft_strdup(array[i]);
-		// TODO: Malloc error handling
-		ft_listadd_back(&list, ft_listnew(str));
-		i++;
-	}
-	return (list);
-}
-
-/**
- * @brief Convert the linked list into an array of strings.
- *
- * Each new index of the array is the equivalent stepping to the next node
- * of the linked list.
- *
- * @param[in] list Linked list.
- *
- * @return Pointer to the Array of strings, or `NULL` on failure.
- *
- * @warning Caller owns free().
- */
-char	**llist_to_array(const t_list *list)
-{
-	char	**array;
-	size_t	listsize;
-	size_t	i;
-
-	if (list == NULL)
-	{
-		return (NULL);
-	}
-	i = 0;
-	listsize = ft_listsize((t_list *)list);
-	array = ft_calloc(listsize + 1, sizeof(char *));
-	if (array == NULL)
-	{
-		return (NULL);
-	}
-	while (list)
-	{
-		array[i] = ft_strdup(list->content);
-		if (array[i] == NULL)
-		{
-			// TODO: Malloc error handling.
-			return (NULL);
-		}
-		list = list->next;
-		i++;
-	}
-	return (array);
 }
 
 /**
