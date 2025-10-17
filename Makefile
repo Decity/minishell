@@ -4,7 +4,7 @@ NAME		= minishell
 # Compiler and flags
 CC			= cc
 # CFLAGS		= -Wall -Werror -Wextra -g -fsanitize=address
-CFLAGS = -Wall -Wextra -Werror
+CFLAGS = -Wall -Wextra -g3 #-Werror
 MAKEFLAGS += --no-print-directory
 
 # Directories
