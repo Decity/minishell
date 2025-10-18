@@ -64,27 +64,34 @@ bool	has_redirection_target(char *str)
 	return (false);
 }
 
-void	validate_quotes(char *str)
+bool	validate_quotation(char *str)
 {
-	uint8_t	in_quote;
+	char	quote_type;
 	size_t	i;
 	size_t	count;
 
-	in_quote = 0;
+	quote_type = 0;
 	count = 0;
 	i = 0;
 	while (str[i])
 	{
-		in_quote = get_quote_type(&str[i]);
-		if (in_quote)
+		if (is_quote(str[i]))
+		{
+			quote_type = str[i];
 			count++;
-		while (str[i] != in_quote)
 			i++;
-		if (str[i] == in_quote)
-			count++;
+			while (str[i] && str[i] != quote_type)
+				i++;
+			if (str[i] == quote_type)
+			{
+				count++;
+				quote_type = 0;
+			}
+		}
 		i++;
-
-
 	}
-
+	// Return success if even amount of unquoted quotes
+	if (count % 2 == 0)
+		return (SUCCESS);
+	return (FAILURE);
 }

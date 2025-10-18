@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   tokenization_normalization.c                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: elie <elie@student.42.fr>                  +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/10/18 15:18:05 by elie              #+#    #+#             */
+/*   Updated: 2025/10/18 15:18:07 by elie             ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
 size_t	get_normalized_str_len(const char *str)
@@ -63,6 +75,7 @@ char	*normalize_whitespace(const char *str)
 	new_str = ft_calloc(get_normalized_str_len(str) + 1, sizeof(char));
 	if (new_str == NULL)
 		return (NULL);
+
 	i = 0;
 	j = 0;
 	in_quote = 0;

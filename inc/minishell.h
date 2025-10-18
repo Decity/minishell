@@ -6,7 +6,7 @@
 /*   By: elie <elie@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/30 15:08:30 by ebelle            #+#    #+#             */
-/*   Updated: 2025/10/17 18:21:36 by elie             ###   ########.fr       */
+/*   Updated: 2025/10/18 12:55:09 by elie             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,7 @@ uint8_t	get_redirection_type(const char *str);
 uint8_t	get_quote_type(const char *str);
 bool	has_redirection_target(char *str);
 int		validate_token_str(char *str);
+bool	validate_quotation(char *str);
 
 
 // Shell expansion utilities

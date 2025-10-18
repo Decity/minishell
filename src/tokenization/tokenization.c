@@ -3,17 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   tokenization.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dbakker <dbakker@student.42.fr>            +#+  +:+       +#+        */
+/*   By: elie <elie@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/03 15:20:17 by elie              #+#    #+#             */
-/*   Updated: 2025/10/06 16:54:01 by dbakker          ###   ########.fr       */
+/*   Updated: 2025/10/18 15:19:52 by elie             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 /**
- * @brief Sets tokens from @p `data->input` to @p `data->tokens`
+ * @brief Sets tokens from str @p `data->input` to array @p `data->tokens`
  *
  * Example:
  * - in: data->input: 'echo "hello" ${TERM} > test.txt'
@@ -27,18 +27,27 @@ int	set_tokens(t_data *data)
 	if (DEBUG)
 		printf("=== set_tokens ===\n\n");
 
-	if (validate_token_str(data->input) == FAILURE)
+	// Validate quoation
+	if (validate_quotation(data->input) == FAILURE)
 	{
-		printf("validate_token_str: failure\n");
+		printf("== Validating quotation:\n = FAILED\n");
 		return (FAILURE);
 	}
 
+	// validate syntax
+	if (validate_token_str(data->input) == FAILURE)
+	{
+		printf("== validate_token_str:\n = FAILED\n");
+		return (FAILURE);
+	}
+
+	// Normalize string for easier splittin
 	if (DEBUG)
 		printf("== Normalizing str\n"), printf("= before: %s\n", data->input);
 	normalized_token_str = normalize_whitespace(data->input);
 	ft_repoint(&data->input, normalized_token_str);
 	if (DEBUG)
-		printf("== After normalizing: %s\n", data->input);
+		printf("= After normalizing: %s\n", data->input);
 
 	token_count = count_tokens(normalized_token_str);
 	data->tokens = ft_calloc((token_count + 1), sizeof(char *));
@@ -73,11 +82,14 @@ void	tokenize(t_data *data, int token_count)
 		end = start;
 		if (is_quote(input[end]) == true)
 		{
-			quote = input[end];
-			end++;
-			while (input[end] && input[end] != quote)
+			while (is_quote(input[end]) == true)
+			{
+				quote = input[end];
 				end++;
-			end++;
+				while (input[end] && input[end] != quote)
+					end++;
+				end++;
+			}
 		}
 		else if (input[end])
 		{
