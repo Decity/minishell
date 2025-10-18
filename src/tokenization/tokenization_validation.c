@@ -1,7 +1,19 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   tokenization_validation.c                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: elie <elie@student.42.fr>                  +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/10/18 15:25:55 by elie              #+#    #+#             */
+/*   Updated: 2025/10/18 15:26:19 by elie             ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
 // TODO: check if inside quotes
-int	validate_token_str(char *str)
+bool	validate_token_str(char *str)
 {
 	size_t	i;
 	size_t	count_consecutive;

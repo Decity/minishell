@@ -6,7 +6,7 @@
 /*   By: elie <elie@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/18 15:18:05 by elie              #+#    #+#             */
-/*   Updated: 2025/10/18 15:18:07 by elie             ###   ########.fr       */
+/*   Updated: 2025/10/18 15:28:37 by elie             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,8 @@ size_t	get_normalized_str_len(const char *str)
 
 	size_t	len;
 	size_t	i;
-	int		curr_type;
-	int		next_type;
+	int8_t	curr_type;
+	int8_t	next_type;
 	char	in_quote;
 
 	i = 0;
@@ -68,8 +68,8 @@ char	*normalize_whitespace(const char *str)
 	char	*new_str;
 	size_t	i;
 	size_t	j;
-	int		curr_type;
-	int		next_type;
+	int8_t	curr_type;
+	int8_t	next_type;
 	char	in_quote;
 
 	new_str = ft_calloc(get_normalized_str_len(str) + 1, sizeof(char));

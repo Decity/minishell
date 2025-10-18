@@ -6,7 +6,7 @@
 /*   By: elie <elie@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/30 15:08:30 by ebelle            #+#    #+#             */
-/*   Updated: 2025/10/18 12:55:09 by elie             ###   ########.fr       */
+/*   Updated: 2025/10/18 15:34:15 by elie             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,20 +36,26 @@ bool	is_redirection(char *str);
 t_cmd	*init_command(void);
 void	assign_redirection(char **tokens, t_cmd *cmd);
 
+/// TOKENIZATION
 
-// Tokenization
-void	tokenize(t_data *data, int token_count);
-int 	set_tokens(t_data *data);
+// tokenization.c
+void	tokenize(t_data *data, size_t token_count);
+size_t	set_tokens(t_data *data);
+size_t	count_tokens(char *input);
+
+// tokenization_utils.c
 bool	is_quote(int c);
-int		count_tokens(char *input);
-
-char	*normalize_whitespace(const char *str);
-size_t	get_normalized_str_len(const char *str);
 uint8_t	get_token_type(const char *str);
 uint8_t	get_redirection_type(const char *str);
 uint8_t	get_quote_type(const char *str);
+
+// tokenization_normalization.c
+char	*normalize_whitespace(const char *str);
+size_t	get_normalized_str_len(const char *str);
+
+// tokenization_validation.c
+bool	validate_token_str(char *str);
 bool	has_redirection_target(char *str);
-int		validate_token_str(char *str);
 bool	validate_quotation(char *str);
 
 

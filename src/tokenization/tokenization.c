@@ -6,7 +6,7 @@
 /*   By: elie <elie@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/03 15:20:17 by elie              #+#    #+#             */
-/*   Updated: 2025/10/18 15:19:52 by elie             ###   ########.fr       */
+/*   Updated: 2025/10/18 15:34:31 by elie             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,9 +19,9 @@
  * - in: data->input: 'echo "hello" ${TERM} > test.txt'
  * - out: Tokenized array: ["echo", "\"hello\"", "${TERM}", ">", "test.txt"]
  */
-int	set_tokens(t_data *data)
+size_t	set_tokens(t_data *data)
 {
-	int		token_count;
+	size_t	token_count;
 	char	*normalized_token_str;
 
 	if (DEBUG)
@@ -61,13 +61,12 @@ int	set_tokens(t_data *data)
 /**
  * @brief Breaks down the string @p `data->input` into an array of tokens.
  */
-void	tokenize(t_data *data, int token_count)
+void	tokenize(t_data *data, size_t token_count)
 {
-	int		i;
-	int		start;
-	int		end;
+	size_t	i;
+	size_t	start;
+	size_t	end;
 	char	quote;
-
 	const char *input = data->input;
 
 	i = 0;
@@ -110,11 +109,11 @@ void	tokenize(t_data *data, int token_count)
 /**
  * @brief Counts and returns the amount of tokens the given string @p `input` should be split into
  */
-int		count_tokens(char *input)
+size_t	count_tokens(char *input)
 {
-	int		i;
+	size_t	i;
 	char	quote;
-	int		token_count;
+	size_t	token_count;
 
 	quote = 0;
 	token_count = 0;
@@ -145,6 +144,6 @@ int		count_tokens(char *input)
 		token_count++;
 	}
 	if (DEBUG)
-		printf("Token count: %i\n", token_count);
+		printf("Token count: %lu\n", token_count);
 	return (token_count);
 }
