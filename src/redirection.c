@@ -31,11 +31,11 @@ void	set_redirections(t_data *data)
 	current_cmd = data->command;
 	while (current_cmd)
 	{
-		if (current_cmd->redirection.redirection_type == REDIRECTION_OUT)
+		if (current_cmd->redirection.redirection_type == TYPE_REDIRECTION_OUT)
 			current_cmd->redirection.output_fd = open(current_cmd->redirection.output_file_name, O_WRONLY | O_CREAT | O_TRUNC, 0644);
-		if (current_cmd->redirection.redirection_type == REDIRECTION_IN)
+		if (current_cmd->redirection.redirection_type == TYPE_REDIRECTION_IN)
 			current_cmd->redirection.input_fd = open(current_cmd->redirection.input_file_name, O_RDONLY);
-		if (current_cmd->redirection.redirection_type == REDIRECTION_APPEND)
+		if (current_cmd->redirection.redirection_type == TYPE_REDIRECTION_APPEND)
 			current_cmd->redirection.output_fd = open(current_cmd->redirection.output_file_name, O_WRONLY | O_CREAT | O_APPEND, 0644);
 	
 		current_cmd = current_cmd->next;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dbakker <dbakker@student.42.fr>            +#+  +:+       +#+        */
+/*   By: elie <elie@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/30 15:08:30 by ebelle            #+#    #+#             */
-/*   Updated: 2025/10/16 14:30:52 by dbakker          ###   ########.fr       */
+/*   Updated: 2025/10/17 18:21:36 by elie             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,6 @@
 # include <stdlib.h>
 
 // Shell operations
-void	set_tokens(t_data *data);
 void	set_commands(t_data *data);
 void	apply_shell_expansions(t_data *data);
 void	set_redirections(t_data *data);
@@ -35,15 +34,22 @@ void	execute(t_data *data);
 // Parsing
 bool	is_redirection(char *str);
 t_cmd	*init_command(void);
-int		get_redirection_type(char *str);
 void	assign_redirection(char **tokens, t_cmd *cmd);
 
 
 // Tokenization
 void	tokenize(t_data *data, int token_count);
-void	set_tokens(t_data *data);
+int 	set_tokens(t_data *data);
 bool	is_quote(int c);
 int		count_tokens(char *input);
+
+char	*normalize_whitespace(const char *str);
+size_t	get_normalized_str_len(const char *str);
+uint8_t	get_token_type(const char *str);
+uint8_t	get_redirection_type(const char *str);
+uint8_t	get_quote_type(const char *str);
+bool	has_redirection_target(char *str);
+int		validate_token_str(char *str);
 
 
 // Shell expansion utilities

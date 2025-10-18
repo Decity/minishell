@@ -110,24 +110,6 @@ t_cmd	*init_command()
 }
 
 /**
- * @brief Returns redirection type from token string
- * @param str Token string containing the redirection operator
- * @return Redirection type as int
- */
-int	get_redirection_type(char *str)
-{
-	if (!strncmp(str, ">>", 2))
-		return (REDIRECTION_APPEND);
-	if (!strncmp(str, "<<", 2))
-		return (REDIRECTION_HEREDOC);
-	if (!strncmp(str, ">", 1))
-		return (REDIRECTION_OUT);
-	if (!strncmp(str, "<", 1))
-		return (REDIRECTION_IN);
-	return (0);
-}
-
-/**
  * @brief Assigns redirection to command structure
  * @param tokens Array where [0] is operator and [1] is filename
  * @param cmd Command structure to update
@@ -136,12 +118,12 @@ void	assign_redirection(char **tokens, t_cmd *cmd)
 {
 	cmd->redirection.redirection_type = get_redirection_type(tokens[0]);
 
-	if (cmd->redirection.redirection_type == REDIRECTION_OUT)
+	if (cmd->redirection.redirection_type == TYPE_REDIRECTION_OUT)
 		cmd->redirection.output_file_name = ft_strdup(tokens[1]);
 
-	if (cmd->redirection.redirection_type == REDIRECTION_APPEND)
+	if (cmd->redirection.redirection_type == TYPE_REDIRECTION_APPEND)
 		cmd->redirection.output_file_name = ft_strdup(tokens[1]);
 
-	if (cmd->redirection.redirection_type == REDIRECTION_IN)
+	if (cmd->redirection.redirection_type == TYPE_REDIRECTION_IN)
 		cmd->redirection.input_file_name = ft_strdup(tokens[1]);
 }

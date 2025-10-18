@@ -10,13 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../inc/minishell.h"
-
-// Breaks the input into words and operators, obeying the quoting rules described in Quoting.
-// These tokens are separated by metacharacters. This step performs alias expansion (see Aliases)
-
-// TODO: Implement proper tokenization of operators. Currently they're considered part of strings
-// when theres no whitespace betwen the operator and the rest of the str
+#include "minishell.h"
 
 /**
  * @brief Sets tokens from @p `data->input` to @p `data->tokens`
@@ -25,18 +19,32 @@
  * - in: data->input: 'echo "hello" ${TERM} > test.txt'
  * - out: Tokenized array: ["echo", "\"hello\"", "${TERM}", ">", "test.txt"]
  */
-void	set_tokens(t_data *data)
+int	set_tokens(t_data *data)
 {
-	int	token_count;
+	int		token_count;
+	char	*normalized_token_str;
 
 	if (DEBUG)
 		printf("=== set_tokens ===\n\n");
 
-	// TODO: validate_input_for_tokenization(data->input);
-	token_count = count_tokens(data->input);
+	if (validate_token_str(data->input) == FAILURE)
+	{
+		printf("validate_token_str: failure\n");
+		return (FAILURE);
+	}
+
+	if (DEBUG)
+		printf("== Normalizing str\n"), printf("= before: %s\n", data->input);
+	normalized_token_str = normalize_whitespace(data->input);
+	ft_repoint(&data->input, normalized_token_str);
+	if (DEBUG)
+		printf("== After normalizing: %s\n", data->input);
+
+	token_count = count_tokens(normalized_token_str);
 	data->tokens = ft_calloc((token_count + 1), sizeof(char *));
 	tokenize(data, token_count);
 
+	return (SUCCESS);
 	if (DEBUG)
 		printf("=== +++ ===\n\n");
 }
@@ -87,13 +95,6 @@ void	tokenize(t_data *data, int token_count)
 
 }
 
-bool	is_quote(int c)
-{
-	if (c == '\'' || c == '"')
-		return (true);
-	return (false);
-}
-
 /**
  * @brief Counts and returns the amount of tokens the given string @p `input` should be split into
  */
@@ -135,5 +136,3 @@ int		count_tokens(char *input)
 		printf("Token count: %i\n", token_count);
 	return (token_count);
 }
-
-
