@@ -6,12 +6,11 @@
 /*   By: elie <elie@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/08 18:09:32 by elie              #+#    #+#             */
-/*   Updated: 2025/10/18 14:37:35 by elie             ###   ########.fr       */
+/*   Updated: 2025/10/18 14:38:02 by elie             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
-
 
 /**
  * @brief Performs the shell expansions by rewriting the argument in @p `data->command->arguments`
