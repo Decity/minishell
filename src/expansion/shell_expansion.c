@@ -6,13 +6,12 @@
 /*   By: elie <elie@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/08 18:09:32 by elie              #+#    #+#             */
-/*   Updated: 2025/10/18 14:36:12 by elie             ###   ########.fr       */
+/*   Updated: 2025/10/18 14:37:35 by elie             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-// TODO: 'x''x' results into x x instead of xx
 
 /**
  * @brief Performs the shell expansions by rewriting the argument in @p `data->command->arguments`
