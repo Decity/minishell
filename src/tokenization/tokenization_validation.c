@@ -6,28 +6,35 @@
 /*   By: elie <elie@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/18 15:25:55 by elie              #+#    #+#             */
-/*   Updated: 2025/10/18 15:26:19 by elie             ###   ########.fr       */
+/*   Updated: 2025/10/20 11:05:46 by elie             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-// TODO: check if inside quotes
 bool	validate_token_str(char *str)
 {
 	size_t	i;
 	size_t	count_consecutive;
 	uint8_t	curr;
 	uint8_t	next;
+	char	in_quote;
 
 	i = 0;
 	count_consecutive = 0;
+	in_quote = 0;
 	while (str[i])
 	{
 		curr = get_token_type(&str[i]);
 		next = get_token_type(&str[i + 1]);
 
-		if (is_redirection(&str[i]))
+		// check for quotation
+		if (!in_quote && is_quote(str[i]))
+			in_quote = str[i];
+		else if (in_quote && in_quote == str[i])
+			in_quote = 0;
+
+		if (!in_quote && is_redirection(&str[i]))
 		{
 			count_consecutive++;
 
@@ -46,7 +53,7 @@ bool	validate_token_str(char *str)
 			if (count_consecutive == 3)
 				return (FAILURE);
 		}
-		else if (curr == TYPE_PIPE && has_redirection_target(&str[i]) == false)
+		else if (curr == TYPE_PIPE && (next == TYPE_PIPE || has_redirection_target(&str[i]) == false))
 			return (FAILURE);
 		else
 			count_consecutive = 0;
@@ -71,8 +78,11 @@ bool	has_redirection_target(char *str)
 	while (str[i] && ft_isspace(str[i]))
 		i++;
 	
+	if (str[0] == '|' && str[i] && get_token_type(&str[i]) != 0)
+		return (true);
 	if (str[i] && (get_redirection_type(&str[i]) == 0 && get_token_type(&str[i]) != TYPE_PIPE))
 		return (true);
+	printf("= %c has no target\n", str[i]);
 	return (false);
 }
 

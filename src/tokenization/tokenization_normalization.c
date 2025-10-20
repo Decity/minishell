@@ -6,17 +6,18 @@
 /*   By: elie <elie@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/18 15:18:05 by elie              #+#    #+#             */
-/*   Updated: 2025/10/18 15:28:37 by elie             ###   ########.fr       */
+/*   Updated: 2025/10/20 11:46:56 by elie             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+// TODO: fix disrepency get_normalized_strlen
+// Input: "echo "hi"|cat|grep "h""
+// Tokens: [echo, "hi", |, cat, |, grep, "h"AU]
+
 size_t	get_normalized_str_len(const char *str)
 {
-	if (DEBUG)
-		printf("== Getting normalized str len\n");
-
 	size_t	len;
 	size_t	i;
 	int8_t	curr_type;
@@ -59,7 +60,7 @@ size_t	get_normalized_str_len(const char *str)
 		i++;
 	}
 	if (DEBUG)
-		printf("== len = %lu\n", len);
+		printf("== normalized str len = %lu\n", len);
 	return (len);
 }
 
@@ -107,13 +108,14 @@ char	*normalize_whitespace(const char *str)
 			// Add space between pipe/redirect and an arg
 			else if ((curr_type == TYPE_PIPE || get_redirection_type(&str[i - 1])) && next_type == TYPE_ARG)
 				new_str[j++] = ' ';
+			// Add space between pipe and redirection
+			else if (curr_type == TYPE_PIPE && get_redirection_type(&str[i]))
+				new_str[j++] = ' ';
 			// Add space between closing quote and pipe/redirect
-			else if ((curr_type == TYPE_SQUOTE || curr_type == TYPE_DQUOTE) &&
-				(next_type == TYPE_PIPE || get_redirection_type(&str[i])))
+			else if ((curr_type == TYPE_SQUOTE || curr_type == TYPE_DQUOTE) && (next_type == TYPE_PIPE || get_redirection_type(&str[i])))
 				new_str[j++] = ' ';
 			// Add space between pipe/redirect if next is quote
-			else if ((curr_type == TYPE_PIPE || get_redirection_type(&str[i - 1])) &&
-				(next_type == TYPE_SQUOTE || next_type == TYPE_DQUOTE))
+			else if ((curr_type == TYPE_PIPE || get_redirection_type(&str[i - 1])) && (next_type == TYPE_SQUOTE || next_type == TYPE_DQUOTE))
 				new_str[j++] = ' ';
 		}
 	}

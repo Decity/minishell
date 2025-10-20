@@ -6,7 +6,7 @@
 /*   By: elie <elie@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/03 15:20:17 by elie              #+#    #+#             */
-/*   Updated: 2025/10/18 15:34:31 by elie             ###   ########.fr       */
+/*   Updated: 2025/10/20 09:58:10 by elie             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,19 +43,19 @@ size_t	set_tokens(t_data *data)
 
 	// Normalize string for easier splittin
 	if (DEBUG)
-		printf("== Normalizing str\n"), printf("= before: %s\n", data->input);
+		printf("== Normalizing str [%s]\n", data->input);
 	normalized_token_str = normalize_whitespace(data->input);
 	ft_repoint(&data->input, normalized_token_str);
 	if (DEBUG)
-		printf("= After normalizing: %s\n", data->input);
+		printf("= After normalizing: [%s] str_len: %lu\n", data->input, ft_strlen(data->input));
 
 	token_count = count_tokens(normalized_token_str);
 	data->tokens = ft_calloc((token_count + 1), sizeof(char *));
 	tokenize(data, token_count);
 
-	return (SUCCESS);
 	if (DEBUG)
 		printf("=== +++ ===\n\n");
+	return (SUCCESS);
 }
 
 /**
@@ -87,12 +87,16 @@ void	tokenize(t_data *data, size_t token_count)
 				end++;
 				while (input[end] && input[end] != quote)
 					end++;
-				end++;
+				if (input[end])
+					end++;
 			}
+			// Continue with any non-whitespace after quotes
+			while (input[end] && ft_isspace(input[end]) == false && is_quote(input[end]) == false)
+				end++;
 		}
 		else if (input[end])
 		{
-			while (input[end] && ft_isspace(input[end]) == false)
+			while (input[end] && ft_isspace(input[end]) == false && is_quote(input[end]) == false)
 				end++;
 		}
 		// Duplicate str from start to end
@@ -130,15 +134,22 @@ size_t	count_tokens(char *input)
 		// Check for quote or non quote
 		if (is_quote(input[i]) == true)
 		{
-			quote = input[i];
-			i++;
-			while (input[i] && input[i] != quote)
+			while (is_quote(input[i]) == true)
+			{
+				quote = input[i];
 				i++;
-			i++;
+				while (input[i] && input[i] != quote)
+					i++;
+				if (input[i])
+					i++;
+			}
+			// Continue with any non-whitespace after quotes
+			while (input[i] && ft_isspace(input[i]) == false && is_quote(input[i]) == false)
+				i++;
 		}
 		else
 		{
-			while (input[i] && ft_isspace(input[i]) == false)
+			while (input[i] && ft_isspace(input[i]) == false && is_quote(input[i]) == false)
 				i++;
 		}
 		token_count++;
