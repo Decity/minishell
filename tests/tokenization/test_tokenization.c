@@ -6,7 +6,7 @@
 /*   By: elie <elie@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/18 00:00:00 by elie              #+#    #+#             */
-/*   Updated: 2025/10/20 12:00:54 by elie             ###   ########.fr       */
+/*   Updated: 2025/10/20 14:22:21 by elie             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,9 @@ char *tests[] = {
 	"echo \"hi\"",
 	"echo 'hi'",
 	"echo 'hi'bye",
+	"echo hi'bye'",
+	"echo \"hi\"bye",
+	"echo hi\"bye\"",
 	"echo \"'hi'\"",
 
 	// redirection
@@ -150,15 +153,18 @@ char *tests_fail[] = {
 	"echo < > in",
 	"> out",
 	"< in",
+	"echo hi ><out",
+	"echo hi <>out",
+	"echo hi >><<out",
+
+	// invalid pipes
+	"|",
 	"| cat",
+	"| echo hi",
 	"echo |",
 	"echo | | cat",
 	"echo ||",
 	"echo |||",
-
-	// invalid pipes
-	"|",
-	"| echo hi",
 	"echo hi |",
 	"echo | | cat",
 	"echo hi | | cat",
@@ -170,10 +176,6 @@ char *tests_fail[] = {
 	"echo < ",
 	"echo > ",
 
-	// multiple consecutive operators
-	"echo hi ><out",
-	"echo hi <>out",
-	"echo hi >><<out",
 
 	NULL
 };
@@ -221,7 +223,7 @@ int	main(void)
 	{
 		ft_memset(&data, 0, sizeof(t_data));
 		data.input = ft_strdup(tests_fail[i]);
-		printf("Input: \"%s\"\\n", tests_fail[i]);
+		printf("Input: \"%s\"\n", tests_fail[i]);
 		set_tokens(&data);
 		printf("Tokens: ");
 		print_tokens(data.tokens);
