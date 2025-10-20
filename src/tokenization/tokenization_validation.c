@@ -6,7 +6,7 @@
 /*   By: elie <elie@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/18 15:25:55 by elie              #+#    #+#             */
-/*   Updated: 2025/10/20 11:05:46 by elie             ###   ########.fr       */
+/*   Updated: 2025/10/20 12:39:44 by elie             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ bool	validate_token_str(char *str)
 				return (FAILURE);
 
 			// Check if the there's a mismatch in symbols. i.e.: >< or <> 
-			if (get_redirection_type(&str[i + 1]) && curr != next)
+			if (get_redirection_type(&str[i + 1]) && str[i] != str[i + 1])
 				return (FAILURE);
 
 			// Check if there's three redirection tokens in a row

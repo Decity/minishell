@@ -6,7 +6,7 @@
 /*   By: elie <elie@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/03 15:20:17 by elie              #+#    #+#             */
-/*   Updated: 2025/10/20 09:58:10 by elie             ###   ########.fr       */
+/*   Updated: 2025/10/20 12:28:07 by elie             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ size_t	set_tokens(t_data *data)
 	// Validate quoation
 	if (validate_quotation(data->input) == FAILURE)
 	{
-		printf("== Validating quotation:\n = FAILED\n");
+		printf("== Validating quotation: FAILED\n");
 		return (FAILURE);
 	}
 

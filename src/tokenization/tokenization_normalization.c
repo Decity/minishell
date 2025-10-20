@@ -6,7 +6,7 @@
 /*   By: elie <elie@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/18 15:18:05 by elie              #+#    #+#             */
-/*   Updated: 2025/10/20 11:46:56 by elie             ###   ########.fr       */
+/*   Updated: 2025/10/20 12:22:51 by elie             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,12 @@
 // TODO: fix disrepency get_normalized_strlen
 // Input: "echo "hi"|cat|grep "h""
 // Tokens: [echo, "hi", |, cat, |, grep, "h"AU]
+
+// Input:  echo "hi"|cat|grep "h"
+// Tokens: [echo, "hi", |, cat, |, grep, "h"V]
+
+// Input:  echo 'hi'|cat|grep 'h'
+// Tokens: [echo, 'hi', |, cat, |, grep, 'h'V]
 
 size_t	get_normalized_str_len(const char *str)
 {
