@@ -3,16 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   shell_expansion.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ebelle <ebelle@student.42.fr>              +#+  +:+       +#+        */
+/*   By: elie <elie@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/08 18:09:32 by elie              #+#    #+#             */
-/*   Updated: 2025/10/09 15:46:46 by ebelle           ###   ########.fr       */
+/*   Updated: 2025/10/18 14:38:02 by elie             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
-
-// TODO: 'x''x' results into x x instead of xx
 
 /**
  * @brief Performs the shell expansions by rewriting the argument in @p `data->command->arguments`
@@ -65,6 +63,7 @@ void	expand_env_variables(char **str)
 
 	inside_single_quotes = false;
 	inside_double_quotes = false;
+	j = 0;
 	i = 0;
 	while ((*str)[i])
 	{

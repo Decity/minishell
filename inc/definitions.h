@@ -20,9 +20,14 @@
 # define FAILURE 0
 # define SUCCESS 1
 
-# define REDIRECTION_IN 1
-# define REDIRECTION_OUT 2
-# define REDIRECTION_APPEND 3
-# define REDIRECTION_HEREDOC 4
+# define TYPE_ARG 1
+# define TYPE_SPACE 2
+# define TYPE_SQUOTE 3
+# define TYPE_DQUOTE 4
+# define TYPE_PIPE 5
+# define TYPE_REDIRECTION_IN 6
+# define TYPE_REDIRECTION_OUT 7
+# define TYPE_REDIRECTION_APPEND 8
+# define TYPE_REDIRECTION_HEREDOC 9
 
 #endif

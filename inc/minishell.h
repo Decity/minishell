@@ -6,7 +6,7 @@
 /*   By: dbakker <dbakker@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/30 15:08:30 by ebelle            #+#    #+#             */
-/*   Updated: 2025/10/17 17:36:22 by dbakker          ###   ########.fr       */
+/*   Updated: 2025/10/21 10:39:08 by dbakker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,6 @@
 # include <stdlib.h>
 
 // Shell operations
-void	set_tokens(t_data *data);
 void	set_commands(t_data *data);
 void	apply_shell_expansions(t_data *data);
 void	set_redirections(t_data *data);
@@ -35,15 +34,29 @@ void	execute(t_data *data);
 // Parsing
 bool	is_redirection(char *str);
 t_cmd	*init_command(void);
-int		get_redirection_type(char *str);
 void	assign_redirection(char **tokens, t_cmd *cmd);
 
+/// TOKENIZATION
 
-// Tokenization
-void	tokenize(t_data *data, int token_count);
-void	set_tokens(t_data *data);
+// tokenization.c
+void	tokenize(t_data *data, size_t token_count);
+size_t	set_tokens(t_data *data);
+size_t	count_tokens(char *input);
+
+// tokenization_utils.c
 bool	is_quote(int c);
-int		count_tokens(char *input);
+uint8_t	get_token_type(const char *str);
+uint8_t	get_redirection_type(const char *str);
+uint8_t	get_quote_type(const char *str);
+
+// tokenization_normalization.c
+char	*normalize_whitespace(const char *str);
+size_t	get_normalized_str_len(const char *str);
+
+// tokenization_validation.c
+bool	validate_token_str(char *str);
+bool	has_redirection_target(char *str);
+bool	validate_quotation(char *str);
 
 
 // Shell expansion utilities
