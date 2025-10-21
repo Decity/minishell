@@ -13,7 +13,7 @@
 #ifndef STRUCTS_H
 # define STRUCTS_H
 
-typedef struct s_redirection	s_redirection;
+typedef struct s_redirection	t_redirection;
 typedef struct s_commands		t_cmd;
 typedef struct s_data			t_data;
 
@@ -24,13 +24,13 @@ typedef struct s_redirection
 	int		output_fd;
 	char	*input_file_name;
 	char	*output_file_name;
-}	s_redirection;
+}	t_redirection;
 
 typedef struct s_commands
 {
 	char			**arguments;
-	s_redirection	redirection;
-	t_cmd		*next;
+	t_redirection	redirection;
+	t_cmd			*next;
 }	t_cmd;
 
 typedef struct s_data
