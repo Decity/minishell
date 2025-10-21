@@ -53,7 +53,7 @@ bool	validate_token_str(char *str)
 			if (count_consecutive == 3)
 				return (FAILURE);
 		}
-		else if (curr == TYPE_PIPE && (next == TYPE_PIPE || has_redirection_target(&str[i]) == false))
+		else if (!in_quote && curr == TYPE_PIPE && (next == TYPE_PIPE || has_redirection_target(&str[i]) == false))
 			return (FAILURE);
 		else
 			count_consecutive = 0;
