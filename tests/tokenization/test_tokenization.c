@@ -6,7 +6,7 @@
 /*   By: elie <elie@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/18 00:00:00 by elie              #+#    #+#             */
-/*   Updated: 2025/10/20 14:22:21 by elie             ###   ########.fr       */
+/*   Updated: 2025/10/22 16:52:32 by elie             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ char *tests[] = {
 	"echo \"hi\"bye",
 	"echo hi\"bye\"",
 	"echo \"'hi'\"",
+	"echo hi'bye'hi\"bye\""
 
 	// redirection
 	"echo hi > out",
@@ -106,18 +107,10 @@ char *tests[] = {
 	"echo \"\"\"\"",
 	"echo ''''",
 	"echo \"'\"'\"'",
-	"echo hi>>>out",
-	"echo hi<<<in",
-	"|||",
-	"echo hi|||bye",
-	"echo hi &",
 	"echo hi;bye",
 	"echo $USER",
 	"echo \"$USER\"",
 	"echo '$USER'",
-	"echo ~",
-	"echo \"~\"",
-	"echo '~'",
 
 	// heredoc
 	"cat << EOF",
@@ -147,20 +140,35 @@ char *tests_fail[] = {
 	// invalid redirections
 	"echo >",
 	"echo <",
+	"echo < ",
+	"echo > ",
 	"echo >>",
 	"echo <<",
 	"echo > < out",
 	"echo < > in",
-	"> out",
-	"< in",
 	"echo hi ><out",
 	"echo hi <>out",
 	"echo hi >><<out",
+	"echo hi>>>out",
+	"echo hi< <<in",
+	"echo hi> >>out",
+	"echo hi< <<in",
+	"echo hi>> >out",
+	"echo hi<< <in",
+	"echo hi|| |bye",
+	"echo hi|||bye",
+	"echo hi||| bye",
+	"echo hi>>> out",
+	"echo hi<<< in",
+	"echo hi||| bye",
 
 	// invalid pipes
 	"|",
-	"| cat",
-	"| echo hi",
+	"||",
+	"|| ",
+	"| |",
+	" | | | ",
+	"|||",
 	"echo |",
 	"echo | | cat",
 	"echo ||",
@@ -173,8 +181,6 @@ char *tests_fail[] = {
 	"echo \"hi | cat",
 	"echo 'hi > out",
 	"echo \"hi\" | ",
-	"echo < ",
-	"echo > ",
 
 
 	NULL
