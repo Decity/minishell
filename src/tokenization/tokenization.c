@@ -6,15 +6,11 @@
 /*   By: elie <elie@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/03 15:20:17 by elie              #+#    #+#             */
-/*   Updated: 2025/10/22 17:09:15 by elie             ###   ########.fr       */
+/*   Updated: 2025/10/22 17:28:31 by elie             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-// TODO: normalize space or error check for | |
-// Input: "echo | | cat"
-// Tokens: [echo, |, |, cat]
 
 /**
  * @brief Sets tokens from str @p `data->input` to array @p `data->tokens`
@@ -90,7 +86,7 @@ void	tokenize(t_data *data, size_t token_count)
 				while (input[end] && input[end] != quote)
 					end++;
 				if (input[end] == quote)
-					end++;  // Skip closing quote
+					end++;
 			}
 			else
 				end++;
@@ -98,10 +94,6 @@ void	tokenize(t_data *data, size_t token_count)
 
 		data->tokens[i] = ft_strndup(&input[start], end - start);
 		// TODO: malloc check
-
-		// // Skip any spaces to get to the next token
-		// while (input[end] && ft_isspace(input[end]))
-		// 	end++;
 
 		start = end;
 		i++;
@@ -139,7 +131,7 @@ size_t	count_tokens(char *input)
 		{
 			while (input[i + 1] && ft_isspace(input[i + 1]))
 				i++;
-			if (input[i + 1] && ! ft_isspace(input[i + 1]))
+			if (input[i + 1] && !ft_isspace(input[i + 1]))
 				token_count++;
 		}
 		i++;
