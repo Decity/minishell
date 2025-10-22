@@ -6,7 +6,7 @@
 /*   By: dbakker <dbakker@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/15 13:16:57 by dbakker           #+#    #+#             */
-/*   Updated: 2025/10/17 10:07:28 by dbakker          ###   ########.fr       */
+/*   Updated: 2025/10/22 18:22:11 by dbakker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
  * @brief `NAME`.
  *
  * Allowed characters are lowercase/uppercase alphabetical characters,
- * digits and underscores.
+ * digits and underscores, but may not have digits as the first character.
  *
  * @param[in] str String to check.
  *
@@ -28,7 +28,7 @@ static bool	is_env_name(const char *str)
 	size_t	i;
 
 	i = 0;
-	if (*str == '\0')
+	if (*str == '\0' || ft_isdigit(*str))
 	{
 		return (false);
 	}
@@ -101,7 +101,9 @@ void	*export_env(t_list *list, const char *envvar)
 	void	*old_ptr;
 	void	*new_ptr;
 
-	if (ft_isdigit(*envvar) || is_env_name(envvar) == false)
+	if (envvar == NULL)
+		return (NULL);
+	if (is_env_name(envvar) == false)
 		return (NULL);
 	curr_node = list;
 	while (curr_node)

@@ -6,7 +6,7 @@
 /*   By: dbakker <dbakker@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/17 10:41:14 by dbakker           #+#    #+#             */
-/*   Updated: 2025/10/17 14:10:46 by dbakker          ###   ########.fr       */
+/*   Updated: 2025/10/22 18:04:37 by dbakker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,4 +41,9 @@ void	*ed_update_pwd(t_pwd *directory)
 	free(directory->pwd);
 	directory->pwd = ptr_pwd;
 	return (directory);
+}
+
+void	pwd_print(t_pwd directory)
+{
+	printf("%s\n", directory.pwd);
 }

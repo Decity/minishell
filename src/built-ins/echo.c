@@ -6,26 +6,37 @@
 /*   By: dbakker <dbakker@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/17 14:27:44 by dbakker           #+#    #+#             */
-/*   Updated: 2025/10/18 22:49:52 by dbakker          ###   ########.fr       */
+/*   Updated: 2025/10/22 18:19:52 by dbakker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 /**
- * @brief Print @p `message` to `stdout`.
+ * @brief Print the first pointer of @p `message` to `stdout`.
  *
- * @param[in] message	Message to print
- * @param[in] option	Extra behaviour how @p `message` should be printed.
+ * The only extra option is `-n` for printing without a newline.
+ *
+ * @param[in] message	Message to print with the added options.
  */
-void	ed_echo(const char *message, const char *option)
+void	ed_echo(const char **message)
 {
-	if (option == NULL)
+	size_t	i;
+	bool	n_option;
+
+	i = 0;
+	n_option = false;
+	while (message[i])
 	{
-		printf("%s\n", message);
+		if (ft_strncmp(message[i], "-n", 2))
+		{
+			n_option = true;
+		}
+		i++;
 	}
-	if (ft_memcmp(option, "-n", ft_strlen(option)) == 0)
+	printf("%s", *message);
+	if (n_option == false)
 	{
-		printf("%s", message);
+		printf("\n");
 	}
 }
