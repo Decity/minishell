@@ -6,18 +6,11 @@
 /*   By: elie <elie@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/17 17:49:42 by elie              #+#    #+#             */
-/*   Updated: 2025/10/20 16:45:07 by elie             ###   ########.fr       */
+/*   Updated: 2025/10/22 17:12:22 by elie             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-bool	is_quote(int c)
-{
-	if (c == '\'' || c == '"')
-		return (true);
-	return (false);
-}
 
 /**
  * @brief Gets the token type as num
@@ -72,5 +65,12 @@ uint8_t	get_quote_type(const char *str)
 		return (TYPE_SQUOTE);
 	if (!ft_strncmp(str, "\"", 1))
 		return (TYPE_DQUOTE);
+	return (0);
+}
+
+char	get_quote(const char c)
+{
+	if (c == '\'' || c == '\"')
+		return (c);
 	return (0);
 }
