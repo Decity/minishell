@@ -6,18 +6,19 @@
 /*   By: dbakker <dbakker@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/17 14:27:44 by dbakker           #+#    #+#             */
-/*   Updated: 2025/10/22 18:19:52 by dbakker          ###   ########.fr       */
+/*   Updated: 2025/10/22 18:46:51 by dbakker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 /**
- * @brief Print the first pointer of @p `message` to `stdout`.
+ * @brief Print all pointers of @p `message` to `stdout`,
  *
- * The only extra option is `-n` for printing without a newline.
+ * If the first pointer of @p `message` contains `-n`, no newline will be
+ * printed.
  *
- * @param[in] message	Message to print with the added options.
+ * @param[in] message Messages to print.
  */
 void	ed_echo(const char **message)
 {
@@ -28,15 +29,21 @@ void	ed_echo(const char **message)
 	n_option = false;
 	while (message[i])
 	{
-		if (ft_strncmp(message[i], "-n", 2))
+		if (ft_strncmp(message[i], "-n", 2) == 0)
 		{
 			n_option = true;
 		}
+		else
+		{
+			break ;
+		}
 		i++;
 	}
-	printf("%s", *message);
-	if (n_option == false)
+	while (message[i])
 	{
-		printf("\n");
+		printf("%s", message[i]);
+		i++;
 	}
+	if (n_option == false)
+		printf("\n");
 }
