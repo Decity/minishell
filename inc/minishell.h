@@ -6,7 +6,7 @@
 /*   By: elie <elie@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/30 15:08:30 by ebelle            #+#    #+#             */
-/*   Updated: 2025/10/22 17:12:29 by elie             ###   ########.fr       */
+/*   Updated: 2025/10/23 11:09:43 by elie             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,10 +44,10 @@ size_t	set_tokens(t_data *data);
 size_t	count_tokens(char *input);
 
 // tokenization_utils.c
-uint8_t	get_token_type(const char *str);
-uint8_t	get_redirection_type(const char *str);
 char	get_quote(const char c);
 uint8_t	get_quote_type(const char *str);
+uint8_t	get_token_type(const char *str);
+uint8_t	get_redirection_type(const char *str);
 
 // tokenization_normalization.c
 char	*normalize_whitespace(const char *str);
