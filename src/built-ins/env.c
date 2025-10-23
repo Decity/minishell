@@ -6,7 +6,7 @@
 /*   By: dbakker <dbakker@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/13 22:47:22 by dbakker           #+#    #+#             */
-/*   Updated: 2025/10/16 14:30:41 by dbakker          ###   ########.fr       */
+/*   Updated: 2025/10/17 10:40:57 by dbakker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,27 @@ size_t	env_namelen(const char *name)
 		namelen++;
 	}
 	return (namelen);
+}
+
+/**
+ * @brief Find @p `name` in @p `list` and return its `VALUE`.
+ *
+ * @param[in] list Linked list containing environmental variables.
+ * @param[in] name `NAME` to find in linked list.
+ *
+ * @return Pointer to the `VALUE` of `NAME`, or `NULL` if not found.
+ */
+char	*ft_getenv(const t_list *list, const char *name)
+{
+	while (list)
+	{
+		if (ft_memcmp(list->content, name, env_namelen(list->content)) == 0)
+		{
+			return (ft_strchr(list->content, '=') + 1);
+		}
+		list = list->next;
+	}
+	return (NULL);
 }
 
 /**
