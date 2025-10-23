@@ -6,12 +6,15 @@
 /*   By: elie <elie@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/18 15:18:05 by elie              #+#    #+#             */
-/*   Updated: 2025/10/20 14:45:29 by elie             ###   ########.fr       */
+/*   Updated: 2025/10/23 11:01:00 by elie             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+/**
+ * @brief calculates the len for the normalized version of the given str
+ */
 size_t	get_normalized_str_len(const char *str)
 {
 	size_t	len;
@@ -71,6 +74,10 @@ size_t	get_normalized_str_len(const char *str)
 	return (len);
 }
 
+
+/**
+ * @brief Returns a str with guaranteed whitespace around redirections and pipes
+ */
 char	*normalize_whitespace(const char *str)
 {
 	char	*new_str;

@@ -6,12 +6,16 @@
 /*   By: elie <elie@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/18 15:25:55 by elie              #+#    #+#             */
-/*   Updated: 2025/10/22 17:12:11 by elie             ###   ########.fr       */
+/*   Updated: 2025/10/23 11:05:47 by elie             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+
+/**
+ * @brief validates the syntax of redirections and pipes 
+ */
 bool	validate_token_str(char *str)
 {
 	size_t	i;
@@ -86,6 +90,9 @@ bool	has_redirection_target(char *str)
 	return (false);
 }
 
+/**
+ * @brief Checks if there's an even amount of quotes, not counting quoted quotes.
+ */
 bool	validate_quotation(char *str)
 {
 	char	quote_type;
