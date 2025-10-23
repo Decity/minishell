@@ -66,8 +66,8 @@ void	debug(t_data *data)
 			printf("=     Type: %d\n", current->redirection.redirection_type);
 			printf("=     Input FD: %d\n", current->redirection.input_fd);
 			printf("=     Output FD: %d\n", current->redirection.output_fd);
-			printf("=     Input File: %s\n", current->redirection.input_file_name ? current->redirection.input_file_name : "NULL");
-			printf("=     Output File: %s\n", current->redirection.output_file_name ? current->redirection.output_file_name : "NULL");
+			printf("=     Input File: %s\n", current->redirection.infile ? current->redirection.infile : "NULL");
+			printf("=     Output File: %s\n", current->redirection.outfile ? current->redirection.outfile : "NULL");
 			printf("=   Next: %p\n", (void *)current->next);
 			printf("==\n");
 

@@ -7,15 +7,15 @@
  */
 static void	cleanup_redirection(t_cmd *cmd)
 {
-	if (cmd->redirection.input_file_name)
+	if (cmd->redirection.infile)
 	{
-		free(cmd->redirection.input_file_name);
-		cmd->redirection.input_file_name = NULL;
+		free(cmd->redirection.infile);
+		cmd->redirection.infile = NULL;
 	}
-	if (cmd->redirection.output_file_name)
+	if (cmd->redirection.outfile)
 	{
-		free(cmd->redirection.output_file_name);
-		cmd->redirection.output_file_name = NULL;
+		free(cmd->redirection.outfile);
+		cmd->redirection.outfile = NULL;
 	}
 }
 

@@ -6,7 +6,7 @@
 /*   By: dbakker <dbakker@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/30 18:14:03 by elie              #+#    #+#             */
-/*   Updated: 2025/10/22 20:23:50 by dbakker          ###   ########.fr       */
+/*   Updated: 2025/10/23 15:46:15 by dbakker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,8 @@ typedef struct s_redirection
 	int		redirection_type;
 	int		input_fd;
 	int		output_fd;
-	char	**input_file_name;
-	char	**output_file_name;
+	char	**infile;
+	char	**outfile;
 }	t_redirection;
 
 typedef struct s_commands

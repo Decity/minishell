@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: elie <elie@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: dbakker <dbakker@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/03 15:32:52 by elie              #+#    #+#             */
-/*   Updated: 2025/10/14 18:02:13 by elie             ###   ########.fr       */
+/*   Updated: 2025/10/23 15:46:15 by dbakker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,8 @@
  * - command->redirection->type: ">"
  * - command->redirection->input_fd: stdin
  * - command->redirection->output_fd: stdin
- * - command->redirection->output_file_name: "test.txt"
- * - command->redirection->input_file_name: NULL
+ * - command->redirection->outfile: "test.txt"
+ * - command->redirection->infile: NULL
  */
 void	set_commands(t_data *data)
 {
@@ -119,11 +119,11 @@ void	assign_redirection(char **tokens, t_cmd *cmd)
 	cmd->redirection.redirection_type = get_redirection_type(tokens[0]);
 
 	if (cmd->redirection.redirection_type == TYPE_REDIRECTION_OUT)
-		cmd->redirection.output_file_name = ft_strdup(tokens[1]);
+		cmd->redirection.outfile = ft_strdup(tokens[1]);
 
 	if (cmd->redirection.redirection_type == TYPE_REDIRECTION_APPEND)
-		cmd->redirection.output_file_name = ft_strdup(tokens[1]);
+		cmd->redirection.outfile = ft_strdup(tokens[1]);
 
 	if (cmd->redirection.redirection_type == TYPE_REDIRECTION_IN)
-		cmd->redirection.input_file_name = ft_strdup(tokens[1]);
+		cmd->redirection.infile = ft_strdup(tokens[1]);
 }

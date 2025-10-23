@@ -6,7 +6,7 @@
 /*   By: dbakker <dbakker@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/02 12:02:01 by ebelle            #+#    #+#             */
-/*   Updated: 2025/10/15 18:30:07 by dbakker          ###   ########.fr       */
+/*   Updated: 2025/10/23 15:46:15 by dbakker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,9 +72,9 @@ void	execute(t_data *data)
 	{
 		// Parent process
 		wait(NULL);
-		if (data->command->redirection.input_file_name)
+		if (data->command->redirection.infile)
 			close(data->command->redirection.input_fd);
-		if (data->command->redirection.output_file_name)
+		if (data->command->redirection.outfile)
 			close(data->command->redirection.output_fd);
 	}
 
