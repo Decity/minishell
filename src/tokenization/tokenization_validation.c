@@ -6,12 +6,16 @@
 /*   By: elie <elie@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/18 15:25:55 by elie              #+#    #+#             */
-/*   Updated: 2025/10/20 12:39:44 by elie             ###   ########.fr       */
+/*   Updated: 2025/10/23 11:05:47 by elie             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+
+/**
+ * @brief validates the syntax of redirections and pipes 
+ */
 bool	validate_token_str(char *str)
 {
 	size_t	i;
@@ -29,7 +33,7 @@ bool	validate_token_str(char *str)
 		next = get_token_type(&str[i + 1]);
 
 		// check for quotation
-		if (!in_quote && is_quote(str[i]))
+		if (!in_quote && get_quote(str[i]))
 			in_quote = str[i];
 		else if (in_quote && in_quote == str[i])
 			in_quote = 0;
@@ -78,7 +82,7 @@ bool	has_redirection_target(char *str)
 	while (str[i] && ft_isspace(str[i]))
 		i++;
 	
-	if (str[0] == '|' && str[i] && get_token_type(&str[i]) != 0)
+	if (str[0] == '|' && str[i] &&  str[i] != '|')
 		return (true);
 	if (str[i] && (get_redirection_type(&str[i]) == 0 && get_token_type(&str[i]) != TYPE_PIPE))
 		return (true);
@@ -86,6 +90,9 @@ bool	has_redirection_target(char *str)
 	return (false);
 }
 
+/**
+ * @brief Checks if there's an even amount of quotes, not counting quoted quotes.
+ */
 bool	validate_quotation(char *str)
 {
 	char	quote_type;
@@ -97,7 +104,7 @@ bool	validate_quotation(char *str)
 	i = 0;
 	while (str[i])
 	{
-		if (is_quote(str[i]))
+		if (get_quote(str[i]))
 		{
 			quote_type = str[i];
 			count++;
