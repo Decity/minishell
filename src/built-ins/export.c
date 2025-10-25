@@ -6,7 +6,7 @@
 /*   By: dbakker <dbakker@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/15 13:16:57 by dbakker           #+#    #+#             */
-/*   Updated: 2025/10/15 17:52:13 by dbakker          ###   ########.fr       */
+/*   Updated: 2025/10/22 18:22:11 by dbakker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,17 +17,21 @@
  * @brief `NAME`.
  *
  * Allowed characters are lowercase/uppercase alphabetical characters,
- * digits and underscores.
+ * digits and underscores, but may not have digits as the first character.
  *
  * @param[in] str String to check.
  *
  * @return `false` if an invalid character is found, `true` otherwise.
  */
-bool	is_env_name(const char *str)
+static bool	is_env_name(const char *str)
 {
 	size_t	i;
 
 	i = 0;
+	if (*str == '\0' || ft_isdigit(*str))
+	{
+		return (false);
+	}
 	while (str[i] && str[i] != '=')
 	{
 		if (ft_isalnum(str[i]) == 0 && str[i] != '_')
@@ -40,44 +44,81 @@ bool	is_env_name(const char *str)
 }
 
 /**
+ * @brief Check if @p `envvar` matches the `NAME` in `content` of @p
+ * @brief `curr_node`.
+ *
+ * @param[out]	curr_node	`content` to replace.
+ * @param[in]	envvar		The new environmental variable.
+ *
+ * @retval New pointer to `content` of @p `curr_node` if both arguments match.
+ * @retval Pointer to `content` of @p `curr_node` if neither arguments match.
+ * @retval `NULL` on failure.
+ *
+ * @warning Caller owns free().
+ */
+static void	*try_replacing_existing_env(t_list *curr_node, const char *envvar)
+{
+	size_t	len_envvar;
+	size_t	len_cnt;
+	char	*str;
+
+	len_envvar = env_namelen(envvar);
+	len_cnt = env_namelen(curr_node->content);
+	if (ft_memcmp(curr_node->content, envvar, len_cnt) == 0
+		&& len_envvar == len_cnt)
+	{
+		str = ft_strdup(envvar);
+		if (str == NULL)
+			return (NULL);
+		free(curr_node->content);
+		curr_node->content = str;
+		return (curr_node->content);
+	}
+	return (curr_node->content);
+}
+
+/**
  * @brief Add @p `envvar` to the end of @p `list`.
  *
  * If the `NAME` of @p `envvar` matches that of an already existing environmental
  * variable, it will instead replace the variable.
+ * If allocation for the new environmental variable fails, the current one will
+ * remain unchanged.
  *
  * @param[out]	list	Linked list containing all environmental variables.
  * @param[in]	envvar	Environmental variable to add to the linked list.
  *
  * @return Pointer to the node added to the list, or `NULL` on failure.
  *
- * @warning Callers owns free().
+ * @warning Caller owns free().
  *
  * @note @p `envvar` can only contain alphabetical characters, numbers and
  * @note underscores, but cannot start with numbers.
  */
 void	*export_env(t_list *list, const char *envvar)
 {
-	t_list	*node;
-	size_t	envvarlen;
-	size_t	contentlen;
+	t_list	*curr_node;
+	void	*old_ptr;
+	void	*new_ptr;
 
-	if (ft_isdigit(*envvar) || is_env_name(envvar) == false)
-	{
+	if (envvar == NULL)
 		return (NULL);
-	}
-	node = list;
-	envvarlen = env_namelen(envvar);
-	while (node)
+	if (is_env_name(envvar) == false)
+		return (NULL);
+	curr_node = list;
+	while (curr_node)
 	{
-		contentlen = env_namelen(node->content);
-		if (ft_memcmp(node->content, envvar, contentlen) == 0 && envvarlen == contentlen)
-		{
-			free(node->content);
-			node->content = ft_strdup(envvar);
-			return (node);
-		}
-		node = node->next;
+		old_ptr = curr_node->content;
+		new_ptr = try_replacing_existing_env(curr_node, envvar);
+		if (new_ptr == NULL)
+			return (NULL);
+		else if (new_ptr != old_ptr)
+			return (curr_node);
+		curr_node = curr_node->next;
 	}
-	ft_listadd_back(&list, ft_listnew((char *)envvar));
+	curr_node = ft_listnew((char *)envvar);
+	if (curr_node == NULL)
+		return (NULL);
+	ft_listadd_back(&list, curr_node);
 	return (ft_listlast(list));
 }

@@ -6,7 +6,7 @@
 /*   By: elie <elie@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/03 15:20:17 by elie              #+#    #+#             */
-/*   Updated: 2025/10/20 12:28:07 by elie             ###   ########.fr       */
+/*   Updated: 2025/10/22 17:28:31 by elie             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ size_t	set_tokens(t_data *data)
 	// validate syntax
 	if (validate_token_str(data->input) == FAILURE)
 	{
-		printf("== validate_token_str:\n = FAILED\n");
+		printf("== validate_token_str: FAILED\n");
 		return (FAILURE);
 	}
 
@@ -63,51 +63,42 @@ size_t	set_tokens(t_data *data)
  */
 void	tokenize(t_data *data, size_t token_count)
 {
-	size_t	i;
-	size_t	start;
-	size_t	end;
-	char	quote;
-	const char *input = data->input;
+	size_t		i;
+	size_t		start;
+	size_t		end;
+	char		quote;
+	const char	*input = data->input;
 
 	i = 0;
 	start = 0;
-	quote = 0;
 	while (i < token_count)
 	{
-		// Skip whitespace
-		while(ft_isspace(input[start]) == true)
+		while (ft_isspace(input[start]))
 			start++;
-
 		end = start;
-		if (is_quote(input[end]) == true)
+		// Skip through the token until we hit a space or end of string
+		while (input[end] && !ft_isspace(input[end]))
 		{
-			while (is_quote(input[end]) == true)
+			quote = get_quote(input[end]);
+			if (quote)
 			{
-				quote = input[end];
 				end++;
 				while (input[end] && input[end] != quote)
 					end++;
-				if (input[end])
+				if (input[end] == quote)
 					end++;
 			}
-			// Continue with any non-whitespace after quotes
-			while (input[end] && ft_isspace(input[end]) == false && is_quote(input[end]) == false)
+			else
 				end++;
 		}
-		else if (input[end])
-		{
-			while (input[end] && ft_isspace(input[end]) == false && is_quote(input[end]) == false)
-				end++;
-		}
-		// Duplicate str from start to end
+
 		data->tokens[i] = ft_strndup(&input[start], end - start);
 		// TODO: malloc check
 
-		i++;
 		start = end;
+		i++;
 	}
 	data->tokens[i] = NULL;
-
 }
 
 /**
@@ -120,39 +111,31 @@ size_t	count_tokens(char *input)
 	size_t	token_count;
 
 	quote = 0;
-	token_count = 0;
+	token_count = 1;
 	i = 0;
+	while (ft_isspace(input[i]))
+		i++;
 	while (input[i])
 	{
-		// Skip whitespace
-		while (ft_isspace(input[i]) == true)
+
+		quote = get_quote(input[i]);
+
+		if (quote)
+		{
 			i++;
-
-		if (!input[i])
-			break ;
-
-		// Check for quote or non quote
-		if (is_quote(input[i]) == true)
-		{
-			while (is_quote(input[i]) == true)
-			{
-				quote = input[i];
+			while (input[i] != quote)
 				i++;
-				while (input[i] && input[i] != quote)
-					i++;
-				if (input[i])
-					i++;
-			}
-			// Continue with any non-whitespace after quotes
-			while (input[i] && ft_isspace(input[i]) == false && is_quote(input[i]) == false)
-				i++;
+			quote = 0;
 		}
-		else
+		else if (input[i] && ft_isspace(input[i]))
 		{
-			while (input[i] && ft_isspace(input[i]) == false && is_quote(input[i]) == false)
+			while (input[i + 1] && ft_isspace(input[i + 1]))
 				i++;
+			if (input[i + 1] && !ft_isspace(input[i + 1]))
+				token_count++;
 		}
-		token_count++;
+		i++;
+
 	}
 	if (DEBUG)
 		printf("Token count: %lu\n", token_count);

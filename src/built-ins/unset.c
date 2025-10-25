@@ -6,7 +6,7 @@
 /*   By: dbakker <dbakker@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/14 16:59:49 by dbakker           #+#    #+#             */
-/*   Updated: 2025/10/15 17:48:41 by dbakker          ###   ########.fr       */
+/*   Updated: 2025/10/17 10:13:27 by dbakker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,11 +43,7 @@ void	unset_env(t_list **head, const char *name)
 	t_list	*node;
 	t_list	*last;
 
-	if (ft_strchr(name, '='))
-	{
-		return ;
-	}
-	if (check_head_node(head, name) == true)
+	if (ft_strchr(name, '=') || check_head_node(head, name) == true)
 	{
 		return ;
 	}

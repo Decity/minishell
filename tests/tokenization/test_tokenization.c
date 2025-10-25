@@ -6,17 +6,20 @@
 /*   By: elie <elie@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/18 00:00:00 by elie              #+#    #+#             */
-/*   Updated: 2025/10/20 14:22:21 by elie             ###   ########.fr       */
+/*   Updated: 2025/10/22 17:19:09 by elie             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-char *tests[] = {
+char *tests_basic[] = {
 	"echo hi",
 	"echo hi bye",
+	"echo",
+	NULL
+};
 
-	// quotation
+char *tests_quotes[] = {
 	"echo \"\"",
 	"echo \"hi\"",
 	"echo 'hi'",
@@ -25,18 +28,24 @@ char *tests[] = {
 	"echo \"hi\"bye",
 	"echo hi\"bye\"",
 	"echo \"'hi'\"",
+	"echo hi'bye'hi\"bye\"",
+	"echo \"\"\"\"",
+	"echo ''''",
+	"echo \"'\"'\"'",
+	NULL
+};
 
-	// redirection
+char *tests_redir[] = {
 	"echo hi > out",
 	"echo hi < in > out",
 	"echo hi<in > out",
 	"echo hi<in>out",
-	"echo hi|bye",
-	"echo hi | bye",
-	"echo hi>out|bye",
-	"echo hi<in>out|bye",
+	"echo hi >> out",
+	"echo hi>>out",
+	NULL
+};
 
-	// redirection and quotation
+char *tests_redir_quotes[] = {
 	"echo \"hi\" > out",
 	"echo 'hi' > out",
 	"echo \"hi\" < in",
@@ -46,15 +55,22 @@ char *tests[] = {
 	"cat <'in'>'out'",
 	"echo \"hi > out\"",
 	"echo 'hi < in'",
+	"echo \"hi\" >> \"out\"",
+	NULL
+};
 
-	// pipes
+char *tests_pipes[] = {
+	"echo hi | bye",
+	"echo hi|bye",
 	"echo hi | cat",
 	"echo hi | cat | grep h",
 	"echo hi|cat|grep h",
 	"ls | grep test | wc -l",
 	"cat file | sort | uniq",
+	NULL
+};
 
-	// pipes and redirection
+char *tests_pipes_redir[] = {
 	"echo hi | cat > out",
 	"cat < in | grep h",
 	"cat < in | grep h > out",
@@ -62,8 +78,12 @@ char *tests[] = {
 	"cat < in | grep h | wc > out",
 	"echo hi|cat<in>out",
 	"cat<in|grep h>out|wc",
+	"echo hi>out|bye",
+	"echo hi<in>out|bye",
+	NULL
+};
 
-	// pipes and quotation
+char *tests_pipes_quotes[] = {
 	"echo \"hi\" | cat",
 	"echo 'hi' | cat",
 	"echo \"hi | cat\"",
@@ -71,16 +91,20 @@ char *tests[] = {
 	"echo \"hi\"|cat|grep \"h\"",
 	"echo 'hi'|cat|grep 'h'",
 	"cat \"file\" | grep 'pattern'",
+	NULL
+};
 
-	// pipes, quotes, and redirection
+char *tests_pipes_quotes_redir[] = {
 	"echo \"hi\" | cat > \"out\"",
 	"cat < \"in\" | grep \"h\" > \"out\"",
 	"echo 'hi'|cat<'in'>'out'",
 	"cat \"file\" | grep 'pattern' > output",
 	"echo \"test\" < 'in' | cat > \"out\"",
 	"cat<\"in\"|grep 'h'|wc>'out'",
+	NULL
+};
 
-	// whitespace
+char *tests_whitespace[] = {
 	"",
 	"   ",
 	"\t",
@@ -100,41 +124,30 @@ char *tests[] = {
 	"echo  \t  |  \t  cat",
 	"echo   <   in   >   out",
 	"echo\t<\tin\t>\tout",
+	NULL
+};
 
-	// edge cases
-	"echo",
-	"echo \"\"\"\"",
-	"echo ''''",
-	"echo \"'\"'\"'",
-	"echo hi>>>out",
-	"echo hi<<<in",
-	"|||",
-	"echo hi|||bye",
-	"echo hi &",
-	"echo hi;bye",
-	"echo $USER",
-	"echo \"$USER\"",
-	"echo '$USER'",
-	"echo ~",
-	"echo \"~\"",
-	"echo '~'",
-
-	// heredoc
+char *tests_heredoc[] = {
 	"cat << EOF",
 	"cat <<EOF",
 	"cat << \"EOF\"",
 	"cat <<'EOF'",
-
-	// append redirection
-	"echo hi >> out",
-	"echo hi>>out",
-	"echo \"hi\" >> \"out\"",
-
 	NULL
 };
 
-char *tests_fail[] = {
-	// unclosed quotes
+char *tests_expansion[] = {
+	"echo $USER",
+	"echo \"$USER\"",
+	"echo '$USER'",
+	NULL
+};
+
+char *tests_edge[] = {
+	"echo hi;bye",
+	NULL
+};
+
+char *tests_fail_quotes[] = {
 	"echo \"hi",
 	"echo 'hi",
 	"echo \"hi'",
@@ -143,24 +156,39 @@ char *tests_fail[] = {
 	"echo 'hello world",
 	"cat \"file",
 	"cat 'file",
+	NULL
+};
 
-	// invalid redirections
+char *tests_fail_redir[] = {
 	"echo >",
 	"echo <",
+	"echo < ",
+	"echo > ",
 	"echo >>",
 	"echo <<",
 	"echo > < out",
 	"echo < > in",
-	"> out",
-	"< in",
 	"echo hi ><out",
 	"echo hi <>out",
 	"echo hi >><<out",
+	"echo hi>>>out",
+	"echo hi< <<in",
+	"echo hi> >>out",
+	"echo hi< <<in",
+	"echo hi>> >out",
+	"echo hi<< <in",
+	"echo hi>>> out",
+	"echo hi<<< in",
+	NULL
+};
 
-	// invalid pipes
+char *tests_fail_pipes[] = {
 	"|",
-	"| cat",
-	"| echo hi",
+	"||",
+	"|| ",
+	"| |",
+	" | | | ",
+	"|||",
 	"echo |",
 	"echo | | cat",
 	"echo ||",
@@ -168,15 +196,17 @@ char *tests_fail[] = {
 	"echo hi |",
 	"echo | | cat",
 	"echo hi | | cat",
+	"echo hi|| |bye",
+	"echo hi|||bye",
+	"echo hi||| bye",
+	"echo hi||| bye",
+	NULL
+};
 
-	// mixed invalid cases
+char *tests_fail_mixed[] = {
 	"echo \"hi | cat",
 	"echo 'hi > out",
 	"echo \"hi\" | ",
-	"echo < ",
-	"echo > ",
-
-
 	NULL
 };
 
@@ -201,11 +231,15 @@ void	print_tokens(char **tokens)
 	printf("]\n");
 }
 
-int	main(void)
+void	run_tests(char **tests, char *category)
 {
-	t_data data;
+	t_data	data;
+	int		i;
 
-	for (int i = 0; tests[i]; i++)
+	if (category)
+		printf("\n=== %s ===\n\n", category);
+	i = 0;
+	while (tests[i])
 	{
 		ft_memset(&data, 0, sizeof(t_data));
 		data.input = ft_strdup(tests[i]);
@@ -215,21 +249,27 @@ int	main(void)
 		print_tokens(data.tokens);
 		printf("\n");
 		cleanup_data(&data);
+		i++;
 	}
+}
 
-	printf("\n=== Testing Invalid Cases ===\n\n");
-
-	for (int i = 0; tests_fail[i]; i++)
-	{
-		ft_memset(&data, 0, sizeof(t_data));
-		data.input = ft_strdup(tests_fail[i]);
-		printf("Input: \"%s\"\n", tests_fail[i]);
-		set_tokens(&data);
-		printf("Tokens: ");
-		print_tokens(data.tokens);
-		printf("\n");
-		cleanup_data(&data);
-	}
-
+int	main(void)
+{
+	run_tests(tests_basic, "Basic Commands");
+	run_tests(tests_quotes, "Quotation");
+	run_tests(tests_redir, "Redirection");
+	run_tests(tests_redir_quotes, "Redirection with Quotes");
+	run_tests(tests_pipes, "Pipes");
+	run_tests(tests_pipes_redir, "Pipes with Redirection");
+	run_tests(tests_pipes_quotes, "Pipes with Quotes");
+	run_tests(tests_pipes_quotes_redir, "Pipes with Quotes and Redirection");
+	run_tests(tests_whitespace, "Whitespace Handling");
+	run_tests(tests_heredoc, "Heredoc");
+	run_tests(tests_expansion, "Variable Expansion");
+	run_tests(tests_edge, "Edge Cases");
+	run_tests(tests_fail_quotes, "FAIL - Unclosed Quotes");
+	run_tests(tests_fail_redir, "FAIL - Invalid Redirections");
+	run_tests(tests_fail_pipes, "FAIL - Invalid Pipes");
+	run_tests(tests_fail_mixed, "FAIL - Mixed Invalid Cases");
 	return (0);
 }

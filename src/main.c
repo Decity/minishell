@@ -6,7 +6,7 @@
 /*   By: dbakker <dbakker@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/03 15:32:47 by elie              #+#    #+#             */
-/*   Updated: 2025/10/23 10:28:14 by dbakker          ###   ########.fr       */
+/*   Updated: 2025/10/25 19:17:47 by dbakker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,12 +30,13 @@ void	run(t_data *data)
 int	main(int argc, char **argv)
 {
 	t_data	data;
-	extern char **environ;
+	extern const char **environ;
 
 	(void)argc;
 	(void)argv;
 	ft_bzero(&data, sizeof(data));
-	data.envp = array_to_llist((const char **)environ);
+	data.envp = array_to_llist(environ);
+	data.directory.pwd = ft_calloc(1, sizeof(1));
 	while (42)
 	{
 		run(&data);

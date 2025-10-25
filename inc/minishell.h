@@ -6,7 +6,7 @@
 /*   By: elie <elie@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/30 15:08:30 by ebelle            #+#    #+#             */
-/*   Updated: 2025/10/18 15:34:15 by elie             ###   ########.fr       */
+/*   Updated: 2025/10/23 11:18:17 by elie             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,10 +44,10 @@ size_t	set_tokens(t_data *data);
 size_t	count_tokens(char *input);
 
 // tokenization_utils.c
-bool	is_quote(int c);
+char	get_quote(const char c);
+uint8_t	get_quote_type(const char *str);
 uint8_t	get_token_type(const char *str);
 uint8_t	get_redirection_type(const char *str);
-uint8_t	get_quote_type(const char *str);
 
 // tokenization_normalization.c
 char	*normalize_whitespace(const char *str);
@@ -77,11 +77,23 @@ void	cleanup_commands(t_cmd **cmd);
 void	debug(t_data *data);
 
 // Built-ins
-void	env_print(const t_list *envp);
-void	env_single_print(const t_list *envp);
-void	env_all_print(const t_list *envp);
-void	unset_env(t_list **head, const char *name);
+int		ed_change_directory(t_list *list, t_pwd *directory, const char *path);
+
+void	ed_echo(const char **message);
+
 size_t	env_namelen(const char *name);
+char	*ft_getenv(const t_list *list, const char *name);
+void	env_print(const t_list *envp);
+void	env_all_print(const t_list *envp);
+void	env_single_print(const t_list *envp);
+
+void	minishell_exit(void);
+
 void	*export_env(t_list *list, const char *envvar);
+
+void	*ed_update_pwd(t_pwd *directory);
+void	pwd_print(t_pwd directory);
+
+void	unset_env(t_list **head, const char *name);
 
 #endif
