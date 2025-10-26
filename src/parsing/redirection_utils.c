@@ -6,40 +6,53 @@
 /*   By: dbakker <dbakker@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/25 19:14:19 by dbakker           #+#    #+#             */
-/*   Updated: 2025/10/25 19:14:46 by dbakker          ###   ########.fr       */
+/*   Updated: 2025/10/26 12:07:43 by dbakker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-bool	is_redir_in(char *argument)
+/**
+ * @return `true` if @p `arg` is `<` or `<<`, `false` otherwise.
+ */
+bool	is_redir_in(const char *arg)
 {
-	if (*argument == '<' || ft_strncmp(argument, "<<", 2) == 0)
+	if (*arg == '<' || ft_strncmp(arg, "<<", ft_strlen(arg)) == 0)
 	{
 		return (true);
 	}
 	return (false);
 }
 
-bool	is_redir_out(char *argument)
+/**
+ * @return `true` if @p `arg` is `>` or `>>`, `false` otherwise.
+ */
+bool	is_redir_out(const char *arg)
 {
-	if (*argument == '>' || ft_strncmp(argument, ">>", 2) == 0)
+	if (*arg == '>' || ft_strncmp(arg, ">>", ft_strlen(arg)) == 0)
 	{
 		return (true);
 	}
 	return (false);
 }
 
-size_t	count_redir_in(char **arguments)
+/**
+ * @brief Count how many `<` and `<<` are found in @p `args`.
+ *
+ * @param[in] args Array of strings.
+ *
+ * @return Amount of `<` and `<<` found in @p `args`.
+ */
+size_t	count_redir_in(const char **args)
 {
 	size_t	i;
 	size_t	input_count;
 
 	i = 0;
 	input_count = 0;
-	while (arguments[i])
+	while (args[i])
 	{
-		if (is_redir_in(arguments[i]))
+		if (is_redir_in(args[i]))
 		{
 			input_count++;
 		}
@@ -48,16 +61,23 @@ size_t	count_redir_in(char **arguments)
 	return (input_count);
 }
 
-size_t	count_redir_in(char **arguments)
+/**
+ * @brief Count how many `>` and `>>` are found in @p `args`.
+ *
+ * @param[in] args Array of strings.
+ *
+ * @return Amount of `>` and `>>` found in @p `args`.
+ */
+size_t	count_redir_out(const char **args)
 {
 	size_t	i;
 	size_t	output_count;
 
 	i = 0;
 	output_count = 0;
-	while (arguments[i])
+	while (args[i])
 	{
-		if (is_redir_out(arguments[i]))
+		if (is_redir_out(args[i]))
 		{
 			output_count++;
 		}

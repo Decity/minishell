@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: elie <elie@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: dbakker <dbakker@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/30 15:08:30 by ebelle            #+#    #+#             */
-/*   Updated: 2025/10/23 11:18:17 by elie             ###   ########.fr       */
+/*   Updated: 2025/10/26 15:03:00 by dbakker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,5 +95,21 @@ void	*ed_update_pwd(t_pwd *directory);
 void	pwd_print(t_pwd directory);
 
 void	unset_env(t_list **head, const char *name);
+
+// Parsing
+
+bool	is_redir_in(const char *arg);
+bool	is_redir_out(const char *arg);
+size_t	count_redir_in(const char **args);
+size_t	count_redir_out(const char **args);
+
+t_cmd	*ed_cmdnew(const char **args, size_t num);
+void	ed_cmdadd_back(t_cmd **head, const t_cmd *new);
+
+t_redir	*init_redir_in(const char **args);
+t_redir	*init_redir_out(const char **args);
+t_cmd	*init_cmd(t_data *data, size_t num);
+
+t_data	*ed_parsing(t_data *data);
 
 #endif
