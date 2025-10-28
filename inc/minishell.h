@@ -6,7 +6,7 @@
 /*   By: dbakker <dbakker@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/30 15:08:30 by ebelle            #+#    #+#             */
-/*   Updated: 2025/10/26 15:03:00 by dbakker          ###   ########.fr       */
+/*   Updated: 2025/10/26 15:50:40 by dbakker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,7 +104,7 @@ size_t	count_redir_in(const char **args);
 size_t	count_redir_out(const char **args);
 
 t_cmd	*ed_cmdnew(const char **args, size_t num);
-void	ed_cmdadd_back(t_cmd **head, const t_cmd *new);
+void	ed_cmdadd_back(t_cmd **head, t_cmd *new);
 
 t_redir	*init_redir_in(const char **args);
 t_redir	*init_redir_out(const char **args);

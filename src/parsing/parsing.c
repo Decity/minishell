@@ -6,7 +6,7 @@
 /*   By: dbakker <dbakker@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/22 20:16:18 by dbakker           #+#    #+#             */
-/*   Updated: 2025/10/26 15:16:24 by dbakker          ###   ########.fr       */
+/*   Updated: 2025/10/26 17:20:51 by dbakker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,24 +24,29 @@
 t_data	*ed_parsing(t_data *data)
 {
 	t_cmd	*new;
-	size_t	i;
-	size_t	j;
+	size_t	start;
+	size_t	index;
 
-	i = 0;
-	j = 0;
-	while (data->tokens[j + i])
+	start = 0;
+	index = 0;
+	while (data->tokens[index])
 	{
-		if (get_token_type(data->tokens[j + i]) != TYPE_PIPE && data->tokens[j + i] != NULL)
+		if (get_token_type(data->tokens[index]) == TYPE_PIPE)
 		{
-			i++;
-			continue ;
+			new = init_cmd(data, index - start);
+			if (new == NULL)
+				return (NULL);
+			ed_cmdadd_back(&data->command, new);
+			start = index + 1;
 		}
-		new = ed_cmdnew(data->tokens + j, i++ - 1);
+		index++;
+	}
+	if (start < index)
+	{
+		new = ed_cmdnew((const char **)(data->tokens + start), index - start);
 		if (new == NULL)
 			return (NULL);
 		ed_cmdadd_back(&data->command, new);
-		j = i;
-		i = 0;
 	}
 	return (data);
 }

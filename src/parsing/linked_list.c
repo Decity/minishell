@@ -6,7 +6,7 @@
 /*   By: dbakker <dbakker@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/25 19:33:35 by dbakker           #+#    #+#             */
-/*   Updated: 2025/10/26 15:15:18 by dbakker          ###   ########.fr       */
+/*   Updated: 2025/10/26 17:28:55 by dbakker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ t_cmd	*ed_cmdnew(const char **args, size_t num)
 	{
 		return (NULL);
 	}
-	cmd->arguments = copy_narray(args, num);
+	cmd->arguments = copy_narray((char **)args, num);
 	if (cmd->arguments == NULL)
 	{
 		return (NULL);
@@ -55,12 +55,12 @@ t_cmd	*ed_cmdnew(const char **args, size_t num)
  * @param[out]	head	Head node of the list to append to.
  * @param[in]	new		Node to append.
  */
-void	ed_cmdadd_back(t_cmd **head, const t_cmd *new)
+void	ed_cmdadd_back(t_cmd **head, t_cmd *new)
 {
 	t_cmd	*node;
 
 	node = *head;
-	if (head == NULL)
+	if (*head == NULL)
 	{
 		*head = new;
 		return ;

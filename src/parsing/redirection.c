@@ -6,7 +6,7 @@
 /*   By: dbakker <dbakker@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/25 19:34:56 by dbakker           #+#    #+#             */
-/*   Updated: 2025/10/26 12:57:04 by dbakker          ###   ########.fr       */
+/*   Updated: 2025/10/26 15:53:26 by dbakker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,13 +96,14 @@ t_cmd	*init_cmd(t_data *data, size_t num)
 {
 	t_cmd	*redir;
 
-	data->command = ed_cmdnew(data->tokens, num);
+	redir = malloc(sizeof(t_cmd));
+	data->command = ed_cmdnew((const char **)data->tokens, num);
 	if (data->command == NULL)
 	{
 		return (NULL);
 	}
-	redir->redirection.infile = init_redir_in(data->command->arguments);
-	redir->redirection.outfile = init_redir_out(data->command->arguments);
+	redir->redirection.infile = init_redir_in((const char **)data->command->arguments);
+	redir->redirection.outfile = init_redir_out((const char **)data->command->arguments);
 	if (redir->redirection.infile == NULL || redir->redirection.outfile == NULL)
 	{
 		return (NULL);

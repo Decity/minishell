@@ -6,7 +6,7 @@
 /*   By: dbakker <dbakker@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/03 15:32:47 by elie              #+#    #+#             */
-/*   Updated: 2025/10/25 19:17:47 by dbakker          ###   ########.fr       */
+/*   Updated: 2025/10/26 17:35:26 by dbakker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,12 +18,13 @@ void	run(t_data *data)
 	data->input = readline("> ");
 
 	set_tokens(data);
-	set_commands(data);
-	apply_shell_expansions(data);
-	set_redirections(data);
-	if (DEBUG)
-		debug(data);
-	execute(data);
+	ed_parsing(data);
+	// printf(data->command.)
+	// apply_shell_expansions(data);
+	// set_redirections(data);
+	// if (DEBUG)
+	// 	debug(data);
+	// execute(data);
 	// cleanup();
 }
 
