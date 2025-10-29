@@ -6,31 +6,36 @@
 /*   By: dbakker <dbakker@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/30 18:14:03 by elie              #+#    #+#             */
-/*   Updated: 2025/10/17 11:29:45 by dbakker          ###   ########.fr       */
+/*   Updated: 2025/10/29 10:53:51 by dbakker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef STRUCTS_H
 # define STRUCTS_H
 
-typedef struct s_redirection	t_redirection;
-typedef struct s_commands		t_cmd;
-typedef struct s_data			t_data;
+typedef struct s_rdr	t_rdr;
+typedef struct s_cmd	t_cmd;
+typedef struct s_data	t_data;
 
-typedef struct s_redirection
+typedef struct s_redir
 {
-	int		redirection_type;
+	int		redir_type;
+	char	*file;
+}	t_redir;
+
+typedef struct s_rdr
+{
 	int		input_fd;
 	int		output_fd;
-	char	*input_file_name;
-	char	*output_file_name;
-}	t_redirection;
+	t_redir	*infile;
+	t_redir	*outfile;
+}	t_rdr;
 
-typedef struct s_commands
+typedef struct s_cmd
 {
-	char			**arguments;
-	t_redirection	redirection;
-	t_cmd			*next;
+	char	**args;
+	t_rdr	redirect;
+	t_cmd	*next;
 }	t_cmd;
 
 typedef struct s_pwd

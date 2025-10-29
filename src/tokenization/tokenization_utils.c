@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tokenization_utils.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: elie <elie@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: dbakker <dbakker@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/17 17:49:42 by elie              #+#    #+#             */
-/*   Updated: 2025/10/23 11:15:52 by elie             ###   ########.fr       */
+/*   Updated: 2025/10/26 15:37:35 by dbakker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,4 +76,9 @@ uint8_t	get_redirection_type(const char *str)
 	if (str[0] == '<')
 		return (TYPE_REDIRECTION_IN);
 	return (0);
+}
+
+bool	is_redirection(char *str)
+{
+	return (*str == '>' || *str == '<');
 }

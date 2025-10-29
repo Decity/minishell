@@ -6,11 +6,11 @@
 /*   By: dbakker <dbakker@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/02 12:02:01 by ebelle            #+#    #+#             */
-/*   Updated: 2025/10/15 18:30:07 by dbakker          ###   ########.fr       */
+/*   Updated: 2025/10/29 11:40:42 by dbakker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../inc/minishell.h"
+#include "minishell.h"
 #include <sys/wait.h>
 #include <unistd.h>
 #include <fcntl.h>
@@ -58,27 +58,23 @@ void	execute(t_data *data)
 	if (DEBUG)
 		printf("=== execute_command() ===\n\n");
 
-	path = get_executable_path(data->command->arguments[0]);
+	path = get_executable_path(data->command->args[0]);
 	pid = fork();
 	if (pid == 0)
 	{
 		// Child process
-		dup2(data->command->redirection.input_fd, STDIN_FILENO);
-		dup2(data->command->redirection.output_fd, STDOUT_FILENO);
+		dup2(data->command->redirect.input_fd, STDIN_FILENO);
+		dup2(data->command->redirect.output_fd, STDOUT_FILENO);
 
-		execve(path, data->command->arguments, llist_to_array(data->envp));
+		execve(path, data->command->args, llist_to_array(data->envp));
 	}
 	else
 	{
 		// Parent process
 		wait(NULL);
-		if (data->command->redirection.input_file_name)
-			close(data->command->redirection.input_fd);
-		if (data->command->redirection.output_file_name)
-			close(data->command->redirection.output_fd);
+		if (data->command->redirect.infile)
+			close(data->command->redirect.input_fd);
+		if (data->command->redirect.outfile)
+			close(data->command->redirect.output_fd);
 	}
-
-	// clean up data->input, data->tokens, and data->command
-	cleanup_data(data);
 }
-

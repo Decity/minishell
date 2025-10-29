@@ -6,11 +6,11 @@
 /*   By: dbakker <dbakker@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/03 15:32:47 by elie              #+#    #+#             */
-/*   Updated: 2025/10/17 15:28:58 by dbakker          ###   ########.fr       */
+/*   Updated: 2025/10/29 11:27:53 by dbakker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../inc/minishell.h"
+#include "minishell.h"
 
 void	run(t_data *data)
 {
@@ -18,13 +18,13 @@ void	run(t_data *data)
 	data->input = readline("> ");
 
 	set_tokens(data);
-	set_commands(data);
-	apply_shell_expansions(data);
-	set_redirections(data);
+	ed_parsing(data);
+	// apply_shell_expansions(data);
+	// set_redirections(data);
 	if (DEBUG)
 		debug(data);
-	execute(data);
-	// cleanup();
+	// execute(data);
+	cleanup_data(data);
 }
 
 int	main(int argc, char **argv)

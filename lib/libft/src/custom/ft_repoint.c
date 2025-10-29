@@ -3,17 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   ft_repoint.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ebelle <ebelle@student.42.fr>              +#+  +:+       +#+        */
+/*   By: dbakker <dbakker@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/07 15:57:34 by elie              #+#    #+#             */
-/*   Updated: 2025/10/09 16:16:55 by ebelle           ###   ########.fr       */
+/*   Updated: 2025/10/29 11:21:35 by dbakker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
 /**
- * @brief Frees @p `old_str` and assigns the pointer of @p `new_str`. Essentially replacing it.
+ * @brief Frees @p `old_str` and assigns the pointer of @p `new_str`.
+ * @brief Essentially replacing it.
  *
  * @param old_str pointer to a string that will be replaced.
  * @param new_str the new string that will usurp the throne.
