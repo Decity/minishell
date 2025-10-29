@@ -6,7 +6,7 @@
 /*   By: dbakker <dbakker@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/25 19:33:35 by dbakker           #+#    #+#             */
-/*   Updated: 2025/10/26 17:28:55 by dbakker          ###   ########.fr       */
+/*   Updated: 2025/10/29 11:34:34 by dbakker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,18 +33,18 @@ t_cmd	*ed_cmdnew(const char **args, size_t num)
 	{
 		return (NULL);
 	}
-	cmd = malloc(sizeof(cmd));
+	cmd = malloc(sizeof(t_cmd));
 	if (cmd == NULL)
 	{
 		return (NULL);
 	}
-	cmd->arguments = copy_narray((char **)args, num);
-	if (cmd->arguments == NULL)
+	cmd->args = copy_narray((char **)args, num);
+	if (cmd->args == NULL)
 	{
 		return (NULL);
 	}
-	ft_memset(&cmd->redirection, 0 , sizeof(t_rdr));
-	cmd->redirection.output_fd = STDOUT_FILENO;
+	ft_memset(&cmd->redirect, 0, sizeof(t_rdr));
+	cmd->redirect.output_fd = STDOUT_FILENO;
 	cmd->next = NULL;
 	return (cmd);
 }
@@ -70,4 +70,41 @@ void	ed_cmdadd_back(t_cmd **head, t_cmd *new)
 		node = node->next;
 	}
 	node->next = new;
+}
+
+/**
+ * @brief Frees all allocated memory in @p `cmd`.
+ */
+void	ed_cmddelone(t_cmd *cmd)
+{
+	if (cmd == NULL)
+	{
+		return ;
+	}
+	free_array(&cmd->args);
+	free(cmd->redirect.infile->file);
+	free(cmd->redirect.outfile->file);
+	free(cmd);
+}
+
+/**
+ * @brief Free the entire linked list of @p `cmd`.
+ */
+void	ed_cmdclear(t_cmd **cmd)
+{
+	t_cmd	*node;
+	t_cmd	*temp;
+
+	if (cmd == NULL || *cmd == NULL)
+	{
+		return ;
+	}
+	node = *cmd;
+	while (node)
+	{
+		temp = node->next;
+		ed_cmddelone(node);
+		node = temp;
+	}
+	*cmd = NULL;
 }

@@ -1,48 +1,4 @@
-#include "../inc/minishell.h"
-
-/**
- * @brief Cleans up a single command's redirection file names
- *
- * @param[out] cmd Pointer to command structure
- */
-static void	cleanup_redirection(t_cmd *cmd)
-{
-	if (cmd->redirection.infile)
-	{
-		free(cmd->redirection.infile);
-		cmd->redirection.infile = NULL;
-	}
-	if (cmd->redirection.outfile)
-	{
-		free(cmd->redirection.outfile);
-		cmd->redirection.outfile = NULL;
-	}
-}
-
-/**
- * @brief Cleans up and frees command linked list
- *
- * @param[out] cmd Pointer to pointer of command linked list head
- */
-void	cleanup_commands(t_cmd **cmd)
-{
-	t_cmd	*current;
-	t_cmd	*next;
-
-	if (!cmd || !*cmd)
-		return ;
-	current = *cmd;
-	while (current)
-	{
-		next = current->next;
-		if (current->arguments)
-			free_array(&current->arguments);
-		cleanup_redirection(current);
-		free(current);
-		current = next;
-	}
-	*cmd = NULL;
-}
+#include "minishell.h"
 
 /**
  * @brief Cleans up and frees all allocated memory in t_data structure
@@ -52,7 +8,7 @@ void	cleanup_commands(t_cmd **cmd)
 void	cleanup_data(t_data *data)
 {
 	if (DEBUG)
-		printf("=== cleanup_data() ===\n\n");
+		printf("\n=== cleanup_data() ===\n");
 
 	// Clean up input
 	if (data->input)
@@ -64,8 +20,8 @@ void	cleanup_data(t_data *data)
 
 	// Clean up commands
 	if (data->command)
-		cleanup_commands(&data->command);
+		ed_cmdclear(&data->command);
 
 	if (DEBUG)
-		printf("=== cleanup complete ===\n\n");
+		printf("\n=== cleanup complete ===\n");
 }

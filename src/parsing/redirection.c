@@ -6,7 +6,7 @@
 /*   By: dbakker <dbakker@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/25 19:34:56 by dbakker           #+#    #+#             */
-/*   Updated: 2025/10/26 15:53:26 by dbakker          ###   ########.fr       */
+/*   Updated: 2025/10/29 10:57:45 by dbakker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,19 +92,18 @@ t_redir	*init_redir_out(const char **args)
 	return (redir_out);
 }
 
-t_cmd	*init_cmd(t_data *data, size_t num)
+t_cmd	*init_cmd(const char **args, size_t num)
 {
 	t_cmd	*redir;
 
-	redir = malloc(sizeof(t_cmd));
-	data->command = ed_cmdnew((const char **)data->tokens, num);
-	if (data->command == NULL)
+	redir = ed_cmdnew(args, num);
+	if (redir == NULL)
 	{
 		return (NULL);
 	}
-	redir->redirection.infile = init_redir_in((const char **)data->command->arguments);
-	redir->redirection.outfile = init_redir_out((const char **)data->command->arguments);
-	if (redir->redirection.infile == NULL || redir->redirection.outfile == NULL)
+	redir->redirect.infile = init_redir_in((const char **)redir->args);
+	redir->redirect.outfile = init_redir_out((const char **)redir->args);
+	if (redir->redirect.infile == NULL || redir->redirect.outfile == NULL)
 	{
 		return (NULL);
 	}

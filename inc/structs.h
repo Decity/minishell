@@ -6,7 +6,7 @@
 /*   By: dbakker <dbakker@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/30 18:14:03 by elie              #+#    #+#             */
-/*   Updated: 2025/10/25 19:17:35 by dbakker          ###   ########.fr       */
+/*   Updated: 2025/10/29 10:53:51 by dbakker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,8 +33,8 @@ typedef struct s_rdr
 
 typedef struct s_cmd
 {
-	char	**arguments;
-	t_rdr	redirection;
+	char	**args;
+	t_rdr	redirect;
 	t_cmd	*next;
 }	t_cmd;
 

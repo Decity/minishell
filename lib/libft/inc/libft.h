@@ -6,7 +6,7 @@
 /*   By: dbakker <dbakker@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/22 12:24:41 by dbakker           #+#    #+#             */
-/*   Updated: 2025/10/16 14:31:13 by dbakker          ###   ########.fr       */
+/*   Updated: 2025/10/29 11:23:52 by dbakker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -142,7 +142,6 @@ char	*ft_substr(const char *str, uint32_t start, size_t num);
 
 int		ft_tolower(int character);
 int		ft_toupper(int character);
-
 
 // CUSTOM
 
