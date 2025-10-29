@@ -6,7 +6,7 @@
 /*   By: elie <elie@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/30 15:08:30 by ebelle            #+#    #+#             */
-/*   Updated: 2025/10/23 11:18:17 by elie             ###   ########.fr       */
+/*   Updated: 2025/10/28 14:23:09 by elie             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,6 @@
 void	set_commands(t_data *data);
 void	apply_shell_expansions(t_data *data);
 void	set_redirections(t_data *data);
-void	execute(t_data *data);
 
 // Parsing
 bool	is_redirection(char *str);
@@ -68,6 +67,18 @@ void	expand_tilde(char **str);
 void	expand_env_variables(char **str);
 
 void	remove_quotation(char **str);
+
+/// EXECUTION
+
+char	*get_executable_path(const char *exec);
+size_t	get_cmds_count(t_cmd *commands);
+void	execution(t_data *data);
+void	execute_cmds(t_data *data);
+void	execute_single_cmd(t_cmd *cmd, char **envp);
+void	execute_binary(t_cmd *cmd, char **envp);
+void	close_pipes(int *pipefd, int prev_pipefd, bool is_first, bool is_last);
+void	setup_child_redirections(int *pipefd, int prev_pipefd, bool is_first, bool is_last);
+void	apply_redirections(t_cmd *cmd);
 
 // Cleanup
 void	cleanup_data(t_data *data);
