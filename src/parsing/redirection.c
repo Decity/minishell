@@ -6,7 +6,7 @@
 /*   By: dbakker <dbakker@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/25 19:34:56 by dbakker           #+#    #+#             */
-/*   Updated: 2025/10/29 10:57:45 by dbakker          ###   ########.fr       */
+/*   Updated: 2025/10/29 22:55:16 by dbakker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,6 +90,48 @@ t_redir	*init_redir_out(const char **args)
 		i++;
 	}
 	return (redir_out);
+}
+
+/**
+ * @brief Create a new string with the redirections and in/out files removed.
+ *
+ * @param[in] args Array of strings.
+ *
+ * @return Pointer to the array of strings with the redirections removed,
+ * @return or `NULL` on failure.
+ *
+ * @warning Caller owns free().
+ */
+char	**trim_redirections(const char **args)
+{
+	char	**trimmed;
+	size_t	array_size;
+	size_t	i;
+
+	array_size = 0;
+	i = 0;
+	while (args[i])
+		if (get_redirection_type(args[i++]) == 0)
+			array_size++;
+	trimmed = ft_calloc(array_size + 1, sizeof(char *));
+	if (trimmed == NULL)
+		return (NULL);
+	i = 0;
+	array_size = 0;
+	while (args[i])
+	{
+		if (get_redirection_type(args[i]) == 0)
+		{
+			trimmed[array_size] = ft_strdup(args[i]);
+			if (trimmed[array_size] == NULL)
+				return (ft_free2d((void **)trimmed, array_size), NULL);;
+			array_size++;
+		}
+		else
+			i++;
+		i++;
+	}
+	return (trimmed);
 }
 
 t_cmd	*init_cmd(const char **args, size_t num)
