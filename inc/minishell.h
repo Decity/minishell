@@ -6,7 +6,7 @@
 /*   By: elie <elie@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/30 15:08:30 by ebelle            #+#    #+#             */
-/*   Updated: 2025/10/28 14:23:09 by elie             ###   ########.fr       */
+/*   Updated: 2025/10/29 12:11:18 by elie             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@
 // standard libs
 # include <stdio.h>
 # include <readline/readline.h>
+# include <readline/history.h>
 # include <stdlib.h>
 
 // Shell operations
@@ -32,8 +33,6 @@ void	set_redirections(t_data *data);
 
 // Parsing
 bool	is_redirection(char *str);
-t_cmd	*init_command(void);
-void	assign_redirection(char **tokens, t_cmd *cmd);
 
 /// TOKENIZATION
 
@@ -82,7 +81,6 @@ void	apply_redirections(t_cmd *cmd);
 
 // Cleanup
 void	cleanup_data(t_data *data);
-void	cleanup_commands(t_cmd **cmd);
 
 // Debug
 void	debug(t_data *data);
@@ -106,5 +104,24 @@ void	*ed_update_pwd(t_pwd *directory);
 void	pwd_print(t_pwd directory);
 
 void	unset_env(t_list **head, const char *name);
+
+// Parsing
+
+void	ed_cmddelone(t_cmd *cmd);
+void	ed_cmdclear(t_cmd **cmd);
+
+bool	is_redir_in(const char *arg);
+bool	is_redir_out(const char *arg);
+size_t	count_redir_in(const char **args);
+size_t	count_redir_out(const char **args);
+
+t_cmd	*ed_cmdnew(const char **args, size_t num);
+void	ed_cmdadd_back(t_cmd **head, t_cmd *new);
+
+t_redir	*init_redir_in(const char **args);
+t_redir	*init_redir_out(const char **args);
+t_cmd	*init_cmd(const char **args, size_t num);
+
+t_data	*ed_parsing(t_data *data);
 
 #endif

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   shell_expansion.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: elie <elie@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: dbakker <dbakker@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/08 18:09:32 by elie              #+#    #+#             */
-/*   Updated: 2025/10/18 14:38:02 by elie             ###   ########.fr       */
+/*   Updated: 2025/10/29 11:21:10 by dbakker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ void	apply_shell_expansions(t_data *data)
 		printf("=== apply_shell_expansions ===\n\n");
 
 	i = 0;
-	arguments = data->command->arguments;
+	arguments = data->command->args;
 	while (arguments[i])
 	{
 		expand_tilde(&arguments[i]);
@@ -36,7 +36,6 @@ void	apply_shell_expansions(t_data *data)
 		remove_quotation(&arguments[i]);
 		i++;
 	}
-
 
 	if (DEBUG)
 	{
