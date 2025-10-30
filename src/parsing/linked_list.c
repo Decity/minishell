@@ -6,7 +6,7 @@
 /*   By: dbakker <dbakker@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/25 19:33:35 by dbakker           #+#    #+#             */
-/*   Updated: 2025/10/29 11:34:34 by dbakker          ###   ########.fr       */
+/*   Updated: 2025/10/30 11:12:29 by dbakker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@
  * @param[in] args	Array of strings.
  * @param[in] num	Amount of strings to copy to the new struct.
  *
- * @return Pointer to the struct, or NULL of failure.
+ * @return Pointer to the struct, or `NULL` of failure.
  *
  * @warning Caller owns free().
  */
