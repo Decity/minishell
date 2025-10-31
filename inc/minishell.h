@@ -6,7 +6,7 @@
 /*   By: dbakker <dbakker@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/30 15:08:30 by ebelle            #+#    #+#             */
-/*   Updated: 2025/10/29 11:40:59 by dbakker          ###   ########.fr       */
+/*   Updated: 2025/10/31 10:53:38 by dbakker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,6 +88,7 @@ void	env_single_print(const t_list *envp);
 void	minishell_exit(void);
 
 void	*export_env(t_list *list, const char *envvar);
+void	export_print(const t_list *list);
 
 void	*ed_update_pwd(t_pwd *directory);
 void	pwd_print(t_pwd directory);
