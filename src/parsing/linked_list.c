@@ -6,7 +6,7 @@
 /*   By: dbakker <dbakker@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/25 19:33:35 by dbakker           #+#    #+#             */
-/*   Updated: 2025/10/30 11:12:29 by dbakker          ###   ########.fr       */
+/*   Updated: 2025/11/01 19:55:37 by dbakker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,13 +77,28 @@ void	ed_cmdadd_back(t_cmd **head, t_cmd *new)
  */
 void	ed_cmddelone(t_cmd *cmd)
 {
+	size_t	i;
+	size_t	j;
+
+	i = 0;
+	j = 0;
 	if (cmd == NULL)
 	{
 		return ;
 	}
 	free_array(&cmd->args);
-	free(cmd->redirect.infile->file);
-	free(cmd->redirect.outfile->file);
+	while (cmd->redirect.infile[i].file)
+	{
+		free(cmd->redirect.infile[i].file);
+		i++;
+	}
+	while (cmd->redirect.outfile[j].file)
+	{
+		free(cmd->redirect.outfile[j].file);
+		j++;
+	}
+	free(cmd->redirect.infile);
+	free(cmd->redirect.outfile);
 	free(cmd);
 }
 
