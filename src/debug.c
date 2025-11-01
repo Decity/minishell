@@ -6,7 +6,7 @@
 /*   By: dbakker <dbakker@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/28 11:05:55 by dbakker           #+#    #+#             */
-/*   Updated: 2025/10/29 11:38:50 by dbakker          ###   ########.fr       */
+/*   Updated: 2025/10/30 15:01:04 by dbakker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,7 @@ static void debug_parsing(t_data *data)
 	size_t	i;
 
 	printf("\n=== Parsing Start ===\n\n");
+	printf("String to parse\n\e[96m%s\e[0m\n\n", data->input);
 	while (cmd)
 	{
 		printf("[");

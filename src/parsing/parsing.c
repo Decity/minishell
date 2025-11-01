@@ -6,7 +6,7 @@
 /*   By: dbakker <dbakker@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/22 20:16:18 by dbakker           #+#    #+#             */
-/*   Updated: 2025/10/29 11:29:35 by dbakker          ###   ########.fr       */
+/*   Updated: 2025/10/30 11:12:39 by dbakker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
  *
  * @param[in,out] data Pointer containing tokenized arguments.
  *
- * @return Pointer to the updated list, or NULL on failure.
+ * @return Pointer to the updated list, or `NULL` on failure.
  *
  * @warning Caller owns free().
  */
