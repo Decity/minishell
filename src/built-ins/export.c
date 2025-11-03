@@ -6,7 +6,7 @@
 /*   By: dbakker <dbakker@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/15 13:16:57 by dbakker           #+#    #+#             */
-/*   Updated: 2025/10/22 18:22:11 by dbakker          ###   ########.fr       */
+/*   Updated: 2025/10/31 11:11:01 by dbakker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,4 +121,23 @@ void	*export_env(t_list *list, const char *envvar)
 		return (NULL);
 	ft_listadd_back(&list, curr_node);
 	return (ft_listlast(list));
+}
+
+/**
+ * @brief Print out all environmental variables to `stdout`.
+ *
+ * Should be used if `export` gets called without arguments. At which variables
+ * get printed as `declare -x NAME="VALUE"`.
+ */
+void	export_print(const t_list *list)
+{
+	const char declare_x[] = "declare -x ";
+
+	while (list)
+	{
+		write(STDOUT_FILENO, declare_x, sizeof(declare_x) - 1);
+		write(STDOUT_FILENO, list->content, env_namelen((char *)list->content));
+		printf("=\"%s\"\n", ft_getenv(list, (char *)list->content));
+		list = list->next;
+	}
 }
