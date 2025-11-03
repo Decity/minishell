@@ -108,9 +108,9 @@ size_t	count_redir_out(const char **args);
 t_cmd	*ed_cmdnew(const char **args, size_t num);
 void	ed_cmdadd_back(t_cmd **head, t_cmd *new);
 
-t_redir	*init_redir_in(const char **args);
-t_redir	*init_redir_out(const char **args);
-t_cmd	*init_cmd(const char **args, size_t num);
+t_redir	*init_redir_in(const char **args, size_t size);
+t_redir	*init_redir_out(const char **args, size_t size);
+t_cmd	*init_cmd(const char **args, size_t size);
 
 t_data	*ed_parsing(t_data *data);
 
