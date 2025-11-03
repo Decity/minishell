@@ -6,7 +6,7 @@
 /*   By: elie <elie@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/02 12:02:01 by ebelle            #+#    #+#             */
-/*   Updated: 2025/10/28 17:46:49 by elie             ###   ########.fr       */
+/*   Updated: 2025/10/29 12:14:38 by elie             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,8 +85,8 @@ void	execute_binary(t_cmd *cmd, char **envp)
 {
 	char	*path;
 
-	path = get_executable_path(cmd->arguments[0]);
-	execve(path, cmd->arguments, envp);
+	path = get_executable_path(cmd->args[0]);
+	execve(path, cmd->args, envp);
 	exit(1);
 }
 

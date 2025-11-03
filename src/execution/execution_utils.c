@@ -6,7 +6,7 @@
 /*   By: elie <elie@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/28 13:56:00 by elie              #+#    #+#             */
-/*   Updated: 2025/10/28 14:22:17 by elie             ###   ########.fr       */
+/*   Updated: 2025/10/29 12:16:04 by elie             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,17 +77,17 @@ void	setup_child_redirections(int *pipefd, int prev_pipefd, bool is_first, bool 
 
 void	apply_redirections(t_cmd *cmd)
 {
-	// Input redirection overrides pipe input
-	if (cmd->redirection.input_fd != STDIN_FILENO && cmd->redirection.input_fd != -1)
+	// Input redirect overrides pipe input
+	if (cmd->redirect.input_fd != STDIN_FILENO && cmd->redirect.input_fd != -1)
 	{
-		dup2(cmd->redirection.input_fd, STDIN_FILENO);
-		close(cmd->redirection.input_fd);
+		dup2(cmd->redirect.input_fd, STDIN_FILENO);
+		close(cmd->redirect.input_fd);
 	}
 
-	// Output redirection overrides pipe output
-	if (cmd->redirection.output_fd != STDOUT_FILENO && cmd->redirection.output_fd != -1)
+	// Output redirect overrides pipe output
+	if (cmd->redirect.output_fd != STDOUT_FILENO && cmd->redirect.output_fd != -1)
 	{
-		dup2(cmd->redirection.output_fd, STDOUT_FILENO);
-		close(cmd->redirection.output_fd);
+		dup2(cmd->redirect.output_fd, STDOUT_FILENO);
+		close(cmd->redirect.output_fd);
 	}
 }
