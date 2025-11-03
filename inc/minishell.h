@@ -6,7 +6,7 @@
 /*   By: elie <elie@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/30 15:08:30 by ebelle            #+#    #+#             */
-/*   Updated: 2025/10/29 12:11:18 by elie             ###   ########.fr       */
+/*   Updated: 2025/11/03 09:47:01 by elie             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,6 +99,7 @@ void	env_single_print(const t_list *envp);
 void	minishell_exit(void);
 
 void	*export_env(t_list *list, const char *envvar);
+void	export_print(const t_list *list);
 
 void	*ed_update_pwd(t_pwd *directory);
 void	pwd_print(t_pwd directory);
@@ -118,9 +119,9 @@ size_t	count_redir_out(const char **args);
 t_cmd	*ed_cmdnew(const char **args, size_t num);
 void	ed_cmdadd_back(t_cmd **head, t_cmd *new);
 
-t_redir	*init_redir_in(const char **args);
-t_redir	*init_redir_out(const char **args);
-t_cmd	*init_cmd(const char **args, size_t num);
+t_redir	*init_redir_in(const char **args, size_t size);
+t_redir	*init_redir_out(const char **args, size_t size);
+t_cmd	*init_cmd(const char **args, size_t size);
 
 t_data	*ed_parsing(t_data *data);
 
