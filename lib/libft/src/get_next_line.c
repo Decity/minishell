@@ -109,7 +109,7 @@ static char	*fill_buffer(char *buffer, int fd)
 	{
 		return (NULL);
 	}
-	while (ft_strchr(buffer, '\n') == NULL)
+	while (!buffer || ft_strchr(buffer, '\n') == NULL)
 	{
 		fd_bytes_read = read(fd, line, BUFFER_SIZE);
 		if (fd_bytes_read == 0)
