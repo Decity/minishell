@@ -6,37 +6,35 @@
 /*   By: elie <elie@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/03 15:32:47 by elie              #+#    #+#             */
-/*   Updated: 2025/10/29 12:13:22 by elie             ###   ########.fr       */
+/*   Updated: 2025/11/05 15:21:35 by elie             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+#include <unistd.h>
 
 void	run(t_data *data)
 {
-	// Get input
-	data->input = readline("> ");
-
+	set_input(data);
 	set_tokens(data);
 	ed_parsing(data);
-	// apply_shell_expansions(data);
-	// set_redirections(data);
+	apply_shell_expansions(data);
+	set_redirections(data);
+	setup_signals_executing();
+	execution(data);
+	setup_signals_interactive();
+
 	if (DEBUG)
 		debug(data);
-	// execute(data);
+		
 	cleanup_data(data);
 }
 
-int	main(int argc, char **argv)
+int	main(void)
 {
 	t_data	data;
-	extern const char **environ;
 
-	(void)argc;
-	(void)argv;
-	ft_bzero(&data, sizeof(data));
-	data.envp = array_to_llist(environ);
-	data.directory.pwd = ft_calloc(1, sizeof(1));
+	init(&data);
 	while (42)
 	{
 		run(&data);
