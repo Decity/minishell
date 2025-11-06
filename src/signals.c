@@ -6,16 +6,11 @@
 /*   By: elie <elie@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/04 10:45:00 by elie              #+#    #+#             */
-/*   Updated: 2025/11/04 16:18:59 by elie             ###   ########.fr       */
+/*   Updated: 2025/11/06 10:46:41 by elie             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#define _POSIX_C_SOURCE 200809L
-
 #include "minishell.h"
-#include <signal.h>
-#include <readline/readline.h>
-#include <readline/history.h>
 
 volatile sig_atomic_t	g_signal = 0;
 

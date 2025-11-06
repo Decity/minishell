@@ -20,13 +20,11 @@ void	run(t_data *data)
 	ed_parsing(data);
 	apply_shell_expansions(data);
 	set_redirections(data);
-	setup_signals_executing();
 	execution(data);
-	setup_signals_interactive();
 
 	if (DEBUG)
 		debug(data);
-		
+
 	cleanup_data(data);
 }
 

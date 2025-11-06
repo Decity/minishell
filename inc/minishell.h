@@ -6,12 +6,14 @@
 /*   By: elie <elie@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/30 15:08:30 by ebelle            #+#    #+#             */
-/*   Updated: 2025/11/03 09:47:01 by elie             ###   ########.fr       */
+/*   Updated: 2025/11/06 10:46:53 by elie             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
+
+# define _POSIX_C_SOURCE 200809L
 
 // headers
 # include "../lib/libft/inc/libft.h"
@@ -25,6 +27,11 @@
 # include <readline/readline.h>
 # include <readline/history.h>
 # include <stdlib.h>
+# include <signal.h>
+
+// Initialization
+void	init(t_data *data);
+void	set_input(t_data *data);
 
 // Shell operations
 void	set_commands(t_data *data);
@@ -73,11 +80,22 @@ char	*get_executable_path(const char *exec);
 size_t	get_cmds_count(t_cmd *commands);
 void	execution(t_data *data);
 void	execute_cmds(t_data *data);
-void	execute_single_cmd(t_cmd *cmd, char **envp);
+void	execute_single_cmd(t_cmd *cmd, t_data *data);
+void	execute_single_builtin(t_cmd *cmd, t_data *data);
+void	execute_pipeline_child(t_cmd *cmd, t_data *data, int *pipefd, int prev_pipefd, bool is_first, bool is_last);
+void	wait_for_children(pid_t *pids, size_t count, t_data *data);
 void	execute_binary(t_cmd *cmd, char **envp);
+bool	is_builtin(const char *cmd);
+void	execute_builtin(t_cmd *cmd, t_data *data);
 void	close_pipes(int *pipefd, int prev_pipefd, bool is_first, bool is_last);
 void	setup_child_redirections(int *pipefd, int prev_pipefd, bool is_first, bool is_last);
 void	apply_redirections(t_cmd *cmd);
+
+// Signal handling
+extern volatile sig_atomic_t	g_signal;
+void	setup_signals_interactive(void);
+void	setup_signals_executing(void);
+void	restore_signals_default(void);
 
 // Cleanup
 void	cleanup_data(t_data *data);

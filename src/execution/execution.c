@@ -6,7 +6,7 @@
 /*   By: elie <elie@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/02 12:02:01 by ebelle            #+#    #+#             */
-/*   Updated: 2025/11/05 15:29:04 by elie             ###   ########.fr       */
+/*   Updated: 2025/11/06 10:38:23 by elie             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,12 +17,19 @@
 
 void	execution(t_data *data)
 {
+	if (data->is_interactive)
+		setup_signals_executing();
+
+	// execution mode
 	if (!data->command->next && is_builtin(data->command->args[0]))
 		execute_single_builtin(data->command, data);
 	else if (!data->command->next)
 		execute_single_cmd(data->command, data);
 	else
 		execute_cmds(data);
+
+	if (data->is_interactive)
+		setup_signals_interactive();
 }
 
 void	execute_single_cmd(t_cmd *cmd, t_data *data)

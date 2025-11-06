@@ -21,14 +21,16 @@ void	init(t_data *data)
 	ft_bzero(data, sizeof(t_data));
 	data->envp = array_to_llist(environ);
 	data->directory.pwd = ft_calloc(1, sizeof(1));
-	setup_signals_interactive();
+	data->is_interactive = isatty(STDIN_FILENO);
+	if (data->is_interactive)
+		setup_signals_interactive();
 }
 
 void	set_input(t_data *data)
 {
 	size_t	len;
 
-	if (isatty(STDIN_FILENO))
+	if (data->is_interactive)
 		data->input = readline("> ");
 	else
 	{
