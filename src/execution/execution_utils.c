@@ -6,21 +6,20 @@
 /*   By: elie <elie@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/28 13:56:00 by elie              #+#    #+#             */
-/*   Updated: 2025/10/29 12:16:04 by elie             ###   ########.fr       */
+/*   Updated: 2025/11/10 15:00:25 by elie             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../inc/minishell.h"
-#include <unistd.h>
+#include "minishell.h"
 
-char	*get_executable_path(const char *exec)
+char	*get_executable_path(const char *exec, const t_list *envp)
 {
 	char	**paths;
 	char	*abs_path;
 	char	*slashed_path;
 	size_t	i;
 
-	paths = ft_split(getenv("PATH"), ':');
+	paths = ft_split(ft_getenv(envp, "PATH"), ':');
 	// TODO: Handle malloc fail.
 	i = 0;
 	while (paths[i])

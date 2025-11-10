@@ -6,12 +6,11 @@
 /*   By: elie <elie@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/05 15:22:00 by elie              #+#    #+#             */
-/*   Updated: 2025/11/05 15:22:00 by elie             ###   ########.fr       */
+/*   Updated: 2025/11/10 15:00:16 by elie             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
-#include <unistd.h>
 
 bool	is_builtin(const char *cmd)
 {
@@ -54,7 +53,7 @@ void	execute_builtin(t_cmd *cmd, t_data *data)
 	if (ft_strcmp(cmd->args[0], "env") == 0)
 		env_print(data->envp);
 	if (ft_strcmp(cmd->args[0], "exit") == 0)
-		minishell_exit();
+		minishell_exit(data);
 }
 
 void	execute_single_builtin(t_cmd *cmd, t_data *data)
