@@ -6,14 +6,11 @@
 /*   By: elie <elie@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/02 12:02:01 by ebelle            #+#    #+#             */
-/*   Updated: 2025/11/06 10:38:23 by elie             ###   ########.fr       */
+/*   Updated: 2025/11/10 11:17:34 by elie             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../inc/minishell.h"
-#include <sys/wait.h>
-#include <unistd.h>
-#include <fcntl.h>
+#include "minishell.h"
 
 void	execution(t_data *data)
 {

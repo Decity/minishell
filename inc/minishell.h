@@ -6,7 +6,7 @@
 /*   By: elie <elie@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/30 15:08:30 by ebelle            #+#    #+#             */
-/*   Updated: 2025/11/06 10:46:53 by elie             ###   ########.fr       */
+/*   Updated: 2025/11/10 11:18:08 by elie             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,10 +24,13 @@
 
 // standard libs
 # include <stdio.h>
+# include <stdlib.h>
 # include <readline/readline.h>
 # include <readline/history.h>
-# include <stdlib.h>
 # include <signal.h>
+# include <sys/wait.h>
+# include <unistd.h>
+# include <fcntl.h>
 
 // Initialization
 void	init(t_data *data);
