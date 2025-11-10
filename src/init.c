@@ -12,6 +12,14 @@
 
 #include "minishell.h"
 
+/**
+ * @brief Initialize shell data structure
+ *
+ * Sets up environment variables, current directory, checks if running
+ * interactively, and configures signal handlers.
+ *
+ * @param[out] data Shell data structure to initialize
+ */
 void	init(t_data *data)
 {
 	extern const char **environ;
@@ -24,6 +32,16 @@ void	init(t_data *data)
 		setup_signals_interactive();
 }
 
+/**
+ * @brief Read input from user or stdin
+ *
+ * Uses readline for interactive mode, get_next_line for pipes/files.
+ * Exits on EOF, returns FAILURE for empty input, adds to history if valid.
+ *
+ * @param[in,out] data Shell data structure
+ *
+ * @return SUCCESS if valid input received, FAILURE if empty input
+ */
 uint8_t	set_input(t_data *data)
 {
 	size_t	len;

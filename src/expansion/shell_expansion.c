@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   shell_expansion.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dbakker <dbakker@student.42.fr>            +#+  +:+       +#+        */
+/*   By: elie <elie@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/08 18:09:32 by elie              #+#    #+#             */
-/*   Updated: 2025/10/29 11:21:10 by dbakker          ###   ########.fr       */
+/*   Updated: 2025/11/10 15:41:50 by elie             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ void	apply_shell_expansions(t_data *data)
 	while (arguments[i])
 	{
 		expand_tilde(&arguments[i]);
-		expand_env_variables(&arguments[i]);
+		expand_env_variables(&arguments[i], data);
 		remove_quotation(&arguments[i]);
 		i++;
 	}
@@ -52,8 +52,9 @@ void	apply_shell_expansions(t_data *data)
  * @brief Expands a single given argument from data->command->arguments.
  *
  * @param str A pointer to the string to perfom expansions on
+ * @param data Pointer to t_data for accessing exit_status and envp
  */
-void	expand_env_variables(char **str)
+void	expand_env_variables(char **str, t_data *data)
 {
 	size_t	i;
 	size_t	j;
@@ -74,7 +75,7 @@ void	expand_env_variables(char **str)
 
 		if (inside_single_quotes == false && (*str)[i] == '$')
 		{
-			j = expand_single_variable(str, i); // +1 or na?
+			j = expand_single_variable(str, i);
 			// if (j = -1)
 			// 	TODO: handle error
 			i += j;

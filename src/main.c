@@ -13,6 +13,14 @@
 #include "minishell.h"
 #include <unistd.h>
 
+/**
+ * @brief Execute one iteration of the shell main loop
+ *
+ * Reads input, tokenizes, parses, expands variables, sets up redirections,
+ * executes the command, and cleans up.
+ *
+ * @param[in,out] data Shell data structure
+ */
 void	run(t_data *data)
 {
 	if (set_input(data) == FAILURE)	// TODO: Fix whitespace still passing through

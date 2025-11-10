@@ -12,6 +12,14 @@
 
 #include "minishell.h"
 
+/**
+ * @brief Execute parsed command(s)
+ *
+ * Determines execution mode (single builtin, single command, or pipeline)
+ * and dispatches to appropriate handler. Manages signal handlers.
+ *
+ * @param[in,out] data Shell data structure with parsed commands
+ */
 void	execution(t_data *data)
 {
 	if (data->is_interactive)
@@ -29,6 +37,15 @@ void	execution(t_data *data)
 		setup_signals_interactive();
 }
 
+/**
+ * @brief Execute a single command in a child process
+ *
+ * Forks a child process, applies redirections, executes the command
+ * (builtin or binary), and waits for completion.
+ *
+ * @param[in] cmd Command to execute
+ * @param[in,out] data Shell data structure
+ */
 void	execute_single_cmd(t_cmd *cmd, t_data *data)
 {
 	pid_t	pid;
@@ -51,6 +68,15 @@ void	execute_single_cmd(t_cmd *cmd, t_data *data)
 		data->exit_status = WEXITSTATUS(status);
 }
 
+/**
+ * @brief Execute a binary program
+ *
+ * Determines executable path (absolute, relative, or PATH search),
+ * converts environment list to array, and calls execve.
+ *
+ * @param[in] cmd Command to execute
+ * @param[in] envp Environment variables list
+ */
 void	execute_binary(t_cmd *cmd, t_list *envp)
 {
 	char	*path;

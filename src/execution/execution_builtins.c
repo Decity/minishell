@@ -12,6 +12,13 @@
 
 #include "../../inc/minishell.h"
 
+/**
+ * @brief Check if command is a shell builtin
+ *
+ * @param[in] cmd Command name
+ *
+ * @return True if builtin, false otherwise
+ */
 bool	is_builtin(const char *cmd)
 {
 	if (!cmd)
@@ -33,6 +40,14 @@ bool	is_builtin(const char *cmd)
 	return (false);
 }
 
+/**
+ * @brief Execute a builtin command
+ *
+ * Dispatches to appropriate builtin handler based on command name.
+ *
+ * @param[in] cmd Command to execute
+ * @param[in,out] data Shell data structure
+ */
 void	execute_builtin(t_cmd *cmd, t_data *data)
 {
 	if (ft_strcmp(cmd->args[0], "echo") == 0)
@@ -56,6 +71,14 @@ void	execute_builtin(t_cmd *cmd, t_data *data)
 		minishell_exit(data);
 }
 
+/**
+ * @brief Execute a single builtin with redirections
+ *
+ * Saves stdin/stdout, applies redirections, executes builtin, then restores.
+ *
+ * @param[in] cmd Command to execute
+ * @param[in,out] data Shell data structure
+ */
 void	execute_single_builtin(t_cmd *cmd, t_data *data)
 {
 	int		saved_stdin;
