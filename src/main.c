@@ -6,7 +6,7 @@
 /*   By: elie <elie@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/03 15:32:47 by elie              #+#    #+#             */
-/*   Updated: 2025/11/05 15:21:35 by elie             ###   ########.fr       */
+/*   Updated: 2025/11/10 14:08:32 by elie             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,9 @@
 
 void	run(t_data *data)
 {
-	set_input(data);
+	if (set_input(data) == FAILURE)
+		return ;
+		
 	set_tokens(data);
 	ed_parsing(data);
 	apply_shell_expansions(data);

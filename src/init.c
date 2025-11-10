@@ -6,7 +6,7 @@
 /*   By: elie <elie@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/05 14:09:14 by elie              #+#    #+#             */
-/*   Updated: 2025/11/10 11:12:26 by elie             ###   ########.fr       */
+/*   Updated: 2025/11/10 14:05:07 by elie             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void	init(t_data *data)
 		setup_signals_interactive();
 }
 
-void	set_input(t_data *data)
+uint8_t	set_input(t_data *data)
 {
 	size_t	len;
 
@@ -39,10 +39,11 @@ void	set_input(t_data *data)
 		if (len > 0 && data->input[len - 1] == '\n')
 			data->input[len - 1] = '\0';
 	}
-	if (!data->input || !data->input[0])
+	if (!data->input || !data->input[0] || ft_strlen(data->input) == 0)
 	{
 		if (data->input)
 			free(data->input);
-		exit(0);
+		return (FAILURE);
 	}
+	return (SUCCESS);
 }
