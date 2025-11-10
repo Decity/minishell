@@ -46,5 +46,7 @@ uint8_t	set_input(t_data *data)
 		free(data->input);
 		return (FAILURE);
 	}
+	if (data->is_interactive)
+		add_history(data->input);
 	return (SUCCESS);
 }
