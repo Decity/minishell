@@ -25,3 +25,16 @@ void	cleanup_data(t_data *data)
 	if (DEBUG)
 		printf("\n=== cleanup complete ===\n");
 }
+
+void	exit_cleanup(t_data *data)
+{
+	cleanup_data(data);
+
+	// Clean up environment list
+	if (data->envp)
+		ft_listclear(&data->envp, free);
+
+	// Clean up directory
+	if (data->directory.pwd)
+		free(data->directory.pwd);
+}
