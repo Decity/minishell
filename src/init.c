@@ -6,13 +6,11 @@
 /*   By: elie <elie@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/05 14:09:14 by elie              #+#    #+#             */
-/*   Updated: 2025/11/05 14:09:16 by elie             ###   ########.fr       */
+/*   Updated: 2025/11/10 11:12:26 by elie             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-
 #include "minishell.h"
-#include <unistd.h>
 
 void	init(t_data *data)
 {
