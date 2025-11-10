@@ -129,6 +129,9 @@ size_t	ft_strnlen(const char *str, size_t maxlen);
 // ft_strncmp.c
 
 int32_t	ft_strncmp(const char *str1, const char *str2, size_t num);
+// ft_strcmp.c
+
+int32_t	ft_strcmp(const char *str1, const char *str2);
 // ft_strnstr.c
 
 char	*ft_strnstr(const char *haystack, const char *needle, size_t num);

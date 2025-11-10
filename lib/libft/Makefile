@@ -48,6 +48,7 @@ SRCS = \
 	custom/ft_intlen.c \
 	custom/ft_count_occurrence.c \
 	custom/ft_repoint.c \
+	custom/ft_strcmp.c \
 	custom/ft_strreplace.c \
 
 # Full paths for all source files
