@@ -39,10 +39,11 @@ uint8_t	set_input(t_data *data)
 		if (len > 0 && data->input[len - 1] == '\n')
 			data->input[len - 1] = '\0';
 	}
-	if (!data->input || !data->input[0] || ft_strlen(data->input) == 0)
+	if (!data->input)
+		exit(0);
+	if (!data->input[0] || ft_strlen(data->input) == 0)
 	{
-		if (data->input)
-			free(data->input);
+		free(data->input);
 		return (FAILURE);
 	}
 	return (SUCCESS);
