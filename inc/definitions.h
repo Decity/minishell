@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   definitions.h                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: elie <elie@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: dbakker <dbakker@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/30 19:00:22 by elie              #+#    #+#             */
-/*   Updated: 2025/10/14 17:26:38 by elie             ###   ########.fr       */
+/*   Updated: 2025/11/12 13:39:36 by dbakker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,5 +29,7 @@
 # define TYPE_REDIRECTION_OUT 7
 # define TYPE_REDIRECTION_APPEND 8
 # define TYPE_REDIRECTION_HEREDOC 9
+
+# define HEREDOC_LIMIT 16
 
 #endif
