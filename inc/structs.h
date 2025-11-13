@@ -6,7 +6,7 @@
 /*   By: dbakker <dbakker@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/30 18:14:03 by elie              #+#    #+#             */
-/*   Updated: 2025/10/29 10:53:51 by dbakker          ###   ########.fr       */
+/*   Updated: 2025/11/13 15:27:50 by dbakker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,13 @@
 typedef struct s_rdr	t_rdr;
 typedef struct s_cmd	t_cmd;
 typedef struct s_data	t_data;
+
+typedef struct s_hd
+{
+	int		fd;
+	char	*delimiter;
+	char	*filename;
+}	t_hd;
 
 typedef struct s_redir
 {
@@ -35,6 +42,7 @@ typedef struct s_cmd
 {
 	char	**args;
 	t_rdr	redirect;
+	t_hd	*heredoc;
 	t_cmd	*next;
 }	t_cmd;
 

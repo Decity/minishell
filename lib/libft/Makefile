@@ -45,6 +45,7 @@ SRCS = \
 	custom/ed_convert_list.c \
 	custom/free_and_null.c \
 	custom/free_array.c \
+	custom/ft_abs.c \
 	custom/ft_intlen.c \
 	custom/ft_count_occurrence.c \
 	custom/ft_repoint.c \

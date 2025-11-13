@@ -6,7 +6,7 @@
 /*   By: dbakker <dbakker@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/30 19:00:22 by elie              #+#    #+#             */
-/*   Updated: 2025/11/12 13:39:36 by dbakker          ###   ########.fr       */
+/*   Updated: 2025/11/13 15:46:54 by dbakker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,5 +31,6 @@
 # define TYPE_REDIRECTION_HEREDOC 9
 
 # define HEREDOC_LIMIT 16
+# define HEREDOC_FILENAME_LENGTH 16
 
 #endif
