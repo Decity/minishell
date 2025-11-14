@@ -6,7 +6,7 @@
 /*   By: dbakker <dbakker@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/25 19:34:56 by dbakker           #+#    #+#             */
-/*   Updated: 2025/10/30 14:53:31 by dbakker          ###   ########.fr       */
+/*   Updated: 2025/11/14 15:57:01 by dbakker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,8 +41,7 @@ t_redir	*init_redir_in(const char **args, size_t size)
 		if (is_redir_in(args[i]))
 		{
 			redir_in[j].redir_type = get_redirection_type(args[i]);
-			if (args[i + 1])
-				redir_in[j].file = ft_strdup(args[i + 1]);
+			redir_in[j].file = ft_strdup(args[i + 1]);
 			if (redir_in[j].file == NULL)
 				return (redir_in);
 			j++;
@@ -82,8 +81,7 @@ t_redir	*init_redir_out(const char **args, size_t size)
 		if (is_redir_out(args[i]))
 		{
 			redir_out[j].redir_type = get_redirection_type(args[i]);
-			if (args[i + 1])
-				redir_out[j].file = ft_strdup(args[i + 1]);
+			redir_out[j].file = ft_strdup(args[i + 1]);
 			if (redir_out[j].file == NULL)
 				return (redir_out);
 			j++;

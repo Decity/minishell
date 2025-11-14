@@ -6,7 +6,7 @@
 /*   By: dbakker <dbakker@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/12 10:53:02 by dbakker           #+#    #+#             */
-/*   Updated: 2025/11/13 15:59:05 by dbakker          ###   ########.fr       */
+/*   Updated: 2025/11/14 15:53:37 by dbakker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 /**
  * @return The amount of heredoc redirections found across all command structs.
  */
-size_t	count_heredocs(t_cmd *cmd)
+size_t	count_total_heredocs(t_cmd *cmd)
 {
 	size_t	count;
 	size_t	i;
@@ -143,7 +143,8 @@ char	*convert_mem_to_base16(const void *ptr, size_t size)
 // }
 
 /**
- * @return Return a randomly generated string of base 16 characters.
+ * @return A randomly generated string of base 16 characters, or `NULL`
+ * @return on failure.
  *
  * The length of the string is defined by `HEREDOC_FILENAME_LENGTH`.
  *
@@ -151,50 +152,32 @@ char	*convert_mem_to_base16(const void *ptr, size_t size)
  */
 char	*generate_heredoc_name()
 {
-	char	*filename;
-	void	*ptr;
+	const char	path[] = "/tmp/";
+	char		*filename;
+	char		*retstr;
+	void		*ptr;
 
 	ptr = generate_random_pointer(HEREDOC_FILENAME_LENGTH);
 	filename = convert_mem_to_base16(ptr, HEREDOC_FILENAME_LENGTH);
+	retstr = ft_strjoin(path, filename);
+	free(filename);
 	free(ptr);
-	return (filename);
+	return (retstr);
 }
 
-void	assign_heredoc_delimiters(t_hd *hd, t_cmd *cmd)
+void	*init_heredoc(t_cmd *cmd)
 {
-	size_t	i;
-
-	i = 0;
-	while (cmd)
-	{
-		while (cmd->redirect.infile[i].file)
-		{
-			if (cmd->redirect.infile[i].redir_type == TYPE_REDIRECTION_HEREDOC)
-			{
-				hd->delimiter = cmd->redirect.infile[i].file;
-			}
-			i++;
-		}
-		i = 0;
-		cmd = cmd->next;
-	}
-
-}
-
-
-t_cmd	*init_heredoc(t_cmd *cmd)
-{
-	const size_t	count = count_heredocs(cmd);
+	const size_t	total_count = count_total_heredocs(cmd);
 	size_t			i;
 	size_t			j;
 
-	if (count > HEREDOC_LIMIT)
+	if (total_count > HEREDOC_LIMIT)
 	{
 		return (NULL);
 	}
 	i = 0;
 	j = 0;
-	while (i < count)
+	while (i < total_count)
 	{
 		cmd->heredoc[i].filename = generate_heredoc_name();
 		while (cmd->redirect.infile[j].file)
@@ -207,6 +190,7 @@ t_cmd	*init_heredoc(t_cmd *cmd)
 		}
 		j = 0;
 		i++;
+		cmd = cmd->next;
 	}
 	return (cmd);
 }
@@ -233,25 +217,23 @@ void	remove_files(t_cmd *cmd)
 
 void	heredoc(t_cmd *cmd)
 {
-	t_hd	*heredoc;
-	char	*line;
+	// char	*line;
+	void	*ptr;
 	size_t	i;
 
-	heredoc->filename = init_heredoc(cmd);
-	if (heredoc->filename == NULL)
+	ptr = init_heredoc(cmd);
+	if (ptr == NULL)
 	{
 		return ;
 	}
 	i = 0;
-	while (i)
+	while (cmd->heredoc[i].filename)
 	{
-		heredoc->fd[i] = open(heredoc->filename[i], O_WRONLY | O_CREAT | O_TRUNC, 0644);
-		while (1)
-		{
-			line = readline(NULL);
-
-		}
-
+		printf("Opening file with the name: %s\n", cmd->heredoc[i].filename);
+		printf("Its delimiter is: %s\n", cmd->heredoc[i].delimiter);
+		cmd->heredoc[i].fd = open(cmd->heredoc[i].filename, O_WRONLY | O_CREAT | O_TRUNC, 0644);
+		printf("The file descriptor is: %i\n", cmd->heredoc[i].fd);
+		printf("-----\n");
 		i++;
 	}
 }

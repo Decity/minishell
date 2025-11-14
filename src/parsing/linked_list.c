@@ -6,7 +6,7 @@
 /*   By: dbakker <dbakker@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/25 19:33:35 by dbakker           #+#    #+#             */
-/*   Updated: 2025/11/01 19:55:37 by dbakker          ###   ########.fr       */
+/*   Updated: 2025/11/14 11:42:23 by dbakker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,8 @@ t_cmd	*ed_cmdnew(const char **args, size_t num)
 		return (NULL);
 	}
 	cmd->args = copy_narray((char **)args, num);
-	if (cmd->args == NULL)
+	cmd->heredoc = malloc(sizeof(t_hd));
+	if (cmd->args == NULL || cmd->heredoc == NULL)
 	{
 		return (NULL);
 	}
