@@ -6,7 +6,7 @@
 /*   By: dbakker <dbakker@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/28 11:05:55 by dbakker           #+#    #+#             */
-/*   Updated: 2025/11/14 15:16:20 by dbakker          ###   ########.fr       */
+/*   Updated: 2025/11/15 12:38:53 by dbakker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,6 @@ static void debug_parsing(t_data *data)
 	cmd = data->command;
 	while (cmd)
 	{
-		printf("------------\n");
 		printf("\e[93mNode %zu -\e[0m ", node_i);
 		printf("[");
 		for (i = 0; cmd->args[i]; i++)
@@ -73,6 +72,12 @@ static void debug_parsing(t_data *data)
 			printf("Input redirection type: %i\n", cmd->redirect.infile[i].redir_type);
 		}
 		printf("Input file descriptor: %i\n", cmd->redirect.input_fd);
+		for (i = 0; cmd->redirect.heredoc[i].delimiter; i++)
+		{
+			printf("Heredoc delimiter: %s | ", cmd->redirect.heredoc[i].delimiter);
+			printf("Heredoc filename: %s | ", cmd->redirect.heredoc[i].filename);
+			printf("Heredoc file descriptor: %i\n", cmd->redirect.heredoc[i].fd);
+		}
 		for (i = 0; cmd->redirect.outfile[i].file; i++)
 		{
 			printf("Output file: %s | ", cmd->redirect.outfile[i].file);
@@ -80,6 +85,8 @@ static void debug_parsing(t_data *data)
 		}
 		printf("Output file descriptor: %i\n", cmd->redirect.output_fd);
 		cmd = cmd->next;
+		if (cmd)
+			printf("------------\n");
 		node_i++;
 	}
 	printf("\n=== Parsing End ===\n");

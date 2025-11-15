@@ -6,7 +6,7 @@
 /*   By: dbakker <dbakker@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/30 18:14:03 by elie              #+#    #+#             */
-/*   Updated: 2025/11/13 15:27:50 by dbakker          ###   ########.fr       */
+/*   Updated: 2025/11/14 22:35:21 by dbakker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@ typedef struct s_rdr
 {
 	int		input_fd;
 	int		output_fd;
+	t_hd	*heredoc;
 	t_redir	*infile;
 	t_redir	*outfile;
 }	t_rdr;
@@ -42,7 +43,6 @@ typedef struct s_cmd
 {
 	char	**args;
 	t_rdr	redirect;
-	t_hd	*heredoc;
 	t_cmd	*next;
 }	t_cmd;
 
@@ -52,10 +52,8 @@ typedef struct s_pwd
 	char	*old_pwd;
 }	t_pwd;
 
-
 typedef struct s_data
 {
-	char	*current_directory;
 	char	*input;
 	char	**tokens;
 	t_pwd	directory;

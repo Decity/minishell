@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: elie <elie@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: dbakker <dbakker@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/03 15:32:47 by elie              #+#    #+#             */
-/*   Updated: 2025/11/05 15:21:35 by elie             ###   ########.fr       */
+/*   Updated: 2025/11/15 14:55:34 by dbakker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@ void	run(t_data *data)
 	set_input(data);
 	set_tokens(data);
 	ed_parsing(data);
+	heredoc(data);
 	apply_shell_expansions(data);
 	set_redirections(data);
 	execution(data);
@@ -25,6 +26,7 @@ void	run(t_data *data)
 	if (DEBUG)
 		debug(data);
 
+	remove_heredoc_files(data->command);
 	cleanup_data(data);
 }
 

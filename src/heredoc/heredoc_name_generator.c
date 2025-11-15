@@ -1,42 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   heredoc_utils.c                                    :+:      :+:    :+:   */
+/*   heredoc_name_generator.c                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dbakker <dbakker@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/11/12 10:53:02 by dbakker           #+#    #+#             */
-/*   Updated: 2025/11/14 15:53:37 by dbakker          ###   ########.fr       */
+/*   Created: 2025/11/15 12:49:04 by dbakker           #+#    #+#             */
+/*   Updated: 2025/11/15 12:49:40 by dbakker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-/**
- * @return The amount of heredoc redirections found across all command structs.
- */
-size_t	count_total_heredocs(t_cmd *cmd)
-{
-	size_t	count;
-	size_t	i;
-
-	count = 0;
-	i = 0;
-	while (cmd)
-	{
-		while (cmd->redirect.infile[i].file)
-		{
-			if (cmd->redirect.infile[i].redir_type == TYPE_REDIRECTION_HEREDOC)
-			{
-				count++;
-			}
-			i++;
-		}
-		i = 0;
-		cmd = cmd->next;
-	}
-	return (count);
-}
 
 /**
  * @brief Generate a pointer of length @p `size` read from `/dev/urandom`.
@@ -111,37 +85,6 @@ char	*convert_mem_to_base16(const void *ptr, size_t size)
 	return (hex_str);
 }
 
-// /**
-//  * @return A generated array of strings to be used as names for the heredoc
-//  * @return files, or `NULL` on failure.
-//  */
-// char	**generate_heredoc_names(size_t count)
-// {
-// 	const size_t	size = 16;
-// 	void			*ptr;
-// 	char			**names;
-// 	size_t			i;
-
-// 	names = ft_calloc(count + 1, sizeof(char *));
-// 	if (names == NULL)
-// 	{
-// 		return (NULL);
-// 	}
-// 	i = 0;
-// 	while (i < count)
-// 	{
-// 		ptr = generate_random_pointer(size);
-// 		names[i] = convert_mem_to_base16(ptr, size);
-// 		free(ptr);
-// 		if (names[i] == NULL)
-// 		{
-// 			return (ft_free2d((void **)names, i), NULL);
-// 		}
-// 		i++;
-// 	}
-// 	return (names);
-// }
-
 /**
  * @return A randomly generated string of base 16 characters, or `NULL`
  * @return on failure.
@@ -163,77 +106,4 @@ char	*generate_heredoc_name()
 	free(filename);
 	free(ptr);
 	return (retstr);
-}
-
-void	*init_heredoc(t_cmd *cmd)
-{
-	const size_t	total_count = count_total_heredocs(cmd);
-	size_t			i;
-	size_t			j;
-
-	if (total_count > HEREDOC_LIMIT)
-	{
-		return (NULL);
-	}
-	i = 0;
-	j = 0;
-	while (i < total_count)
-	{
-		cmd->heredoc[i].filename = generate_heredoc_name();
-		while (cmd->redirect.infile[j].file)
-		{
-			if (cmd->redirect.infile[j].redir_type == TYPE_REDIRECTION_HEREDOC)
-			{
-				cmd->heredoc[i].delimiter = cmd->redirect.infile[j].file;
-			}
-			j++;
-		}
-		j = 0;
-		i++;
-		cmd = cmd->next;
-	}
-	return (cmd);
-}
-
-void	remove_files(t_cmd *cmd)
-{
-	size_t	i;
-	int		ret_unlink;
-	int		ret_close;
-
-	i = 0;
-	while (cmd)
-	{
-		while (cmd->heredoc[i].filename)
-		{
-			ret_close = close(cmd->heredoc[i].fd);
-			ret_unlink = unlink(cmd->heredoc[i].filename);
-			i++;
-		}
-		i = 0;
-		cmd = cmd->next;
-	}
-}
-
-void	heredoc(t_cmd *cmd)
-{
-	// char	*line;
-	void	*ptr;
-	size_t	i;
-
-	ptr = init_heredoc(cmd);
-	if (ptr == NULL)
-	{
-		return ;
-	}
-	i = 0;
-	while (cmd->heredoc[i].filename)
-	{
-		printf("Opening file with the name: %s\n", cmd->heredoc[i].filename);
-		printf("Its delimiter is: %s\n", cmd->heredoc[i].delimiter);
-		cmd->heredoc[i].fd = open(cmd->heredoc[i].filename, O_WRONLY | O_CREAT | O_TRUNC, 0644);
-		printf("The file descriptor is: %i\n", cmd->heredoc[i].fd);
-		printf("-----\n");
-		i++;
-	}
 }

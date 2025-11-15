@@ -6,11 +6,38 @@
 /*   By: dbakker <dbakker@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/25 19:34:56 by dbakker           #+#    #+#             */
-/*   Updated: 2025/11/14 15:57:01 by dbakker          ###   ########.fr       */
+/*   Updated: 2025/11/15 12:29:40 by dbakker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+t_hd	*init_redir_heredoc(const char **args, size_t size)
+{
+	t_hd	*heredoc;
+	size_t	i;
+	size_t	j;
+
+	heredoc = ft_calloc(count_redir_heredoc(args) + 1, sizeof(t_hd));
+	if (heredoc == NULL)
+	{
+		return (NULL);
+	}
+	i = 0;
+	j = 0;
+	while (i < size && args[i])
+	{
+		if (is_redir_heredoc(args[i]))
+		{
+			heredoc[j].delimiter = ft_strdup(args[i + 1]);
+			if (heredoc[j].delimiter == NULL)
+				return (NULL);
+			j++;
+		}
+		i++;
+	}
+	return (heredoc);
+}
 
 /**
  * @brief Initialize an array of input files along with the respective
@@ -178,6 +205,7 @@ t_cmd	*init_cmd(const char **args, size_t size)
 	{
 		return (NULL);
 	}
+	redir->redirect.heredoc = init_redir_heredoc(args, size);
 	redir->redirect.infile = init_redir_in(args, size);
 	redir->redirect.outfile = init_redir_out(args, size);
 	return (redir);
