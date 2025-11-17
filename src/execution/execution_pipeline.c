@@ -6,13 +6,11 @@
 /*   By: elie <elie@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/05 15:25:00 by elie              #+#    #+#             */
-/*   Updated: 2025/11/05 15:38:17 by elie             ###   ########.fr       */
+/*   Updated: 2025/11/10 15:00:35 by elie             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../inc/minishell.h"
-#include <sys/wait.h>
-#include <unistd.h>
+#include "minishell.h"
 
 void	execute_pipeline_child(t_cmd *cmd, t_data *data, int *pipefd, int prev_pipefd, bool is_first, bool is_last)
 {

@@ -14,6 +14,13 @@
 
 volatile sig_atomic_t	g_signal = 0;
 
+/**
+ * @brief Handle SIGINT (Ctrl+C) in interactive mode
+ *
+ * Clears the current readline input line and displays a new prompt.
+ *
+ * @param[in] sig Signal number
+ */
 void	handle_sigint_interactive(int sig)
 {
 	(void)sig;
@@ -24,6 +31,13 @@ void	handle_sigint_interactive(int sig)
 	rl_redisplay();
 }
 
+/**
+ * @brief Handle SIGINT (Ctrl+C) during command execution
+ *
+ * Prints a newline to display output properly.
+ *
+ * @param[in] sig Signal number
+ */
 void	handle_sigint_executing(int sig)
 {
 	(void)sig;
@@ -31,6 +45,11 @@ void	handle_sigint_executing(int sig)
 	write(STDOUT_FILENO, "\n", 1);
 }
 
+/**
+ * @brief Configure signal handlers for interactive mode
+ *
+ * Sets up SIGINT handler to clear input line, ignores SIGQUIT.
+ */
 void	setup_signals_interactive(void)
 {
 	struct sigaction	sa_int;
@@ -49,6 +68,11 @@ void	setup_signals_interactive(void)
 	sigaction(SIGQUIT, &sa_quit, NULL);
 }
 
+/**
+ * @brief Configure signal handlers for command execution mode
+ *
+ * Sets up SIGINT handler for running commands, ignores SIGQUIT.
+ */
 void	setup_signals_executing(void)
 {
 	struct sigaction	sa_int;
@@ -67,6 +91,11 @@ void	setup_signals_executing(void)
 	sigaction(SIGQUIT, &sa_quit, NULL);
 }
 
+/**
+ * @brief Restore default signal handlers
+ *
+ * Resets SIGINT and SIGQUIT to their default behavior.
+ */
 void	restore_signals_default(void)
 {
 	struct sigaction	sa_default;

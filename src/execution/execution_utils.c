@@ -6,21 +6,30 @@
 /*   By: elie <elie@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/28 13:56:00 by elie              #+#    #+#             */
-/*   Updated: 2025/10/29 12:16:04 by elie             ###   ########.fr       */
+/*   Updated: 2025/11/10 15:00:25 by elie             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../inc/minishell.h"
-#include <unistd.h>
+#include "minishell.h"
 
-char	*get_executable_path(const char *exec)
+/**
+ * @brief Find executable path by searching PATH directories
+ *
+ * Searches directories in PATH environment variable for the executable.
+ *
+ * @param[in] exec Executable name
+ * @param[in] envp Environment variables list
+ *
+ * @return Path to executable, or NULL if not found
+ */
+char	*get_executable_path(const char *exec, const t_list *envp)
 {
 	char	**paths;
 	char	*abs_path;
 	char	*slashed_path;
 	size_t	i;
 
-	paths = ft_split(getenv("PATH"), ':');
+	paths = ft_split(ft_getenv(envp, "PATH"), ':');
 	// TODO: Handle malloc fail.
 	i = 0;
 	while (paths[i])
@@ -39,6 +48,13 @@ char	*get_executable_path(const char *exec)
 	return (NULL);
 }
 
+/**
+ * @brief Count number of commands in linked list
+ *
+ * @param[in] commands Head of command list
+ *
+ * @return Number of commands
+ */
 size_t	get_cmds_count(t_cmd *commands)
 {
 	size_t	count;
@@ -54,6 +70,16 @@ size_t	get_cmds_count(t_cmd *commands)
 	return (count);
 }
 
+/**
+ * @brief Close pipe file descriptors
+ *
+ * Closes previous pipe read end and current pipe both ends if applicable.
+ *
+ * @param[in] pipefd Current pipe file descriptors
+ * @param[in] prev_pipefd Previous pipe read end
+ * @param[in] is_first True if first command in pipeline
+ * @param[in] is_last True if last command in pipeline
+ */
 void	close_pipes(int *pipefd, int prev_pipefd, bool is_first, bool is_last)
 {
 	if (!is_first)
@@ -67,6 +93,16 @@ void	close_pipes(int *pipefd, int prev_pipefd, bool is_first, bool is_last)
 
 }
 
+/**
+ * @brief Set up stdin/stdout for pipeline child process
+ *
+ * Duplicates pipe file descriptors to stdin/stdout as needed.
+ *
+ * @param[in] pipefd Current pipe file descriptors
+ * @param[in] prev_pipefd Previous pipe read end
+ * @param[in] is_first True if first command in pipeline
+ * @param[in] is_last True if last command in pipeline
+ */
 void	setup_child_redirections(int *pipefd, int prev_pipefd, bool is_first, bool is_last)
 {
 	if (!is_first)
@@ -75,6 +111,13 @@ void	setup_child_redirections(int *pipefd, int prev_pipefd, bool is_first, bool 
 		dup2(pipefd[1], STDOUT_FILENO);
 }
 
+/**
+ * @brief Apply file redirections to stdin/stdout
+ *
+ * Redirects stdin/stdout to specified file descriptors if set.
+ *
+ * @param[in] cmd Command with redirection info
+ */
 void	apply_redirections(t_cmd *cmd)
 {
 	// Input redirect overrides pipe input

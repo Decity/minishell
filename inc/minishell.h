@@ -6,7 +6,7 @@
 /*   By: dbakker <dbakker@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/30 15:08:30 by ebelle            #+#    #+#             */
-/*   Updated: 2025/11/15 14:55:34 by dbakker          ###   ########.fr       */
+/*   Updated: 2025/11/17 11:51:29 by dbakker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@
 
 // Initialization
 void	init(t_data *data);
-void	set_input(t_data *data);
+uint8_t	set_input(t_data *data);
 
 // Shell operations
 void	set_commands(t_data *data);
@@ -79,7 +79,7 @@ void	remove_quotation(char **str);
 
 /// EXECUTION
 
-char	*get_executable_path(const char *exec);
+char	*get_executable_path(const char *exec, const t_list *envp);
 size_t	get_cmds_count(t_cmd *commands);
 void	execution(t_data *data);
 void	execute_cmds(t_data *data);
@@ -87,7 +87,7 @@ void	execute_single_cmd(t_cmd *cmd, t_data *data);
 void	execute_single_builtin(t_cmd *cmd, t_data *data);
 void	execute_pipeline_child(t_cmd *cmd, t_data *data, int *pipefd, int prev_pipefd, bool is_first, bool is_last);
 void	wait_for_children(pid_t *pids, size_t count, t_data *data);
-void	execute_binary(t_cmd *cmd, char **envp);
+void	execute_binary(t_cmd *cmd, t_list *envp);
 bool	is_builtin(const char *cmd);
 void	execute_builtin(t_cmd *cmd, t_data *data);
 void	close_pipes(int *pipefd, int prev_pipefd, bool is_first, bool is_last);
@@ -104,6 +104,7 @@ void	restore_signals_default(void);
 // Cleanup
 
 void	cleanup_data(t_data *data);
+void	exit_cleanup(t_data *data);
 
 // Debug
 
@@ -121,7 +122,7 @@ void	env_print(const t_list *envp);
 void	env_all_print(const t_list *envp);
 void	env_single_print(const t_list *envp);
 
-void	minishell_exit(void);
+void	minishell_exit(t_data *data);
 
 void	*export_env(t_list *list, const char *envvar);
 void	export_print(const t_list *list);
