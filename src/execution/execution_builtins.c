@@ -6,13 +6,19 @@
 /*   By: elie <elie@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/05 15:22:00 by elie              #+#    #+#             */
-/*   Updated: 2025/11/05 15:22:00 by elie             ###   ########.fr       */
+/*   Updated: 2025/11/10 15:00:16 by elie             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
-#include <unistd.h>
 
+/**
+ * @brief Check if command is a shell builtin
+ *
+ * @param[in] cmd Command name
+ *
+ * @return True if builtin, false otherwise
+ */
 bool	is_builtin(const char *cmd)
 {
 	if (!cmd)
@@ -34,6 +40,14 @@ bool	is_builtin(const char *cmd)
 	return (false);
 }
 
+/**
+ * @brief Execute a builtin command
+ *
+ * Dispatches to appropriate builtin handler based on command name.
+ *
+ * @param[in] cmd Command to execute
+ * @param[in,out] data Shell data structure
+ */
 void	execute_builtin(t_cmd *cmd, t_data *data)
 {
 	if (ft_strcmp(cmd->args[0], "echo") == 0)
@@ -54,9 +68,17 @@ void	execute_builtin(t_cmd *cmd, t_data *data)
 	if (ft_strcmp(cmd->args[0], "env") == 0)
 		env_print(data->envp);
 	if (ft_strcmp(cmd->args[0], "exit") == 0)
-		minishell_exit();
+		minishell_exit(data);
 }
 
+/**
+ * @brief Execute a single builtin with redirections
+ *
+ * Saves stdin/stdout, applies redirections, executes builtin, then restores.
+ *
+ * @param[in] cmd Command to execute
+ * @param[in,out] data Shell data structure
+ */
 void	execute_single_builtin(t_cmd *cmd, t_data *data)
 {
 	int		saved_stdin;

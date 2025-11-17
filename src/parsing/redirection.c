@@ -13,17 +13,18 @@
 #include "minishell.h"
 
 /**
- * @brief Initialize an array of input files along with the respective
- * @brief redirection type.
+ * @brief Initialize an array of input redirections with their types
  *
- * A pointer will still be returned even if the duplication of one the strings
- * fails.
+ * Scans the argument array for input redirections (< or <<) and creates
+ * an array storing the redirection type and target filename. Returns a
+ * partial result if string duplication fails.
  *
- * @param[in] args Array of strings.
+ * @param[in] args Array of command arguments
+ * @param[in] size Number of arguments to process
  *
- * @return Pointer to the initialized input array, or `NULL` on complete failure.
+ * @return Pointer to array of input redirections, or NULL on complete failure
  *
- * @warning Caller owns free().
+ * @warning Caller owns free()
  */
 t_redir	*init_redir_in(const char **args, size_t size)
 {
@@ -53,18 +54,18 @@ t_redir	*init_redir_in(const char **args, size_t size)
 }
 
 /**
- * @brief Initialize an array of output files along with the respective
- * @brief redirection type.
+ * @brief Initialize an array of output redirections with their types
  *
- * A pointer will still be returned even if the duplication of one the strings
- * fails.
+ * Scans the argument array for output redirections (> or >>) and creates
+ * an array storing the redirection type and target filename. Returns a
+ * partial result if string duplication fails.
  *
- * @param[in] args Array of strings.
+ * @param[in] args Array of command arguments
+ * @param[in] size Number of arguments to process
  *
- * @return Pointer to the initialized output array, or `NULL` on complete
- * @return failure.
+ * @return Pointer to array of output redirections, or NULL on complete failure
  *
- * @warning Caller owns free().
+ * @warning Caller owns free()
  */
 t_redir	*init_redir_out(const char **args, size_t size)
 {
@@ -94,7 +95,12 @@ t_redir	*init_redir_out(const char **args, size_t size)
 }
 
 /**
- * @return The amount of arguments excluding all redirections and filenames.
+ * @brief Count arguments excluding redirections and their target files
+ *
+ * @param[in] args Array of command arguments
+ * @param[in] size Number of arguments to process
+ *
+ * @return Number of non-redirection arguments
  */
 size_t	ed_args_size(const char **args, size_t size)
 {
@@ -119,14 +125,14 @@ size_t	ed_args_size(const char **args, size_t size)
 }
 
 /**
- * @brief Create a new string with the redirections and filenames removed.
+ * @brief Create a new array with redirections and target files removed
  *
- * @param[in] args Array of strings.
+ * @param[in] args Array of command arguments
+ * @param[in] size Number of arguments to process
  *
- * @return Pointer to the array of strings with the redirections removed,
- * @return or `NULL` on failure.
+ * @return Pointer to new array without redirections, or NULL on failure
  *
- * @warning Caller owns free().
+ * @warning Caller owns free()
  */
 char	**trim_redirections(const char **args, size_t size)
 {
@@ -158,16 +164,18 @@ char	**trim_redirections(const char **args, size_t size)
 }
 
 /**
- * @brief Initialize the command struct with @p `size` tokens from @p `args`.
+ * @brief Initialize a command struct from argument tokens
  *
- * @param[in] args Array of strings.
- * @param[in] size Amount of strings to copy to the command struct.
+ * Creates a command struct with arguments trimmed of redirections and
+ * separate arrays for input/output redirections. Returns partial result
+ * if redirection initialization fails.
  *
- * @return Pointer to the new command struct, or `NULL` on complete failure.
+ * @param[in] args Array of command arguments
+ * @param[in] size Number of arguments to process
  *
- * @warning Caller owns free.
+ * @return Pointer to new command struct, or NULL on complete failure
  *
- * @note A pointer still gets returned even if redirections fail.
+ * @warning Caller owns free()
  */
 t_cmd	*init_cmd(const char **args, size_t size)
 {

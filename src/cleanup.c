@@ -25,3 +25,23 @@ void	cleanup_data(t_data *data)
 	if (DEBUG)
 		printf("\n=== cleanup complete ===\n");
 }
+
+/**
+ * @brief Clean up all resources before program exit
+ *
+ * Calls cleanup_data and additionally frees environment list and directory.
+ *
+ * @param[in,out] data Shell data structure to clean up
+ */
+void	exit_cleanup(t_data *data)
+{
+	cleanup_data(data);
+
+	// Clean up environment list
+	if (data->envp)
+		ft_listclear(&data->envp, free);
+
+	// Clean up directory
+	if (data->directory.pwd)
+		free(data->directory.pwd);
+}

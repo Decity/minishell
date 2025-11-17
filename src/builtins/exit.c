@@ -12,7 +12,8 @@
 
 #include "minishell.h"
 
-void	minishell_exit(void)
+void	minishell_exit(t_data *data)
 {
+	exit_cleanup(data);
 	exit(0);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   shell_expansion.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dbakker <dbakker@student.42.fr>            +#+  +:+       +#+        */
+/*   By: elie <elie@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/08 18:09:32 by elie              #+#    #+#             */
-/*   Updated: 2025/10/29 11:21:10 by dbakker          ###   ########.fr       */
+/*   Updated: 2025/11/10 15:41:50 by elie             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ void	expand_env_variables(char **str)
 
 		if (inside_single_quotes == false && (*str)[i] == '$')
 		{
-			j = expand_single_variable(str, i); // +1 or na?
+			j = expand_single_variable(str, i);
 			// if (j = -1)
 			// 	TODO: handle error
 			i += j;
