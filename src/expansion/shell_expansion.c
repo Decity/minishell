@@ -32,7 +32,7 @@ void	apply_shell_expansions(t_data *data)
 	while (arguments[i])
 	{
 		expand_tilde(&arguments[i]);
-		expand_env_variables(&arguments[i], data);
+		expand_env_variables(&arguments[i]);
 		remove_quotation(&arguments[i]);
 		i++;
 	}
@@ -52,9 +52,8 @@ void	apply_shell_expansions(t_data *data)
  * @brief Expands a single given argument from data->command->arguments.
  *
  * @param str A pointer to the string to perfom expansions on
- * @param data Pointer to t_data for accessing exit_status and envp
  */
-void	expand_env_variables(char **str, t_data *data)
+void	expand_env_variables(char **str)
 {
 	size_t	i;
 	size_t	j;
