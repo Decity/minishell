@@ -6,7 +6,7 @@
 /*   By: dbakker <dbakker@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/25 19:33:35 by dbakker           #+#    #+#             */
-/*   Updated: 2025/11/14 23:07:51 by dbakker          ###   ########.fr       */
+/*   Updated: 2025/11/18 15:40:56 by dbakker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,12 +82,6 @@ void	ed_cmddelone(t_cmd *cmd)
 	if (cmd == NULL)
 		return ;
 	free_array(&cmd->args);
-	i = 0;
-	while (cmd->redirect.heredoc[i].delimiter)
-	{
-		free(cmd->redirect.heredoc[i].delimiter);
-		free(cmd->redirect.heredoc[i++].filename);
-	}
 	i = 0;
 	while (cmd->redirect.infile[i].file)
 	{

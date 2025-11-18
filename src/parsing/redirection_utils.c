@@ -6,15 +6,12 @@
 /*   By: dbakker <dbakker@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/25 19:14:19 by dbakker           #+#    #+#             */
-/*   Updated: 2025/11/15 12:27:52 by dbakker          ###   ########.fr       */
+/*   Updated: 2025/11/18 15:58:05 by dbakker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-/**
- * @return `true` if @p `arg` is `<<`, `false` otherwise.
- */
 bool	is_redir_heredoc(const char *arg)
 {
 	if (ft_strncmp(arg, "<<", 2) == 0)
@@ -25,11 +22,11 @@ bool	is_redir_heredoc(const char *arg)
 }
 
 /**
- * @return `true` if @p `arg` is `<`, `false` otherwise.
+ * @return `true` if @p `arg` is `<` or `<<`, `false` otherwise.
  */
 bool	is_redir_in(const char *arg)
 {
-	if (ft_strncmp(arg, "<", ft_strlen(arg)) == 0)
+	if (ft_strncmp(arg, "<", ft_strlen(arg)) == 0 || ft_strncmp(arg, "<<", 2) == 0)
 	{
 		return (true);
 	}
@@ -41,7 +38,7 @@ bool	is_redir_in(const char *arg)
  */
 bool	is_redir_out(const char *arg)
 {
-	if (*arg == '>' || ft_strncmp(arg, ">>", 2) == 0)
+	if (ft_strncmp(arg, ">", ft_strlen(arg)) == 0 || ft_strncmp(arg, ">>", 2) == 0)
 	{
 		return (true);
 	}
@@ -74,11 +71,11 @@ size_t	count_redir_heredoc(const char **args)
 }
 
 /**
- * @brief Count how many `<` are found in @p `args`.
+ * @brief Count how many `<` and `<<` are found in @p `args`.
  *
  * @param[in] args Array of strings.
  *
- * @return Amount of `<` found in @p `args`.
+ * @return Amount of `<` and `<<` found in @p `args`.
  */
 size_t	count_redir_in(const char **args)
 {

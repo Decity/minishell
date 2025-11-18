@@ -6,52 +6,24 @@
 /*   By: dbakker <dbakker@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/25 19:34:56 by dbakker           #+#    #+#             */
-/*   Updated: 2025/11/15 12:29:40 by dbakker          ###   ########.fr       */
+/*   Updated: 2025/11/18 18:54:32 by dbakker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-t_hd	*init_redir_heredoc(const char **args, size_t size)
-{
-	t_hd	*heredoc;
-	size_t	i;
-	size_t	j;
-
-	heredoc = ft_calloc(count_redir_heredoc(args) + 1, sizeof(t_hd));
-	if (heredoc == NULL)
-	{
-		return (NULL);
-	}
-	i = 0;
-	j = 0;
-	while (i < size && args[i])
-	{
-		if (is_redir_heredoc(args[i]))
-		{
-			heredoc[j].delimiter = ft_strdup(args[i + 1]);
-			if (heredoc[j].delimiter == NULL)
-				return (NULL);
-			j++;
-		}
-		i++;
-	}
-	return (heredoc);
-}
-
 /**
  * @brief Initialize an array of input redirections with their types
  *
  * Scans the argument array for input redirections (< or <<) and creates
- * an array storing the redirection type and target filename. Returns a
- * partial result if string duplication fails.
+ * an array storing the redirection type and target filename/delimiter.
  *
  * @param[in] args Array of command arguments
  * @param[in] size Number of arguments to process
  *
- * @return Pointer to array of input redirections, or NULL on complete failure
+ * @return Pointer to array of input redirections, or `NULL` on failure.
  *
- * @warning Caller owns free()
+ * @warning Caller owns free().
  */
 t_redir	*init_redir_in(const char **args, size_t size)
 {
@@ -69,9 +41,12 @@ t_redir	*init_redir_in(const char **args, size_t size)
 		if (is_redir_in(args[i]))
 		{
 			redir_in[j].redir_type = get_redirection_type(args[i]);
-			redir_in[j].file = ft_strdup(args[i + 1]);
-			if (redir_in[j].file == NULL)
-				return (redir_in);
+			if (redir_in[j].redir_type == TYPE_REDIRECTION_HEREDOC)
+				redir_in[j].delimiter = ft_strdup(args[i + 1]);
+			else
+				redir_in[j].file = ft_strdup(args[i + 1]);
+			if (redir_in[j].file == NULL && redir_in[j].delimiter == NULL)
+				return (NULL);
 			j++;
 		}
 		i++;
@@ -213,7 +188,6 @@ t_cmd	*init_cmd(const char **args, size_t size)
 	{
 		return (NULL);
 	}
-	redir->redirect.heredoc = init_redir_heredoc(args, size);
 	redir->redirect.infile = init_redir_in(args, size);
 	redir->redirect.outfile = init_redir_out(args, size);
 	return (redir);
