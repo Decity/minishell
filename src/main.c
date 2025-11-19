@@ -6,7 +6,7 @@
 /*   By: dbakker <dbakker@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/03 15:32:47 by elie              #+#    #+#             */
-/*   Updated: 2025/11/17 11:52:32 by dbakker          ###   ########.fr       */
+/*   Updated: 2025/11/19 15:13:34 by dbakker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,11 +31,11 @@ void	run(t_data *data)
 	heredoc(data);
 	apply_shell_expansions(data);
 	set_redirections(data);
-	execution(data);
 
 	if (DEBUG)
 		debug(data);
 
+	execution(data);
 	remove_heredoc_files(data->command);
 	cleanup_data(data);
 }
