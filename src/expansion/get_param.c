@@ -3,19 +3,19 @@
 /*                                                        :::      ::::::::   */
 /*   get_param.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: elie <elie@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: dbakker <dbakker@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/08 18:05:06 by elie              #+#    #+#             */
-/*   Updated: 2025/10/09 10:38:17 by elie             ###   ########.fr       */
+/*   Updated: 2025/11/19 15:33:46 by dbakker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../inc/minishell.h"
+#include "minishell.h"
 
 /**
  * @brief Gets the fully formatted variable name in a given @p `str`. Example: "$VAR" or "${VAR}"
  *
- * @param str a string that starts with '$'. 
+ * @param str a string that starts with '$'.
  */
 char	*get_parameter_var(const char *str)
 {
