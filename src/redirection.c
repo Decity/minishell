@@ -6,7 +6,7 @@
 /*   By: elie <elie@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/15 09:54:20 by elie              #+#    #+#             */
-/*   Updated: 2025/11/03 09:44:08 by elie             ###   ########.fr       */
+/*   Updated: 2025/11/20 12:39:20 by elie             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,6 @@
 /*
  TODO:
 	Open needs error check
-	Deal with heredoc
 */
 
 void	set_redirections(t_data *data)
@@ -49,7 +48,15 @@ void	set_redirections(t_data *data)
 					current_cmd->redirect.input_fd = -1;
 				}
 			}
-			// TODO: Handle TYPE_REDIRECTION_HEREDOC
+			else if (current_cmd->redirect.infile[i].redir_type == TYPE_REDIRECTION_HEREDOC)
+			{
+				current_cmd->redirect.input_fd = open(current_cmd->redirect.infile[i].file, O_RDONLY);
+				if (current_cmd->redirect.input_fd == -1)
+				{
+					perror(current_cmd->redirect.infile[i].file);
+					current_cmd->redirect.input_fd = -1;
+				}
+			}
 			i++;
 		}
 
