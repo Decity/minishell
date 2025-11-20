@@ -6,7 +6,7 @@
 /*   By: dbakker <dbakker@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/25 19:33:35 by dbakker           #+#    #+#             */
-/*   Updated: 2025/11/01 19:55:37 by dbakker          ###   ########.fr       */
+/*   Updated: 2025/11/18 15:40:56 by dbakker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,8 @@
 /**
  * @brief Initializes @p `num` strings from @p `args` to the new struct.
  *
- * It will also initialize all member variables of t_rdr to `0`/`NULL`, with the
- * exception of `output_fd` which gets initialized to `1`.
+ * It will also initialize all member variables of `t_rdr` and `t_hd` to `0`,
+ * with the exception of `output_fd` which gets initialized to `1`.
  *
  * @param[in] args	Array of strings.
  * @param[in] num	Amount of strings to copy to the new struct.
@@ -78,24 +78,19 @@ void	ed_cmdadd_back(t_cmd **head, t_cmd *new)
 void	ed_cmddelone(t_cmd *cmd)
 {
 	size_t	i;
-	size_t	j;
 
-	i = 0;
-	j = 0;
 	if (cmd == NULL)
-	{
 		return ;
-	}
 	free_array(&cmd->args);
+	i = 0;
 	while (cmd->redirect.infile[i].file)
 	{
-		free(cmd->redirect.infile[i].file);
-		i++;
+		free(cmd->redirect.infile[i++].file);
 	}
-	while (cmd->redirect.outfile[j].file)
+	i = 0;
+	while (cmd->redirect.outfile[i].file)
 	{
-		free(cmd->redirect.outfile[j].file);
-		j++;
+		free(cmd->redirect.outfile[i++].file);
 	}
 	free(cmd->redirect.infile);
 	free(cmd->redirect.outfile);

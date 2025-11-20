@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: elie <elie@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: dbakker <dbakker@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/30 15:08:30 by ebelle            #+#    #+#             */
-/*   Updated: 2025/11/10 14:38:50 by elie             ###   ########.fr       */
+/*   Updated: 2025/11/17 11:51:29 by dbakker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,19 +95,23 @@ void	setup_child_redirections(int *pipefd, int prev_pipefd, bool is_first, bool 
 void	apply_redirections(t_cmd *cmd);
 
 // Signal handling
+
 extern volatile sig_atomic_t	g_signal;
 void	setup_signals_interactive(void);
 void	setup_signals_executing(void);
 void	restore_signals_default(void);
 
 // Cleanup
+
 void	cleanup_data(t_data *data);
 void	exit_cleanup(t_data *data);
 
 // Debug
+
 void	debug(t_data *data);
 
 // Built-ins
+
 int		ed_change_directory(t_list *list, t_pwd *directory, const char *path);
 
 void	ed_echo(const char **message);
@@ -133,8 +137,10 @@ void	unset_env(t_list **head, const char *name);
 void	ed_cmddelone(t_cmd *cmd);
 void	ed_cmdclear(t_cmd **cmd);
 
+bool	is_redir_heredoc(const char *arg);
 bool	is_redir_in(const char *arg);
 bool	is_redir_out(const char *arg);
+size_t	count_redir_heredoc(const char **args);
 size_t	count_redir_in(const char **args);
 size_t	count_redir_out(const char **args);
 
@@ -146,5 +152,14 @@ t_redir	*init_redir_out(const char **args, size_t size);
 t_cmd	*init_cmd(const char **args, size_t size);
 
 t_data	*ed_parsing(t_data *data);
+
+// Heredoc
+
+void	*generate_random_pointer(size_t size);
+char	*convert_mem_to_base16(const void *ptr, size_t size);
+char	*generate_heredoc_name();
+
+t_data	*heredoc(t_data *data);
+void	remove_heredoc_files(t_cmd *cmd);
 
 #endif
