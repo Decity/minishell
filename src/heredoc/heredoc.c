@@ -6,7 +6,7 @@
 /*   By: dbakker <dbakker@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/12 10:53:02 by dbakker           #+#    #+#             */
-/*   Updated: 2025/11/19 15:15:20 by dbakker          ###   ########.fr       */
+/*   Updated: 2025/11/20 08:11:44 by dbakker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,6 +125,7 @@ t_data	*heredoc(t_data *data)
 			}
 			close(data->command->redirect.infile[i].fd);
 			data->command->redirect.infile[i].fd = open(data->command->redirect.infile[i].file, O_WRONLY | O_CREAT | O_TRUNC, 0644);
+			data->command->redirect.input_fd = data->command->redirect.infile[i].fd;
 		}
 		i++;
 	}
