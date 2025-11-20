@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dbakker <dbakker@student.42.fr>            +#+  +:+       +#+        */
+/*   By: elie <elie@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/12 10:53:02 by dbakker           #+#    #+#             */
-/*   Updated: 2025/11/20 08:11:44 by dbakker          ###   ########.fr       */
+/*   Updated: 2025/11/20 13:13:01 by elie             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,6 @@
 void	remove_heredoc_files(t_cmd *cmd)
 {
 	size_t	i;
-	int		ret_unlink;
-	int		ret_close;
 
 	i = 0;
 	while (cmd)
@@ -28,8 +26,8 @@ void	remove_heredoc_files(t_cmd *cmd)
 		{
 			if (cmd->redirect.infile[i].redir_type == TYPE_REDIRECTION_HEREDOC)
 			{
-				ret_close = close(cmd->redirect.infile[i].fd);
-				ret_unlink = unlink(cmd->redirect.infile[i].file);
+				close(cmd->redirect.infile[i].fd);
+				unlink(cmd->redirect.infile[i].file);
 			}
 			i++;
 		}
@@ -110,7 +108,7 @@ t_data	*heredoc(t_data *data)
 			data->command->redirect.infile[i].fd = open(data->command->redirect.infile[i].file, O_WRONLY | O_CREAT | O_TRUNC, 0644);
 			while (true)
 			{
-				line = readline("> ");
+				line = readline("  ");
 				line_count++;
 				if (line == NULL)
 				{
@@ -119,13 +117,13 @@ t_data	*heredoc(t_data *data)
 				}
 				if (ft_strcmp(line, data->command->redirect.infile[i].delimiter) == 0)
 				{
+					free(line);
 					break ;
 				}
 				ft_putendl_fd(line, data->command->redirect.infile[i].fd);
+				free(line);
 			}
 			close(data->command->redirect.infile[i].fd);
-			data->command->redirect.infile[i].fd = open(data->command->redirect.infile[i].file, O_WRONLY | O_CREAT | O_TRUNC, 0644);
-			data->command->redirect.input_fd = data->command->redirect.infile[i].fd;
 		}
 		i++;
 	}
