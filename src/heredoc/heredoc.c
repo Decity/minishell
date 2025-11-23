@@ -6,7 +6,7 @@
 /*   By: dbakker <dbakker@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/12 10:53:02 by dbakker           #+#    #+#             */
-/*   Updated: 2025/11/20 15:56:05 by dbakker          ###   ########.fr       */
+/*   Updated: 2025/11/23 18:32:30 by dbakker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,10 +98,45 @@ bool	heredoc_check(t_data *data)
 	return (true);
 }
 
-void	heredoc_readline(t_cmd *cmd, size_t i)
+char	*quoted_variable(t_list *envp, char *str)
+{
+
+}
+
+char	*expand_variable(t_list *envp, char *str)
+{
+	size_t	valuelen;
+	char	*envvar;
+
+	envvar = ft_strchr(str, '$');
+	if (envvar == NULL)
+	{
+		return (NULL);
+	}
+	if (is_env_name(envvar) == false)
+	{
+		/* code */
+	}
+
+	valuelen = env_valuelen(str);
+	while (envp)
+	{
+		if (ft_memcmp(envp->content, envvar, valuelen) == 0)
+		{
+
+		}
+		envp = envp->next;
+	}
+
+	ft_getenv(envp, envvar);
+
+}
+
+void	heredoc_readline(t_cmd *cmd, t_list *envp, size_t i)
 {
 	static size_t	line_count = 0;
 	char			*line;
+	char			*expand;
 
 	while (true != false)
 	{
@@ -122,7 +157,7 @@ void	heredoc_readline(t_cmd *cmd, size_t i)
 	}
 }
 
-void	*heredoc_file_insertion(t_cmd *cmd)
+void	*heredoc_file_insertion(t_cmd *cmd, t_list *envp)
 {
 	size_t			i;
 
@@ -132,9 +167,9 @@ void	*heredoc_file_insertion(t_cmd *cmd)
 		if (cmd->redirect.infile[i].redir_type == TYPE_REDIRECTION_HEREDOC)
 		{
 			cmd->redirect.infile[i].fd = open(cmd->redirect.infile[i].file, O_WRONLY | O_CREAT | O_TRUNC, 0644);
-			if (cmd->redirect.infile[i].fd)
+			if (cmd->redirect.infile[i].fd == -1)
 				return (NULL);
-			heredoc_readline(cmd, i);
+			heredoc_readline(cmd, envp, i);
 			close(cmd->redirect.infile[i].fd);
 		}
 		i++;
@@ -144,13 +179,19 @@ void	*heredoc_file_insertion(t_cmd *cmd)
 
 t_data	*heredoc(t_data *data)
 {
+	t_cmd	*cmd;
 	if (DEBUG)
 		printf("=== Heredoc begin ===\n");
 
 	if (heredoc_check(data) == false)
 		return (NULL);
 
-	heredoc_file_insertion(data->command);
+	cmd = data->command;
+	while (cmd)
+	{
+		heredoc_file_insertion(cmd, data->envp);
+		cmd = cmd->next;
+	}
 	if (DEBUG)
 		printf("=== Heredoc end ===\n");
 	return (data);

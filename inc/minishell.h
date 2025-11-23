@@ -6,7 +6,7 @@
 /*   By: dbakker <dbakker@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/30 15:08:30 by ebelle            #+#    #+#             */
-/*   Updated: 2025/11/17 11:51:29 by dbakker          ###   ########.fr       */
+/*   Updated: 2025/11/21 20:27:01 by dbakker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,13 +117,15 @@ int		ed_change_directory(t_list *list, t_pwd *directory, const char *path);
 void	ed_echo(const char **message);
 
 size_t	env_namelen(const char *name);
+size_t	env_valuelen(const char *str);
 char	*ft_getenv(const t_list *list, const char *name);
 void	env_print(const t_list *envp);
-void	env_all_print(const t_list *envp);
-void	env_single_print(const t_list *envp);
+// void	env_all_print(const t_list *envp);
+// void	env_single_print(const t_list *envp);
 
 void	minishell_exit(t_data *data);
 
+bool	is_env_name(const char *str);
 void	*export_env(t_list *list, const char *envvar);
 void	export_print(const t_list *list);
 
