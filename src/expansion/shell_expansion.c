@@ -16,7 +16,6 @@
  * @brief Performs the shell expansions by rewriting the argument in @p `data->command->arguments`
  *
  * - Expands the env variables
- * - Expands tilde
  * - Removes quotation marks
  */
 void	apply_shell_expansions(t_data *data)
@@ -31,7 +30,6 @@ void	apply_shell_expansions(t_data *data)
 	arguments = data->command->args;
 	while (arguments[i])
 	{
-		expand_tilde(&arguments[i]);
 		expand_env_variables(&arguments[i]);
 		remove_quotation(&arguments[i]);
 		i++;

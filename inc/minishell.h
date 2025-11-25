@@ -72,7 +72,6 @@ char	*get_parameter_name(const char *str);
 char	*get_parameter_var(const char *str);
 
 size_t	expand_single_variable(char **str, size_t index);
-void	expand_tilde(char **str);
 void	expand_env_variables(char **str);
 
 void	remove_quotation(char **str);
