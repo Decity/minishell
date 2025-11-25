@@ -6,7 +6,7 @@
 /*   By: elie <elie@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/03 15:20:17 by elie              #+#    #+#             */
-/*   Updated: 2025/10/22 17:28:31 by elie             ###   ########.fr       */
+/*   Updated: 2025/11/25 10:48:18 by elie             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,6 @@
 size_t	set_tokens(t_data *data)
 {
 	size_t	token_count;
-	char	*normalized_token_str;
 
 	if (DEBUG)
 		printf("=== set_tokens ===\n\n");
@@ -30,27 +29,37 @@ size_t	set_tokens(t_data *data)
 	// Validate quoation
 	if (validate_quotation(data->input) == FAILURE)
 	{
-		printf("== Validating quotation: FAILED\n");
+		perror("minishell: failed to validate quotes.\n");
 		return (FAILURE);
 	}
 
 	// validate syntax
 	if (validate_token_str(data->input) == FAILURE)
 	{
-		printf("== validate_token_str: FAILED\n");
+		printf("minishell: failed to valdiate syntax\n");
 		return (FAILURE);
 	}
 
 	// Normalize string for easier splittin
 	if (DEBUG)
 		printf("== Normalizing str [%s]\n", data->input);
-	normalized_token_str = normalize_whitespace(data->input);
-	ft_repoint(&data->input, normalized_token_str);
+	data->input = normalize_whitespace(data->input);
+	if (!data->input)
+	{
+		exit_cleanup(data);
+		exit(data->exit_status);
+	}
+
 	if (DEBUG)
 		printf("= After normalizing: [%s] str_len: %lu\n", data->input, ft_strlen(data->input));
 
-	token_count = count_tokens(normalized_token_str);
+	token_count = count_tokens(data->input);
 	data->tokens = ft_calloc((token_count + 1), sizeof(char *));
+	if (!data->tokens)
+	{
+		exit_cleanup(data);
+		exit(data->exit_status);
+	}
 	tokenize(data, token_count);
 
 	if (DEBUG)
@@ -93,7 +102,11 @@ void	tokenize(t_data *data, size_t token_count)
 		}
 
 		data->tokens[i] = ft_strndup(&input[start], end - start);
-		// TODO: malloc check
+		if (data->tokens[i] == NULL)
+		{
+			exit_cleanup(data);
+			exit(data->exit_status);
+		}
 
 		start = end;
 		i++;

@@ -6,7 +6,7 @@
 /*   By: elie <elie@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/08 18:09:32 by elie              #+#    #+#             */
-/*   Updated: 2025/11/10 15:41:50 by elie             ###   ########.fr       */
+/*   Updated: 2025/11/25 11:03:37 by elie             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,11 @@ void	apply_shell_expansions(t_data *data)
 	arguments = data->command->args;
 	while (arguments[i])
 	{
-		expand_env_variables(&arguments[i]);
+		if (expand_env_variables(&arguments[i], data->envp) == FAILURE)
+		{
+			exit_cleanup(data);
+			exit(data->exit_status);
+		}
 		remove_quotation(&arguments[i]);
 		i++;
 	}
@@ -50,8 +54,9 @@ void	apply_shell_expansions(t_data *data)
  * @brief Expands a single given argument from data->command->arguments.
  *
  * @param str A pointer to the string to perfom expansions on
+ * @param envp Environment variables list
  */
-void	expand_env_variables(char **str)
+int8_t	expand_env_variables(char **str, const t_list *envp)
 {
 	size_t	i;
 	size_t	j;
@@ -72,14 +77,15 @@ void	expand_env_variables(char **str)
 
 		if (inside_single_quotes == false && (*str)[i] == '$')
 		{
-			j = expand_single_variable(str, i);
-			// if (j = -1)
-			// 	TODO: handle error
+			j = expand_single_variable(str, i, envp);
+			if (j == (size_t)-1)
+				return (FAILURE);
 			i += j;
 
 		}
 		i++;
 	}
+	return (SUCCESS);
 }
 
 /**
@@ -87,8 +93,9 @@ void	expand_env_variables(char **str)
  *
  * @param str the string with the paramater to be expanded
  * @param index the index of where the variable starts in the given str
+ * @param envp Environment variables list
  */
-size_t	expand_single_variable(char **str, size_t index)
+size_t	expand_single_variable(char **str, size_t index, const t_list *envp)
 {
 	char *parameter_var;
 	char *parameter_name;
@@ -100,31 +107,30 @@ size_t	expand_single_variable(char **str, size_t index)
 		printf("== expand_single_variable() \n");
 	}
 
-	// $TERM or ${TERM}
 	parameter_var = get_parameter_var(*str + index);
 	if (parameter_var == NULL)
 		return (-1);
 	if (DEBUG)
 		printf("= Parameter_var: %s\n", parameter_var);
 
-	// TERM
 	parameter_name = get_parameter_name(parameter_var);
 	if (parameter_name == NULL)
 		return (free_and_null(&parameter_var), -1);
 	if (DEBUG)
 		printf("= Parameter_name: %s\n", parameter_name);
 
-	// xterm-kitty
-	parameter_value = getenv(parameter_name); // TODO: Replace with own getenv. Can't free system's getenv.
+	parameter_value = ft_getenv(envp, parameter_name);
 	if (parameter_value == NULL)
-		return (free_and_null(&parameter_var), free_and_null(&parameter_name), -1);
+		parameter_value = "";
 	if (DEBUG)
 		printf("= Parameter_value: %s\n", parameter_value);
 
-	// Rewrite the str with the replacements
+	// Rewrite the str
 	new_parameter = ft_strreplace(*str, parameter_var, parameter_value);
+	free_and_null(&parameter_var);
+	free_and_null(&parameter_name);
 	if (new_parameter == NULL)
-		return (free_and_null(&parameter_var), free_and_null(&parameter_name), free_and_null(&parameter_value), -1);
+		return (-1);
 
 	ft_repoint(str, new_parameter);
 

@@ -71,8 +71,8 @@ bool	validate_quotation(char *str);
 char	*get_parameter_name(const char *str);
 char	*get_parameter_var(const char *str);
 
-size_t	expand_single_variable(char **str, size_t index);
-void	expand_env_variables(char **str);
+size_t	expand_single_variable(char **str, size_t index, const t_list *envp);
+int8_t	expand_env_variables(char **str, const t_list *envp);
 
 void	remove_quotation(char **str);
 

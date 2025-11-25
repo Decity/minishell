@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dbakker <dbakker@student.42.fr>            +#+  +:+       +#+        */
+/*   By: elie <elie@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/03 15:32:47 by elie              #+#    #+#             */
-/*   Updated: 2025/11/19 15:13:34 by dbakker          ###   ########.fr       */
+/*   Updated: 2025/11/25 10:10:29 by elie             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,9 +24,9 @@
 void	run(t_data *data)
 {
 	if (set_input(data) == FAILURE)	// TODO: Fix whitespace still passing through
+		return ;	
+	if (set_tokens(data) == FAILURE)
 		return ;
-
-	set_tokens(data);
 	ed_parsing(data);
 	heredoc(data);
 	apply_shell_expansions(data);
