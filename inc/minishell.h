@@ -6,7 +6,7 @@
 /*   By: dbakker <dbakker@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/30 15:08:30 by ebelle            #+#    #+#             */
-/*   Updated: 2025/11/21 20:27:01 by dbakker          ###   ########.fr       */
+/*   Updated: 2025/11/25 15:33:36 by dbakker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,7 @@ size_t	set_tokens(t_data *data);
 size_t	count_tokens(char *input);
 
 // tokenization_utils.c
+
 char	get_quote(const char c);
 uint8_t	get_quote_type(const char *str);
 uint8_t	get_token_type(const char *str);
@@ -163,5 +164,9 @@ char	*generate_heredoc_name();
 
 t_data	*heredoc(t_data *data);
 void	remove_heredoc_files(t_cmd *cmd);
+char	**extract_variables(const char *str);
+size_t	strarrlen(const char **str_array);
+char	*heredoc_expansion(char *line);
+// char	*expand_variable(t_list *envp, char *str);
 
 #endif

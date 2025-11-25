@@ -6,7 +6,7 @@
 /*   By: dbakker <dbakker@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/03 15:32:47 by elie              #+#    #+#             */
-/*   Updated: 2025/11/19 15:13:34 by dbakker          ###   ########.fr       */
+/*   Updated: 2025/11/25 15:42:40 by dbakker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,10 @@ int	main(void)
 	t_data	data;
 
 	init(&data);
+	// char *str = "hello $USER";
+	// char *ret = heredoc_expansion(str);
+	// printf("%s\n", ret);
+	// return (0);
 	while (42)
 	{
 		run(&data);
