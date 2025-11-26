@@ -6,7 +6,7 @@
 /*   By: dbakker <dbakker@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/12 10:53:02 by dbakker           #+#    #+#             */
-/*   Updated: 2025/11/25 15:57:07 by dbakker          ###   ########.fr       */
+/*   Updated: 2025/11/26 17:27:27 by dbakker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,39 +98,6 @@ bool	heredoc_check(t_data *data)
 	return (true);
 }
 
-// /**
-//  * @brief Return a new pointer of @p `str` after the first `$` sign.
-//  *
-//  * The length of the string will be delimited by ft_isspace() and get_quote().
-//  *
-//  * @param[in] str The string at which to extract the first variable.
-//  *
-//  * @return Pointer to the new string, or `NULL` on failure.
-//  *
-//  * @warning Caller owns free().
-//  */
-// char	*extract_variable(const char *str)
-// {
-// 	char	*envvar;
-// 	size_t	namelen;
-
-// 	envvar = ft_strchr(str, '$');
-// 	if (envvar == NULL)
-// 	{
-// 		return (NULL);
-// 	}
-// 	while (envvar[namelen + 1] && ft_isspace(envvar[namelen + 1]) == false && get_quote(envvar[namelen + 1]) == false)
-// 	{
-// 		namelen += 1;
-// 	}
-// 	envvar = ft_strndup(ft_strchr(str, '$') + 1, namelen);
-// 	if (envvar == NULL)
-// 	{
-// 		return (NULL);
-// 	}
-// 	return (envvar);
-// }
-
 /**
  * @return The length of @p `line` until it encounters a `ft_isspace()`,
  * @return `get_quote()` or a `$` character.
@@ -194,12 +161,34 @@ size_t	strarrlen(const char **strarr)
 	return (length);
 }
 
+char	*heredoc_duplicate(const char *line)
+{
+	char	*dollar;
+	size_t	num;
+
+	dollar = ft_strchr(line, '$') + 1;
+	num = heredoc_variable_length(dollar);
+	return (ft_strndup(dollar, num));
+}
+
+char	*heredoc_expand(const t_list *envp, const char *envvar)
+{
+	// TODO: Expand $?
+	if (ft_getenv(envp, envvar) == NULL)
+	{
+		return (ft_strdup(""));
+	}
+	return (ft_strdup(ft_getenv(envp, envvar)));
+}
+
 /**
  * @brief Count how many variables are in @p `line` and store each one in an
- * @brief array.
+ * @brief array, after expanding them.
  *
- * Anything after a `$` is considered a variable.
+ * Anything after a `$` is considered a variable. If the variable is invalid,
+ * it will be replaced with an empty string instead.
  *
+ * @param[in] envp Linked list containing environmental variables.
  * @param[in] line Returned string from `readline()`.
  *
  * @return Pointer to the array of variables found in @p `line`, or `NULL` on
@@ -207,52 +196,110 @@ size_t	strarrlen(const char **strarr)
  *
  * @warning Caller owns `free()`.
  */
-char	**extract_variables(const char *line)
+char	**heredoc_extract_variables(const t_list *envp, const char *line)
 {
+	const size_t	count = char_count(line, '$');
 	char	**strarr;
-	char	*dollar;
-	size_t	num;
-	size_t	count;
+	char	*envvar;
 	size_t	i;
 
-	count = char_count(line, '$');
 	strarr = ft_calloc(count + 1, sizeof(char *));
 	if (strarr == NULL)
 		return (NULL);
 	i = 0;
 	while (i < count)
 	{
-		dollar = ft_strchr(line, '$') + 1;
-		num = heredoc_variable_length(dollar);
-		if (num == 0)
-			strarr[i] = ft_strdup("$");
-		else
-			strarr[i] = ft_strndup(dollar, num);
+		envvar = heredoc_duplicate(line);
+		if (envvar == NULL)
+			return (NULL);
+		strarr[i] = heredoc_expand(envp, envvar);
 		if (strarr[i] == NULL)
 			return (free_array(&strarr), NULL);
-		line = dollar;
+		free(envvar);
+		line = ft_strchr(line, '$') + 1;
 		i += 1;
 	}
 	return (strarr);
 }
 
-// char	*heredoc_expansion(t_list *envp, const char *line)
+size_t	heredoc_new_strlen(const char **strarr, const char *line)
+{
+	const size_t	strslen = strarrlen(strarr);
+	const size_t	linelen = ft_strlen(line);
+	size_t			reduce;
+	size_t			i;
+	size_t			varlen;
+
+	reduce = 0;
+	i = 0;
+	while (line[i])
+	{
+		if (line[i] == '$')
+		{
+			varlen = heredoc_variable_length(line + i + 1);
+			reduce += varlen + 1;
+			i += varlen + 1;
+		}
+		else
+		{
+			i += 1;
+		}
+	}
+	return (linelen - reduce + strslen);
+}
+
+char	*heredoc_rewrite(const char *line, const char **strarr)
+{
+	const size_t	strretlen = heredoc_new_strlen((const char **)strarr, line);
+	char	*strret;
+	size_t	i;
+
+	i = 0;
+	strret = ft_calloc(strretlen + 1, sizeof(char));
+	if (strret == NULL)
+	{
+		return (free_array(&strarr), NULL);
+	}
+}
+
+char	*heredoc_expansion(const t_list *envp, const char *line)
+{
+	const size_t	count = char_count(line, '$');
+	size_t			strretlen;
+	char			**strarr;
+	char			*strret;
+
+	if (count == 0)
+	{
+		return ((char *)line);
+	}
+	strarr = heredoc_extract_variables(envp, line);
+	if (strarr == NULL)
+	{
+		return (NULL);
+	}
+	strret = heredoc_rewrite(line, strarr);
+
+	return (strret);
+}
+
+// char	*heredoc_expansion(const t_list *envp, const char *line)
 // {
 // 	char	**strarr;
 // 	char	*str;
-// 	char	*envvalue;
 // 	size_t	count;
 // 	size_t	len;
 // 	size_t	strslen;
 // 	size_t	i;
 // 	size_t	j;
+// 	size_t	k;
 
 // 	count = char_count(line, '$');
 // 	if (count == 0)
 // 	{
-// 		return (line);
+// 		return ((char *)line);
 // 	}
-// 	strarr = extract_variables(line);
+// 	strarr = heredoc_extract_variables(envp, line);
 // 	if (strarr == NULL)
 // 	{
 // 		return (NULL);
@@ -266,72 +313,24 @@ char	**extract_variables(const char *line)
 // 	}
 // 	i = 0;
 // 	j = 0;
+// 	k = 0;
 // 	while (i < len + strslen)
 // 	{
 // 		while (line[i] && line[i] != '$')
 // 		{
-// 			str[i] = line[i];
+// 			str[k] = line[i];
 // 			i += 1;
+// 			k += 1;
 // 		}
 // 		if (line[i] == '\0')
 // 		{
 // 			break ;
 // 		}
-// 		envvalue = ft_getenv(envp, strarr[j]);
 // 		ft_memcpy(str + i, strarr[j], ft_strlen(strarr[j]));
-// 		i += ft_strlen(strarr[j]);
+// 		i += heredoc_variable_length(line + i + 1);
 // 		j += 1;
 // 	}
 // 	return (str);
-// }
-
-// char	*expand_variable(t_list *envp, char *str)
-// {
-// 	size_t	namelen;
-// 	size_t	new_strlen;
-// 	size_t	i;
-// 	size_t	j;
-// 	char	*envvar;
-// 	char	*envvalue;
-// 	char	*new_str;
-
-// 	namelen = 0;
-// 	envvar = extract_variable(str, &namelen);
-// 	if (envvar == NULL)
-// 	{
-// 		return (NULL);
-// 	}
-// 	envvalue = ft_getenv(envp, envvar);
-// 	free(envvar);
-// 	if (envvalue == NULL)
-// 	{
-// 		return (NULL);
-// 	}
-// 	new_strlen = ft_strlen(str) - namelen + ft_strlen(envvalue);
-// 	new_str = ft_calloc(new_strlen + 1, sizeof(char));
-// 	if (new_str == NULL)
-// 	{
-// 		return (NULL);
-// 	}
-// 	i = 0;
-// 	j = 0;
-// 	while (i < new_strlen)
-// 	{
-// 		while (str[j] && str[j] != '$')
-// 		{
-// 			new_str[i] = str[j];
-// 			i++;
-// 			j++;
-// 		}
-// 		if (str[j] == '\0')
-// 		{
-// 			break ;
-// 		}
-// 		ft_memcpy(new_str + i, envvalue, ft_strlen(envvalue));
-// 		i += ft_strlen(envvalue);
-// 		j += namelen + 1;
-// 	}
-// 	return (new_str);
 // }
 
 void	heredoc_readline(t_cmd *cmd, t_list *envp, size_t i)

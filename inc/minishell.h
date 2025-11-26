@@ -6,7 +6,7 @@
 /*   By: dbakker <dbakker@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/30 15:08:30 by ebelle            #+#    #+#             */
-/*   Updated: 2025/11/25 15:33:36 by dbakker          ###   ########.fr       */
+/*   Updated: 2025/11/26 15:43:19 by dbakker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -164,9 +164,9 @@ char	*generate_heredoc_name();
 
 t_data	*heredoc(t_data *data);
 void	remove_heredoc_files(t_cmd *cmd);
-char	**extract_variables(const char *str);
+char	**heredoc_extract_variables(const t_list *envp, const char *line);
 size_t	strarrlen(const char **str_array);
-char	*heredoc_expansion(char *line);
+char	*heredoc_expansion(const t_list *envp, const char *line);
 // char	*expand_variable(t_list *envp, char *str);
 
 #endif

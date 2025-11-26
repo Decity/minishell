@@ -6,7 +6,7 @@
 /*   By: dbakker <dbakker@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/13 22:47:22 by dbakker           #+#    #+#             */
-/*   Updated: 2025/11/20 23:32:58 by dbakker          ###   ########.fr       */
+/*   Updated: 2025/11/26 17:18:56 by dbakker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,11 +59,25 @@ size_t	env_valuelen(const char *str)
  */
 char	*ft_getenv(const t_list *list, const char *name)
 {
+	const size_t	namelen = ft_strlen(name);
+	size_t	envlen;
+
 	while (list)
 	{
-		if (ft_memcmp(list->content, name, env_namelen(list->content)) == 0)
+		envlen = env_namelen(list->content);
+		if (namelen > envlen)
 		{
-			return (ft_strchr(list->content, '=') + 1);
+			if (ft_memcmp(list->content, name, namelen) == 0)
+			{
+				return (ft_strchr(list->content, '=') + 1);
+			}
+		}
+		else
+		{
+			if (ft_memcmp(list->content, name, envlen) == 0)
+			{
+				return (ft_strchr(list->content, '=') + 1);
+			}
 		}
 		list = list->next;
 	}
