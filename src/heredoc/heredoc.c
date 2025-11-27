@@ -6,7 +6,7 @@
 /*   By: dbakker <dbakker@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/12 10:53:02 by dbakker           #+#    #+#             */
-/*   Updated: 2025/11/26 17:27:27 by dbakker          ###   ########.fr       */
+/*   Updated: 2025/11/27 15:53:47 by dbakker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -248,18 +248,74 @@ size_t	heredoc_new_strlen(const char **strarr, const char *line)
 	return (linelen - reduce + strslen);
 }
 
+size_t	heredoc_copy_variable(char *strret, const char *src)
+{
+	const size_t	slen = ft_strlen(src);
+
+	if (slen)
+	{
+		ft_memcpy(strret, src, slen);
+	}
+	return (slen);
+}
+
+size_t	heredoc_copy_line(char *strret, const char *src)
+{
+	const char	*envvar = ft_strchr(src, '$');
+	size_t		num;
+
+	if (envvar == NULL)
+	{
+		num = ft_strlen(src);
+	}
+	else
+	{
+		num = envvar - src;
+	}
+	if (num)
+	{
+		ft_memcpy(strret, src, num);
+	}
+	if (envvar == NULL)
+	{
+		src = src + num;
+	}
+	else
+	{
+		src = envvar;
+	}
+	return (src);
+}
+
 char	*heredoc_rewrite(const char *line, const char **strarr)
 {
 	const size_t	strretlen = heredoc_new_strlen((const char **)strarr, line);
-	char	*strret;
-	size_t	i;
+	char			*strret;
+	size_t			i;
+	size_t			j;
 
 	i = 0;
+	j = 0;
 	strret = ft_calloc(strretlen + 1, sizeof(char));
 	if (strret == NULL)
 	{
-		return (free_array(&strarr), NULL);
+		return (free_array((char ***)&strarr), NULL);
 	}
+	while (*line)
+	{
+		if (*line == '$')
+		{
+			i += heredoc_copy_variable(strret + i, strarr[j]);
+			line += heredoc_variable_length(line + 1) + 1;
+			j++;
+		}
+		else
+		{
+			line = heredoc_copy_line(strret + i, line);
+			i = ft_strlen(strret);
+		}
+	}
+	return (strret);
 }
 
 char	*heredoc_expansion(const t_list *envp, const char *line)
@@ -278,60 +334,10 @@ char	*heredoc_expansion(const t_list *envp, const char *line)
 	{
 		return (NULL);
 	}
-	strret = heredoc_rewrite(line, strarr);
-
+	strret = heredoc_rewrite(line, (const char **)strarr);
+	free_array(&strarr);
 	return (strret);
 }
-
-// char	*heredoc_expansion(const t_list *envp, const char *line)
-// {
-// 	char	**strarr;
-// 	char	*str;
-// 	size_t	count;
-// 	size_t	len;
-// 	size_t	strslen;
-// 	size_t	i;
-// 	size_t	j;
-// 	size_t	k;
-
-// 	count = char_count(line, '$');
-// 	if (count == 0)
-// 	{
-// 		return ((char *)line);
-// 	}
-// 	strarr = heredoc_extract_variables(envp, line);
-// 	if (strarr == NULL)
-// 	{
-// 		return (NULL);
-// 	}
-// 	strslen = strarrlen((const char **)strarr);
-// 	len = ft_strlen(line);
-// 	str = ft_calloc(len + strslen + 1, sizeof(char));
-// 	if (str == NULL)
-// 	{
-// 		return (free_array(&strarr), NULL);
-// 	}
-// 	i = 0;
-// 	j = 0;
-// 	k = 0;
-// 	while (i < len + strslen)
-// 	{
-// 		while (line[i] && line[i] != '$')
-// 		{
-// 			str[k] = line[i];
-// 			i += 1;
-// 			k += 1;
-// 		}
-// 		if (line[i] == '\0')
-// 		{
-// 			break ;
-// 		}
-// 		ft_memcpy(str + i, strarr[j], ft_strlen(strarr[j]));
-// 		i += heredoc_variable_length(line + i + 1);
-// 		j += 1;
-// 	}
-// 	return (str);
-// }
 
 void	heredoc_readline(t_cmd *cmd, t_list *envp, size_t i)
 {
@@ -353,6 +359,7 @@ void	heredoc_readline(t_cmd *cmd, t_list *envp, size_t i)
 			free(line);
 			break ;
 		}
+		line = heredoc_expansion(envp, line);
 		ft_putendl_fd(line, cmd->redirect.infile[i].fd);
 		free(line);
 	}
