@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dbakker <dbakker@student.42.fr>            +#+  +:+       +#+        */
+/*   By: elie <elie@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/17 14:29:42 by dbakker           #+#    #+#             */
-/*   Updated: 2025/10/17 14:29:48 by dbakker          ###   ########.fr       */
+/*   Updated: 2025/11/28 12:24:19 by elie             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 
 void	minishell_exit(t_data *data)
 {
+	ft_putstr_fd("exit", STDERR_FILENO);
 	exit_cleanup(data);
-	exit(0);
+	exit(data->exit_status);
 }
