@@ -6,7 +6,7 @@
 /*   By: dbakker <dbakker@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/30 15:08:30 by ebelle            #+#    #+#             */
-/*   Updated: 2025/11/28 10:14:58 by dbakker          ###   ########.fr       */
+/*   Updated: 2025/11/28 10:18:18 by dbakker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -166,13 +166,11 @@ size_t	heredoc_copy_variable(char *dest, const char *src);
 // heredoc_expansion.c
 
 char	*heredoc_expansion(const t_list *envp, const char *line);
-
 // heredoc_name_generator.c
 
 void	*generate_random_pointer(size_t size);
 char	*convert_mem_to_base16(const void *ptr, size_t size);
 char	*generate_heredoc_name(void);
-
 // heredoc_utils.c
 
 void	heredoc_print_warning(size_t line_count, const char *delimiter);
