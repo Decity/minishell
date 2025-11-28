@@ -6,25 +6,47 @@
 /*   By: dbakker <dbakker@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/13 22:47:22 by dbakker           #+#    #+#             */
-/*   Updated: 2025/10/17 10:40:57 by dbakker          ###   ########.fr       */
+/*   Updated: 2025/11/26 17:18:56 by dbakker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 /**
- * @return The length of @p `name` until it encounters the `=` delimiter.
+ * @return The length of @p `str` until it encounters the `=` delimiter.
  */
-size_t	env_namelen(const char *name)
+size_t	env_namelen(const char *str)
 {
 	size_t	namelen;
 
 	namelen = 0;
-	while (name[namelen] && name[namelen] != '=')
+	while (str[namelen] && str[namelen] != '=')
 	{
 		namelen++;
 	}
 	return (namelen);
+}
+
+/**
+ * @return The length of @p `str` after the `=` delimiter.
+ */
+size_t	env_valuelen(const char *str)
+{
+	size_t	namelen;
+	size_t	valuelen;
+
+	if (ft_strchr(str, '=') == NULL)
+	{
+		return (0);
+	}
+	namelen = env_namelen(str) + 1;
+	valuelen = 0;
+	while (str[namelen])
+	{
+		namelen++;
+		valuelen++;
+	}
+	return (valuelen);
 }
 
 /**
@@ -37,11 +59,25 @@ size_t	env_namelen(const char *name)
  */
 char	*ft_getenv(const t_list *list, const char *name)
 {
+	const size_t	namelen = ft_strlen(name);
+	size_t	envlen;
+
 	while (list)
 	{
-		if (ft_memcmp(list->content, name, env_namelen(list->content)) == 0)
+		envlen = env_namelen(list->content);
+		if (namelen > envlen)
 		{
-			return (ft_strchr(list->content, '=') + 1);
+			if (ft_memcmp(list->content, name, namelen) == 0)
+			{
+				return (ft_strchr(list->content, '=') + 1);
+			}
+		}
+		else
+		{
+			if (ft_memcmp(list->content, name, envlen) == 0)
+			{
+				return (ft_strchr(list->content, '=') + 1);
+			}
 		}
 		list = list->next;
 	}
@@ -63,22 +99,22 @@ void	env_print(const t_list *envp)
 	}
 }
 
-/**
- * @brief Print all environment variables to `stdout`.
- */
-void	env_all_print(const t_list *envp)
-{
-	while (envp)
-	{
-		printf("%s\n", (char *)envp->content);
-		envp = envp->next;
-	}
-}
+// /**
+//  * @brief Print all environment variables to `stdout`.
+//  */
+// void	env_all_print(const t_list *envp)
+// {
+// 	while (envp)
+// 	{
+// 		printf("%s\n", (char *)envp->content);
+// 		envp = envp->next;
+// 	}
+// }
 
-/**
- * @brief Print the content variable of @p `envp` to `stdout`.
- */
-void	env_single_print(const t_list *envp)
-{
-	printf("%s\n", (char *)envp->content);
-}
+// /**
+//  * @brief Print the content variable of @p `envp` to `stdout`.
+//  */
+// void	env_single_print(const t_list *envp)
+// {
+// 	printf("%s\n", (char *)envp->content);
+// }

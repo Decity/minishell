@@ -6,7 +6,7 @@
 /*   By: dbakker <dbakker@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/15 12:49:04 by dbakker           #+#    #+#             */
-/*   Updated: 2025/11/15 12:49:40 by dbakker          ###   ########.fr       */
+/*   Updated: 2025/11/28 09:44:33 by dbakker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,8 @@ void	*generate_random_pointer(size_t size)
 }
 
 /**
- * @brief Convert @p `size` bytes of @p `ptr` into a string of hexadecimal characters.
+ * @brief Convert @p `size` bytes of @p `ptr` into a string of hexadecimal
+ * @brief characters.
  *
  * Returns `NULL` if @p `ptr` is `NULL`.
  *
@@ -93,7 +94,7 @@ char	*convert_mem_to_base16(const void *ptr, size_t size)
  *
  * @warning Caller owns free().
  */
-char	*generate_heredoc_name()
+char	*generate_heredoc_name(void)
 {
 	const char	path[] = "/tmp/";
 	char		*filename;

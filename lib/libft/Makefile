@@ -41,6 +41,7 @@ SRCS = \
 	ft_substr.c \
 	ft_tocase.c \
 	get_next_line.c \
+	custom/char_count.c \
 	custom/copy_array.c \
 	custom/ed_convert_list.c \
 	custom/free_and_null.c \
@@ -51,6 +52,7 @@ SRCS = \
 	custom/ft_repoint.c \
 	custom/ft_strcmp.c \
 	custom/ft_strreplace.c \
+	custom/strarrlen.c \
 
 # Full paths for all source files
 SRC_PATHS = $(addprefix $(SRC_DIR), $(SRCS))
