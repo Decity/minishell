@@ -6,7 +6,7 @@
 /*   By: dbakker <dbakker@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/22 12:24:41 by dbakker           #+#    #+#             */
-/*   Updated: 2025/11/27 17:15:22 by dbakker          ###   ########.fr       */
+/*   Updated: 2025/11/28 09:26:11 by dbakker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -153,6 +153,7 @@ void	ft_repoint(char **old_str, char *new_str);
 size_t	ft_count_occurrences(const char *base_str, const char *pattern);
 int32_t	ft_abs(int32_t number);
 size_t	strarrlen(const char **strarr);
+size_t	char_count(const char *str, int chr);
 // ed_convert_list.c
 
 t_list	*array_to_llist(const char **array);

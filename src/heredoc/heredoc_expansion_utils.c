@@ -6,31 +6,35 @@
 /*   By: dbakker <dbakker@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/27 18:38:50 by dbakker           #+#    #+#             */
-/*   Updated: 2025/11/27 22:32:22 by dbakker          ###   ########.fr       */
+/*   Updated: 2025/11/28 10:05:48 by dbakker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 /**
- * @return The expanded variable of @p `envvar`, or `NULL` on failure.
+ * @return The expanded variable of @p `name`, or `NULL` on failure.
  *
  * @warning Caller owns `free()`.
  */
-char	*heredoc_expand(const t_list *envp, const char *envvar)
+char	*heredoc_expand(const t_list *envp, const char *name)
 {
-	// TODO: Expand $?
-	if (ft_getenv(envp, envvar) == NULL)
+	if (ft_getenv(envp, name) == NULL)
 	{
 		return (ft_strdup(""));
 	}
-	return (ft_strdup(ft_getenv(envp, envvar)));
+	return (ft_strdup(ft_getenv(envp, name)));
 }
 
 /**
+ * @brief Copy from @p `src` to @p `dest` until a variable is encountered.
  *
+ * @param[out]	dest	String to copy to.
+ * @param[in]	src		String to copy from.
+ *
+ * @return Pointer to @p `src`.
  */
-size_t	heredoc_copy_line(char *strret, const char *src)
+char	*heredoc_copy_line(char *dest, const char *src)
 {
 	const char	*envvar = ft_strchr(src, '$');
 	size_t		num;
@@ -45,7 +49,7 @@ size_t	heredoc_copy_line(char *strret, const char *src)
 	}
 	if (num)
 	{
-		ft_memcpy(strret, src, num);
+		ft_memcpy(dest, src, num);
 	}
 	if (envvar == NULL)
 	{
@@ -55,19 +59,24 @@ size_t	heredoc_copy_line(char *strret, const char *src)
 	{
 		src = envvar;
 	}
-	return (src);
+	return ((char *)src);
 }
 
 /**
+ * @brief Copy the variable from @p `src` to @p `dest`.
  *
+ * @param[out]	dest	String to copy to.
+ * @param[in]	src		String to copy from.
+ *
+ * @return The length of @p `src`.
  */
-size_t	heredoc_copy_variable(char *strret, const char *src)
+size_t	heredoc_copy_variable(char *dest, const char *src)
 {
 	const size_t	slen = ft_strlen(src);
 
 	if (slen)
 	{
-		ft_memcpy(strret, src, slen);
+		ft_memcpy(dest, src, slen);
 	}
 	return (slen);
 }

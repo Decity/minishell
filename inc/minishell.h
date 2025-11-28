@@ -6,7 +6,7 @@
 /*   By: dbakker <dbakker@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/30 15:08:30 by ebelle            #+#    #+#             */
-/*   Updated: 2025/11/27 17:17:12 by dbakker          ###   ########.fr       */
+/*   Updated: 2025/11/28 09:44:43 by dbakker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -162,7 +162,7 @@ t_data	*ed_parsing(t_data *data);
 
 void	*generate_random_pointer(size_t size);
 char	*convert_mem_to_base16(const void *ptr, size_t size);
-char	*generate_heredoc_name();
+char	*generate_heredoc_name(void);
 // heredoc_utils.c
 
 void	heredoc_print_warning(size_t line_count, const char *delimiter);
@@ -170,9 +170,10 @@ size_t	heredoc_variable_length(const char *line);
 
 t_data	*heredoc(t_data *data);
 void	remove_heredoc_files(t_cmd *cmd);
-char	**heredoc_extract_variables(const t_list *envp, const char *line);
-size_t	strarrlen(const char **str_array);
 char	*heredoc_expansion(const t_list *envp, const char *line);
-// char	*expand_variable(t_list *envp, char *str);
+char	*heredoc_duplicate(const char *line);
+char	*heredoc_expand(const t_list *envp, const char *name);
+size_t	heredoc_copy_variable(char *dest, const char *src);
+char	*heredoc_copy_line(char *dest, const char *src);
 
 #endif

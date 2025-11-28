@@ -6,7 +6,7 @@
 /*   By: dbakker <dbakker@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/27 18:34:03 by dbakker           #+#    #+#             */
-/*   Updated: 2025/11/27 22:31:42 by dbakker          ###   ########.fr       */
+/*   Updated: 2025/11/28 09:54:57 by dbakker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,9 +30,9 @@
 static char	**heredoc_extract_variables(const t_list *envp, const char *line)
 {
 	const size_t	count = char_count(line, '$');
-	char	**strarr;
-	char	*envvar;
-	size_t	i;
+	char			**strarr;
+	char			*envvar;
+	size_t			i;
 
 	strarr = ft_calloc(count + 1, sizeof(char *));
 	if (strarr == NULL)
@@ -89,7 +89,15 @@ static size_t	heredoc_new_strlen(const char **strarr, const char *line)
 }
 
 /**
- * @brief
+ * @brief Rewrite @p `line` to have all variables expanded.
+ *
+ * @param[in] line		String read from `readline()`.
+ * @param[in] strarr	Array of expanded variables.
+ *
+ * @return Pointer to the new string with expanded variables, or `NULL` on
+ * @return failure.
+ *
+ * @warning Caller owns `free()`.
  */
 static char	*heredoc_rewrite(const char *line, const char **strarr)
 {
@@ -102,16 +110,14 @@ static char	*heredoc_rewrite(const char *line, const char **strarr)
 	j = 0;
 	strret = ft_calloc(strretlen + 1, sizeof(char));
 	if (strret == NULL)
-	{
 		return (free_array((char ***)&strarr), NULL);
-	}
 	while (*line)
 	{
 		if (*line == '$')
 		{
 			i += heredoc_copy_variable(strret + i, strarr[j]);
 			line += heredoc_variable_length(line + 1) + 1;
-			j++;
+			j += 1;
 		}
 		else
 		{
@@ -137,7 +143,6 @@ static char	*heredoc_rewrite(const char *line, const char **strarr)
 char	*heredoc_expansion(const t_list *envp, const char *line)
 {
 	const size_t	count = char_count(line, '$');
-	size_t			strretlen;
 	char			**strarr;
 	char			*strret;
 
@@ -151,7 +156,7 @@ char	*heredoc_expansion(const t_list *envp, const char *line)
 		return (NULL);
 	}
 	strret = heredoc_rewrite(line, (const char **)strarr);
-	free(line);
+	free((void *)line);
 	free_array(&strarr);
 	return (strret);
 }
