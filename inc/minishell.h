@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dbakker <dbakker@student.42.fr>            +#+  +:+       +#+        */
+/*   By: elie <elie@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/30 15:08:30 by ebelle            #+#    #+#             */
-/*   Updated: 2025/11/17 11:51:29 by dbakker          ###   ########.fr       */
+/*   Updated: 2025/11/27 11:28:24 by elie             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,10 +71,10 @@ bool	validate_quotation(char *str);
 char	*get_parameter_name(const char *str);
 char	*get_parameter_var(const char *str);
 
-size_t	expand_single_variable(char **str, size_t index, const t_list *envp);
-int8_t	expand_env_variables(char **str, const t_list *envp);
+int 	expand_single_variable(char **str, size_t index, t_data *data);
+int8_t	expand_env_variables(char **str, t_data *data);
 
-void	remove_quotation(char **str);
+int8_t	remove_quotation(char **str);
 
 /// EXECUTION
 
@@ -91,7 +91,7 @@ bool	is_builtin(const char *cmd);
 void	execute_builtin(t_cmd *cmd, t_data *data);
 void	close_pipes(int *pipefd, int prev_pipefd, bool is_first, bool is_last);
 void	setup_child_redirections(int *pipefd, int prev_pipefd, bool is_first, bool is_last);
-void	apply_redirections(t_cmd *cmd);
+int8_t	apply_redirections(t_cmd *cmd);
 
 // Signal handling
 
