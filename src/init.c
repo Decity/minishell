@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dbakker <dbakker@student.42.fr>            +#+  +:+       +#+        */
+/*   By: elie <elie@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/05 14:09:14 by elie              #+#    #+#             */
-/*   Updated: 2025/11/17 11:51:51 by dbakker          ###   ########.fr       */
+/*   Updated: 2025/11/25 10:10:12 by elie             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,11 @@ uint8_t	set_input(t_data *data)
 			data->input[len - 1] = '\0';
 	}
 	if (!data->input)
-		exit(0);
+	{
+		exit_cleanup(data);
+		exit(data->exit_status);
+	}
+
 	if (!data->input[0] || ft_strlen(data->input) == 0)
 	{
 		free(data->input);
