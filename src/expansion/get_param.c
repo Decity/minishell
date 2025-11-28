@@ -6,11 +6,11 @@
 /*   By: elie <elie@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/08 18:05:06 by elie              #+#    #+#             */
-/*   Updated: 2025/10/09 10:38:17 by elie             ###   ########.fr       */
+/*   Updated: 2025/11/28 12:12:07 by elie             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../inc/minishell.h"
+#include "minishell.h"
 
 /**
  * @brief Gets the fully formatted variable name in a given @p `str`. Example: "$VAR" or "${VAR}"
@@ -26,8 +26,11 @@ char	*get_parameter_var(const char *str)
 	if (!str || str[0] != '$')
 		return (NULL);
 
+	// Handle $? 
+	if (str[1] == '?')
+		end = 2;
 	// Handle ${VAR} format
-	if (str[1] == '{')
+	else if (str[1] == '{')
 	{
 		i = 2;
 		while (str[i] && str[i] != '}')

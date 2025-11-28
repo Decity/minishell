@@ -6,16 +6,16 @@
 /*   By: elie <elie@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/08 18:11:34 by elie              #+#    #+#             */
-/*   Updated: 2025/11/25 11:21:31 by elie             ###   ########.fr       */
+/*   Updated: 2025/11/28 12:12:12 by elie             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../inc/minishell.h"
+#include "minishell.h"
 
 /**
  * @brief Remove outer quotes from a string
  */
-void	remove_quotation(char **str)
+int8_t	remove_quotation(char **str)
 {
 	char	*result;
 	char	*src;
@@ -24,10 +24,10 @@ void	remove_quotation(char **str)
 	char	quote;
 
 	if (!str || !*str)
-		return;
+		return (FAILURE);
 	result = malloc(ft_strlen(*str) + 1);
 	if (!result)
-		return;
+		return (FAILURE);
 	src = *str;
 	i = 0;
 	j = 0;
@@ -51,4 +51,5 @@ void	remove_quotation(char **str)
 	result[j] = '\0';
 	free(*str);
 	*str = result;
+	return (SUCCESS);
 }
