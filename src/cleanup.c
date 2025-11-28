@@ -39,9 +39,15 @@ void	exit_cleanup(t_data *data)
 
 	// Clean up environment list
 	if (data->envp)
+	{
 		ft_listclear(&data->envp, free);
-
-	// Clean up directory
+	}
 	if (data->directory.pwd)
+	{
 		free(data->directory.pwd);
+	}
+	if (data->directory.old_pwd)
+	{
+		free(data->directory.old_pwd);
+	}
 }

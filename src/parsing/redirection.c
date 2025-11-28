@@ -6,7 +6,7 @@
 /*   By: dbakker <dbakker@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/25 19:34:56 by dbakker           #+#    #+#             */
-/*   Updated: 2025/11/18 18:54:32 by dbakker          ###   ########.fr       */
+/*   Updated: 2025/11/28 13:26:08 by dbakker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -188,6 +188,7 @@ t_cmd	*init_cmd(const char **args, size_t size)
 	{
 		return (NULL);
 	}
+	free_array(&trimmed);
 	redir->redirect.infile = init_redir_in(args, size);
 	redir->redirect.outfile = init_redir_out(args, size);
 	return (redir);
