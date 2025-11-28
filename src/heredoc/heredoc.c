@@ -3,38 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: elie <elie@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: dbakker <dbakker@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/12 10:53:02 by dbakker           #+#    #+#             */
-/*   Updated: 2025/11/20 13:13:01 by elie             ###   ########.fr       */
+/*   Updated: 2025/11/28 09:45:20 by dbakker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-/**
- * @brief Closes and unlinks all generated files for the heredocs.
- */
-void	remove_heredoc_files(t_cmd *cmd)
-{
-	size_t	i;
-
-	i = 0;
-	while (cmd)
-	{
-		while (cmd->redirect.infile[i].file)
-		{
-			if (cmd->redirect.infile[i].redir_type == TYPE_REDIRECTION_HEREDOC)
-			{
-				close(cmd->redirect.infile[i].fd);
-				unlink(cmd->redirect.infile[i].file);
-			}
-			i++;
-		}
-		i = 0;
-		cmd = cmd->next;
-	}
-}
 
 /**
  * @brief Initializes all command structs with a file for the heredoc to write
@@ -44,9 +20,9 @@ void	remove_heredoc_files(t_cmd *cmd)
  *
  * @return Pointer to @p `cmd`, or `NULL` on failure.
  *
- * @warning Caller owns free().
+ * @warning Caller owns `free()`.
  */
-void	*init_heredoc(t_cmd *cmd)
+static void	*heredoc_init(t_cmd *cmd)
 {
 	t_cmd	*node;
 	size_t	i;
@@ -55,7 +31,8 @@ void	*init_heredoc(t_cmd *cmd)
 	node = cmd;
 	while (node)
 	{
-		while (node->redirect.infile[i].file || node->redirect.infile[i].delimiter)
+		while (node->redirect.infile[i].file
+			|| node->redirect.infile[i].delimiter)
 		{
 			if (node->redirect.infile[i].redir_type == TYPE_REDIRECTION_HEREDOC)
 			{
@@ -65,69 +42,125 @@ void	*init_heredoc(t_cmd *cmd)
 					return (NULL);
 				}
 			}
-			i++;
+			i += 1;
 		}
 		i = 0;
 		node = node->next;
 	}
 	return (cmd);
 }
+
 /**
- * The warning it prints out if you CTRL + D in the heredoc.
+ * @return `false` if there are more than 16 heredoc redirections or if
+ * @return initialization failed, `true` otherwise.
+ *
+ * @warning Caller owns `free()`.
  */
-void	heredoc_print_warning(size_t line_count, const char *delimiter)
+static bool	heredoc_check(t_data *data)
 {
-	ft_putstr_fd("minishell: warning: here-document at line ", STDERR_FILENO);
-	ft_putnum_fd(line_count, STDERR_FILENO);
-	ft_putstr_fd(" delimited by end-of-file (wanted `", STDERR_FILENO);
-	ft_putstr_fd(delimiter, STDERR_FILENO);
-	ft_putstr_fd("')\n", STDERR_FILENO);
+	if (count_redir_heredoc((const char **)data->tokens) > HEREDOC_LIMIT)
+	{
+		return (false);
+	}
+	if (heredoc_init(data->command) == NULL)
+	{
+		return (false);
+	}
+	return (true);
 }
 
-t_data	*heredoc(t_data *data)
+/**
+ * @brief Imitate the bash heredoc behaviour.
+ *
+ * @param[in] cmd	Command struct containing the file descriptor to write to.
+ * @param[in] envp	Linked list containing all environmental variables.
+ * @param[in] idx	Index of the command struct to access.
+ */
+static t_cmd	*heredoc_readline(const t_cmd *cmd, const t_list *envp,
+	const size_t idx)
 {
 	static size_t	line_count = 0;
-	size_t			i;
 	char			*line;
+
+	while (true != false)
+	{
+		line = readline(NULL);
+		line_count += 1;
+		if (line == NULL)
+		{
+			heredoc_print_warning(line_count,
+				cmd->redirect.infile[idx].delimiter);
+			break ;
+		}
+		if (strcmp(line, cmd->redirect.infile[idx].delimiter) == 0)
+		{
+			free(line);
+			break ;
+		}
+		line = heredoc_expansion(envp, line);
+		if (line == NULL)
+			return (NULL);
+		ft_putendl_fd(line, cmd->redirect.infile[idx].fd);
+		free(line);
+	}
+	return ((t_cmd *)cmd);
+}
+
+/**
+ * @brief Create and write to a temporary file for each heredoc redirection.
+ *
+ * @param[in,out]	cmd		Command struct that contains a heredoc redirection.
+ * @param[in]		envp	Linked list containing environmental variables.
+ *
+ * @return Pointer to @p `cmd`, or NULL on failure.
+ */
+static void	*heredoc_create_file(t_cmd *cmd, const t_list *envp)
+{
+	size_t	i;
+
+	i = 0;
+	while (cmd->redirect.infile[i].file)
+	{
+		if (cmd->redirect.infile[i].redir_type == TYPE_REDIRECTION_HEREDOC)
+		{
+			cmd->redirect.infile[i].fd = open(cmd->redirect.infile[i].file,
+					O_WRONLY | O_CREAT | O_TRUNC, 0644);
+			if (cmd->redirect.infile[i].fd == -1)
+				return (NULL);
+			heredoc_readline(cmd, envp, i);
+			close(cmd->redirect.infile[i].fd);
+		}
+		i += 1;
+	}
+	return (cmd);
+}
+
+/**
+ * @brief Handle the heredoc redirections.
+ */
+t_data	*heredoc(t_data *data)
+{
+	t_cmd	*cmd;
 
 	if (DEBUG)
 		printf("=== Heredoc begin ===\n");
-	if (count_redir_heredoc((const char **)data->tokens) > HEREDOC_LIMIT)
+
+	if (heredoc_check(data) == false)
 	{
 		return (NULL);
 	}
-	if (init_heredoc(data->command) == NULL)
+	cmd = data->command;
+	while (cmd)
 	{
-		return (NULL);
-	}
-	i = 0;
-	while (data->command->redirect.infile[i].file)
-	{
-		if (data->command->redirect.infile[i].redir_type == TYPE_REDIRECTION_HEREDOC)
+		if (heredoc_create_file(cmd, data->envp) == NULL)
 		{
-			data->command->redirect.infile[i].fd = open(data->command->redirect.infile[i].file, O_WRONLY | O_CREAT | O_TRUNC, 0644);
-			while (true)
-			{
-				line = readline("  ");
-				line_count++;
-				if (line == NULL)
-				{
-					heredoc_print_warning(line_count, data->command->redirect.infile[i].delimiter);
-					break ;
-				}
-				if (ft_strcmp(line, data->command->redirect.infile[i].delimiter) == 0)
-				{
-					free(line);
-					break ;
-				}
-				ft_putendl_fd(line, data->command->redirect.infile[i].fd);
-				free(line);
-			}
-			close(data->command->redirect.infile[i].fd);
+			return (NULL);
 		}
-		i++;
+		cmd = cmd->next;
 	}
+
 	if (DEBUG)
 		printf("=== Heredoc end ===\n");
+
 	return (data);
 }

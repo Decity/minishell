@@ -6,7 +6,7 @@
 /*   By: elie <elie@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/30 15:08:30 by ebelle            #+#    #+#             */
-/*   Updated: 2025/11/27 11:28:24 by elie             ###   ########.fr       */
+/*   Updated: 2025/11/28 12:56:42 by elie             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,7 @@ size_t	set_tokens(t_data *data);
 size_t	count_tokens(char *input);
 
 // tokenization_utils.c
+
 char	get_quote(const char c);
 uint8_t	get_quote_type(const char *str);
 uint8_t	get_token_type(const char *str);
@@ -116,13 +117,15 @@ int		ed_change_directory(t_list *list, t_pwd *directory, const char *path);
 void	ed_echo(const char **message);
 
 size_t	env_namelen(const char *name);
+size_t	env_valuelen(const char *str);
 char	*ft_getenv(const t_list *list, const char *name);
 void	env_print(const t_list *envp);
-void	env_all_print(const t_list *envp);
-void	env_single_print(const t_list *envp);
+// void	env_all_print(const t_list *envp);
+// void	env_single_print(const t_list *envp);
 
 void	minishell_exit(t_data *data);
 
+bool	is_env_name(const char *str);
 void	*export_env(t_list *list, const char *envvar);
 void	export_print(const t_list *list);
 
@@ -152,13 +155,29 @@ t_cmd	*init_cmd(const char **args, size_t size);
 
 t_data	*ed_parsing(t_data *data);
 
-// Heredoc
+// HEREDOC
+
+// heredoc_expansion_utils.c
+
+char	*heredoc_expand(const t_list *envp, const char *name);
+char	*heredoc_copy_line(char *dest, const char *src);
+size_t	heredoc_copy_variable(char *dest, const char *src);
+// heredoc_expansion.c
+
+char	*heredoc_expansion(const t_list *envp, const char *line);
+// heredoc_name_generator.c
 
 void	*generate_random_pointer(size_t size);
 char	*convert_mem_to_base16(const void *ptr, size_t size);
-char	*generate_heredoc_name();
+char	*generate_heredoc_name(void);
+// heredoc_utils.c
+
+void	heredoc_print_warning(size_t line_count, const char *delimiter);
+size_t	heredoc_variable_length(const char *line);
+char	*heredoc_duplicate(const char *line);
+void	remove_heredoc_files(t_cmd *cmd);
+// heredoc.c
 
 t_data	*heredoc(t_data *data);
-void	remove_heredoc_files(t_cmd *cmd);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: elie <elie@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/15 13:16:57 by dbakker           #+#    #+#             */
-/*   Updated: 2025/11/25 09:07:16 by elie             ###   ########.fr       */
+/*   Updated: 2025/11/28 12:56:14 by elie             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@
  *
  * @return `false` if an invalid character is found, `true` otherwise.
  */
-static bool	is_env_name(const char *str)
+bool	is_env_name(const char *str)
 {
 	size_t	i;
 
@@ -115,6 +115,7 @@ void	*export_env(t_list *list, const char *envvar)
 
 	if (is_env_name(envvar) == false)
 		return (NULL);
+	if (has_env_value(envvar) == false)
 	if (has_env_value(envvar) == false)
 		return (list);
 	str_env = ft_strdup(envvar);
