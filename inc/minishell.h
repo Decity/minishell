@@ -6,7 +6,7 @@
 /*   By: dbakker <dbakker@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/30 15:08:30 by ebelle            #+#    #+#             */
-/*   Updated: 2025/11/29 16:49:39 by dbakker          ###   ########.fr       */
+/*   Updated: 2025/11/29 19:56:42 by dbakker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -136,24 +136,28 @@ void	unset_env(t_list **head, const char *name);
 
 // Parsing
 
-void	ed_cmddelone(t_cmd *cmd);
-void	ed_cmdclear(t_cmd **cmd);
+// parsing_linked_list.c
+
+t_cmd	*cmdnew(const char **args, size_t num);
+void	cmdadd_back(t_cmd **head, t_cmd *new);
+void	cmddelone(t_cmd *cmd);
+void	cmdclear(t_cmd **cmd);
+// parsing_redirection_in.c
 
 bool	is_redir_heredoc(const char *arg);
 bool	is_redir_in(const char *arg);
-bool	is_redir_out(const char *arg);
 size_t	count_redir_heredoc(const char **args);
 size_t	count_redir_in(const char **args);
+// parsing_redirection_out.c
+
+bool	is_redir_out(const char *arg);
 size_t	count_redir_out(const char **args);
+// parsing_redirection.c
 
-t_cmd	*ed_cmdnew(const char **args, size_t num);
-void	ed_cmdadd_back(t_cmd **head, t_cmd *new);
+t_cmd	*parsing_init(const char **args, size_t size);
+// parsing.c
 
-t_redir	*init_redir_in(const char **args, size_t size);
-t_redir	*init_redir_out(const char **args, size_t size);
-t_cmd	*init_cmd(const char **args, size_t size);
-
-t_data	*ed_parsing(t_data *data);
+t_data	*parsing(t_data *data);
 
 // HEREDOC
 

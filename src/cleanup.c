@@ -19,7 +19,7 @@ void	cleanup_data(t_data *data)
 	}
 	if (data->command)
 	{
-		ed_cmdclear(&data->command);
+		cmdclear(&data->command);
 	}
 	if (DEBUG)
 		printf("\n=== cleanup complete ===\n");

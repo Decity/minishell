@@ -6,11 +6,24 @@
 /*   By: dbakker <dbakker@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/22 20:16:18 by dbakker           #+#    #+#             */
-/*   Updated: 2025/10/30 11:12:39 by dbakker          ###   ########.fr       */
+/*   Updated: 2025/11/29 20:03:35 by dbakker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+static void	*parsing_add_cmd(t_data *data, const char **tokens, size_t size)
+{
+	t_cmd	*new;
+
+	new = parsing_init(tokens, size);
+	if (new == NULL)
+	{
+		return (NULL);
+	}
+	cmdadd_back(&data->command, new);
+	return (new);
+}
 
 /**
  * @brief Turn the tokenized arguments into a linked list, split along each `|`.
@@ -19,11 +32,10 @@
  *
  * @return Pointer to the updated list, or `NULL` on failure.
  *
- * @warning Caller owns free().
+ * @warning Caller owns `free()`.
  */
-t_data	*ed_parsing(t_data *data)
+t_data	*parsing(t_data *data)
 {
-	t_cmd	*new;
 	size_t	start;
 	size_t	index;
 
@@ -33,20 +45,14 @@ t_data	*ed_parsing(t_data *data)
 	{
 		if (get_token_type(data->tokens[index]) == TYPE_PIPE)
 		{
-			new = init_cmd((const char **)data->tokens + start, index - start);
-			if (new == NULL)
+			if (parsing_add_cmd(data, (const char **)data->tokens + start, index - start) == NULL)
 				return (NULL);
-			ed_cmdadd_back(&data->command, new);
 			start = index + 1;
 		}
 		index++;
 	}
 	if (start < index)
-	{
-		new = init_cmd((const char **)data->tokens + start, index - start);
-		if (new == NULL)
-			return (NULL);
-		ed_cmdadd_back(&data->command, new);
-	}
+		if (parsing_add_cmd(data, (const char **)data->tokens + start, index - start) == NULL)
+				return (NULL);
 	return (data);
 }

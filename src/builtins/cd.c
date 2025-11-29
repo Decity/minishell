@@ -6,13 +6,13 @@
 /*   By: dbakker <dbakker@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/17 14:30:29 by dbakker           #+#    #+#             */
-/*   Updated: 2025/11/29 16:57:40 by dbakker          ###   ########.fr       */
+/*   Updated: 2025/11/29 20:00:07 by dbakker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static void *builtin_update_pwd_env(t_list *envp, t_pwd *dir, const char *path)
+static void *builtin_update_pwd_env(t_list *envp, t_pwd *dir)
 {
 	char	*pwd;
 	char	*old_pwd;
@@ -47,17 +47,11 @@ static void *builtin_update_pwd_env(t_list *envp, t_pwd *dir, const char *path)
  */
 int	builtin_cd(t_list *envp, t_pwd *dir, const char *path)
 {
-	char	*pwd;
-	char	*old_pwd;
-	char	*export;
-
-	pwd = NULL;
-	old_pwd = NULL;
 	if (chdir(path) == 0)
 	{
 		if (ed_update_pwd(dir) == NULL)
 			return (2);
-		if (builtin_update_pwd_env(envp, dir, path) == NULL)
+		if (builtin_update_pwd_env(envp, dir) == NULL)
 			return (2);
 		return (0);
 	}
