@@ -3,14 +3,23 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: elie <elie@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: dbakker <dbakker@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/15 13:16:57 by dbakker           #+#    #+#             */
-/*   Updated: 2025/11/28 13:00:45 by elie             ###   ########.fr       */
+/*   Updated: 2025/11/29 16:51:42 by dbakker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+bool	has_env_value(const char *envvar)
+{
+	if (ft_strchr(envvar, '=') == NULL)
+	{
+		return (false);
+	}
+	return (true);
+}
 
 /**
  * @brief Check if @p `str` only contains allowed characters for environmental
@@ -77,15 +86,6 @@ static void	*try_replacing_existing_env(t_list *curr_node, const char *envvar)
 	return (curr_node->content);
 }
 
-bool	has_env_value(const char *envvar)
-{
-	if (ft_strchr(envvar, '=') == NULL)
-	{
-		return (false);
-	}
-	return (true);
-}
-
 /**
  * @brief Add @p `envvar` to the end of @p `list`.
  *
@@ -113,7 +113,7 @@ void	*export_env(t_list *list, const char *envvar)
 	void	*ptr_old;
 	void	*ptr_new;
 
-	if (is_env_name(envvar) == false)
+	if (envvar == NULL || is_env_name(envvar) == false)
 		return (NULL);
 	if (has_env_value(envvar) == false)
 		return (list);

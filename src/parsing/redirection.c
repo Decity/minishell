@@ -6,7 +6,7 @@
 /*   By: dbakker <dbakker@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/25 19:34:56 by dbakker           #+#    #+#             */
-/*   Updated: 2025/11/18 18:54:32 by dbakker          ###   ########.fr       */
+/*   Updated: 2025/11/29 17:07:47 by dbakker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -151,14 +151,14 @@ char	**trim_redirections(const char **args, size_t size)
 		{
 			trimmed[array_size] = ft_strdup(args[i]);
 			if (trimmed[array_size] == NULL)
-				return (ft_free2d((void **)trimmed, array_size), NULL);
+				return (free_array(&trimmed), NULL);
 			array_size++;
 		}
 		else
 		{
-			i++;
+			i += 1;
 		}
-		i++;
+		i += 1;
 	}
 	return (trimmed);
 }
@@ -184,11 +184,16 @@ t_cmd	*init_cmd(const char **args, size_t size)
 
 	trimmed = trim_redirections(args, size);
 	redir = ed_cmdnew((const char **)trimmed, size);
+	free_array(&trimmed);
 	if (redir == NULL)
 	{
 		return (NULL);
 	}
 	redir->redirect.infile = init_redir_in(args, size);
 	redir->redirect.outfile = init_redir_out(args, size);
+	if (redir->redirect.infile == NULL || redir->redirect.outfile == NULL)
+	{
+		return (NULL);
+	}
 	return (redir);
 }

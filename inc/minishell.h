@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: elie <elie@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: dbakker <dbakker@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/30 15:08:30 by ebelle            #+#    #+#             */
-/*   Updated: 2025/11/28 12:56:42 by elie             ###   ########.fr       */
+/*   Updated: 2025/11/29 16:49:39 by dbakker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,7 @@ bool	is_builtin(const char *cmd);
 void	execute_builtin(t_cmd *cmd, t_data *data);
 void	close_pipes(int *pipefd, int prev_pipefd, bool is_first, bool is_last);
 void	setup_child_redirections(int *pipefd, int prev_pipefd, bool is_first, bool is_last);
-int8_t	apply_redirections(t_cmd *cmd);
+void	apply_redirections(t_cmd *cmd);
 
 // Signal handling
 
@@ -112,7 +112,7 @@ void	debug(t_data *data);
 
 // Built-ins
 
-int		ed_change_directory(t_list *list, t_pwd *directory, const char *path);
+int		builtin_cd(t_list *envp, t_pwd *dir, const char *path);
 
 void	ed_echo(const char **message);
 
