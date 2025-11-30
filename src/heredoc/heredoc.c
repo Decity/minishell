@@ -6,7 +6,7 @@
 /*   By: dbakker <dbakker@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/12 10:53:02 by dbakker           #+#    #+#             */
-/*   Updated: 2025/11/28 09:45:20 by dbakker          ###   ########.fr       */
+/*   Updated: 2025/11/30 22:28:49 by dbakker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ static bool	heredoc_check(t_data *data)
  * @param[in] idx	Index of the command struct to access.
  */
 static t_cmd	*heredoc_readline(const t_cmd *cmd, const t_list *envp,
-	const size_t idx)
+	size_t idx)
 {
 	static size_t	line_count = 0;
 	char			*line;
