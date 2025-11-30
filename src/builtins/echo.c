@@ -6,12 +6,15 @@
 /*   By: dbakker <dbakker@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/17 14:27:44 by dbakker           #+#    #+#             */
-/*   Updated: 2025/11/29 12:40:52 by dbakker          ###   ########.fr       */
+/*   Updated: 2025/11/29 20:23:27 by dbakker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+/**
+ * @return `true` if @p `message` contains the `-n` option, `false` otherwise.
+ */
 static bool	builtin_echo_option_n(const char *message)
 {
 	size_t	i;
@@ -34,23 +37,23 @@ static bool	builtin_echo_option_n(const char *message)
 }
 
 /**
- * @brief Print all pointers of @p `message` to `stdout`,
+ * @brief Print all pointers of @p `messages` to `stdout`,
  *
- * If the first pointer of @p `message` contains `-n`, no newline will be
+ * If the first pointer of @p `messages` contains `-n`, no newline will be
  * printed.
  *
- * @param[in] message Messages to print.
+ * @param[in] messages Messages to print.
  */
-void	ed_echo(const char **message)
+void	builtin_echo(const char **messages)
 {
 	size_t	i;
 	bool	n_option;
 
 	i = 0;
 	n_option = false;
-	while (message[i])
+	while (messages[i])
 	{
-		if (builtin_echo_option_n(message[i]) == true)
+		if (builtin_echo_option_n(messages[i]) == true)
 		{
 			n_option = true;
 			i += 1;
@@ -58,12 +61,12 @@ void	ed_echo(const char **message)
 		else
 			break ;
 	}
-	while (message[i])
+	while (messages[i])
 	{
-		if (message[i + 1] == NULL)
-			printf("%s", message[i]);
+		if (messages[i + 1] == NULL)
+			printf("%s", messages[i]);
 		else
-			printf("%s ", message[i]);
+			printf("%s ", messages[i]);
 		i += 1;
 	}
 	if (n_option == false)

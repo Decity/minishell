@@ -6,7 +6,7 @@
 /*   By: dbakker <dbakker@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/17 14:30:29 by dbakker           #+#    #+#             */
-/*   Updated: 2025/11/29 20:00:07 by dbakker          ###   ########.fr       */
+/*   Updated: 2025/11/30 11:58:34 by dbakker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,12 +20,12 @@ static void *builtin_update_pwd_env(t_list *envp, t_pwd *dir)
 
 	if (ft_getenv(envp, "PWD"))
 		pwd = ft_strjoin("PWD", dir->pwd);
-	export = export_env(envp, pwd);
+	export = builtin_export(envp, pwd);
 	if (export == NULL)
 		return (free(pwd), NULL);
 	if (ft_getenv(envp, "OLDPWD"))
 		old_pwd = ft_strjoin("OLDPWD", dir->old_pwd);
-	export = export_env(envp, old_pwd);
+	export = builtin_export(envp, old_pwd);
 	if (export == NULL)
 		return (free(old_pwd), NULL);
 	free(pwd);
@@ -49,7 +49,7 @@ int	builtin_cd(t_list *envp, t_pwd *dir, const char *path)
 {
 	if (chdir(path) == 0)
 	{
-		if (ed_update_pwd(dir) == NULL)
+		if (builtin_update_pwd(dir) == NULL)
 			return (2);
 		if (builtin_update_pwd_env(envp, dir) == NULL)
 			return (2);

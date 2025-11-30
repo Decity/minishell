@@ -6,7 +6,7 @@
 /*   By: dbakker <dbakker@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/30 15:08:30 by ebelle            #+#    #+#             */
-/*   Updated: 2025/11/29 19:56:42 by dbakker          ###   ########.fr       */
+/*   Updated: 2025/11/30 11:50:39 by dbakker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,25 +114,22 @@ void	debug(t_data *data);
 
 int		builtin_cd(t_list *envp, t_pwd *dir, const char *path);
 
-void	ed_echo(const char **message);
+void	builtin_echo(const char **messages);
 
 size_t	env_namelen(const char *name);
 size_t	env_valuelen(const char *str);
 char	*ft_getenv(const t_list *list, const char *name);
-void	env_print(const t_list *envp);
-// void	env_all_print(const t_list *envp);
-// void	env_single_print(const t_list *envp);
+void	builtin_env_print(const t_list *envp);
 
 void	minishell_exit(t_data *data);
 
-bool	is_env_name(const char *str);
-void	*export_env(t_list *list, const char *envvar);
+void	*builtin_export(t_list *list, const char *envvar);
 void	export_print(const t_list *list);
 
-void	*ed_update_pwd(t_pwd *directory);
+void	*builtin_update_pwd(t_pwd *directory);
 void	pwd_print(t_pwd directory);
 
-void	unset_env(t_list **head, const char *name);
+void	builtin_unset(t_list **head, const char *name);
 
 // Parsing
 

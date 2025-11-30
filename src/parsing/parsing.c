@@ -6,12 +6,21 @@
 /*   By: dbakker <dbakker@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/22 20:16:18 by dbakker           #+#    #+#             */
-/*   Updated: 2025/11/29 20:03:35 by dbakker          ###   ########.fr       */
+/*   Updated: 2025/11/30 11:55:11 by dbakker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+/**
+ * @brief Add a new command struct to the end of the linked list
+ *
+ * @param[out]	data	Data struct containing a linked list of command structs.
+ * @param[in]	tokens	Array of commandline arguments.
+ * @param[in]	size	Amount of tokens to copy.
+ *
+ * @warning Caller owns `free()`.
+ */
 static void	*parsing_add_cmd(t_data *data, const char **tokens, size_t size)
 {
 	t_cmd	*new;
