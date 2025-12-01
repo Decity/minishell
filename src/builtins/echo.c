@@ -6,31 +6,11 @@
 /*   By: dbakker <dbakker@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/17 14:27:44 by dbakker           #+#    #+#             */
-/*   Updated: 2025/12/01 09:47:30 by dbakker          ###   ########.fr       */
+/*   Updated: 2025/12/01 09:48:07 by dbakker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-static bool	builtin_echo_option(const char *message)
-{
-	size_t	i;
-
-	i = 0;
-	if (message[i] == '-')
-	{
-		i += 1;
-	}
-	while (message[i])
-	{
-		if (message[i] != 'n')
-		{
-			return (false);
-		}
-		i += 1;
-	}
-	return (true);
-}
 
 /**
  * @return `true` if @p `message` contains the `-n` option, `false` otherwise.
