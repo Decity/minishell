@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: elie <elie@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: dbakker <dbakker@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/30 15:08:30 by ebelle            #+#    #+#             */
-/*   Updated: 2025/11/28 12:56:42 by elie             ###   ########.fr       */
+/*   Updated: 2025/11/30 11:50:39 by dbakker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,7 @@ bool	is_builtin(const char *cmd);
 void	execute_builtin(t_cmd *cmd, t_data *data);
 void	close_pipes(int *pipefd, int prev_pipefd, bool is_first, bool is_last);
 void	setup_child_redirections(int *pipefd, int prev_pipefd, bool is_first, bool is_last);
-int8_t	apply_redirections(t_cmd *cmd);
+void	apply_redirections(t_cmd *cmd);
 
 // Signal handling
 
@@ -112,48 +112,49 @@ void	debug(t_data *data);
 
 // Built-ins
 
-int		ed_change_directory(t_list *list, t_pwd *directory, const char *path);
+int		builtin_cd(t_list *envp, t_pwd *dir, const char *path);
 
-void	ed_echo(const char **message);
+void	builtin_echo(const char **messages);
 
 size_t	env_namelen(const char *name);
 size_t	env_valuelen(const char *str);
 char	*ft_getenv(const t_list *list, const char *name);
-void	env_print(const t_list *envp);
-// void	env_all_print(const t_list *envp);
-// void	env_single_print(const t_list *envp);
+void	builtin_env_print(const t_list *envp);
 
 void	minishell_exit(t_data *data);
 
-bool	is_env_name(const char *str);
-void	*export_env(t_list *list, const char *envvar);
+void	*builtin_export(t_list *list, const char *envvar);
 void	export_print(const t_list *list);
 
-void	*ed_update_pwd(t_pwd *directory);
+void	*builtin_update_pwd(t_pwd *directory);
 void	pwd_print(t_pwd directory);
 
-void	unset_env(t_list **head, const char *name);
+void	builtin_unset(t_list **head, const char *name);
 
 // Parsing
 
-void	ed_cmddelone(t_cmd *cmd);
-void	ed_cmdclear(t_cmd **cmd);
+// parsing_linked_list.c
+
+t_cmd	*cmdnew(const char **args, size_t num);
+void	cmdadd_back(t_cmd **head, t_cmd *new);
+void	cmddelone(t_cmd *cmd);
+void	cmdclear(t_cmd **cmd);
+// parsing_redirection_in.c
 
 bool	is_redir_heredoc(const char *arg);
 bool	is_redir_in(const char *arg);
-bool	is_redir_out(const char *arg);
 size_t	count_redir_heredoc(const char **args);
 size_t	count_redir_in(const char **args);
+// parsing_redirection_out.c
+
+bool	is_redir_out(const char *arg);
 size_t	count_redir_out(const char **args);
+// parsing_redirection.c
 
-t_cmd	*ed_cmdnew(const char **args, size_t num);
-void	ed_cmdadd_back(t_cmd **head, t_cmd *new);
+t_cmd	*parsing_init(const char **args, size_t size);
+// parsing.c
 
-t_redir	*init_redir_in(const char **args, size_t size);
-t_redir	*init_redir_out(const char **args, size_t size);
-t_cmd	*init_cmd(const char **args, size_t size);
-
-t_data	*ed_parsing(t_data *data);
+t_data	*parsing(t_data *data);
 
 // HEREDOC
 
