@@ -6,7 +6,7 @@
 /*   By: dbakker <dbakker@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/12 10:53:02 by dbakker           #+#    #+#             */
-/*   Updated: 2025/11/30 22:28:49 by dbakker          ###   ########.fr       */
+/*   Updated: 2025/12/01 09:50:23 by dbakker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -144,7 +144,6 @@ t_data	*heredoc(t_data *data)
 
 	if (DEBUG)
 		printf("=== Heredoc begin ===\n");
-
 	if (heredoc_check(data) == false)
 	{
 		return (NULL);
@@ -158,9 +157,7 @@ t_data	*heredoc(t_data *data)
 		}
 		cmd = cmd->next;
 	}
-
 	if (DEBUG)
 		printf("=== Heredoc end ===\n");
-
 	return (data);
 }

@@ -6,7 +6,7 @@
 /*   By: dbakker <dbakker@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/15 13:16:57 by dbakker           #+#    #+#             */
-/*   Updated: 2025/11/29 20:37:38 by dbakker          ###   ########.fr       */
+/*   Updated: 2025/12/01 10:04:30 by dbakker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ static bool	is_env_name(const char *str)
 
 /**
  * @brief Check if @p `envvar` matches the `NAME` in `content` of @p
- * @brief `curr_node`.
+ * @brief `curr_node` and replace its `VALUE`.
  *
  * @param[out]	curr_node	`content` to replace.
  * @param[in]	envvar		The new environmental variable.
@@ -65,7 +65,7 @@ static bool	is_env_name(const char *str)
  *
  * @warning Caller owns free().
  */
-static void	*builtin_replace_env(t_list *curr_node, const char *envvar)
+static t_list	*builtin_replace_env(t_list *curr_node, const char *envvar)
 {
 	size_t	len_envvar;
 	size_t	len_cnt;
@@ -84,6 +84,41 @@ static void	*builtin_replace_env(t_list *curr_node, const char *envvar)
 		return (curr_node->content);
 	}
 	return (curr_node->content);
+}
+
+/**
+ * @brief Iterate through the linked list and either replace an existing
+ * @brief variable, or add @p `str_env` to the end of @p `list`.
+ *
+ * @param[out]	list	Linked list containing environmental variables.
+ * @param[in]	str_env	String containing a NAME=VALUE pair.
+ *
+ * @return Pointer to the node added to the list, or `NULL` on failure.
+ *
+ * @warning Caller owns `free()`.
+ */
+static t_list	*builtin_iterate_list(t_list *list, const char *str_env)
+{
+	t_list	*curr_node;
+	void	*ptr_old;
+	void	*ptr_new;
+
+	curr_node = list;
+	while (curr_node)
+	{
+		ptr_old = curr_node->content;
+		ptr_new = builtin_replace_env(curr_node, str_env);
+		if (ptr_new == NULL)
+			return (NULL);
+		else if (ptr_new != ptr_old)
+			return (curr_node);
+		curr_node = curr_node->next;
+	}
+	curr_node = ft_listnew((char *)str_env);
+	if (curr_node == NULL)
+		return (NULL);
+	ft_listadd_back(&list, curr_node);
+	return (ft_listlast(list));
 }
 
 /**
@@ -108,10 +143,7 @@ static void	*builtin_replace_env(t_list *curr_node, const char *envvar)
  */
 void	*builtin_export(t_list *list, const char *envvar)
 {
-	t_list	*curr_node;
 	char	*str_env;
-	void	*ptr_old;
-	void	*ptr_new;
 
 	if (envvar == NULL || is_env_name(envvar) == false)
 		return (NULL);
@@ -120,39 +152,5 @@ void	*builtin_export(t_list *list, const char *envvar)
 	str_env = ft_strdup(envvar);
 	if (str_env == NULL)
 		return (NULL);
-	curr_node = list;
-	while (curr_node)
-	{
-		ptr_old = curr_node->content;
-		ptr_new = builtin_replace_env(curr_node, str_env);
-		if (ptr_new == NULL)
-			return (NULL);
-		else if (ptr_new != ptr_old)
-			return (curr_node);
-		curr_node = curr_node->next;
-	}
-	curr_node = ft_listnew((char *)str_env);
-	if (curr_node == NULL)
-		return (NULL);
-	ft_listadd_back(&list, curr_node);
-	return (ft_listlast(list));
-}
-
-/**
- * @brief Print out all environmental variables to `stdout`.
- *
- * Should be used if `export` gets called without arguments. At which variables
- * get printed as `declare -x NAME="VALUE"`.
- */
-void	export_print(const t_list *list)
-{
-	const char declare_x[] = "declare -x ";
-
-	while (list)
-	{
-		write(STDOUT_FILENO, declare_x, sizeof(declare_x) - 1);
-		write(STDOUT_FILENO, list->content, env_namelen((char *)list->content));
-		printf("=\"%s\"\n", ft_getenv(list, (char *)list->content));
-		list = list->next;
-	}
+	return (builtin_iterate_list(list, str_env));
 }

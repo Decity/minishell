@@ -6,13 +6,13 @@
 /*   By: dbakker <dbakker@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/17 14:30:29 by dbakker           #+#    #+#             */
-/*   Updated: 2025/11/30 11:58:34 by dbakker          ###   ########.fr       */
+/*   Updated: 2025/12/01 09:52:31 by dbakker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static void *builtin_update_pwd_env(t_list *envp, t_pwd *dir)
+static void	*builtin_update_pwd_env(t_list *envp, t_pwd *dir)
 {
 	char	*pwd;
 	char	*old_pwd;

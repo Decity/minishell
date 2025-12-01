@@ -6,7 +6,7 @@
 /*   By: dbakker <dbakker@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/13 22:47:22 by dbakker           #+#    #+#             */
-/*   Updated: 2025/11/30 11:59:43 by dbakker          ###   ########.fr       */
+/*   Updated: 2025/12/01 09:52:25 by dbakker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ size_t	env_valuelen(const char *str)
 char	*ft_getenv(const t_list *list, const char *name)
 {
 	const size_t	namelen = ft_strlen(name);
-	size_t	envlen;
+	size_t			envlen;
 
 	while (list)
 	{

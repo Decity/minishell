@@ -6,7 +6,7 @@
 /*   By: dbakker <dbakker@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/22 20:16:18 by dbakker           #+#    #+#             */
-/*   Updated: 2025/11/30 11:55:11 by dbakker          ###   ########.fr       */
+/*   Updated: 2025/12/01 10:05:37 by dbakker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,14 +54,16 @@ t_data	*parsing(t_data *data)
 	{
 		if (get_token_type(data->tokens[index]) == TYPE_PIPE)
 		{
-			if (parsing_add_cmd(data, (const char **)data->tokens + start, index - start) == NULL)
+			if (parsing_add_cmd(data, (const char **)data->tokens + start,
+					index - start) == NULL)
 				return (NULL);
 			start = index + 1;
 		}
 		index++;
 	}
 	if (start < index)
-		if (parsing_add_cmd(data, (const char **)data->tokens + start, index - start) == NULL)
-				return (NULL);
+		if (parsing_add_cmd(data, (const char **)data->tokens + start,
+				index - start) == NULL)
+			return (NULL);
 	return (data);
 }

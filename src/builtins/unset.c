@@ -6,7 +6,7 @@
 /*   By: dbakker <dbakker@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/14 16:59:49 by dbakker           #+#    #+#             */
-/*   Updated: 2025/12/01 09:47:29 by dbakker          ###   ########.fr       */
+/*   Updated: 2025/12/01 09:51:23 by dbakker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 /**
  * @return `true` if `content` of @p `head` matches @p `name`, false otherwise.
  */
-static bool	check_head_node(t_list **head, const char *name)
+static bool	unset_head(t_list **head, const char *name)
 {
 	t_list	*last;
 
@@ -43,7 +43,7 @@ void	builtin_unset(t_list **head, const char *name)
 	t_list	*node;
 	t_list	*last;
 
-	if (name == NULL || ft_strchr(name, '=') || check_head_node(head, name) == true)
+	if (name == NULL || ft_strchr(name, '=') || unset_head(head, name) == true)
 	{
 		return ;
 	}
