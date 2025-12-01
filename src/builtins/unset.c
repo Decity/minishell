@@ -6,7 +6,7 @@
 /*   By: dbakker <dbakker@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/14 16:59:49 by dbakker           #+#    #+#             */
-/*   Updated: 2025/11/28 13:12:49 by dbakker          ###   ########.fr       */
+/*   Updated: 2025/12/01 09:47:29 by dbakker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ static bool	check_head_node(t_list **head, const char *name)
  * @param[out]	head Head of the linked list.
  * @param[in]	name Environmental variable to delete.
  */
-void	unset_env(t_list **head, const char *name)
+void	builtin_unset(t_list **head, const char *name)
 {
 	t_list	*node;
 	t_list	*last;

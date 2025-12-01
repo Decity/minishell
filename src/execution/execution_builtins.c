@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution_builtins.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: elie <elie@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: dbakker <dbakker@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/05 15:22:00 by elie              #+#    #+#             */
-/*   Updated: 2025/11/10 15:00:16 by elie             ###   ########.fr       */
+/*   Updated: 2025/11/29 20:48:48 by dbakker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,22 +51,22 @@ bool	is_builtin(const char *cmd)
 void	execute_builtin(t_cmd *cmd, t_data *data)
 {
 	if (ft_strcmp(cmd->args[0], "echo") == 0)
-		ed_echo((const char **)cmd->args + 1);
+		builtin_echo((const char **)cmd->args + 1);
 	if (ft_strcmp(cmd->args[0], "cd") == 0)
-		ed_change_directory(data->envp, &data->directory, cmd->args[1]);
+		builtin_cd(data->envp, &data->directory, cmd->args[1]);
 	if (ft_strcmp(cmd->args[0], "pwd") == 0)
 		pwd_print(data->directory);
 	if (ft_strcmp(cmd->args[0], "export") == 0)
 	{
 		if (cmd->args[1])
-			export_env(data->envp, cmd->args[1]);
+			builtin_export(data->envp, cmd->args[1]);
 		else
 			export_print(data->envp);
 	}
 	if (ft_strcmp(cmd->args[0], "unset") == 0)
-		unset_env(&data->envp, cmd->args[1]);
+		builtin_unset(&data->envp, cmd->args[1]);
 	if (ft_strcmp(cmd->args[0], "env") == 0)
-		env_print(data->envp);
+		builtin_env_print(data->envp);
 	if (ft_strcmp(cmd->args[0], "exit") == 0)
 		minishell_exit(data);
 }

@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   linked_list.c                                      :+:      :+:    :+:   */
+/*   parsing_linked_list.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dbakker <dbakker@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/25 19:33:35 by dbakker           #+#    #+#             */
-/*   Updated: 2025/11/18 15:40:56 by dbakker          ###   ########.fr       */
+/*   Updated: 2025/11/29 19:56:17 by dbakker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,9 +23,9 @@
  *
  * @return Pointer to the struct, or `NULL` of failure.
  *
- * @warning Caller owns free().
+ * @warning Caller owns `free()`.
  */
-t_cmd	*ed_cmdnew(const char **args, size_t num)
+t_cmd	*cmdnew(const char **args, size_t num)
 {
 	t_cmd	*cmd;
 
@@ -55,7 +55,7 @@ t_cmd	*ed_cmdnew(const char **args, size_t num)
  * @param[out]	head	Head node of the list to append to.
  * @param[in]	new		Node to append.
  */
-void	ed_cmdadd_back(t_cmd **head, t_cmd *new)
+void	cmdadd_back(t_cmd **head, t_cmd *new)
 {
 	t_cmd	*node;
 
@@ -75,7 +75,7 @@ void	ed_cmdadd_back(t_cmd **head, t_cmd *new)
 /**
  * @brief Frees all allocated memory in @p `cmd`.
  */
-void	ed_cmddelone(t_cmd *cmd)
+void	cmddelone(t_cmd *cmd)
 {
 	size_t	i;
 
@@ -85,13 +85,17 @@ void	ed_cmddelone(t_cmd *cmd)
 	i = 0;
 	while (cmd->redirect.infile[i].file)
 	{
-		free(cmd->redirect.infile[i++].file);
+		free(cmd->redirect.infile[i].delimiter);
+		free(cmd->redirect.infile[i].file);
+		i += 1;
 	}
 	i = 0;
 	while (cmd->redirect.outfile[i].file)
 	{
-		free(cmd->redirect.outfile[i++].file);
+		free(cmd->redirect.outfile[i].file);
+		i += 1;
 	}
+	i = 0;
 	free(cmd->redirect.infile);
 	free(cmd->redirect.outfile);
 	free(cmd);
@@ -100,7 +104,7 @@ void	ed_cmddelone(t_cmd *cmd)
 /**
  * @brief Free the entire linked list of @p `cmd`.
  */
-void	ed_cmdclear(t_cmd **cmd)
+void	cmdclear(t_cmd **cmd)
 {
 	t_cmd	*node;
 	t_cmd	*temp;
@@ -113,7 +117,7 @@ void	ed_cmdclear(t_cmd **cmd)
 	while (node)
 	{
 		temp = node->next;
-		ed_cmddelone(node);
+		cmddelone(node);
 		node = temp;
 	}
 	*cmd = NULL;

@@ -6,7 +6,7 @@
 /*   By: dbakker <dbakker@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/13 22:47:22 by dbakker           #+#    #+#             */
-/*   Updated: 2025/11/26 17:18:56 by dbakker          ###   ########.fr       */
+/*   Updated: 2025/11/30 11:59:43 by dbakker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,8 @@ size_t	env_namelen(const char *str)
 
 /**
  * @return The length of @p `str` after the `=` delimiter.
+ *
+ * @note Behaviour is undefined if no delimiter is found.
  */
 size_t	env_valuelen(const char *str)
 {
@@ -87,7 +89,7 @@ char	*ft_getenv(const t_list *list, const char *name)
 /**
  * @brief Print all environment variables with a value to `stdout`.
  */
-void	env_print(const t_list *envp)
+void	builtin_env_print(const t_list *envp)
 {
 	while (envp)
 	{
@@ -98,23 +100,3 @@ void	env_print(const t_list *envp)
 		envp = envp->next;
 	}
 }
-
-// /**
-//  * @brief Print all environment variables to `stdout`.
-//  */
-// void	env_all_print(const t_list *envp)
-// {
-// 	while (envp)
-// 	{
-// 		printf("%s\n", (char *)envp->content);
-// 		envp = envp->next;
-// 	}
-// }
-
-// /**
-//  * @brief Print the content variable of @p `envp` to `stdout`.
-//  */
-// void	env_single_print(const t_list *envp)
-// {
-// 	printf("%s\n", (char *)envp->content);
-// }

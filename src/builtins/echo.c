@@ -6,7 +6,7 @@
 /*   By: dbakker <dbakker@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/17 14:27:44 by dbakker           #+#    #+#             */
-/*   Updated: 2025/11/28 15:56:14 by dbakker          ###   ########.fr       */
+/*   Updated: 2025/12/01 09:47:30 by dbakker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,23 +33,47 @@ static bool	builtin_echo_option(const char *message)
 }
 
 /**
- * @brief Print all pointers of @p `message` to `stdout`,
+ * @return `true` if @p `message` contains the `-n` option, `false` otherwise.
+ */
+static bool	builtin_echo_option_n(const char *message)
+{
+	size_t	i;
+
+	i = 0;
+	if (message[i] != '-')
+	{
+		return (false);
+	}
+	i += 1;
+	while (message[i])
+	{
+		if (message[i] != 'n')
+		{
+			return (false);
+		}
+		i += 1;
+	}
+	return (true);
+}
+
+/**
+ * @brief Print all pointers of @p `messages` to `stdout`,
  *
- * If the first pointer of @p `message` contains `-n`, no newline will be
+ * If the first pointer of @p `messages` contains `-n`, no newline will be
  * printed.
  *
- * @param[in] message Messages to print.
+ * @param[in] messages Messages to print.
  */
-void	ed_echo(const char **message)
+void	builtin_echo(const char **messages)
 {
 	size_t	i;
 	bool	n_option;
 
 	i = 0;
 	n_option = false;
-	while (message[i])
+	while (messages[i])
 	{
-		if (builtin_echo_option(message[i]) == true)
+		if (builtin_echo_option_n(messages[i]) == true)
 		{
 			n_option = true;
 			i += 1;
@@ -57,12 +81,12 @@ void	ed_echo(const char **message)
 		else
 			break ;
 	}
-	while (message[i])
+	while (messages[i])
 	{
-		if (message[i + 1] == NULL)
-			printf("%s", message[i]);
+		if (messages[i + 1] == NULL)
+			printf("%s", messages[i]);
 		else
-			printf("%s ", message[i]);
+			printf("%s ", messages[i]);
 		i += 1;
 	}
 	if (n_option == false)

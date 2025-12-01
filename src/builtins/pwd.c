@@ -6,7 +6,7 @@
 /*   By: dbakker <dbakker@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/17 10:41:14 by dbakker           #+#    #+#             */
-/*   Updated: 2025/10/22 18:04:37 by dbakker          ###   ########.fr       */
+/*   Updated: 2025/11/29 21:00:02 by dbakker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,9 +19,9 @@
  *
  * @return Pointer to @p `directory`, or NULL on failure.
  *
- * @warning Caller owns free().
+ * @warning Caller owns `free()`.
  */
-void	*ed_update_pwd(t_pwd *directory)
+void	*builtin_update_pwd(t_pwd *directory)
 {
 	char	*ptr_old_pwd;
 	char	*ptr_pwd;
@@ -43,6 +43,9 @@ void	*ed_update_pwd(t_pwd *directory)
 	return (directory);
 }
 
+/**
+ * @brief Print the current directory to `stdout`.
+ */
 void	pwd_print(t_pwd directory)
 {
 	printf("%s\n", directory.pwd);
