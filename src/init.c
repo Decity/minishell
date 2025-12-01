@@ -52,7 +52,7 @@ uint8_t	set_input(t_data *data)
 	{
 		data->input = get_next_line(STDIN_FILENO);
 		if (!data->input)
-			exit(0);
+			exit(data->exit_status);
 		len = ft_strlen(data->input);
 		if (len > 0 && data->input[len - 1] == '\n')
 			data->input[len - 1] = '\0';
