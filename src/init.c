@@ -68,6 +68,14 @@ uint8_t	set_input(t_data *data)
 		free(data->input);
 		return (FAILURE);
 	}
+	len = 0;
+	while (data->input[len] && ft_isspace(data->input[len]))
+		len++;
+	if (data->input[len] == '\0')
+	{
+		free(data->input);
+		return (FAILURE);
+	}
 	if (data->is_interactive)
 		add_history(data->input);
 	return (SUCCESS);
