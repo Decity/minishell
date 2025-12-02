@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dbakker <dbakker@student.42.fr>            +#+  +:+       +#+        */
+/*   By: elie <elie@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/30 15:08:30 by ebelle            #+#    #+#             */
-/*   Updated: 2025/11/30 11:50:39 by dbakker          ###   ########.fr       */
+/*   Updated: 2025/12/01 14:45:07 by elie             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,14 +85,11 @@ void	execution(t_data *data);
 void	execute_cmds(t_data *data);
 void	execute_single_cmd(t_cmd *cmd, t_data *data);
 void	execute_single_builtin(t_cmd *cmd, t_data *data);
-void	execute_pipeline_child(t_cmd *cmd, t_data *data, int *pipefd, int prev_pipefd, bool is_first, bool is_last);
-void	wait_for_children(pid_t *pids, size_t count, t_data *data);
-void	execute_binary(t_cmd *cmd, t_list *envp);
 bool	is_builtin(const char *cmd);
-void	execute_builtin(t_cmd *cmd, t_data *data);
+int		execute_builtin(t_cmd *cmd, t_data *data);
 void	close_pipes(int *pipefd, int prev_pipefd, bool is_first, bool is_last);
 void	setup_child_redirections(int *pipefd, int prev_pipefd, bool is_first, bool is_last);
-void	apply_redirections(t_cmd *cmd);
+int		apply_redirections(t_cmd *cmd);
 
 // Signal handling
 
@@ -114,22 +111,23 @@ void	debug(t_data *data);
 
 int		builtin_cd(t_list *envp, t_pwd *dir, const char *path);
 
-void	builtin_echo(const char **messages);
+int		builtin_echo(const char **messages);
 
 size_t	env_namelen(const char *name);
 size_t	env_valuelen(const char *str);
 char	*ft_getenv(const t_list *list, const char *name);
-void	builtin_env_print(const t_list *envp);
+int		builtin_env_print(const t_list *envp);
 
+int		builtin_exit(t_data *data, char **args);
 void	minishell_exit(t_data *data);
 
 void	*builtin_export(t_list *list, const char *envvar);
-void	export_print(const t_list *list);
+int		export_print(const t_list *list);
 
 void	*builtin_update_pwd(t_pwd *directory);
-void	pwd_print(t_pwd directory);
+int		pwd_print(t_pwd directory);
 
-void	builtin_unset(t_list **head, const char *name);
+int		builtin_unset(t_list **head, const char *name);
 
 // Parsing
 

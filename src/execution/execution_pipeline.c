@@ -12,16 +12,17 @@
 
 #include "minishell.h"
 
-void	execute_pipeline_child(t_cmd *cmd, t_data *data, int *pipefd, int prev_pipefd, bool is_first, bool is_last)
+static void	execute_pipeline_child(t_cmd *cmd, t_data *data, int *pipefd, int prev_pipefd, bool is_first, bool is_last)
 {
 	restore_signals_default();
 	setup_child_redirections(pipefd, prev_pipefd, is_first, is_last);
 	close_pipes(pipefd, prev_pipefd, is_first, is_last);
 	execute_single_cmd(cmd, data);
-	exit(1);
+	data->exit_status = 1;
+	exit(data->exit_status);
 }
 
-void	wait_for_children(pid_t *pids, size_t count, t_data *data)
+static void	wait_for_children(pid_t *pids, size_t count, t_data *data)
 {
 	size_t	i;
 	int		status;
@@ -34,9 +35,25 @@ void	wait_for_children(pid_t *pids, size_t count, t_data *data)
 		{
 			if (WIFEXITED(status))
 				data->exit_status = WEXITSTATUS(status);
+			else if (WIFSIGNALED(status))
+				data->exit_status = 128 + WTERMSIG(status);
 		}
 		i++;
 	}
+}
+
+static void	cleanup_pipeline(pid_t *pids, size_t count)
+{
+	size_t	i;
+
+	i = 0;
+	while (i < count)
+	{
+		if (pids[i] > 0)
+			kill(pids[i], SIGKILL);
+		i++;
+	}
+	free(pids);
 }
 
 void	execute_cmds(t_data *data)
@@ -48,24 +65,47 @@ void	execute_cmds(t_data *data)
 	size_t	i;
 
 	pids = malloc(get_cmds_count(data->command) * sizeof(pid_t));
-	// handle error
-	pipefd = malloc (2 * sizeof(int));
-	// handle error
+	if (!pids)
+	{
+		perror("minishell: malloc");
+		data->exit_status = 1;
+		exit_cleanup(data);
+		exit(data->exit_status);
+	}
+	pipefd = malloc(2 * sizeof(int));
+	if (!pipefd)
+	{
+		free(pids);
+		perror("minishell: malloc");
+		data->exit_status = 1;
+		exit_cleanup(data);
+		exit(data->exit_status);
+	}
 	current = data->command;
 	i = 0;
 	while (current)
 	{
-		if (current->next != NULL)
+		if (current->next != NULL && pipe(pipefd) == -1)
 		{
-			pipe(pipefd);
-			// handle error
+			perror("minishell: pipe");
+			data->exit_status = 1;
+			cleanup_pipeline(pids, i);
+			free(pipefd);
+			exit_cleanup(data);
+			exit(data->exit_status);
 		}
-
 		pids[i] = fork();
-		// handle error
+		if (pids[i] == -1)
+		{
+			perror("minishell: fork");
+			data->exit_status = 1;
+			cleanup_pipeline(pids, i);
+			free(pipefd);
+			exit_cleanup(data);
+			exit(data->exit_status);
+		}
 		if (pids[i] == 0)
 			execute_pipeline_child(current, data, pipefd, prev_pipefd, i == 0, current->next == NULL);
-
 		if (i > 0)
 			close(prev_pipefd);
 		if (current->next != NULL)
@@ -73,9 +113,10 @@ void	execute_cmds(t_data *data)
 			prev_pipefd = pipefd[0];
 			close(pipefd[1]);
 		}
-
 		current = current->next;
 		i++;
 	}
+	free(pipefd);
 	wait_for_children(pids, get_cmds_count(data->command), data);
+	free(pids);
 }
