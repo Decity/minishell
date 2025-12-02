@@ -6,7 +6,7 @@
 /*   By: dbakker <dbakker@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/30 15:08:30 by ebelle            #+#    #+#             */
-/*   Updated: 2025/11/30 11:50:39 by dbakker          ###   ########.fr       */
+/*   Updated: 2025/12/02 13:46:03 by dbakker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,6 +119,7 @@ void	builtin_echo(const char **messages);
 size_t	env_namelen(const char *name);
 size_t	env_valuelen(const char *str);
 char	*ft_getenv(const t_list *list, const char *name);
+char	*ft_getnenv(const t_list *list, const char *name, size_t num);
 void	builtin_env_print(const t_list *envp);
 
 void	minishell_exit(t_data *data);
@@ -180,5 +181,9 @@ void	remove_heredoc_files(t_cmd *cmd);
 // heredoc.c
 
 t_data	*heredoc(t_data *data);
+
+// EXPANSION
+
+
 
 #endif

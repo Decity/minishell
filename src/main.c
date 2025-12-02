@@ -6,12 +6,14 @@
 /*   By: dbakker <dbakker@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/03 15:32:47 by elie              #+#    #+#             */
-/*   Updated: 2025/11/29 20:14:03 by dbakker          ###   ########.fr       */
+/*   Updated: 2025/12/02 17:43:30 by dbakker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include <unistd.h>
+
+void	expansion(t_data *data);
 
 /**
  * @brief Execute one iteration of the shell main loop
@@ -29,7 +31,8 @@ void	run(t_data *data)
 		return ;
 	parsing(data);
 	heredoc(data);
-	apply_shell_expansions(data);
+	expansion(data);
+	// apply_shell_expansions(data);
 	set_redirections(data);
 
 	if (DEBUG)

@@ -3,14 +3,241 @@
 /*                                                        :::      ::::::::   */
 /*   shell_expansion.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: elie <elie@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: dbakker <dbakker@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/08 18:09:32 by elie              #+#    #+#             */
-/*   Updated: 2025/11/28 12:12:22 by elie             ###   ########.fr       */
+/*   Updated: 2025/12/02 18:36:29 by dbakker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+/**
+ * @brief Calculate the length of @p `arg` until it encounters a non-NAME
+ * @brief character.
+ *
+ * This function assumes that @p `arg` starts right after a `$`.
+ *
+ * @param[in] arg	String from the command line argument.
+ * @param[in] data	Data struct containing the most recent `exit_status`.
+ *
+ * @return The length of @p `arg`.
+ */
+size_t	expansion_varlen(const char *arg, const t_data *data)
+{
+	size_t	len;
+
+	len = 0;
+	if (arg[len] == '?')
+	{
+		return (ft_intlen(data->exit_status));
+	}
+	while (ft_isalnum(arg[len]) || arg[len] == '_')
+	{
+		len += 1;
+	}
+	return (len);
+}
+
+/**
+ * @brief Calculate the length of @p `arg` after expanding the first variable.
+ *
+ * @param[in] arg	String from the command line argument.
+ * @param[in] idx	Index of the first variable.
+ * @param[in] data	Data struct containing the linked list of environmental
+ * 					variables and most recent `exit_status`.
+ */
+size_t	expansion_new_strlen(const char *arg, size_t idx, const t_data *data)
+{
+	const size_t	arglen = ft_strlen(arg);
+	const size_t	varlen = expansion_varlen(arg + idx, data);
+	size_t			expandlen;
+	char			*envval;
+
+	envval = ft_getnenv(data->envp, arg + idx, varlen);
+	if (envval == NULL)
+	{
+		expandlen = 0;
+	}
+	else
+	{
+		expandlen = ft_strlen(envval);
+	}
+	return (arglen - varlen + expandlen);
+}
+
+/**
+ * @brief Expand @p `arg` by duplicating the value.
+ *
+ * This function assumes that @p `arg` starts right after a `$`.
+ *
+ * @param[in] arg	String from the command line argument.
+ * @param[in] data	Data struct containing the most recent `exit_status`.
+ *
+ * @return Pointer to the expanded value of @p `arg`, or `NULL` on failure.
+ *
+ * @warning Caller owns `free()`.
+ */
+char	*expand_variable_single(const char *arg, const t_data *data)
+{
+	size_t	varlen;
+	char	*envval;
+
+	if (*arg == '?')
+	{
+		return (ft_itoa(data->exit_status));
+	}
+	else
+	{
+		varlen = expansion_varlen(arg, data);
+		envval = ft_getnenv(data->envp, arg, varlen);
+		if (envval == NULL)
+		{
+			return (NULL);
+		}
+		return (ft_strdup(envval));
+	}
+}
+
+char	*expansion_copy_before_variable(char *dest, const char *src)
+{
+	const char	*envvar = ft_strchr(src, '$');
+	size_t		num;
+
+	if (envvar == NULL)
+	{
+		num = ft_strlen(src);
+	}
+	else
+	{
+		num = envvar - src;
+	}
+	ft_memcpy(dest, src, num);
+	if (envvar == NULL)
+	{
+		src = src + num;
+	}
+	else
+	{
+		src = envvar;
+	}
+	return ((char *)src);
+}
+
+char	*expansion_copy_variable(char *dest, const char *src)
+{
+	const size_t	destlen = ft_strlen(dest);
+	const size_t	srclen = ft_strlen(src);
+
+	ft_memcpy(dest + destlen, src, srclen);
+	return (dest);
+}
+
+char	*expansion_copy_after_variable(char *dest, const char *src, const char *envval)
+{
+	const char		*envvar = ft_strchr(src, '$') + ft_strlen(envval)+ 1;
+	const size_t	destlen = ft_strlen(dest);
+	const size_t	envvarlen = ft_strlen(envvar);
+
+	ft_memcpy(dest + destlen, src, envvarlen);
+	return (dest);
+}
+
+char	*expansion_copy(char *dest, const char *src, const char *envval)
+{
+	expansion_copy_before_variable(dest, src);
+	expansion_copy_variable(dest, envval);
+	expansion_copy_after_variable(dest, src, envval);
+	return (dest);
+}
+
+char	*expand_variable(char *arg, size_t idx, const t_data *data)
+{
+	const size_t	new_strlen = expansion_new_strlen(arg, idx, data);
+	size_t			varlen;
+	char			*strret;
+	char			*envval;
+
+	varlen = expansion_varlen(arg + idx, data);
+	envval = expand_variable_single(arg + idx, data);
+	if (envval == NULL)
+	{
+		return (NULL);
+	}
+	strret = ft_calloc(new_strlen, sizeof(char));
+	if (strret == NULL)
+	{
+		return (NULL);
+	}
+	expansion_copy(strret, arg, envval);
+	free(arg);
+	return (strret);
+}
+
+char	*expand_string(char *arg, t_data *data)
+{
+	size_t	i;
+	bool	quote_single;
+	bool	quote_double;
+
+	i = 0;
+	quote_single = false;
+	quote_double = false;
+	while (arg[i])
+	{
+		if (quote_single == false && arg[i] == '\"')
+		{
+			quote_double = !quote_double;
+		}
+		else if (quote_double == false && arg[i] == '\'')
+		{
+			quote_single = !quote_single;
+		}
+		if (quote_single == false && arg[i] == '$')
+		{
+			arg = expand_variable(arg, i + 1, data);
+			if (arg == NULL)
+			{
+				return (NULL);
+			}
+			continue ;
+		}
+		i += 1;
+	}
+	return (arg);
+}
+
+char	**expansion_quotes(char **args, t_data *data)
+{
+	size_t	i;
+
+	i = 0;
+	while (args[i])
+	{
+		if (expand_string(args[i], data) == NULL)
+		{
+			return (NULL);
+		}
+		i += 1;
+	}
+	return (args);
+}
+
+void	*expansion(t_data *data)
+{
+	t_cmd	*cmd;
+
+	cmd = data->command;
+	while (cmd)
+	{
+		if (expansion_quotes(cmd->args, data) == NULL)
+		{
+			return (NULL);
+		}
+		cmd = cmd->next;
+	}
+	return (data);
+}
 
 /**
  * @brief Performs the shell expansions by rewriting the argument in @p `data->command->arguments`

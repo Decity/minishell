@@ -6,7 +6,7 @@
 /*   By: dbakker <dbakker@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/13 22:47:22 by dbakker           #+#    #+#             */
-/*   Updated: 2025/12/01 09:52:25 by dbakker          ###   ########.fr       */
+/*   Updated: 2025/12/02 17:55:32 by dbakker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,6 +80,36 @@ char	*ft_getenv(const t_list *list, const char *name)
 			{
 				return (ft_strchr(list->content, '=') + 1);
 			}
+		}
+		list = list->next;
+	}
+	return (NULL);
+}
+
+/**
+ * @brief Compare the first @p `num` bytes of @p `name` in @p `list` and
+ * @brief return its `VALUE`.
+ *
+ * Use this function if @p `name` contains more than just the variable.
+ *
+ * @param[in] list	Linked list containing environmental variables.
+ * @param[in] name	`NAME` to find in linked list.
+ * @param[in] num	The amount of bytes to compare.
+ *
+ * @return Pointer to the `VALUE` of `NAME`, or `NULL` if not found.
+ */
+char	*ft_getnenv(const t_list *list, const char *name, size_t num)
+{
+	while (list)
+	{
+		if (env_namelen(list->content) != num)
+		{
+			list = list->next;
+			continue ;
+		}
+		if (ft_memcmp(list->content, name, num) == 0)
+		{
+			return (ft_strchr(list->content, '=') + 1);
 		}
 		list = list->next;
 	}
