@@ -6,7 +6,7 @@
 /*   By: dbakker <dbakker@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/17 14:27:44 by dbakker           #+#    #+#             */
-/*   Updated: 2025/12/01 09:48:07 by dbakker          ###   ########.fr       */
+/*   Updated: 2025/12/03 15:24:21 by dbakker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ void	builtin_echo(const char **messages)
 	}
 	while (messages[i])
 	{
-		if (messages[i + 1] == NULL)
+		if (messages[i + 1] == NULL || *messages[i] == '\0')
 			printf("%s", messages[i]);
 		else
 			printf("%s ", messages[i]);

@@ -6,7 +6,7 @@
 /*   By: dbakker <dbakker@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/08 18:09:32 by elie              #+#    #+#             */
-/*   Updated: 2025/12/02 18:36:29 by dbakker          ###   ########.fr       */
+/*   Updated: 2025/12/03 15:37:02 by dbakker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,18 +19,17 @@
  * This function assumes that @p `arg` starts right after a `$`.
  *
  * @param[in] arg	String from the command line argument.
- * @param[in] data	Data struct containing the most recent `exit_status`.
  *
  * @return The length of @p `arg`.
  */
-size_t	expansion_varlen(const char *arg, const t_data *data)
+size_t	expansion_varlen(const char *arg)
 {
 	size_t	len;
 
 	len = 0;
 	if (arg[len] == '?')
 	{
-		return (ft_intlen(data->exit_status));
+		return (1);
 	}
 	while (ft_isalnum(arg[len]) || arg[len] == '_')
 	{
@@ -50,12 +49,15 @@ size_t	expansion_varlen(const char *arg, const t_data *data)
 size_t	expansion_new_strlen(const char *arg, size_t idx, const t_data *data)
 {
 	const size_t	arglen = ft_strlen(arg);
-	const size_t	varlen = expansion_varlen(arg + idx, data);
+	const size_t	varlen = expansion_varlen(arg + idx);
+	const char		*envval = ft_getnenv(data->envp, arg + idx, varlen);
 	size_t			expandlen;
-	char			*envval;
 
-	envval = ft_getnenv(data->envp, arg + idx, varlen);
-	if (envval == NULL)
+	if (arg[idx] == '?')
+	{
+		expandlen = ft_intlen(data->exit_status);
+	}
+	else if (envval == NULL)
 	{
 		expandlen = 0;
 	}
@@ -78,7 +80,7 @@ size_t	expansion_new_strlen(const char *arg, size_t idx, const t_data *data)
  *
  * @warning Caller owns `free()`.
  */
-char	*expand_variable_single(const char *arg, const t_data *data)
+char	*expand_variable(const char *arg, const t_data *data)
 {
 	size_t	varlen;
 	char	*envval;
@@ -89,11 +91,11 @@ char	*expand_variable_single(const char *arg, const t_data *data)
 	}
 	else
 	{
-		varlen = expansion_varlen(arg, data);
+		varlen = expansion_varlen(arg);
 		envval = ft_getnenv(data->envp, arg, varlen);
 		if (envval == NULL)
 		{
-			return (NULL);
+			return (ft_strdup(""));
 		}
 		return (ft_strdup(envval));
 	}
@@ -133,13 +135,16 @@ char	*expansion_copy_variable(char *dest, const char *src)
 	return (dest);
 }
 
-char	*expansion_copy_after_variable(char *dest, const char *src, const char *envval)
+char	*expansion_copy_after_variable(char *dest, const char *src)
 {
-	const char		*envvar = ft_strchr(src, '$') + ft_strlen(envval)+ 1;
 	const size_t	destlen = ft_strlen(dest);
-	const size_t	envvarlen = ft_strlen(envvar);
+	char			*envvar;
+	size_t			envvarlen;
 
-	ft_memcpy(dest + destlen, src, envvarlen);
+	envvar = ft_strchr(src, '$') + 1;
+	envvar += expansion_varlen(envvar);
+	envvarlen = ft_strlen(envvar);
+	ft_memcpy(dest + destlen, envvar, envvarlen);
 	return (dest);
 }
 
@@ -147,19 +152,17 @@ char	*expansion_copy(char *dest, const char *src, const char *envval)
 {
 	expansion_copy_before_variable(dest, src);
 	expansion_copy_variable(dest, envval);
-	expansion_copy_after_variable(dest, src, envval);
+	expansion_copy_after_variable(dest, src);
 	return (dest);
 }
 
-char	*expand_variable(char *arg, size_t idx, const t_data *data)
+char	*expand_string(char *arg, size_t idx, const t_data *data)
 {
 	const size_t	new_strlen = expansion_new_strlen(arg, idx, data);
-	size_t			varlen;
 	char			*strret;
 	char			*envval;
 
-	varlen = expansion_varlen(arg + idx, data);
-	envval = expand_variable_single(arg + idx, data);
+	envval = expand_variable(arg + idx, data);
 	if (envval == NULL)
 	{
 		return (NULL);
@@ -174,7 +177,7 @@ char	*expand_variable(char *arg, size_t idx, const t_data *data)
 	return (strret);
 }
 
-char	*expand_string(char *arg, t_data *data)
+char	*expansion_string(char *arg, t_data *data)
 {
 	size_t	i;
 	bool	quote_single;
@@ -195,7 +198,7 @@ char	*expand_string(char *arg, t_data *data)
 		}
 		if (quote_single == false && arg[i] == '$')
 		{
-			arg = expand_variable(arg, i + 1, data);
+			arg = expand_string(arg, i + 1, data);
 			if (arg == NULL)
 			{
 				return (NULL);
@@ -214,7 +217,8 @@ char	**expansion_quotes(char **args, t_data *data)
 	i = 0;
 	while (args[i])
 	{
-		if (expand_string(args[i], data) == NULL)
+		args[i] = expansion_string(args[i], data);
+		if (args[i] == NULL)
 		{
 			return (NULL);
 		}
