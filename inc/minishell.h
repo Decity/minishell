@@ -6,7 +6,7 @@
 /*   By: dbakker <dbakker@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/30 15:08:30 by ebelle            #+#    #+#             */
-/*   Updated: 2025/12/02 13:46:03 by dbakker          ###   ########.fr       */
+/*   Updated: 2025/12/03 19:45:44 by dbakker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,16 +66,6 @@ size_t	get_normalized_str_len(const char *str);
 bool	validate_token_str(char *str);
 bool	has_redirection_target(char *str);
 bool	validate_quotation(char *str);
-
-
-// Shell expansion utilities
-char	*get_parameter_name(const char *str);
-char	*get_parameter_var(const char *str);
-
-int 	expand_single_variable(char **str, size_t index, t_data *data);
-int8_t	expand_env_variables(char **str, t_data *data);
-
-int8_t	remove_quotation(char **str);
 
 /// EXECUTION
 
@@ -184,6 +174,17 @@ t_data	*heredoc(t_data *data);
 
 // EXPANSION
 
+// expansion_copy.c
 
+char	*expansion_copy(char *dest, const char *src, const char *envval);
+// expansion_remove_quotes.c
 
+char	*expansion_remove_quotation(char *str);
+// expansion_utils.c
+
+size_t	expansion_varlen(const char *arg);
+size_t	expansion_new_strlen(const char *arg, size_t idx, const t_data *data);
+// expansion.c
+
+t_data	*expansion(t_data *data);
 #endif
