@@ -21,7 +21,7 @@ size_t	ft_count_occurrences(const char *base_str, const char *pattern)
 	size_t			count;
 	size_t			i;
 	const size_t	len_pattern = ft_strlen(pattern);
-	const size_t	len_base = ft_strlen(pattern);
+	const size_t	len_base = ft_strlen(base_str);
 
 	count = 0;
 	i = 0;

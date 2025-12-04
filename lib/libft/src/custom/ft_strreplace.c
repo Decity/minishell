@@ -22,6 +22,7 @@ static void	replace(char *result, const char *base_str, const char *pattern, con
 	size_t			k;
 	const size_t	len_base = ft_strlen(base_str);
 	const size_t	len_pattern = ft_strlen(pattern);
+	const size_t	len_replacement = ft_strlen(replacement);
 
 	i = 0;
 	j = 0;
@@ -30,13 +31,14 @@ static void	replace(char *result, const char *base_str, const char *pattern, con
 		if (i <= len_base - len_pattern && ft_strncmp(&base_str[i], pattern, len_pattern) == 0)
 		{
 			k = 0;
-			while (k < ft_strlen(replacement))
+			while (k < len_replacement)
 				result[j++] = replacement[k++];
 			i += len_pattern;
 		}
 		else
 			result[j++] = base_str[i++];
 	}
+	result[j] = '\0';
 }
 
 /**
@@ -53,6 +55,7 @@ char	*ft_strreplace(const char *base_str, const char *pattern, const char *repla
 	const size_t	len_replacement = ft_strlen(replacement);
 	char			*result;
 	size_t			len_result;
+	size_t			occurrences;
 
 	if (!base_str || !pattern || !replacement)
 		return (NULL);
@@ -60,7 +63,11 @@ char	*ft_strreplace(const char *base_str, const char *pattern, const char *repla
 	if (len_pattern == 0)
 		return (ft_strdup(base_str));
 
-	len_result = len_base + ft_count_occurrences(base_str, pattern) * (len_replacement - len_pattern);
+	occurrences = ft_count_occurrences(base_str, pattern);
+	if (len_replacement >= len_pattern)
+		len_result = len_base + occurrences * (len_replacement - len_pattern);
+	else
+		len_result = len_base - occurrences * (len_pattern - len_replacement);
 
 	result = ft_calloc(len_result + 1, sizeof(char));
 	if (!result)
