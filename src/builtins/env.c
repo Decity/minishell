@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dbakker <dbakker@student.42.fr>            +#+  +:+       +#+        */
+/*   By: elie <elie@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/13 22:47:22 by dbakker           #+#    #+#             */
-/*   Updated: 2025/12/01 09:52:25 by dbakker          ###   ########.fr       */
+/*   Updated: 2025/12/01 14:34:01 by elie             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,7 @@ char	*ft_getenv(const t_list *list, const char *name)
 /**
  * @brief Print all environment variables with a value to `stdout`.
  */
-void	builtin_env_print(const t_list *envp)
+int	builtin_env_print(const t_list *envp)
 {
 	while (envp)
 	{
@@ -99,4 +99,5 @@ void	builtin_env_print(const t_list *envp)
 		}
 		envp = envp->next;
 	}
+	return (0);
 }

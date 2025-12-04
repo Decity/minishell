@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   unset.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dbakker <dbakker@student.42.fr>            +#+  +:+       +#+        */
+/*   By: elie <elie@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/14 16:59:49 by dbakker           #+#    #+#             */
-/*   Updated: 2025/12/01 09:51:23 by dbakker          ###   ########.fr       */
+/*   Updated: 2025/12/01 14:41:35 by elie             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,14 +38,14 @@ static bool	unset_head(t_list **head, const char *name)
  * @param[out]	head Head of the linked list.
  * @param[in]	name Environmental variable to delete.
  */
-void	builtin_unset(t_list **head, const char *name)
+int	builtin_unset(t_list **head, const char *name)
 {
 	t_list	*node;
 	t_list	*last;
 
 	if (name == NULL || ft_strchr(name, '=') || unset_head(head, name) == true)
 	{
-		return ;
+		return (0);
 	}
 	node = *head;
 	while (node)
@@ -58,8 +58,9 @@ void	builtin_unset(t_list **head, const char *name)
 			{
 				last->next = node->next;
 				ft_listdelone(node, free);
-				return ;
+				return (0);
 			}
 		}
 	}
+	return (0);
 }

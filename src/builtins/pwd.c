@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pwd.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dbakker <dbakker@student.42.fr>            +#+  +:+       +#+        */
+/*   By: elie <elie@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/17 10:41:14 by dbakker           #+#    #+#             */
-/*   Updated: 2025/12/01 09:51:43 by dbakker          ###   ########.fr       */
+/*   Updated: 2025/12/01 14:35:08 by elie             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,8 @@ void	*builtin_update_pwd(t_pwd *directory)
 /**
  * @brief Print the current directory to `stdout`.
  */
-void	pwd_print(t_pwd directory)
+int	pwd_print(t_pwd directory)
 {
 	printf("%s\n", directory.pwd);
+	return (0);
 }

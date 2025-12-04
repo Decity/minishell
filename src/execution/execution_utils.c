@@ -6,7 +6,7 @@
 /*   By: elie <elie@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/28 13:56:00 by elie              #+#    #+#             */
-/*   Updated: 2025/11/10 15:00:25 by elie             ###   ########.fr       */
+/*   Updated: 2025/12/01 15:08:50 by elie             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,14 +30,18 @@ char	*get_executable_path(const char *exec, const t_list *envp)
 	size_t	i;
 
 	paths = ft_split(ft_getenv(envp, "PATH"), ':');
-	// TODO: Handle malloc fail.
+	if (paths == NULL)
+		return (perror("minishell: malloc"), NULL);
 	i = 0;
 	while (paths[i])
 	{
 		slashed_path = ft_strjoin(paths[i], "/");
+		if (slashed_path == NULL)
+			return (perror("minishell: malloc"), NULL);
 		abs_path = ft_strjoin(slashed_path, exec);
-		// TODO: handle malloc fail.
 		free(slashed_path);
+		if (abs_path == NULL)
+			return (perror("minishell: malloc"), NULL);
 		if (access(abs_path, X_OK) == 0)
 		{
 			return (abs_path);
@@ -117,20 +121,30 @@ void	setup_child_redirections(int *pipefd, int prev_pipefd, bool is_first, bool 
  * Redirects stdin/stdout to specified file descriptors if set.
  *
  * @param[in] cmd Command with redirection info
+ * @return SUCCESS on success, FAILURE on dup2 failure
  */
-void	apply_redirections(t_cmd *cmd)
+int	apply_redirections(t_cmd *cmd)
 {
 	// Input redirect overrides pipe input
 	if (cmd->redirect.input_fd != STDIN_FILENO && cmd->redirect.input_fd != -1)
 	{
-		dup2(cmd->redirect.input_fd, STDIN_FILENO);
+		if (dup2(cmd->redirect.input_fd, STDIN_FILENO) == -1)
+		{
+			perror("minishell: dup2");
+			return (FAILURE);
+		}
 		close(cmd->redirect.input_fd);
 	}
 
 	// Output redirect overrides pipe output
 	if (cmd->redirect.output_fd != STDOUT_FILENO && cmd->redirect.output_fd != -1)
 	{
-		dup2(cmd->redirect.output_fd, STDOUT_FILENO);
+		if (dup2(cmd->redirect.output_fd, STDOUT_FILENO) == -1)
+		{
+			perror("minishell: dup2");
+			return (FAILURE);
+		}
 		close(cmd->redirect.output_fd);
 	}
+	return (SUCCESS);
 }
