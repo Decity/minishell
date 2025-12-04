@@ -6,7 +6,7 @@
 /*   By: elie <elie@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/08 18:09:32 by elie              #+#    #+#             */
-/*   Updated: 2025/11/28 12:12:22 by elie             ###   ########.fr       */
+/*   Updated: 2025/12/02 16:37:01 by elie             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,38 +20,45 @@
  */
 void	apply_shell_expansions(t_data *data)
 {
+	t_cmd	*current;
 	char	**arguments;
 	size_t	i;
 
 	if (DEBUG)
 		printf("=== apply_shell_expansions ===\n\n");
 
-	i = 0;
-	arguments = data->command->args;
-	while (arguments[i])
+	current = data->command;
+	while (current)
 	{
-		if (expand_env_variables(&arguments[i], data) == FAILURE)
+		i = 0;
+		arguments = current->args;
+		while (arguments[i])
 		{
-			exit_cleanup(data);
-			exit(data->exit_status);
+			if (expand_env_variables(&arguments[i], data) == FAILURE)
+			{
+				exit_cleanup(data);
+				exit(data->exit_status);
+			}
+			if (remove_quotation(&arguments[i]) == FAILURE)
+			{
+				exit_cleanup(data);
+				exit(data->exit_status);
+			}
+			i++;
 		}
-		if (remove_quotation(&arguments[i]) == FAILURE)
+		if (DEBUG)
 		{
-			exit_cleanup(data);
-			exit(data->exit_status);
+			printf("== After expansions for command: \n");
+			printf("= args: %li\n", i);
+			i = 0;
+			while (arguments[i])
+				printf("= [%li] %s\n", i, arguments[i]), i++;
 		}
-		i++;
+		current = current->next;
 	}
 
 	if (DEBUG)
-	{
-		printf("== After expansions: \n");
-		printf("= args: %li\n", i);
-		i = 0;
-		while (arguments[i])
-			printf("= [%li] %s\n", i, arguments[i]), i++;
 		printf("=== END SHELL_EXPANSIONS ===\n\n");
-	}
 }
 
 /**
