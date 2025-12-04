@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: elie <elie@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: dbakker <dbakker@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/30 15:08:30 by ebelle            #+#    #+#             */
-/*   Updated: 2025/12/01 14:45:07 by elie             ###   ########.fr       */
+/*   Updated: 2025/12/04 11:53:09 by dbakker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,8 +37,6 @@ void	init(t_data *data);
 uint8_t	set_input(t_data *data);
 
 // Shell operations
-void	set_commands(t_data *data);
-void	apply_shell_expansions(t_data *data);
 void	set_redirections(t_data *data);
 
 // Parsing
@@ -66,16 +64,6 @@ size_t	get_normalized_str_len(const char *str);
 bool	validate_token_str(char *str);
 bool	has_redirection_target(char *str);
 bool	validate_quotation(char *str);
-
-
-// Shell expansion utilities
-char	*get_parameter_name(const char *str);
-char	*get_parameter_var(const char *str);
-
-int 	expand_single_variable(char **str, size_t index, t_data *data);
-int8_t	expand_env_variables(char **str, t_data *data);
-
-int8_t	remove_quotation(char **str);
 
 /// EXECUTION
 
@@ -116,6 +104,7 @@ int		builtin_echo(const char **messages);
 size_t	env_namelen(const char *name);
 size_t	env_valuelen(const char *str);
 char	*ft_getenv(const t_list *list, const char *name);
+char	*ft_getnenv(const t_list *list, const char *name, size_t num);
 int		builtin_env_print(const t_list *envp);
 
 int		builtin_exit(t_data *data, char **args);
@@ -179,4 +168,19 @@ void	remove_heredoc_files(t_cmd *cmd);
 
 t_data	*heredoc(t_data *data);
 
+// EXPANSION
+
+// expansion_copy.c
+
+char	*expansion_copy(char *dest, const char *src, const char *envval);
+// expansion_remove_quotes.c
+
+char	*expansion_remove_quotation(char *str);
+// expansion_utils.c
+
+size_t	expansion_varlen(const char *arg);
+size_t	expansion_new_strlen(const char *arg, size_t idx, const t_data *data);
+// expansion.c
+
+t_data	*expansion(t_data *data);
 #endif

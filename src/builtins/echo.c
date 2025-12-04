@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: elie <elie@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: dbakker <dbakker@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/17 14:27:44 by dbakker           #+#    #+#             */
-/*   Updated: 2025/12/01 14:33:53 by elie             ###   ########.fr       */
+/*   Updated: 2025/12/04 11:48:52 by dbakker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ int	builtin_echo(const char **messages)
 	}
 	while (messages[i])
 	{
-		if (messages[i + 1] == NULL)
+		if (messages[i + 1] == NULL || *messages[i] == '\0')
 			printf("%s", messages[i]);
 		else
 			printf("%s ", messages[i]);

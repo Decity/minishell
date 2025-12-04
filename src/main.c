@@ -3,15 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: elie <elie@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: dbakker <dbakker@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/03 15:32:47 by elie              #+#    #+#             */
-/*   Updated: 2025/12/02 14:55:28 by elie             ###   ########.fr       */
+/*   Updated: 2025/12/04 11:52:06 by dbakker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-#include <unistd.h>
 
 /**
  * @brief Execute one iteration of the shell main loop
@@ -29,7 +28,7 @@ static void	run(t_data *data)
 		return ;
 	parsing(data);
 	heredoc(data);
-	apply_shell_expansions(data);
+	expansion(data);
 	set_redirections(data);
 
 	if (DEBUG)
@@ -62,7 +61,7 @@ static void	run_command(t_data *data, const char *command)
 	}
 	parsing(data);
 	heredoc(data);
-	apply_shell_expansions(data);
+	expansion(data);
 	set_redirections(data);
 	if (DEBUG)
 		debug(data);
