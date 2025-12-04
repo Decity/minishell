@@ -6,7 +6,7 @@
 /*   By: dbakker <dbakker@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/03 19:38:22 by dbakker           #+#    #+#             */
-/*   Updated: 2025/12/03 19:58:51 by dbakker          ###   ########.fr       */
+/*   Updated: 2025/12/04 12:00:06 by dbakker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ static void	expansion_copy_before_variable(char *dest, const char *src)
 /**
  * @brief Copy the expanded variable of @p `src` to @p `dest`.
  */
-static void expansion_copy_variable(char *dest, const char *src)
+static void	expansion_copy_variable(char *dest, const char *src)
 {
 	const size_t	destlen = ft_strlen(dest);
 	const size_t	srclen = ft_strlen(src);

@@ -6,11 +6,47 @@
 /*   By: dbakker <dbakker@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/08 18:11:34 by elie              #+#    #+#             */
-/*   Updated: 2025/12/03 20:03:10 by dbakker          ###   ########.fr       */
+/*   Updated: 2025/12/04 12:13:46 by dbakker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+/**
+ * @brief Copy from @p `src` to @p `dest` with outer quotes removed.
+ *
+ * @param[out]	dest	String to copy to.
+ * @param[in]	src		String to copy from.
+ *
+ * @return Pointer to @p `dest`.
+ */
+static char	*expansion_copy_woquote(char *dest, char *src)
+{
+	size_t	i;
+	size_t	j;
+	char	quote;
+
+	i = 0;
+	j = 0;
+	quote = 0;
+	while (src[i])
+	{
+		if (quote == 0 && (src[i] == '\'' || src[i] == '\"'))
+		{
+			quote = src[i];
+			i++;
+			continue ;
+		}
+		else if (quote != 0 && src[i] == quote)
+		{
+			quote = 0;
+			i++;
+			continue ;
+		}
+		dest[j++] = src[i++];
+	}
+	return (dest);
+}
 
 /**
  * @brief Create a new string with the most outer quotes removed.
@@ -24,9 +60,6 @@
 char	*expansion_remove_quotation(char *str)
 {
 	char	*strret;
-	size_t	i;
-	size_t	j;
-	char	quote;
 
 	if (str == NULL)
 	{
@@ -37,25 +70,6 @@ char	*expansion_remove_quotation(char *str)
 	{
 		return (NULL);
 	}
-	i = 0;
-	j = 0;
-	quote = 0;
-	while (str[i])
-	{
-		if (quote == 0 && (str[i] == '\'' || str[i] == '\"'))
-		{
-			quote = str[i];
-			i++;
-			continue;
-		}
-		else if (quote != 0 && str[i] == quote)
-		{
-			quote = 0;
-			i++;
-			continue;
-		}
-		strret[j++] = str[i++];
-	}
-	free(str);
-	return (strret);
+	expansion_copy_woquote(strret, str);
+	return (free(str), strret);
 }

@@ -6,7 +6,7 @@
 /*   By: dbakker <dbakker@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/08 18:09:32 by elie              #+#    #+#             */
-/*   Updated: 2025/12/03 20:49:51 by dbakker          ###   ########.fr       */
+/*   Updated: 2025/12/04 12:08:21 by dbakker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -131,7 +131,7 @@ char	*expand_variables(char *arg, t_data *data)
  *
  * @warning Caller owns `free()`.
  */
-char	**expand_strings(char **args, t_data *data)
+char	**expand_arguments(char **args, t_data *data)
 {
 	size_t	i;
 
@@ -167,7 +167,7 @@ t_data	*expansion(t_data *data)
 	cmd = data->command;
 	while (cmd)
 	{
-		cmd->args = expand_strings(cmd->args, data);
+		cmd->args = expand_arguments(cmd->args, data);
 		if (cmd->args == NULL)
 		{
 			return (NULL);
