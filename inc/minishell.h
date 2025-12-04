@@ -6,7 +6,7 @@
 /*   By: dbakker <dbakker@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/30 15:08:30 by ebelle            #+#    #+#             */
-/*   Updated: 2025/12/04 11:48:30 by dbakker          ###   ########.fr       */
+/*   Updated: 2025/12/04 11:53:09 by dbakker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,8 +37,6 @@ void	init(t_data *data);
 uint8_t	set_input(t_data *data);
 
 // Shell operations
-void	set_commands(t_data *data);
-void	apply_shell_expansions(t_data *data);
 void	set_redirections(t_data *data);
 
 // Parsing
