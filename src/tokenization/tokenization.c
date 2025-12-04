@@ -30,6 +30,7 @@ size_t	set_tokens(t_data *data)
 	if (validate_quotation(data->input) == FAILURE)
 	{
 		perror("minishell: failed to validate quotes.\n");
+		data->exit_status = 2;
 		return (FAILURE);
 	}
 
@@ -37,6 +38,7 @@ size_t	set_tokens(t_data *data)
 	if (validate_token_str(data->input) == FAILURE)
 	{
 		printf("minishell: failed to valdiate syntax\n");
+		data->exit_status = 2;
 		return (FAILURE);
 	}
 

@@ -6,11 +6,14 @@
 /*   By: elie <elie@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/02 12:02:01 by ebelle            #+#    #+#             */
-/*   Updated: 2025/11/10 15:41:04 by elie             ###   ########.fr       */
+/*   Updated: 2025/12/02 13:18:39 by elie             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+#include <errno.h>
+
+static void	execute_binary(t_cmd *cmd, t_data *data);
 
 /**
  * @brief Execute parsed command(s)
@@ -52,20 +55,36 @@ void	execute_single_cmd(t_cmd *cmd, t_data *data)
 	int		status;
 
 	pid = fork();
-	// handle error
+	if (pid == -1)
+	{
+		perror("minishell: fork");
+		data->exit_status = 1;
+		exit_cleanup(data);
+		exit(data->exit_status);
+	}
 	if (pid == 0)
 	{
 		restore_signals_default();
-		apply_redirections(cmd);
+		if (apply_redirections(cmd) == FAILURE)
+		{
+			data->exit_status = 1;
+			exit(data->exit_status);
+		}
 		if (is_builtin(cmd->args[0]))
-			execute_builtin(cmd, data);
+		{
+			data->exit_status = execute_builtin(cmd, data);
+			exit(data->exit_status);
+		}
 		else
-			execute_binary(cmd, data->envp);
-		exit(0);
+			execute_binary(cmd, data);
+		data->exit_status = 1;
+		exit(data->exit_status);
 	}
 	waitpid(pid, &status, 0);
 	if (WIFEXITED(status))
 		data->exit_status = WEXITSTATUS(status);
+	else if (WIFSIGNALED(status))
+		data->exit_status = 128 + WTERMSIG(status);
 }
 
 /**
@@ -73,19 +92,36 @@ void	execute_single_cmd(t_cmd *cmd, t_data *data)
  *
  * Determines executable path (absolute, relative, or PATH search),
  * converts environment list to array, and calls execve.
+ * Exits with appropriate error codes if execution fails.
  *
  * @param[in] cmd Command to execute
- * @param[in] envp Environment variables list
+ * @param[in,out] data Shell data structure
  */
-void	execute_binary(t_cmd *cmd, t_list *envp)
+static void	execute_binary(t_cmd *cmd, t_data *data)
 {
 	char	*path;
 
 	if (cmd->args[0][0] == '/' || ft_strncmp(cmd->args[0], "./", 2) == 0 || ft_strncmp(cmd->args[0], "../", 3) == 0)
 		path = cmd->args[0];
 	else
-		path = get_executable_path(cmd->args[0], envp);
-	// handle error
-	execve(path, cmd->args, llist_to_array(envp));
-	exit(1);
+	{
+		path = get_executable_path(cmd->args[0], data->envp);
+		if (path == NULL)
+		{
+			ft_putstr_fd("minishell: ", STDERR_FILENO);
+			ft_putstr_fd(cmd->args[0], STDERR_FILENO);
+			ft_putstr_fd(": command not found\n", STDERR_FILENO);
+			data->exit_status = 127;
+			exit(data->exit_status);
+		}
+	}
+	execve(path, cmd->args, llist_to_array(data->envp));
+	perror("minishell");
+	if (errno == ENOENT)
+		data->exit_status = 127;
+	else if (errno == EACCES)
+		data->exit_status = 126;
+	else
+		data->exit_status = 1;
+	exit(data->exit_status);
 }

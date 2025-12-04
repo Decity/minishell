@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution_builtins.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dbakker <dbakker@student.42.fr>            +#+  +:+       +#+        */
+/*   By: elie <elie@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/05 15:22:00 by elie              #+#    #+#             */
-/*   Updated: 2025/11/29 20:48:48 by dbakker          ###   ########.fr       */
+/*   Updated: 2025/12/02 14:52:08 by elie             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,28 +47,34 @@ bool	is_builtin(const char *cmd)
  *
  * @param[in] cmd Command to execute
  * @param[in,out] data Shell data structure
+ * @return Exit code from the builtin command
  */
-void	execute_builtin(t_cmd *cmd, t_data *data)
+int	execute_builtin(t_cmd *cmd, t_data *data)
 {
 	if (ft_strcmp(cmd->args[0], "echo") == 0)
-		builtin_echo((const char **)cmd->args + 1);
+		return (builtin_echo((const char **)cmd->args + 1));
 	if (ft_strcmp(cmd->args[0], "cd") == 0)
-		builtin_cd(data->envp, &data->directory, cmd->args[1]);
+		return (builtin_cd(data->envp, &data->directory, cmd->args[1]));
 	if (ft_strcmp(cmd->args[0], "pwd") == 0)
-		pwd_print(data->directory);
+		return (pwd_print(data->directory));
 	if (ft_strcmp(cmd->args[0], "export") == 0)
 	{
 		if (cmd->args[1])
-			builtin_export(data->envp, cmd->args[1]);
+		{
+			if (builtin_export(data->envp, cmd->args[1]) == NULL)
+				return (1);
+			return (0);
+		}
 		else
-			export_print(data->envp);
+			return (export_print(data->envp));
 	}
 	if (ft_strcmp(cmd->args[0], "unset") == 0)
-		builtin_unset(&data->envp, cmd->args[1]);
+		return (builtin_unset(&data->envp, cmd->args[1]));
 	if (ft_strcmp(cmd->args[0], "env") == 0)
-		builtin_env_print(data->envp);
+		return (builtin_env_print(data->envp));
 	if (ft_strcmp(cmd->args[0], "exit") == 0)
 		minishell_exit(data);
+	return (0);
 }
 
 /**
@@ -83,11 +89,31 @@ void	execute_single_builtin(t_cmd *cmd, t_data *data)
 {
 	int		saved_stdin;
 	int		saved_stdout;
+	int		exit_code;
 
 	saved_stdin = dup(STDIN_FILENO);
 	saved_stdout = dup(STDOUT_FILENO);
-	apply_redirections(cmd);
-	execute_builtin(cmd, data);
+	if (saved_stdin == -1 || saved_stdout == -1)
+	{
+		perror("minishell: dup");
+		if (saved_stdin != -1)
+			close(saved_stdin);
+		if (saved_stdout != -1)
+			close(saved_stdout);
+		data->exit_status = 1;
+		exit_cleanup(data);
+		exit(data->exit_status);
+	}
+	if (apply_redirections(cmd) == FAILURE)
+	{
+		close(saved_stdin);
+		close(saved_stdout);
+		data->exit_status = 1;
+		exit_cleanup(data);
+		exit(data->exit_status);
+	}
+	exit_code = execute_builtin(cmd, data);
+	data->exit_status = exit_code;
 	dup2(saved_stdin, STDIN_FILENO);
 	dup2(saved_stdout, STDOUT_FILENO);
 	close(saved_stdin);

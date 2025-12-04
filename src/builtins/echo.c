@@ -6,7 +6,7 @@
 /*   By: dbakker <dbakker@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/17 14:27:44 by dbakker           #+#    #+#             */
-/*   Updated: 2025/12/03 15:24:21 by dbakker          ###   ########.fr       */
+/*   Updated: 2025/12/04 11:48:52 by dbakker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ static bool	builtin_echo_option_n(const char *message)
  *
  * @param[in] messages Messages to print.
  */
-void	builtin_echo(const char **messages)
+int	builtin_echo(const char **messages)
 {
 	size_t	i;
 	bool	n_option;
@@ -71,4 +71,5 @@ void	builtin_echo(const char **messages)
 	}
 	if (n_option == false)
 		printf("\n");
+	return (0);
 }

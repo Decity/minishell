@@ -6,7 +6,7 @@
 /*   By: dbakker <dbakker@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/13 22:47:22 by dbakker           #+#    #+#             */
-/*   Updated: 2025/12/02 17:55:32 by dbakker          ###   ########.fr       */
+/*   Updated: 2025/12/04 11:49:01 by dbakker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,7 +119,7 @@ char	*ft_getnenv(const t_list *list, const char *name, size_t num)
 /**
  * @brief Print all environment variables with a value to `stdout`.
  */
-void	builtin_env_print(const t_list *envp)
+int	builtin_env_print(const t_list *envp)
 {
 	while (envp)
 	{
@@ -129,4 +129,5 @@ void	builtin_env_print(const t_list *envp)
 		}
 		envp = envp->next;
 	}
+	return (0);
 }
