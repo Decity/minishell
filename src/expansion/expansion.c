@@ -6,7 +6,7 @@
 /*   By: dbakker <dbakker@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/08 18:09:32 by elie              #+#    #+#             */
-/*   Updated: 2025/12/04 12:08:21 by dbakker          ###   ########.fr       */
+/*   Updated: 2025/12/04 14:04:31 by dbakker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,7 @@ char	*expand_string(char *arg, size_t idx, const t_data *data)
 		return (NULL);
 	}
 	expansion_copy(strret, arg, envval);
+	free(envval);
 	free(arg);
 	return (strret);
 }
