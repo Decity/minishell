@@ -6,7 +6,7 @@
 /*   By: dbakker <dbakker@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/25 19:33:35 by dbakker           #+#    #+#             */
-/*   Updated: 2025/11/29 19:56:17 by dbakker          ###   ########.fr       */
+/*   Updated: 2025/12/04 17:07:45 by dbakker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ t_cmd	*cmdnew(const char **args, size_t num)
 {
 	t_cmd	*cmd;
 
-	if (args == NULL || *args == NULL)
+	if (args == NULL)
 	{
 		return (NULL);
 	}
