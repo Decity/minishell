@@ -6,7 +6,7 @@
 /*   By: dbakker <dbakker@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/16 14:30:14 by dbakker           #+#    #+#             */
-/*   Updated: 2025/12/05 11:02:49 by dbakker          ###   ########.fr       */
+/*   Updated: 2025/12/05 14:04:08 by dbakker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ t_list	*array_to_llist(const char **array)
 		str = ft_strdup(array[i]);
 		if (str == NULL)
 		{
-			return (NULL);
+			return (ft_listclear(&list, free), NULL);
 		}
 		node = ft_listnew(str);
 		if (node == NULL)

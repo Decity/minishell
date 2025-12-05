@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: elie <elie@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: dbakker <dbakker@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/05 14:09:14 by elie              #+#    #+#             */
-/*   Updated: 2025/11/25 10:10:12 by elie             ###   ########.fr       */
+/*   Updated: 2025/12/05 11:19:38 by dbakker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,12 @@ void	init(t_data *data)
 	data->envp = array_to_llist(environ);
 	data->directory.pwd = getcwd(NULL, 0);
 	data->is_interactive = isatty(STDIN_FILENO);
+	if (data->envp == NULL || data->directory.pwd == NULL)
+	{
+		perror("minishell: malloc");
+		exit_cleanup(data);
+		exit(EXIT_FAILURE);
+	}
 	if (data->is_interactive)
 		setup_signals_interactive();
 }
