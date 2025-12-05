@@ -6,7 +6,7 @@
 /*   By: dbakker <dbakker@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/30 15:08:30 by ebelle            #+#    #+#             */
-/*   Updated: 2025/12/05 10:58:37 by dbakker          ###   ########.fr       */
+/*   Updated: 2025/12/05 23:29:11 by dbakker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,6 +126,7 @@ t_cmd	*cmdnew(const char **args, size_t num);
 void	cmdadd_back(t_cmd **head, t_cmd *new);
 void	cmddelone(t_cmd *cmd);
 void	cmdclear(t_cmd **cmd);
+void	redirclear(t_redir *redir);
 // parsing_redirection_in.c
 
 bool	is_redir_heredoc(const char *arg);
