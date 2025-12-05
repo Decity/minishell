@@ -6,7 +6,7 @@
 /*   By: dbakker <dbakker@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/03 15:32:47 by elie              #+#    #+#             */
-/*   Updated: 2025/12/04 11:52:06 by dbakker          ###   ########.fr       */
+/*   Updated: 2025/12/05 22:48:36 by dbakker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,12 @@ static void	run(t_data *data)
 		return ;
 	if (set_tokens(data) == FAILURE)
 		return ;
-	parsing(data);
+	if (parsing(data) == NULL)
+	{
+		perror("minishell: malloc");
+		exit_cleanup(data);
+		exit(EXIT_FAILURE);
+	}
 	heredoc(data);
 	expansion(data);
 	set_redirections(data);
