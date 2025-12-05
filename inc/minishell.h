@@ -6,7 +6,7 @@
 /*   By: dbakker <dbakker@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/30 15:08:30 by ebelle            #+#    #+#             */
-/*   Updated: 2025/12/04 11:53:09 by dbakker          ###   ########.fr       */
+/*   Updated: 2025/12/05 10:58:37 by dbakker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,9 @@
 # define _POSIX_C_SOURCE 200809L
 
 // headers
-# include "../lib/libft/inc/libft.h"
-# include "../lib/libft/inc/ft_printf.h"
-# include "../lib/libft/inc/get_next_line.h"
+# include "../libft/inc/libft.h"
+# include "../libft/inc/ft_printf.h"
+# include "../libft/inc/get_next_line.h"
 # include "structs.h"
 # include "definitions.h"
 
