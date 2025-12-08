@@ -6,7 +6,7 @@
 /*   By: dbakker <dbakker@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/05 14:09:14 by elie              #+#    #+#             */
-/*   Updated: 2025/12/05 11:19:38 by dbakker          ###   ########.fr       */
+/*   Updated: 2025/12/08 10:55:05 by dbakker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,11 +64,7 @@ uint8_t	set_input(t_data *data)
 			data->input[len - 1] = '\0';
 	}
 	if (!data->input)
-	{
-		exit_cleanup(data);
-		exit(data->exit_status);
-	}
-
+		exit_cleanup(data, data->exit_status);
 	if (!data->input[0] || ft_strlen(data->input) == 0)
 	{
 		free(data->input);

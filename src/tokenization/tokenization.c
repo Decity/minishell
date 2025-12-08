@@ -6,7 +6,7 @@
 /*   By: elie <elie@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/03 15:20:17 by elie              #+#    #+#             */
-/*   Updated: 2025/11/25 10:48:18 by elie             ###   ########.fr       */
+/*   Updated: 2025/12/08 10:03:27 by elie             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,10 +47,7 @@ size_t	set_tokens(t_data *data)
 		printf("== Normalizing str [%s]\n", data->input);
 	data->input = normalize_whitespace(data->input);
 	if (!data->input)
-	{
-		exit_cleanup(data);
-		exit(data->exit_status);
-	}
+		exit_cleanup(data, data->exit_status);
 
 	if (DEBUG)
 		printf("= After normalizing: [%s] str_len: %lu\n", data->input, ft_strlen(data->input));
@@ -58,10 +55,7 @@ size_t	set_tokens(t_data *data)
 	token_count = count_tokens(data->input);
 	data->tokens = ft_calloc((token_count + 1), sizeof(char *));
 	if (!data->tokens)
-	{
-		exit_cleanup(data);
-		exit(data->exit_status);
-	}
+		exit_cleanup(data, data->exit_status);
 	tokenize(data, token_count);
 
 	if (DEBUG)
@@ -105,11 +99,7 @@ void	tokenize(t_data *data, size_t token_count)
 
 		data->tokens[i] = ft_strndup(&input[start], end - start);
 		if (data->tokens[i] == NULL)
-		{
-			exit_cleanup(data);
-			exit(data->exit_status);
-		}
-
+			exit_cleanup(data, data->exit_status);
 		start = end;
 		i++;
 	}
@@ -150,7 +140,6 @@ size_t	count_tokens(char *input)
 				token_count++;
 		}
 		i++;
-
 	}
 	if (DEBUG)
 		printf("Token count: %lu\n", token_count);

@@ -6,7 +6,7 @@
 /*   By: dbakker <dbakker@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/30 15:08:30 by ebelle            #+#    #+#             */
-/*   Updated: 2025/12/05 23:29:11 by dbakker          ###   ########.fr       */
+/*   Updated: 2025/12/08 10:55:13 by dbakker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,14 +70,29 @@ bool	validate_quotation(char *str);
 char	*get_executable_path(const char *exec, const t_list *envp);
 size_t	get_cmds_count(t_cmd *commands);
 void	execution(t_data *data);
-void	execute_cmds(t_data *data);
-void	execute_single_cmd(t_cmd *cmd, t_data *data);
-void	execute_single_builtin(t_cmd *cmd, t_data *data);
+void	handle_pipeline(t_data *data);
+void	handle_single_cmd(t_cmd *cmd, t_data *data);
+void	handle_single_builtin(t_cmd *cmd, t_data *data);
+void	execute_binary(t_cmd *cmd, t_data *data);
+void	execute_child(t_cmd *cmd, t_data *data);
+char	*get_bin_path(t_cmd *cmd, t_data *data);
 bool	is_builtin(const char *cmd);
 int		execute_builtin(t_cmd *cmd, t_data *data);
 void	close_pipes(int *pipefd, int prev_pipefd, bool is_first, bool is_last);
 void	setup_child_redirections(int *pipefd, int prev_pipefd, bool is_first, bool is_last);
 int		apply_redirections(t_cmd *cmd);
+void	exec_pipeline_child(t_cmd *cmd, t_data *data, int *pipefd,
+			int prev_pipefd, bool is_first, bool is_last);
+void	wait_for_children(pid_t *pids, size_t count, t_data *data);
+void	cleanup_pipeline(pid_t *pids, size_t count);
+void	handle_fork_error(pid_t *pids, size_t i, int *pipefd, t_data *data);
+void	close_parent_pipes(size_t i, int prev_pipefd, int *pipefd,
+			t_cmd *current);
+void	init_pipeline(t_data *data, pid_t **pids, int **pipefd);
+void	handle_pipe_creation(t_cmd *current, int *pipefd, pid_t *pids,
+			t_data *data, size_t i);
+void	fork_and_execute(t_cmd *current, pid_t *pids, int *pipefd,
+			int prev_pipefd, size_t i, t_data *data);
 
 // Signal handling
 
@@ -89,7 +104,8 @@ void	restore_signals_default(void);
 // Cleanup
 
 void	cleanup_data(t_data *data);
-void	exit_cleanup(t_data *data);
+void	full_cleanup(t_data *data);
+void	exit_cleanup(t_data *data, int exit_code);
 
 // Debug
 
