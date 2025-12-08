@@ -3,95 +3,40 @@
 /*                                                        :::      ::::::::   */
 /*   tokenization_validation.c                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: elie <elie@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: dbakker <dbakker@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/18 15:25:55 by elie              #+#    #+#             */
-/*   Updated: 2025/10/23 11:05:47 by elie             ###   ########.fr       */
+/*   Updated: 2025/12/08 17:42:04 by dbakker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-
 /**
- * @brief validates the syntax of redirections and pipes 
- */
-bool	validate_token_str(char *str)
-{
-	size_t	i;
-	size_t	count_consecutive;
-	uint8_t	curr;
-	uint8_t	next;
-	char	in_quote;
-
-	i = 0;
-	count_consecutive = 0;
-	in_quote = 0;
-	while (str[i])
-	{
-		curr = get_token_type(&str[i]);
-		next = get_token_type(&str[i + 1]);
-
-		// check for quotation
-		if (!in_quote && get_quote(str[i]))
-			in_quote = str[i];
-		else if (in_quote && in_quote == str[i])
-			in_quote = 0;
-
-		if (!in_quote && is_redirection(&str[i]))
-		{
-			count_consecutive++;
-
-			if (next == TYPE_PIPE)
-				return (FAILURE);
-			
-			// Check if redirection has a target
-			if (has_redirection_target(&str[i]) == false)
-				return (FAILURE);
-
-			// Check if the there's a mismatch in symbols. i.e.: >< or <> 
-			if (get_redirection_type(&str[i + 1]) && str[i] != str[i + 1])
-				return (FAILURE);
-
-			// Check if there's three redirection tokens in a row
-			if (count_consecutive == 3)
-				return (FAILURE);
-		}
-		else if (!in_quote && curr == TYPE_PIPE && (next == TYPE_PIPE || has_redirection_target(&str[i]) == false))
-			return (FAILURE);
-		else
-			count_consecutive = 0;
-
-		i++;
-	}
-	return (SUCCESS);
-}
-
-/**
-*	@brief Checks whether the current redirection has a target (i.e. in or outfile to redirect to)
+ * @brief Checks whether the current redirection has a target
+ * @brief (i.e. in or outfile to redirect to).
 */
 bool	has_redirection_target(char *str)
 {
 	size_t	i;
 
 	i = 1;
-	// Skip the redirection token(s)
 	while (str[i] && is_redirection(&str[i]))
 		i++;
-	// Skip whitespace
 	while (str[i] && ft_isspace(str[i]))
 		i++;
-	
-	if (str[0] == '|' && str[i] &&  str[i] != '|')
+	if (str[0] == '|' && str[i] && str[i] != '|')
 		return (true);
-	if (str[i] && (get_redirection_type(&str[i]) == 0 && get_token_type(&str[i]) != TYPE_PIPE))
+	if (str[i] && (get_redirection_type(&str[i]) == 0
+			&& get_token_type(&str[i]) != TYPE_PIPE))
 		return (true);
 	printf("= %c has no target\n", str[i]);
 	return (false);
 }
 
 /**
- * @brief Checks if there's an even amount of quotes, not counting quoted quotes.
+ * @brief Checks if there's an even amount of quotes, not counting quoted
+ * @brief quotes.
  */
 bool	validate_quotation(char *str)
 {
@@ -119,8 +64,5 @@ bool	validate_quotation(char *str)
 		}
 		i++;
 	}
-	// Return success if even amount of unquoted quotes
-	if (count % 2 == 0)
-		return (SUCCESS);
-	return (FAILURE);
+	return ((count + 1) % 2);
 }
