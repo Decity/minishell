@@ -6,7 +6,7 @@
 /*   By: dbakker <dbakker@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/08 18:09:32 by elie              #+#    #+#             */
-/*   Updated: 2025/12/04 14:04:31 by dbakker          ###   ########.fr       */
+/*   Updated: 2025/12/08 10:32:10 by dbakker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -163,8 +163,6 @@ t_data	*expansion(t_data *data)
 {
 	t_cmd	*cmd;
 
-	if (DEBUG)
-		printf("=== apply_shell_expansions ===\n\n");
 	cmd = data->command;
 	while (cmd)
 	{
@@ -174,15 +172,6 @@ t_data	*expansion(t_data *data)
 			return (NULL);
 		}
 		cmd = cmd->next;
-	}
-	if (DEBUG)
-	{
-		size_t	i = 0;
-		printf("== After expansions: \n");
-		printf("= args: %li\n", i);
-		while (data->tokens[i])
-			printf("= [%li] %s\n", i, data->tokens[i]), i++;
-		printf("=== END SHELL_EXPANSIONS ===\n\n");
 	}
 	return (data);
 }

@@ -11,7 +11,7 @@ MAKEFLAGS += --no-print-directory
 SRC_DIR		= src
 OBJ_DIR		= obj
 INC_DIR		= inc
-LIBFT_DIR	= lib/libft
+LIBFT_DIR	= libft
 
 # Source files
 SRCS		= $(shell find $(SRC_DIR) -name "*.c")

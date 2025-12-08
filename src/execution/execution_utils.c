@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution_utils.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: elie <elie@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: dbakker <dbakker@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/28 13:56:00 by elie              #+#    #+#             */
-/*   Updated: 2025/12/05 11:16:29 by elie             ###   ########.fr       */
+/*   Updated: 2025/12/08 11:02:13 by dbakker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,25 +31,23 @@ char	*get_executable_path(const char *exec, const t_list *envp)
 
 	paths = ft_split(ft_getenv(envp, "PATH"), ':');
 	if (paths == NULL)
-		return (perror("minishell: malloc"), NULL);
+		return (perror("minishell"), NULL);
 	i = 0;
 	while (paths[i])
 	{
 		slashed_path = ft_strjoin(paths[i], "/");
 		if (slashed_path == NULL)
-			return (perror("minishell: malloc"), NULL);
+			return (perror("minishell"), free_array(&paths), NULL);
 		abs_path = ft_strjoin(slashed_path, exec);
 		free(slashed_path);
 		if (abs_path == NULL)
-			return (perror("minishell: malloc"), NULL);
+			return (perror("minishell"), free_array(&paths), NULL);
 		if (access(abs_path, X_OK) == 0)
-		{
-			return (abs_path);
-		}
+			return (free_array(&paths), abs_path);
 		free(abs_path);
 		i++;
 	}
-	return (NULL);
+	return (free_array(&paths), NULL);
 }
 
 /**

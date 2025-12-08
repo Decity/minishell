@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ed_convert_list.c                                  :+:      :+:    :+:   */
+/*   convert_list.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dbakker <dbakker@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/16 14:30:14 by dbakker           #+#    #+#             */
-/*   Updated: 2025/10/29 11:23:31 by dbakker          ###   ########.fr       */
+/*   Updated: 2025/12/05 14:04:08 by dbakker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,9 +37,9 @@ t_list	*array_to_llist(const char **array)
 	while (array[i])
 	{
 		str = ft_strdup(array[i]);
-		if (array[i] == NULL)
+		if (str == NULL)
 		{
-			return (ft_free2d((void **)array, i), NULL);
+			return (ft_listclear(&list, free), NULL);
 		}
 		node = ft_listnew(str);
 		if (node == NULL)
@@ -82,7 +82,7 @@ char	**llist_to_array(const t_list *list)
 		array[i] = ft_strdup(list->content);
 		if (array[i] == NULL)
 		{
-			ft_free2d((void **)array, i);
+			free_array(&array);
 			return (NULL);
 		}
 		list = list->next;

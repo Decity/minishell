@@ -6,7 +6,7 @@
 /*   By: dbakker <dbakker@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/25 19:34:56 by dbakker           #+#    #+#             */
-/*   Updated: 2025/12/01 09:47:28 by dbakker          ###   ########.fr       */
+/*   Updated: 2025/12/05 23:23:04 by dbakker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ static t_redir	*parsing_init_redir_in(const char **args, size_t size)
 			else
 				redir_in[j].file = ft_strdup(args[i + 1]);
 			if (redir_in[j].file == NULL && redir_in[j].delimiter == NULL)
-				return (NULL);
+				return (redirclear(redir_in), NULL);
 			j += 1;
 		}
 		i += 1;
@@ -85,7 +85,7 @@ static t_redir	*parsing_init_redir_out(const char **args, size_t size)
 			redir_out[j].redir_type = get_redirection_type(args[i]);
 			redir_out[j].file = ft_strdup(args[i + 1]);
 			if (redir_out[j].file == NULL)
-				return (NULL);
+				return (redirclear(redir_out), NULL);
 			j += 1;
 		}
 		i += 1;
@@ -129,9 +129,9 @@ static size_t	parsing_args_size(const char **args, size_t size)
  * @param[in] args Array of command arguments
  * @param[in] size Number of arguments to process
  *
- * @return Pointer to new array without redirections, or NULL on failure
+ * @return Pointer to new array without redirections, or `NULL` on failure
  *
- * @warning Caller owns free()
+ * @warning Caller owns `free()`.
  */
 static char	**parsing_trim_redirections(const char **args, size_t size)
 {
@@ -172,9 +172,9 @@ static char	**parsing_trim_redirections(const char **args, size_t size)
  * @param[in] args Array of command arguments
  * @param[in] size Number of arguments to process
  *
- * @return Pointer to new command struct, or NULL on complete failure
+ * @return Pointer to new command struct, or `NULL` on failure.
  *
- * @warning Caller owns free()
+ * @warning Caller owns `free()`.
  */
 t_cmd	*parsing_init(const char **args, size_t size)
 {
@@ -192,7 +192,7 @@ t_cmd	*parsing_init(const char **args, size_t size)
 	cmd->redirect.outfile = parsing_init_redir_out(args, size);
 	if (cmd->redirect.infile == NULL || cmd->redirect.outfile == NULL)
 	{
-		return (NULL);
+		return (cmddelone(cmd), NULL);
 	}
 	return (cmd);
 }

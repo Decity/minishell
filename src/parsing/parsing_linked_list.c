@@ -6,7 +6,7 @@
 /*   By: dbakker <dbakker@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/25 19:33:35 by dbakker           #+#    #+#             */
-/*   Updated: 2025/12/04 17:07:45 by dbakker          ###   ########.fr       */
+/*   Updated: 2025/12/08 10:47:55 by dbakker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ t_cmd	*cmdnew(const char **args, size_t num)
 	cmd->args = copy_narray((char **)args, num);
 	if (cmd->args == NULL)
 	{
-		return (NULL);
+		return (free(cmd), NULL);
 	}
 	ft_memset(&cmd->redirect, 0, sizeof(t_rdr));
 	cmd->redirect.output_fd = STDOUT_FILENO;
@@ -83,18 +83,19 @@ void	cmddelone(t_cmd *cmd)
 		return ;
 	free_array(&cmd->args);
 	i = 0;
-	while (cmd->redirect.infile[i].file)
+	if (cmd->redirect.infile)
 	{
-		free(cmd->redirect.infile[i].delimiter);
-		free(cmd->redirect.infile[i].file);
-		i += 1;
+		while (cmd->redirect.infile[i].file)
+		{
+			free(cmd->redirect.infile[i].delimiter);
+			free(cmd->redirect.infile[i].file);
+			i += 1;
+		}
 	}
 	i = 0;
-	while (cmd->redirect.outfile[i].file)
-	{
-		free(cmd->redirect.outfile[i].file);
-		i += 1;
-	}
+	if (cmd->redirect.outfile)
+		while (cmd->redirect.outfile[i].file)
+			free(cmd->redirect.outfile[i++].file);
 	i = 0;
 	free(cmd->redirect.infile);
 	free(cmd->redirect.outfile);
@@ -121,4 +122,25 @@ void	cmdclear(t_cmd **cmd)
 		node = temp;
 	}
 	*cmd = NULL;
+}
+
+/**
+ * @brief Free the entire t_redir struct.
+ */
+void	redirclear(t_redir *redir)
+{
+	size_t	i;
+
+	i = 0;
+	if (redir == NULL)
+	{
+		return ;
+	}
+	while (redir[i].file || redir[i].delimiter)
+	{
+		free(redir[i].file);
+		free(redir[i].file);
+		i += 1;
+	}
+	free(redir);
 }
