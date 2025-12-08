@@ -6,7 +6,7 @@
 /*   By: dbakker <dbakker@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/05 14:09:14 by elie              #+#    #+#             */
-/*   Updated: 2025/12/08 10:56:19 by dbakker          ###   ########.fr       */
+/*   Updated: 2025/12/08 14:00:21 by dbakker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ uint8_t	set_input(t_data *data)
 	size_t	len;
 
 	if (data->is_interactive)
-		data->input = readline("> ");
+		data->input = readline("( ͡° ͜ʖ ͡°) ");
 	else
 	{
 		data->input = get_next_line(STDIN_FILENO);

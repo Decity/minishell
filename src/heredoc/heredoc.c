@@ -6,7 +6,7 @@
 /*   By: dbakker <dbakker@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/12 10:53:02 by dbakker           #+#    #+#             */
-/*   Updated: 2025/12/08 10:17:01 by dbakker          ###   ########.fr       */
+/*   Updated: 2025/12/08 14:01:52 by dbakker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ static t_cmd	*heredoc_readline(const t_cmd *cmd, const t_list *envp,
 
 	while (true != false)
 	{
-		line = readline(NULL);
+		line = readline("(⌐□_□) ");
 		if (line == NULL)
 		{
 			heredoc_print_warning(line_count,
