@@ -1,0 +1,64 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   execution_pipeline_utils.c                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: elie <elie@student.42.fr>                  +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/12/05 10:30:00 by elie              #+#    #+#             */
+/*   Updated: 2025/12/08 09:52:40 by elie             ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "minishell.h"
+
+void	wait_for_children(pid_t *pids, size_t count, t_data *data)
+{
+	size_t	i;
+	int		status;
+
+	i = 0;
+	while (i < count)
+	{
+		waitpid(pids[i], &status, 0);
+		if (i == count - 1)
+		{
+			if (WIFEXITED(status))
+				data->exit_status = WEXITSTATUS(status);
+			else if (WIFSIGNALED(status))
+				data->exit_status = 128 + WTERMSIG(status);
+		}
+		i++;
+	}
+	free(pids);
+}
+
+void	cleanup_pipeline(pid_t *pids, size_t count)
+{
+	size_t	i;
+
+	i = 0;
+	while (i < count)
+	{
+		if (pids[i] > 0)
+			kill(pids[i], SIGKILL);
+		i++;
+	}
+	free(pids);
+}
+
+void	handle_fork_error(pid_t *pids, size_t i, int *pipefd, t_data *data)
+{
+	perror("minishell: fork");
+	cleanup_pipeline(pids, i);
+	free(pipefd);
+	exit_cleanup(data, 1);
+}
+
+void	close_parent_pipes(size_t i, int prev_pipefd, int *pipefd, t_cmd *current)
+{
+	if (i > 0)
+		close(prev_pipefd);
+	if (current->next != NULL)
+		close(pipefd[1]);
+}

@@ -6,7 +6,7 @@
 /*   By: elie <elie@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/28 13:56:00 by elie              #+#    #+#             */
-/*   Updated: 2025/12/01 15:08:50 by elie             ###   ########.fr       */
+/*   Updated: 2025/12/05 11:16:29 by elie             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,7 +94,6 @@ void	close_pipes(int *pipefd, int prev_pipefd, bool is_first, bool is_last)
 		close(pipefd[0]);
 		close(pipefd[1]);
 	}
-
 }
 
 /**
@@ -125,7 +124,6 @@ void	setup_child_redirections(int *pipefd, int prev_pipefd, bool is_first, bool 
  */
 int	apply_redirections(t_cmd *cmd)
 {
-	// Input redirect overrides pipe input
 	if (cmd->redirect.input_fd != STDIN_FILENO && cmd->redirect.input_fd != -1)
 	{
 		if (dup2(cmd->redirect.input_fd, STDIN_FILENO) == -1)
@@ -135,8 +133,6 @@ int	apply_redirections(t_cmd *cmd)
 		}
 		close(cmd->redirect.input_fd);
 	}
-
-	// Output redirect overrides pipe output
 	if (cmd->redirect.output_fd != STDOUT_FILENO && cmd->redirect.output_fd != -1)
 	{
 		if (dup2(cmd->redirect.output_fd, STDOUT_FILENO) == -1)
