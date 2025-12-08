@@ -6,7 +6,7 @@
 /*   By: dbakker <dbakker@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/15 13:16:57 by dbakker           #+#    #+#             */
-/*   Updated: 2025/12/01 10:04:30 by dbakker          ###   ########.fr       */
+/*   Updated: 2025/12/08 14:12:53 by dbakker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -152,5 +152,7 @@ void	*builtin_export(t_list *list, const char *envvar)
 	str_env = ft_strdup(envvar);
 	if (str_env == NULL)
 		return (NULL);
-	return (builtin_iterate_list(list, str_env));
+	list = builtin_iterate_list(list, str_env);
+	free(str_env);
+	return (list);
 }

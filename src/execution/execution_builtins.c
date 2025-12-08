@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution_builtins.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: elie <elie@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: dbakker <dbakker@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/05 15:22:00 by elie              #+#    #+#             */
-/*   Updated: 2025/12/08 10:18:34 by elie             ###   ########.fr       */
+/*   Updated: 2025/12/08 14:25:36 by dbakker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,6 @@ void	handle_single_builtin(t_cmd *cmd, t_data *data)
 {
 	int	saved_stdin;
 	int	saved_stdout;
-	int	exit_code;
 
 	saved_stdin = dup(STDIN_FILENO);
 	saved_stdout = dup(STDOUT_FILENO);
@@ -87,8 +86,7 @@ void	handle_single_builtin(t_cmd *cmd, t_data *data)
 		data->exit_status = 1;
 		return ;
 	}
-	exit_code = execute_builtin(cmd, data);
-	data->exit_status = exit_code;
+	data->exit_status = execute_builtin(cmd, data);;
 	dup2(saved_stdin, STDIN_FILENO);
 	dup2(saved_stdout, STDOUT_FILENO);
 	close(saved_stdin);
