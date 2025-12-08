@@ -6,7 +6,7 @@
 /*   By: dbakker <dbakker@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/30 15:08:30 by ebelle            #+#    #+#             */
-/*   Updated: 2025/12/08 10:55:13 by dbakker          ###   ########.fr       */
+/*   Updated: 2025/12/08 14:50:12 by dbakker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -158,7 +158,7 @@ size_t	count_redir_out(const char **args);
 t_cmd	*parsing_init(const char **args, size_t size);
 // parsing.c
 
-t_data	*parsing(t_data *data);
+int		*parsing(t_data *data);
 
 // HEREDOC
 
@@ -183,7 +183,7 @@ char	*heredoc_duplicate(const char *line);
 void	remove_heredoc_files(t_cmd *cmd);
 // heredoc.c
 
-t_data	*heredoc(t_data *data);
+int		*heredoc(t_data *data);
 
 // EXPANSION
 
@@ -199,5 +199,5 @@ size_t	expansion_varlen(const char *arg);
 size_t	expansion_new_strlen(const char *arg, size_t idx, const t_data *data);
 // expansion.c
 
-t_data	*expansion(t_data *data);
+int		*expansion(t_data *data);
 #endif

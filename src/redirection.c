@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirection.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: elie <elie@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: dbakker <dbakker@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/15 09:54:20 by elie              #+#    #+#             */
-/*   Updated: 2025/11/20 12:39:20 by elie             ###   ########.fr       */
+/*   Updated: 2025/12/08 14:53:04 by dbakker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,9 +22,6 @@
 
 void	set_redirections(t_data *data)
 {
-	if (DEBUG)
-		printf("=== set_redirections ===\n\n");
-
 	t_cmd	*current_cmd;
 	size_t	i;
 
@@ -84,7 +81,4 @@ void	set_redirections(t_data *data)
 
 		current_cmd = current_cmd->next;
 	}
-
-	if (DEBUG)
-		printf("=== end redirections ===\n\n");
 }

@@ -6,7 +6,7 @@
 /*   By: dbakker <dbakker@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/08 18:09:32 by elie              #+#    #+#             */
-/*   Updated: 2025/12/08 10:32:10 by dbakker          ###   ########.fr       */
+/*   Updated: 2025/12/08 14:49:49 by dbakker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -159,7 +159,7 @@ char	**expand_arguments(char **args, t_data *data)
  *
  * @warning Caller owns `free()`.
  */
-t_data	*expansion(t_data *data)
+int	expansion(t_data *data)
 {
 	t_cmd	*cmd;
 
@@ -169,9 +169,9 @@ t_data	*expansion(t_data *data)
 		cmd->args = expand_arguments(cmd->args, data);
 		if (cmd->args == NULL)
 		{
-			return (NULL);
+			return (FAILURE);
 		}
 		cmd = cmd->next;
 	}
-	return (data);
+	return (SUCCESS);
 }
