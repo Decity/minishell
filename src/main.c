@@ -79,7 +79,7 @@ int	main(int argc, char **argv)
 	{
 		data.is_interactive = false;
 		run_command(&data, argv[2]);
-		exit_cleanup(&data);
+		full_cleanup(&data);
 		return (data.exit_status);
 	}
 	while (42)

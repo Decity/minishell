@@ -15,6 +15,5 @@
 void	minishell_exit(t_data *data)
 {
 	ft_putstr_fd("exit", STDERR_FILENO);
-	exit_cleanup(data);
-	exit(data->exit_status);
+	exit_cleanup(data, data->exit_status);
 }

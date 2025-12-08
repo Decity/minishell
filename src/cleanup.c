@@ -26,13 +26,32 @@ void	cleanup_data(t_data *data)
 }
 
 /**
- * @brief Clean up all resources before program exit
+ * @brief Clean up all resources and exit the program
  *
- * Calls cleanup_data and additionally frees environment list and directory.
+ * Calls cleanup_data, frees environment list and directory, then exits.
  *
  * @param[in,out] data Shell data structure to clean up
+ * @param[in] exit_code Exit code to pass to exit()
  */
-void	exit_cleanup(t_data *data)
+void	exit_cleanup(t_data *data, int exit_code)
+{
+	cleanup_data(data);
+	if (data->envp)
+	{
+		ft_listclear(&data->envp, free);
+	}
+	if (data->directory.pwd)
+	{
+		free(data->directory.pwd);
+	}
+	if (data->directory.old_pwd)
+	{
+		free(data->directory.old_pwd);
+	}
+	exit(exit_code);
+}
+
+void	full_cleanup(t_data *data)
 {
 	cleanup_data(data);
 	if (data->envp)
