@@ -6,7 +6,7 @@
 /*   By: dbakker <dbakker@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/03 15:32:47 by elie              #+#    #+#             */
-/*   Updated: 2025/12/08 10:57:03 by dbakker          ###   ########.fr       */
+/*   Updated: 2025/12/08 14:50:47 by dbakker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,21 +26,13 @@ static void	run(t_data *data)
 		return ;
 	if (set_tokens(data) == FAILURE)
 		return ;
-	if (parsing(data) == NULL)
-	{
+	if (parsing(data) == FAILURE)
 		exit_cleanup(data, EXIT_FAILURE);
-	}
-	if (heredoc(data) == NULL)
-	{
+	if (heredoc(data) == FAILURE)
 		exit_cleanup(data, EXIT_FAILURE);
-	}
-	if (expansion(data) == NULL)
-	{
+	if (expansion(data) == FAILURE)
 		exit_cleanup(data, EXIT_FAILURE);
-	}
 	set_redirections(data);
-	if (DEBUG)
-		debug(data);
 	execution(data);
 	remove_heredoc_files(data->command);
 	cleanup_data(data);
@@ -70,8 +62,6 @@ static void	run_command(t_data *data, const char *command)
 	heredoc(data);
 	expansion(data);
 	set_redirections(data);
-	if (DEBUG)
-		debug(data);
 	execution(data);
 	remove_heredoc_files(data->command);
 	cleanup_data(data);

@@ -6,7 +6,7 @@
 /*   By: dbakker <dbakker@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/12 10:53:02 by dbakker           #+#    #+#             */
-/*   Updated: 2025/12/08 14:01:52 by dbakker          ###   ########.fr       */
+/*   Updated: 2025/12/08 14:49:27 by dbakker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,7 +124,7 @@ static void	*heredoc_create_file(t_cmd *cmd, const t_list *envp)
 /**
  * @brief Handle the heredoc redirections.
  */
-t_data	*heredoc(t_data *data)
+int	heredoc(t_data *data)
 {
 	t_cmd	*cmd;
 
@@ -132,12 +132,12 @@ t_data	*heredoc(t_data *data)
 	{
 		ft_putendl_fd("minishell: maximum here-document count exceeded",
 			STDERR_FILENO);
-		return (NULL);
+		return (FAILURE);
 	}
 	if (heredoc_init(data->command) == NULL)
 	{
 		perror("minishell");
-		return (NULL);
+		return (FAILURE);
 	}
 	cmd = data->command;
 	while (cmd)
@@ -145,9 +145,9 @@ t_data	*heredoc(t_data *data)
 		if (heredoc_create_file(cmd, data->envp) == NULL)
 		{
 			perror("minishell");
-			return (NULL);
+			return (FAILURE);
 		}
 		cmd = cmd->next;
 	}
-	return (data);
+	return (SUCCESS);
 }

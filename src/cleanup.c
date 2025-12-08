@@ -7,8 +7,6 @@
  */
 void	cleanup_data(t_data *data)
 {
-	if (DEBUG)
-		printf("\n=== cleanup_data() ===\n");
 	if (data->input)
 	{
 		free_and_null(&data->input);
@@ -21,8 +19,6 @@ void	cleanup_data(t_data *data)
 	{
 		cmdclear(&data->command);
 	}
-	if (DEBUG)
-		printf("\n=== cleanup complete ===\n");
 }
 
 /**

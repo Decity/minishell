@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution_pipeline_utils.c                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: elie <elie@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: dbakker <dbakker@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/05 10:30:00 by elie              #+#    #+#             */
-/*   Updated: 2025/12/08 09:52:40 by elie             ###   ########.fr       */
+/*   Updated: 2025/12/08 14:42:36 by dbakker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,8 @@ void	handle_fork_error(pid_t *pids, size_t i, int *pipefd, t_data *data)
 	exit_cleanup(data, 1);
 }
 
-void	close_parent_pipes(size_t i, int prev_pipefd, int *pipefd, t_cmd *current)
+void	close_parent_pipes(size_t i, int prev_pipefd, int *pipefd,
+	t_cmd *current)
 {
 	if (i > 0)
 		close(prev_pipefd);
