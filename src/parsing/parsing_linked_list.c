@@ -6,7 +6,7 @@
 /*   By: dbakker <dbakker@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/25 19:33:35 by dbakker           #+#    #+#             */
-/*   Updated: 2025/12/05 23:23:04 by dbakker          ###   ########.fr       */
+/*   Updated: 2025/12/08 10:47:55 by dbakker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ t_cmd	*cmdnew(const char **args, size_t num)
 	cmd->args = copy_narray((char **)args, num);
 	if (cmd->args == NULL)
 	{
-		return (NULL);
+		return (free(cmd), NULL);
 	}
 	ft_memset(&cmd->redirect, 0, sizeof(t_rdr));
 	cmd->redirect.output_fd = STDOUT_FILENO;

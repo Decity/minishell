@@ -6,7 +6,7 @@
 /*   By: dbakker <dbakker@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/05 14:09:14 by elie              #+#    #+#             */
-/*   Updated: 2025/12/08 10:55:05 by dbakker          ###   ########.fr       */
+/*   Updated: 2025/12/08 10:56:19 by dbakker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,9 +30,8 @@ void	init(t_data *data)
 	data->is_interactive = isatty(STDIN_FILENO);
 	if (data->envp == NULL || data->directory.pwd == NULL)
 	{
-		perror("minishell: malloc");
-		exit_cleanup(data);
-		exit(EXIT_FAILURE);
+		perror("minishell");
+		exit_cleanup(data, EXIT_FAILURE);
 	}
 	if (data->is_interactive)
 		setup_signals_interactive();
