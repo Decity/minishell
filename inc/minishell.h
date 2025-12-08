@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: elie <elie@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: dbakker <dbakker@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/30 15:08:30 by ebelle            #+#    #+#             */
-/*   Updated: 2025/12/05 10:16:47 by elie             ###   ########.fr       */
+/*   Updated: 2025/12/08 14:50:12 by dbakker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,9 @@
 # define _POSIX_C_SOURCE 200809L
 
 // headers
-# include "../lib/libft/inc/libft.h"
-# include "../lib/libft/inc/ft_printf.h"
-# include "../lib/libft/inc/get_next_line.h"
+# include "../libft/inc/libft.h"
+# include "../libft/inc/ft_printf.h"
+# include "../libft/inc/get_next_line.h"
 # include "structs.h"
 # include "definitions.h"
 
@@ -142,6 +142,7 @@ t_cmd	*cmdnew(const char **args, size_t num);
 void	cmdadd_back(t_cmd **head, t_cmd *new);
 void	cmddelone(t_cmd *cmd);
 void	cmdclear(t_cmd **cmd);
+void	redirclear(t_redir *redir);
 // parsing_redirection_in.c
 
 bool	is_redir_heredoc(const char *arg);
@@ -157,7 +158,7 @@ size_t	count_redir_out(const char **args);
 t_cmd	*parsing_init(const char **args, size_t size);
 // parsing.c
 
-t_data	*parsing(t_data *data);
+int		*parsing(t_data *data);
 
 // HEREDOC
 
@@ -182,7 +183,7 @@ char	*heredoc_duplicate(const char *line);
 void	remove_heredoc_files(t_cmd *cmd);
 // heredoc.c
 
-t_data	*heredoc(t_data *data);
+int		*heredoc(t_data *data);
 
 // EXPANSION
 
@@ -198,5 +199,5 @@ size_t	expansion_varlen(const char *arg);
 size_t	expansion_new_strlen(const char *arg, size_t idx, const t_data *data);
 // expansion.c
 
-t_data	*expansion(t_data *data);
+int		*expansion(t_data *data);
 #endif

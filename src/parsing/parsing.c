@@ -6,7 +6,7 @@
 /*   By: dbakker <dbakker@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/22 20:16:18 by dbakker           #+#    #+#             */
-/*   Updated: 2025/12/01 10:05:37 by dbakker          ###   ########.fr       */
+/*   Updated: 2025/12/08 14:49:31 by dbakker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ static void	*parsing_add_cmd(t_data *data, const char **tokens, size_t size)
  *
  * @warning Caller owns `free()`.
  */
-t_data	*parsing(t_data *data)
+int	parsing(t_data *data)
 {
 	size_t	start;
 	size_t	index;
@@ -56,7 +56,7 @@ t_data	*parsing(t_data *data)
 		{
 			if (parsing_add_cmd(data, (const char **)data->tokens + start,
 					index - start) == NULL)
-				return (NULL);
+				return (perror("minishell"), FAILURE);
 			start = index + 1;
 		}
 		index++;
@@ -64,6 +64,6 @@ t_data	*parsing(t_data *data)
 	if (start < index)
 		if (parsing_add_cmd(data, (const char **)data->tokens + start,
 				index - start) == NULL)
-			return (NULL);
-	return (data);
+			return (perror("minishell"), FAILURE);
+	return (SUCCESS);
 }

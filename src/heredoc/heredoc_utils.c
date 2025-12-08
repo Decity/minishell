@@ -6,7 +6,7 @@
 /*   By: dbakker <dbakker@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/27 17:15:39 by dbakker           #+#    #+#             */
-/*   Updated: 2025/11/28 10:00:58 by dbakker          ###   ########.fr       */
+/*   Updated: 2025/12/08 10:17:36 by dbakker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void	heredoc_print_warning(size_t line_count, const char *delimiter)
 	ft_putnum_fd(line_count, STDERR_FILENO);
 	ft_putstr_fd(" delimited by end-of-file (wanted `", STDERR_FILENO);
 	ft_putstr_fd(delimiter, STDERR_FILENO);
-	ft_putstr_fd("')\n", STDERR_FILENO);
+	ft_putendl_fd("')", STDERR_FILENO);
 }
 
 /**

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tokenization.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: elie <elie@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: dbakker <dbakker@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/03 15:20:17 by elie              #+#    #+#             */
-/*   Updated: 2025/12/08 10:03:27 by elie             ###   ########.fr       */
+/*   Updated: 2025/12/08 14:53:05 by dbakker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,43 +23,26 @@ size_t	set_tokens(t_data *data)
 {
 	size_t	token_count;
 
-	if (DEBUG)
-		printf("=== set_tokens ===\n\n");
-
-	// Validate quoation
 	if (validate_quotation(data->input) == FAILURE)
 	{
 		perror("minishell: failed to validate quotes.\n");
 		data->exit_status = 2;
 		return (FAILURE);
 	}
-
-	// validate syntax
 	if (validate_token_str(data->input) == FAILURE)
 	{
 		printf("minishell: failed to valdiate syntax\n");
 		data->exit_status = 2;
 		return (FAILURE);
 	}
-
-	// Normalize string for easier splittin
-	if (DEBUG)
-		printf("== Normalizing str [%s]\n", data->input);
 	data->input = normalize_whitespace(data->input);
 	if (!data->input)
 		exit_cleanup(data, data->exit_status);
-
-	if (DEBUG)
-		printf("= After normalizing: [%s] str_len: %lu\n", data->input, ft_strlen(data->input));
-
 	token_count = count_tokens(data->input);
 	data->tokens = ft_calloc((token_count + 1), sizeof(char *));
 	if (!data->tokens)
 		exit_cleanup(data, data->exit_status);
 	tokenize(data, token_count);
-
-	if (DEBUG)
-		printf("=== +++ ===\n\n");
 	return (SUCCESS);
 }
 
@@ -141,7 +124,5 @@ size_t	count_tokens(char *input)
 		}
 		i++;
 	}
-	if (DEBUG)
-		printf("Token count: %lu\n", token_count);
 	return (token_count);
 }

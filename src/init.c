@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: elie <elie@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: dbakker <dbakker@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/05 14:09:14 by elie              #+#    #+#             */
-/*   Updated: 2025/12/05 11:39:07 by elie             ###   ########.fr       */
+/*   Updated: 2025/12/08 14:00:21 by dbakker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,11 @@ void	init(t_data *data)
 	data->envp = array_to_llist(environ);
 	data->directory.pwd = getcwd(NULL, 0);
 	data->is_interactive = isatty(STDIN_FILENO);
+	if (data->envp == NULL || data->directory.pwd == NULL)
+	{
+		perror("minishell");
+		exit_cleanup(data, EXIT_FAILURE);
+	}
 	if (data->is_interactive)
 		setup_signals_interactive();
 }
@@ -47,7 +52,7 @@ uint8_t	set_input(t_data *data)
 	size_t	len;
 
 	if (data->is_interactive)
-		data->input = readline("> ");
+		data->input = readline("( ͡° ͜ʖ ͡°) ");
 	else
 	{
 		data->input = get_next_line(STDIN_FILENO);

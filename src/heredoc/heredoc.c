@@ -6,7 +6,7 @@
 /*   By: dbakker <dbakker@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/12 10:53:02 by dbakker           #+#    #+#             */
-/*   Updated: 2025/12/01 09:50:23 by dbakker          ###   ########.fr       */
+/*   Updated: 2025/12/08 14:49:27 by dbakker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ static void	*heredoc_init(t_cmd *cmd)
 				node->redirect.infile[i].file = generate_heredoc_name();
 				if (node->redirect.infile[i].file == NULL)
 				{
-					return (NULL);
+					return (redirclear(node->redirect.infile), NULL);
 				}
 			}
 			i += 1;
@@ -48,25 +48,6 @@ static void	*heredoc_init(t_cmd *cmd)
 		node = node->next;
 	}
 	return (cmd);
-}
-
-/**
- * @return `false` if there are more than 16 heredoc redirections or if
- * @return initialization failed, `true` otherwise.
- *
- * @warning Caller owns `free()`.
- */
-static bool	heredoc_check(t_data *data)
-{
-	if (count_redir_heredoc((const char **)data->tokens) > HEREDOC_LIMIT)
-	{
-		return (false);
-	}
-	if (heredoc_init(data->command) == NULL)
-	{
-		return (false);
-	}
-	return (true);
 }
 
 /**
@@ -79,19 +60,19 @@ static bool	heredoc_check(t_data *data)
 static t_cmd	*heredoc_readline(const t_cmd *cmd, const t_list *envp,
 	size_t idx)
 {
-	static size_t	line_count = 0;
+	static size_t	line_count = 1;
 	char			*line;
 
 	while (true != false)
 	{
-		line = readline(NULL);
-		line_count += 1;
+		line = readline("(⌐□_□) ");
 		if (line == NULL)
 		{
 			heredoc_print_warning(line_count,
 				cmd->redirect.infile[idx].delimiter);
 			break ;
 		}
+		line_count += 1;
 		if (strcmp(line, cmd->redirect.infile[idx].delimiter) == 0)
 		{
 			free(line);
@@ -126,8 +107,13 @@ static void	*heredoc_create_file(t_cmd *cmd, const t_list *envp)
 			cmd->redirect.infile[i].fd = open(cmd->redirect.infile[i].file,
 					O_WRONLY | O_CREAT | O_TRUNC, 0644);
 			if (cmd->redirect.infile[i].fd == -1)
+			{
 				return (NULL);
-			heredoc_readline(cmd, envp, i);
+			}
+			if (heredoc_readline(cmd, envp, i) == NULL)
+			{
+				return (NULL);
+			}
 			close(cmd->redirect.infile[i].fd);
 		}
 		i += 1;
@@ -138,26 +124,30 @@ static void	*heredoc_create_file(t_cmd *cmd, const t_list *envp)
 /**
  * @brief Handle the heredoc redirections.
  */
-t_data	*heredoc(t_data *data)
+int	heredoc(t_data *data)
 {
 	t_cmd	*cmd;
 
-	if (DEBUG)
-		printf("=== Heredoc begin ===\n");
-	if (heredoc_check(data) == false)
+	if (count_redir_heredoc((const char **)data->tokens) > HEREDOC_LIMIT)
 	{
-		return (NULL);
+		ft_putendl_fd("minishell: maximum here-document count exceeded",
+			STDERR_FILENO);
+		return (FAILURE);
+	}
+	if (heredoc_init(data->command) == NULL)
+	{
+		perror("minishell");
+		return (FAILURE);
 	}
 	cmd = data->command;
 	while (cmd)
 	{
 		if (heredoc_create_file(cmd, data->envp) == NULL)
 		{
-			return (NULL);
+			perror("minishell");
+			return (FAILURE);
 		}
 		cmd = cmd->next;
 	}
-	if (DEBUG)
-		printf("=== Heredoc end ===\n");
-	return (data);
+	return (SUCCESS);
 }

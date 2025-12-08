@@ -6,7 +6,7 @@
 /*   By: dbakker <dbakker@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/08 18:09:32 by elie              #+#    #+#             */
-/*   Updated: 2025/12/04 14:04:31 by dbakker          ###   ########.fr       */
+/*   Updated: 2025/12/08 14:49:49 by dbakker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -159,30 +159,19 @@ char	**expand_arguments(char **args, t_data *data)
  *
  * @warning Caller owns `free()`.
  */
-t_data	*expansion(t_data *data)
+int	expansion(t_data *data)
 {
 	t_cmd	*cmd;
 
-	if (DEBUG)
-		printf("=== apply_shell_expansions ===\n\n");
 	cmd = data->command;
 	while (cmd)
 	{
 		cmd->args = expand_arguments(cmd->args, data);
 		if (cmd->args == NULL)
 		{
-			return (NULL);
+			return (FAILURE);
 		}
 		cmd = cmd->next;
 	}
-	if (DEBUG)
-	{
-		size_t	i = 0;
-		printf("== After expansions: \n");
-		printf("= args: %li\n", i);
-		while (data->tokens[i])
-			printf("= [%li] %s\n", i, data->tokens[i]), i++;
-		printf("=== END SHELL_EXPANSIONS ===\n\n");
-	}
-	return (data);
+	return (SUCCESS);
 }

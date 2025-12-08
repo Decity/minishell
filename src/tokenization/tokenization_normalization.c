@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tokenization_normalization.c                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: elie <elie@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: dbakker <dbakker@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/18 15:18:05 by elie              #+#    #+#             */
-/*   Updated: 2025/10/23 11:01:00 by elie             ###   ########.fr       */
+/*   Updated: 2025/12/08 14:53:05 by dbakker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,8 +69,6 @@ size_t	get_normalized_str_len(const char *str)
 
 		i++;
 	}
-	if (DEBUG)
-		printf("== normalized str len = %lu\n", len);
 	return (len);
 }
 

@@ -11,7 +11,7 @@ MAKEFLAGS += --no-print-directory
 SRC_DIR		= src
 OBJ_DIR		= obj
 INC_DIR		= inc
-LIBFT_DIR	= lib/libft
+LIBFT_DIR	= libft
 
 # Source files
 SRCS		= $(shell find $(SRC_DIR) -name "*.c")
@@ -36,12 +36,6 @@ $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c
 $(LIBFT):
 	@make -C $(LIBFT_DIR)
 
-# debug rule to add a define flag which will set debug mode to true
-debug: CFLAGS += -D DEBUG=true
-debug: $(LIBFT) $(OBJS)
-	@$(CC) $(CFLAGS) $(OBJS) -L$(LIBFT_DIR) -lft -lreadline -o $(NAME)
-	@echo "\e[93mCompiled in debug mode\e[0m"
-
 clean:
 	@rm -rf $(OBJ_DIR)
 	@make -C $(LIBFT_DIR) clean
@@ -57,12 +51,7 @@ ffclean: fclean
 
 re: fclean all
 
-red: fclean debug
-
 rerun: fclean all
-	./minishell
-
-rerund: fclean debug
 	./minishell
 
 .PHONY: all clean fclean re
