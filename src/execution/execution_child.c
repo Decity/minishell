@@ -25,7 +25,8 @@ void	execute_child(t_cmd *cmd, t_data *data)
 		execute_binary(cmd, data);
 }
 
-void	exec_pipeline_child(t_cmd *cmd, t_data *data, int *pipefd, int prev_pipefd, bool is_first, bool is_last)
+void	exec_pipeline_child(t_cmd *cmd, t_data *data, int *pipefd,
+	int prev_pipefd, bool is_first, bool is_last)
 {
 	restore_signals_default();
 	setup_child_redirections(pipefd, prev_pipefd, is_first, is_last);

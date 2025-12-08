@@ -43,9 +43,7 @@ char	*get_executable_path(const char *exec, const t_list *envp)
 		if (abs_path == NULL)
 			return (perror("minishell: malloc"), NULL);
 		if (access(abs_path, X_OK) == 0)
-		{
 			return (abs_path);
-		}
 		free(abs_path);
 		i++;
 	}
@@ -88,7 +86,6 @@ void	close_pipes(int *pipefd, int prev_pipefd, bool is_first, bool is_last)
 {
 	if (!is_first)
 		close(prev_pipefd);
-
 	if (!is_last)
 	{
 		close(pipefd[0]);
@@ -106,7 +103,8 @@ void	close_pipes(int *pipefd, int prev_pipefd, bool is_first, bool is_last)
  * @param[in] is_first True if first command in pipeline
  * @param[in] is_last True if last command in pipeline
  */
-void	setup_child_redirections(int *pipefd, int prev_pipefd, bool is_first, bool is_last)
+void	setup_child_redirections(int *pipefd, int prev_pipefd,
+	bool is_first, bool is_last)
 {
 	if (!is_first)
 		dup2(prev_pipefd, STDIN_FILENO);
@@ -133,7 +131,8 @@ int	apply_redirections(t_cmd *cmd)
 		}
 		close(cmd->redirect.input_fd);
 	}
-	if (cmd->redirect.output_fd != STDOUT_FILENO && cmd->redirect.output_fd != -1)
+	if (cmd->redirect.output_fd != STDOUT_FILENO
+		&& cmd->redirect.output_fd != -1)
 	{
 		if (dup2(cmd->redirect.output_fd, STDOUT_FILENO) == -1)
 		{

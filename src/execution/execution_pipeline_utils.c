@@ -55,7 +55,8 @@ void	handle_fork_error(pid_t *pids, size_t i, int *pipefd, t_data *data)
 	exit_cleanup(data, 1);
 }
 
-void	close_parent_pipes(size_t i, int prev_pipefd, int *pipefd, t_cmd *current)
+void	close_parent_pipes(size_t i, int prev_pipefd, int *pipefd,
+	t_cmd *current)
 {
 	if (i > 0)
 		close(prev_pipefd);

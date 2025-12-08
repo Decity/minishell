@@ -29,7 +29,8 @@ void	init_pipeline(t_data *data, pid_t **pids, int **pipefd)
 	}
 }
 
-void	handle_pipe_creation(t_cmd *current, int *pipefd, pid_t *pids, t_data *data, size_t i)
+void	handle_pipe_creation(t_cmd *current, int *pipefd, pid_t *pids,
+	t_data *data, size_t i)
 {
 	if (current->next != NULL && pipe(pipefd) == -1)
 	{
@@ -40,7 +41,8 @@ void	handle_pipe_creation(t_cmd *current, int *pipefd, pid_t *pids, t_data *data
 	}
 }
 
-void	fork_and_execute(t_cmd *current, pid_t *pids, int *pipefd, int prev_pipefd, size_t i, t_data *data)
+void	fork_and_execute(t_cmd *current, pid_t *pids, int *pipefd,
+	int prev_pipefd, size_t i, t_data *data)
 {
 	pids[i] = fork();
 	if (pids[i] == -1)
@@ -48,7 +50,8 @@ void	fork_and_execute(t_cmd *current, pid_t *pids, int *pipefd, int prev_pipefd,
 	if (pids[i] == 0)
 	{
 		free(pids);
-		exec_pipeline_child(current, data, pipefd, prev_pipefd, i == 0, current->next == NULL);
+		exec_pipeline_child(current, data, pipefd, prev_pipefd, i == 0,
+			current->next == NULL);
 	}
 }
 
