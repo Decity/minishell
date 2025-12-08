@@ -12,70 +12,65 @@
 
 #include "minishell.h"
 
-void	init_pipeline(t_data *data, pid_t **pids, int **pipefd)
+void	init_pipeline(t_data *data, t_pnp *pnp)
 {
-	*pids = malloc(get_cmds_count(data->command) * sizeof(pid_t));
-	if (*pids == NULL)
+	pnp->pids = malloc(get_cmds_count(data->command) * sizeof(pid_t));
+	if (pnp->pids == NULL)
 	{
 		perror("minishell: malloc");
 		exit_cleanup(data, 1);
 	}
-	*pipefd = malloc(2 * sizeof(int));
-	if (*pipefd == NULL)
+	pnp->pipefd = malloc(2 * sizeof(int));
+	if (pnp->pipefd == NULL)
 	{
-		free(*pids);
+		free(pnp->pids);
 		perror("minishell: malloc");
 		exit_cleanup(data, 1);
 	}
 }
 
-void	handle_pipe_creation(t_cmd *current, int *pipefd, pid_t *pids,
-	t_data *data, size_t i)
+void	handle_pipe_creation(t_cmd *current, t_pnp *pnp, t_data *data, size_t i)
 {
-	if (current->next != NULL && pipe(pipefd) == -1)
+	if (current->next != NULL && pipe(pnp->pipefd) == -1)
 	{
 		perror("minishell: pipe");
-		cleanup_pipeline(pids, i);
-		free(pipefd);
+		cleanup_pipeline(pnp->pids, i);
+		free(pnp->pipefd);
 		exit_cleanup(data, 1);
 	}
 }
 
-void	fork_and_execute(t_cmd *current, pid_t *pids, int *pipefd,
-	int prev_pipefd, size_t i, t_data *data)
+void	fork_and_execute(t_cmd *current, t_pnp *pnp, size_t i, t_data *data)
 {
-	pids[i] = fork();
-	if (pids[i] == -1)
-		handle_fork_error(pids, i, pipefd, data);
-	if (pids[i] == 0)
+	pnp->pids[i] = fork();
+	if (pnp->pids[i] == -1)
+		handle_fork_error(pnp->pids, i, pnp->pipefd, data);
+	if (pnp->pids[i] == 0)
 	{
-		free(pids);
-		exec_pipeline_child(current, data, pipefd, prev_pipefd, i == 0,
-			current->next == NULL);
+		free(pnp->pids);
+		exec_pipeline_child(current, data, pnp, i == 0);
 	}
 }
 
 void	handle_pipeline(t_data *data)
 {
 	t_cmd	*current;
-	pid_t	*pids;
-	int		*pipefd;
-	int		prev_pipefd;
+	t_pnp	pnp;
 	size_t	i;
 
-	init_pipeline(data, &pids, &pipefd);
+	init_pipeline(data, &pnp);
 	current = data->command;
 	i = 0;
 	while (current)
 	{
-		handle_pipe_creation(current, pipefd, pids, data, i);
-		fork_and_execute(current, pids, pipefd, prev_pipefd, i, data);
-		close_parent_pipes(i, prev_pipefd, pipefd, current);
+		handle_pipe_creation(current, &pnp, data, i);
+		fork_and_execute(current, &pnp, i, data);
+		close_parent_pipes(i, pnp.prev_pipefd, pnp.pipefd, current);
 		if (current->next != NULL)
-			prev_pipefd = pipefd[0];
+			pnp.prev_pipefd = pnp.pipefd[0];
 		current = current->next;
 		i++;
 	}
-	free(pipefd);
-	wait_for_children(pids, get_cmds_count(data->command), data);
+	free(pnp.pipefd);
+	wait_for_children(pnp.pids, get_cmds_count(data->command), data);
 }

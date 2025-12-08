@@ -57,4 +57,11 @@ typedef struct s_data
 	bool	is_interactive;
 }	t_data;
 
+typedef struct s_p_and_p
+{
+	pid_t	*pids;
+	int		*pipefd;
+	int		prev_pipefd;
+}	t_pnp;
+
 #endif

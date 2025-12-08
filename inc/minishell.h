@@ -79,20 +79,20 @@ char	*get_bin_path(t_cmd *cmd, t_data *data);
 bool	is_builtin(const char *cmd);
 int		execute_builtin(t_cmd *cmd, t_data *data);
 void	close_pipes(int *pipefd, int prev_pipefd, bool is_first, bool is_last);
-void	setup_child_redirections(int *pipefd, int prev_pipefd, bool is_first, bool is_last);
+void	setup_child_redirections(int *pipefd, int prev_pipefd, bool is_first,
+			bool is_last);
 int		apply_redirections(t_cmd *cmd);
-void	exec_pipeline_child(t_cmd *cmd, t_data *data, int *pipefd,
-			int prev_pipefd, bool is_first, bool is_last);
+void	exec_pipeline_child(t_cmd *cmd, t_data *data, t_pnp *pnp,
+			bool is_first);
 void	wait_for_children(pid_t *pids, size_t count, t_data *data);
 void	cleanup_pipeline(pid_t *pids, size_t count);
 void	handle_fork_error(pid_t *pids, size_t i, int *pipefd, t_data *data);
 void	close_parent_pipes(size_t i, int prev_pipefd, int *pipefd,
 			t_cmd *current);
-void	init_pipeline(t_data *data, pid_t **pids, int **pipefd);
-void	handle_pipe_creation(t_cmd *current, int *pipefd, pid_t *pids,
-			t_data *data, size_t i);
-void	fork_and_execute(t_cmd *current, pid_t *pids, int *pipefd,
-			int prev_pipefd, size_t i, t_data *data);
+void	init_pipeline(t_data *data, t_pnp *pnp);
+void	handle_pipe_creation(t_cmd *current, t_pnp *pnp, t_data *data,
+			size_t i);
+void	fork_and_execute(t_cmd *current, t_pnp *pnp, size_t i, t_data *data);
 
 // Signal handling
 
@@ -158,7 +158,7 @@ size_t	count_redir_out(const char **args);
 t_cmd	*parsing_init(const char **args, size_t size);
 // parsing.c
 
-int		*parsing(t_data *data);
+int		parsing(t_data *data);
 
 // HEREDOC
 
@@ -183,7 +183,7 @@ char	*heredoc_duplicate(const char *line);
 void	remove_heredoc_files(t_cmd *cmd);
 // heredoc.c
 
-int		*heredoc(t_data *data);
+int		heredoc(t_data *data);
 
 // EXPANSION
 
@@ -199,5 +199,5 @@ size_t	expansion_varlen(const char *arg);
 size_t	expansion_new_strlen(const char *arg, size_t idx, const t_data *data);
 // expansion.c
 
-int		*expansion(t_data *data);
+int		expansion(t_data *data);
 #endif
