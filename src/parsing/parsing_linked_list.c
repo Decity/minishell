@@ -16,7 +16,7 @@
  * @brief Initializes @p `num` strings from @p `args` to the new struct.
  *
  * It will also initialize all member variables of `t_rdr` and `t_hd` to `0`,
- * with the exception of `output_fd` which gets initialized to `1`.
+ * with the exception of `o_fd` which gets initialized to `1`.
  *
  * @param[in] args	Array of strings.
  * @param[in] num	Amount of strings to copy to the new struct.
@@ -43,8 +43,8 @@ t_cmd	*cmdnew(const char **args, size_t num)
 	{
 		return (free(cmd), NULL);
 	}
-	ft_memset(&cmd->redirect, 0, sizeof(t_rdr));
-	cmd->redirect.output_fd = STDOUT_FILENO;
+	ft_memset(&cmd->rdr, 0, sizeof(t_rdr));
+	cmd->rdr.o_fd = STDOUT_FILENO;
 	cmd->next = NULL;
 	return (cmd);
 }
@@ -83,22 +83,22 @@ void	cmddelone(t_cmd *cmd)
 		return ;
 	free_array(&cmd->args);
 	i = 0;
-	if (cmd->redirect.infile)
+	if (cmd->rdr.infile)
 	{
-		while (cmd->redirect.infile[i].file)
+		while (cmd->rdr.infile[i].file)
 		{
-			free(cmd->redirect.infile[i].delimiter);
-			free(cmd->redirect.infile[i].file);
+			free(cmd->rdr.infile[i].delimiter);
+			free(cmd->rdr.infile[i].file);
 			i += 1;
 		}
 	}
 	i = 0;
-	if (cmd->redirect.outfile)
-		while (cmd->redirect.outfile[i].file)
-			free(cmd->redirect.outfile[i++].file);
+	if (cmd->rdr.outfile)
+		while (cmd->rdr.outfile[i].file)
+			free(cmd->rdr.outfile[i++].file);
 	i = 0;
-	free(cmd->redirect.infile);
-	free(cmd->redirect.outfile);
+	free(cmd->rdr.infile);
+	free(cmd->rdr.outfile);
 	free(cmd);
 }
 

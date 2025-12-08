@@ -122,24 +122,24 @@ void	setup_child_redirections(int *pipefd, int prev_pipefd, bool is_first,
  */
 int	apply_redirections(t_cmd *cmd)
 {
-	if (cmd->redirect.input_fd != STDIN_FILENO && cmd->redirect.input_fd != -1)
+	if (cmd->rdr.i_fd != STDIN_FILENO && cmd->rdr.i_fd != -1)
 	{
-		if (dup2(cmd->redirect.input_fd, STDIN_FILENO) == -1)
+		if (dup2(cmd->rdr.i_fd, STDIN_FILENO) == -1)
 		{
 			perror("minishell: dup2");
 			return (FAILURE);
 		}
-		close(cmd->redirect.input_fd);
+		close(cmd->rdr.i_fd);
 	}
-	if (cmd->redirect.output_fd != STDOUT_FILENO
-		&& cmd->redirect.output_fd != -1)
+	if (cmd->rdr.o_fd != STDOUT_FILENO
+		&& cmd->rdr.o_fd != -1)
 	{
-		if (dup2(cmd->redirect.output_fd, STDOUT_FILENO) == -1)
+		if (dup2(cmd->rdr.o_fd, STDOUT_FILENO) == -1)
 		{
 			perror("minishell: dup2");
 			return (FAILURE);
 		}
-		close(cmd->redirect.output_fd);
+		close(cmd->rdr.o_fd);
 	}
 	return (SUCCESS);
 }

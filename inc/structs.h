@@ -27,8 +27,8 @@ typedef struct s_redir
 
 typedef struct s_rdr
 {
-	int		input_fd;
-	int		output_fd;
+	int		i_fd;
+	int		o_fd;
 	t_redir	*infile;
 	t_redir	*outfile;
 }	t_rdr;
@@ -36,7 +36,7 @@ typedef struct s_rdr
 typedef struct s_cmd
 {
 	char	**args;
-	t_rdr	redirect;
+	t_rdr	rdr;
 	t_cmd	*next;
 }	t_cmd;
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dbakker <dbakker@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ebelle <ebelle@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/11/05 14:09:14 by elie              #+#    #+#             */
-/*   Updated: 2025/12/08 14:00:21 by dbakker          ###   ########.fr       */
+/*   Created: 2025/12/08 17:15:33 by ebelle            #+#    #+#             */
+/*   Updated: 2025/12/08 17:23:53 by ebelle           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@
  */
 void	init(t_data *data)
 {
-	extern const char **environ;
+	extern const char	**environ;
 
 	ft_bzero(data, sizeof(t_data));
 	data->envp = array_to_llist(environ);

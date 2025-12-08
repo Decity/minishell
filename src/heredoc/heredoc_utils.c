@@ -69,12 +69,12 @@ void	remove_heredoc_files(t_cmd *cmd)
 	i = 0;
 	while (cmd)
 	{
-		while (cmd->redirect.infile[i].file)
+		while (cmd->rdr.infile[i].file)
 		{
-			if (cmd->redirect.infile[i].redir_type == TYPE_REDIRECTION_HEREDOC)
+			if (cmd->rdr.infile[i].redir_type == TYPE_REDIRECTION_HEREDOC)
 			{
-				close(cmd->redirect.infile[i].fd);
-				unlink(cmd->redirect.infile[i].file);
+				close(cmd->rdr.infile[i].fd);
+				unlink(cmd->rdr.infile[i].file);
 			}
 			i++;
 		}

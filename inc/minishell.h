@@ -6,7 +6,7 @@
 /*   By: dbakker <dbakker@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/30 15:08:30 by ebelle            #+#    #+#             */
-/*   Updated: 2025/12/08 14:50:12 by dbakker          ###   ########.fr       */
+/*   Updated: 2025/12/08 14:53:04 by dbakker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,7 +96,6 @@ void	fork_and_execute(t_cmd *current, t_pnp *pnp, size_t i, t_data *data);
 
 // Signal handling
 
-extern volatile sig_atomic_t	g_signal;
 void	setup_signals_interactive(void);
 void	setup_signals_executing(void);
 void	restore_signals_default(void);

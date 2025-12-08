@@ -188,9 +188,9 @@ t_cmd	*parsing_init(const char **args, size_t size)
 	{
 		return (NULL);
 	}
-	cmd->redirect.infile = parsing_init_redir_in(args, size);
-	cmd->redirect.outfile = parsing_init_redir_out(args, size);
-	if (cmd->redirect.infile == NULL || cmd->redirect.outfile == NULL)
+	cmd->rdr.infile = parsing_init_redir_in(args, size);
+	cmd->rdr.outfile = parsing_init_redir_out(args, size);
+	if (cmd->rdr.infile == NULL || cmd->rdr.outfile == NULL)
 	{
 		return (cmddelone(cmd), NULL);
 	}
