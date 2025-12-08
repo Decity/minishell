@@ -6,7 +6,7 @@
 /*   By: dbakker <dbakker@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/05 15:22:00 by elie              #+#    #+#             */
-/*   Updated: 2025/12/08 14:25:36 by dbakker          ###   ########.fr       */
+/*   Updated: 2025/12/08 14:44:27 by dbakker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,7 @@ void	handle_single_builtin(t_cmd *cmd, t_data *data)
 		data->exit_status = 1;
 		return ;
 	}
-	data->exit_status = execute_builtin(cmd, data);;
+	data->exit_status = execute_builtin(cmd, data);
 	dup2(saved_stdin, STDIN_FILENO);
 	dup2(saved_stdout, STDOUT_FILENO);
 	close(saved_stdin);

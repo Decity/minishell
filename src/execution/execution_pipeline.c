@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution_pipeline.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: elie <elie@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: dbakker <dbakker@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/05 15:25:00 by elie              #+#    #+#             */
-/*   Updated: 2025/12/08 10:19:40 by elie             ###   ########.fr       */
+/*   Updated: 2025/12/08 14:43:44 by dbakker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,8 @@ void	fork_and_execute(t_cmd *current, pid_t *pids, int *pipefd, int prev_pipefd,
 	if (pids[i] == 0)
 	{
 		free(pids);
-		exec_pipeline_child(current, data, pipefd, prev_pipefd, i == 0, current->next == NULL);
+		exec_pipeline_child(current, data, pipefd, prev_pipefd, i == 0,
+			current->next == NULL);
 	}
 }
 

@@ -6,7 +6,7 @@
 /*   By: dbakker <dbakker@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/28 13:56:00 by elie              #+#    #+#             */
-/*   Updated: 2025/12/08 11:02:13 by dbakker          ###   ########.fr       */
+/*   Updated: 2025/12/08 14:42:20 by dbakker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,6 @@ void	close_pipes(int *pipefd, int prev_pipefd, bool is_first, bool is_last)
 {
 	if (!is_first)
 		close(prev_pipefd);
-
 	if (!is_last)
 	{
 		close(pipefd[0]);
@@ -104,7 +103,8 @@ void	close_pipes(int *pipefd, int prev_pipefd, bool is_first, bool is_last)
  * @param[in] is_first True if first command in pipeline
  * @param[in] is_last True if last command in pipeline
  */
-void	setup_child_redirections(int *pipefd, int prev_pipefd, bool is_first, bool is_last)
+void	setup_child_redirections(int *pipefd, int prev_pipefd, bool is_first,
+	bool is_last)
 {
 	if (!is_first)
 		dup2(prev_pipefd, STDIN_FILENO);
@@ -131,7 +131,8 @@ int	apply_redirections(t_cmd *cmd)
 		}
 		close(cmd->redirect.input_fd);
 	}
-	if (cmd->redirect.output_fd != STDOUT_FILENO && cmd->redirect.output_fd != -1)
+	if (cmd->redirect.output_fd != STDOUT_FILENO
+		&& cmd->redirect.output_fd != -1)
 	{
 		if (dup2(cmd->redirect.output_fd, STDOUT_FILENO) == -1)
 		{
