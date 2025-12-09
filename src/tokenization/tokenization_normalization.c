@@ -6,72 +6,59 @@
 /*   By: dbakker <dbakker@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/18 15:18:05 by elie              #+#    #+#             */
-/*   Updated: 2025/12/08 14:53:05 by dbakker          ###   ########.fr       */
+/*   Updated: 2025/12/08 16:28:58 by dbakker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-/**
- * @brief calculates the len for the normalized version of the given str
- */
-size_t	get_normalized_str_len(const char *str)
+static int	tokenization_in_quote(const char *str, int8_t curr,
+	int8_t next)
 {
-	size_t	len;
-	size_t	i;
-	int8_t	curr_type;
-	int8_t	next_type;
-	char	in_quote;
-
-	i = 0;
-	len = 0;
-	in_quote = 0;
-	while (str[i])
-	{
-		curr_type = get_token_type(&str[i]);
-		next_type = get_token_type(&str[i + 1]);
-
-		// Track quoatation
-		if (!in_quote && (curr_type == TYPE_SQUOTE || curr_type == TYPE_DQUOTE))
-			in_quote = str[i];
-		else if (in_quote && str[i] == in_quote)
-			in_quote = 0;
-
-		// Handle <<  and >> >
-		if (curr_type == TYPE_REDIRECTION_APPEND || curr_type == TYPE_REDIRECTION_HEREDOC)
-		{
-			len += 2;
-			i++;
-			next_type = get_token_type(&str[i + 1]);
-		}
-		else
-			len++;
-
-		// Normalize if not in quotes
-		if (!in_quote)
-		{
-			// Add space between an arg and pipe/redirect
-			if (curr_type == TYPE_ARG && (next_type == TYPE_PIPE || get_redirection_type(&str[i + 1])))
-				len++;
-			// Add space between pipe/redirect and an arg
-			else if ((curr_type == TYPE_PIPE || get_redirection_type(&str[i])) && next_type == TYPE_ARG)
-				len++;
-			// Add space between pipe and redirection
-			else if (curr_type == TYPE_PIPE && get_redirection_type(&str[i + 1]))
-				len++;
-			// Add space between closing quote and pipe/redirect
-			else if ((curr_type == TYPE_SQUOTE || curr_type == TYPE_DQUOTE) && (next_type == TYPE_PIPE || get_redirection_type(&str[i + 1])))
-				len++;
-			// Add space between pipe/redirect if next is quote
-			else if ((curr_type == TYPE_PIPE || get_redirection_type(&str[i])) && (next_type == TYPE_SQUOTE || next_type == TYPE_DQUOTE))
-				len++;
-		}
-
-		i++;
-	}
-	return (len);
+	if (curr == TYPE_ARG && (next == TYPE_PIPE || get_redirection_type(str)))
+		return (' ');
+	else if ((curr == TYPE_PIPE || get_redirection_type(str - 1))
+		&& next == TYPE_ARG)
+		return (' ');
+	else if (curr == TYPE_PIPE && get_redirection_type(str))
+		return (' ');
+	else if ((curr == TYPE_SQUOTE || curr == TYPE_DQUOTE)
+		&& (next == TYPE_PIPE || get_redirection_type(str)))
+		return (' ');
+	else if ((curr == TYPE_PIPE || get_redirection_type(str - 1))
+		&& (next == TYPE_SQUOTE || next == TYPE_DQUOTE))
+		return (' ');
+	return (0);
 }
 
+void	tokenization_normalize(char *new_str, const char *str)
+{
+	char	in_quote;
+	int8_t	curr;
+	int8_t	next;
+	size_t	i;
+	size_t	j;
+
+	in_quote = 0;
+	j = 0;
+	i = 0;
+	while (str[i])
+	{
+		tokenization_update_tokens(str + i, &curr, &next);
+		new_str[j++] = str[i++];
+		if (!in_quote && (curr == TYPE_SQUOTE || curr == TYPE_DQUOTE))
+			in_quote = str[i - 1];
+		else if (in_quote && str[i - 1] == in_quote)
+			in_quote = 0;
+		if (curr == TYPE_REDIRECTION_APPEND || curr == TYPE_REDIRECTION_HEREDOC)
+		{
+			new_str[j++] = str[i++];
+			next = get_token_type(&str[i]);
+		}
+		if (in_quote == 0 && tokenization_in_quote(str + i, curr, next))
+			new_str[j++] = tokenization_in_quote(str + i, curr, next);
+	}
+}
 
 /**
  * @brief Returns a str with guaranteed whitespace around redirections and pipes
@@ -79,57 +66,10 @@ size_t	get_normalized_str_len(const char *str)
 char	*normalize_whitespace(const char *str)
 {
 	char	*new_str;
-	size_t	i;
-	size_t	j;
-	int8_t	curr_type;
-	int8_t	next_type;
-	char	in_quote;
 
 	new_str = ft_calloc(get_normalized_str_len(str) + 1, sizeof(char));
 	if (new_str == NULL)
 		return (NULL);
-
-	i = 0;
-	j = 0;
-	in_quote = 0;
-	while (str[i])
-	{
-		curr_type = get_token_type(&str[i]);
-		next_type = get_token_type(&str[i + 1]);
-
-		new_str[j++] = str[i++];
-
-		// track quotation
-		if (!in_quote && (curr_type == TYPE_SQUOTE || curr_type == TYPE_DQUOTE))
-			in_quote = str[i - 1];
-		else if (in_quote && str[i - 1] == in_quote)
-			in_quote = 0;
-
-		// Handle >> and <<
-		if (curr_type == TYPE_REDIRECTION_APPEND || curr_type == TYPE_REDIRECTION_HEREDOC)
-		{
-			new_str[j++] = str[i++];
-			next_type = get_token_type(&str[i]);
-		}
-
-		if (!in_quote)
-		{
-			// Add space between an arg and pipe/redirect
-			if (curr_type == TYPE_ARG && (next_type == TYPE_PIPE || get_redirection_type(&str[i])))
-				new_str[j++] = ' ';
-			// Add space between pipe/redirect and an arg
-			else if ((curr_type == TYPE_PIPE || get_redirection_type(&str[i - 1])) && next_type == TYPE_ARG)
-				new_str[j++] = ' ';
-			// Add space between pipe and redirection
-			else if (curr_type == TYPE_PIPE && get_redirection_type(&str[i]))
-				new_str[j++] = ' ';
-			// Add space between closing quote and pipe/redirect
-			else if ((curr_type == TYPE_SQUOTE || curr_type == TYPE_DQUOTE) && (next_type == TYPE_PIPE || get_redirection_type(&str[i])))
-				new_str[j++] = ' ';
-			// Add space between pipe/redirect if next is quote
-			else if ((curr_type == TYPE_PIPE || get_redirection_type(&str[i - 1])) && (next_type == TYPE_SQUOTE || next_type == TYPE_DQUOTE))
-				new_str[j++] = ' ';
-		}
-	}
+	tokenization_normalize(new_str, str);
 	return (new_str);
 }

@@ -6,16 +6,12 @@
 /*   By: dbakker <dbakker@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/30 19:00:22 by elie              #+#    #+#             */
-/*   Updated: 2025/11/15 14:52:51 by dbakker          ###   ########.fr       */
+/*   Updated: 2025/12/08 16:04:07 by dbakker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef DEFINITIONS_H
 # define DEFINITIONS_H
-
-# ifndef DEBUG
-#  define DEBUG false
-# endif
 
 # define FAILURE 0
 # define SUCCESS 1

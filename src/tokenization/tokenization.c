@@ -6,7 +6,7 @@
 /*   By: dbakker <dbakker@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/03 15:20:17 by elie              #+#    #+#             */
-/*   Updated: 2025/12/08 14:53:05 by dbakker          ###   ########.fr       */
+/*   Updated: 2025/12/08 18:30:16 by dbakker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,13 +25,13 @@ size_t	set_tokens(t_data *data)
 
 	if (validate_quotation(data->input) == FAILURE)
 	{
-		perror("minishell: failed to validate quotes.\n");
+		ft_putendl_fd("minishell: failed to validate quotes.", STDERR_FILENO);
 		data->exit_status = 2;
 		return (FAILURE);
 	}
 	if (validate_token_str(data->input) == FAILURE)
 	{
-		printf("minishell: failed to valdiate syntax\n");
+		ft_putendl_fd("minishell: failed to valdiate syntax", STDERR_FILENO);
 		data->exit_status = 2;
 		return (FAILURE);
 	}
@@ -44,6 +44,25 @@ size_t	set_tokens(t_data *data)
 		exit_cleanup(data, data->exit_status);
 	tokenize(data, token_count);
 	return (SUCCESS);
+}
+
+static void	tokenization_quote_matching(const char *input, size_t *end,
+	char *quote)
+{
+	while (input[*end] && !ft_isspace(input[*end]))
+	{
+		*quote = get_quote(input[*end]);
+		if (*quote)
+		{
+			(*end)++;
+			while (input[*end] && input[*end] != *quote)
+				(*end)++;
+			if (input[*end] == *quote)
+				(*end)++;
+		}
+		else
+			(*end)++;
+	}
 }
 
 /**
@@ -64,22 +83,7 @@ void	tokenize(t_data *data, size_t token_count)
 		while (ft_isspace(input[start]))
 			start++;
 		end = start;
-		// Skip through the token until we hit a space or end of string
-		while (input[end] && !ft_isspace(input[end]))
-		{
-			quote = get_quote(input[end]);
-			if (quote)
-			{
-				end++;
-				while (input[end] && input[end] != quote)
-					end++;
-				if (input[end] == quote)
-					end++;
-			}
-			else
-				end++;
-		}
-
+		tokenization_quote_matching(input, &end, &quote);
 		data->tokens[i] = ft_strndup(&input[start], end - start);
 		if (data->tokens[i] == NULL)
 			exit_cleanup(data, data->exit_status);
@@ -89,25 +93,17 @@ void	tokenize(t_data *data, size_t token_count)
 	data->tokens[i] = NULL;
 }
 
-/**
- * @brief Counts and returns the amount of tokens the given string @p `input` should be split into
- */
-size_t	count_tokens(char *input)
+static void	tokenization_quote_handling(char *input, size_t *token_count)
 {
 	size_t	i;
 	char	quote;
-	size_t	token_count;
 
-	quote = 0;
-	token_count = 1;
 	i = 0;
 	while (ft_isspace(input[i]))
 		i++;
 	while (input[i])
 	{
-
 		quote = get_quote(input[i]);
-
 		if (quote)
 		{
 			i++;
@@ -120,9 +116,21 @@ size_t	count_tokens(char *input)
 			while (input[i + 1] && ft_isspace(input[i + 1]))
 				i++;
 			if (input[i + 1] && !ft_isspace(input[i + 1]))
-				token_count++;
+				(*token_count)++;
 		}
 		i++;
 	}
+}
+
+/**
+ * @brief Counts and returns the amount of tokens the given string
+ * @brief @p `input` should be split into.
+ */
+size_t	count_tokens(char *input)
+{
+	size_t	token_count;
+
+	token_count = 1;
+	tokenization_quote_handling(input, &token_count);
 	return (token_count);
 }
