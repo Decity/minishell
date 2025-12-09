@@ -6,7 +6,7 @@
 /*   By: elie <elie@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/05 15:22:00 by elie              #+#    #+#             */
-/*   Updated: 2025/12/09 13:28:58 by elie             ###   ########.fr       */
+/*   Updated: 2025/12/09 13:44:47 by elie             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,6 @@ static void	handle_redir_error(int saved_stdin, int saved_stdout, t_data *data);
 
 static void	close_stdin_stdout(int saved_stdin, int saved_stdout)
 {
-	dup2(saved_stdin, STDIN_FILENO);
-	dup2(saved_stdout, STDOUT_FILENO);
 	close(saved_stdin);
 	close(saved_stdout);
 }

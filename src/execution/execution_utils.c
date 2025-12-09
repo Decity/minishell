@@ -6,7 +6,7 @@
 /*   By: elie <elie@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/28 13:56:00 by elie              #+#    #+#             */
-/*   Updated: 2025/12/09 13:30:20 by elie             ###   ########.fr       */
+/*   Updated: 2025/12/09 13:48:08 by elie             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,6 @@ static char	**get_bin_paths(const t_list *envp)
 	if (path_env == NULL)
 		return (NULL);
 	paths = ft_split(path_env, ':');
-	free_and_null(&path_env);
 	return (paths);
 }
 
