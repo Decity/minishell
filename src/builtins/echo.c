@@ -6,7 +6,7 @@
 /*   By: dbakker <dbakker@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/17 14:27:44 by dbakker           #+#    #+#             */
-/*   Updated: 2025/12/09 11:41:36 by dbakker          ###   ########.fr       */
+/*   Updated: 2025/12/09 16:32:09 by dbakker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ int	builtin_echo(const char **messages)
 			printf("%s ", messages[i]);
 		i += 1;
 	}
-	if (n_option == false)
+	if (n_option == false && *messages)
 		printf("\n");
 	return (0);
 }
