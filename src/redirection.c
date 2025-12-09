@@ -6,7 +6,7 @@
 /*   By: ebelle <ebelle@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/15 09:54:20 by elie              #+#    #+#             */
-/*   Updated: 2025/12/09 17:24:02 by ebelle           ###   ########.fr       */
+/*   Updated: 2025/12/09 17:36:27 by ebelle           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,6 @@ static void	set_redirection_input(t_cmd *curr_cmd, t_data *data)
 			curr_cmd->rdr.i_fd = open(curr_cmd->rdr.infile[i].file, O_RDONLY);
 			if (curr_cmd->rdr.i_fd == -1)
 				perror(curr_cmd->rdr.infile[i].file);
-
 		}
 		else if (curr_cmd->rdr.infile[i].redir_type == TYPE_REDIRECTION_HEREDOC)
 		{
