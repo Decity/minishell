@@ -86,11 +86,19 @@ void	handle_single_builtin(t_cmd *cmd, t_data *data)
 		data->exit_status = 1;
 		return ;
 	}
+	if (ft_strcmp(cmd->args[0], "exit") == 0)
+	{
+		close(saved_stdin);
+		close(saved_stdout);
+	}
 	data->exit_status = execute_builtin(cmd, data);
-	dup2(saved_stdin, STDIN_FILENO);
-	dup2(saved_stdout, STDOUT_FILENO);
-	close(saved_stdin);
-	close(saved_stdout);
+	if (ft_strcmp(cmd->args[0], "exit") != 0)
+	{
+		dup2(saved_stdin, STDIN_FILENO);
+		dup2(saved_stdout, STDOUT_FILENO);
+		close(saved_stdin);
+		close(saved_stdout);
+	}
 }
 
 static void	handle_redir_error(int saved_stdin, int saved_stdout, t_data *data)

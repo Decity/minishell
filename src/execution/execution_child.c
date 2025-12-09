@@ -12,6 +12,26 @@
 
 #include "minishell.h"
 
+static void	close_other_cmd_fds(t_data *data, t_cmd *current_cmd)
+{
+	t_cmd	*other_cmd;
+
+	other_cmd = data->command;
+	while (other_cmd)
+	{
+		if (other_cmd != current_cmd)
+		{
+			if (other_cmd->rdr.i_fd != STDIN_FILENO
+				&& other_cmd->rdr.i_fd != -1)
+				close(other_cmd->rdr.i_fd);
+			if (other_cmd->rdr.o_fd != STDOUT_FILENO
+				&& other_cmd->rdr.o_fd != -1)
+				close(other_cmd->rdr.o_fd);
+		}
+		other_cmd = other_cmd->next;
+	}
+}
+
 void	execute_child(t_cmd *cmd, t_data *data)
 {
 	restore_signals_default();
@@ -25,12 +45,14 @@ void	execute_child(t_cmd *cmd, t_data *data)
 		execute_binary(cmd, data);
 }
 
-void	exec_pipeline_child(t_cmd *cmd, t_data *data, int *pipefd, int prev_pipefd, bool is_first, bool is_last)
+void	exec_pipeline_child(t_cmd *cmd, t_data *data, t_pnp *pnp, bool is_first)
 {
 	restore_signals_default();
-	setup_child_redirections(pipefd, prev_pipefd, is_first, is_last);
-	close_pipes(pipefd, prev_pipefd, is_first, is_last);
-	free(pipefd);
+	setup_child_redirections(pnp->pipefd, pnp->prev_pipefd, is_first,
+		cmd->next == NULL);
+	close_pipes(pnp->pipefd, pnp->prev_pipefd, is_first, !cmd->next);
+	free(pnp->pipefd);
+	close_other_cmd_fds(data, cmd);
 	if (apply_redirections(cmd) == FAILURE)
 		exit_cleanup(data, 1);
 	if (!cmd->args[0])

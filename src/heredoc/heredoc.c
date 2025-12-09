@@ -31,15 +31,15 @@ static void	*heredoc_init(t_cmd *cmd)
 	node = cmd;
 	while (node)
 	{
-		while (node->redirect.infile[i].file
-			|| node->redirect.infile[i].delimiter)
+		while (node->rdr.infile[i].file
+			|| node->rdr.infile[i].delimiter)
 		{
-			if (node->redirect.infile[i].redir_type == TYPE_REDIRECTION_HEREDOC)
+			if (node->rdr.infile[i].redir_type == TYPE_REDIRECTION_HEREDOC)
 			{
-				node->redirect.infile[i].file = generate_heredoc_name();
-				if (node->redirect.infile[i].file == NULL)
+				node->rdr.infile[i].file = generate_heredoc_name();
+				if (node->rdr.infile[i].file == NULL)
 				{
-					return (redirclear(node->redirect.infile), NULL);
+					return (redirclear(node->rdr.infile), NULL);
 				}
 			}
 			i += 1;
@@ -69,11 +69,11 @@ static t_cmd	*heredoc_readline(const t_cmd *cmd, const t_list *envp,
 		if (line == NULL)
 		{
 			heredoc_print_warning(line_count,
-				cmd->redirect.infile[idx].delimiter);
+				cmd->rdr.infile[idx].delimiter);
 			break ;
 		}
 		line_count += 1;
-		if (strcmp(line, cmd->redirect.infile[idx].delimiter) == 0)
+		if (strcmp(line, cmd->rdr.infile[idx].delimiter) == 0)
 		{
 			free(line);
 			break ;
@@ -81,7 +81,7 @@ static t_cmd	*heredoc_readline(const t_cmd *cmd, const t_list *envp,
 		line = heredoc_expansion(envp, line);
 		if (line == NULL)
 			return (NULL);
-		ft_putendl_fd(line, cmd->redirect.infile[idx].fd);
+		ft_putendl_fd(line, cmd->rdr.infile[idx].fd);
 		free(line);
 	}
 	return ((t_cmd *)cmd);
@@ -100,13 +100,13 @@ static void	*heredoc_create_file(t_cmd *cmd, const t_list *envp)
 	size_t	i;
 
 	i = 0;
-	while (cmd->redirect.infile[i].file)
+	while (cmd->rdr.infile[i].file)
 	{
-		if (cmd->redirect.infile[i].redir_type == TYPE_REDIRECTION_HEREDOC)
+		if (cmd->rdr.infile[i].redir_type == TYPE_REDIRECTION_HEREDOC)
 		{
-			cmd->redirect.infile[i].fd = open(cmd->redirect.infile[i].file,
+			cmd->rdr.infile[i].fd = open(cmd->rdr.infile[i].file,
 					O_WRONLY | O_CREAT | O_TRUNC, 0644);
-			if (cmd->redirect.infile[i].fd == -1)
+			if (cmd->rdr.infile[i].fd == -1)
 			{
 				return (NULL);
 			}
@@ -114,7 +114,7 @@ static void	*heredoc_create_file(t_cmd *cmd, const t_list *envp)
 			{
 				return (NULL);
 			}
-			close(cmd->redirect.infile[i].fd);
+			close(cmd->rdr.infile[i].fd);
 		}
 		i += 1;
 	}

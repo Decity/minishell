@@ -27,8 +27,8 @@ typedef struct s_redir
 
 typedef struct s_rdr
 {
-	int		input_fd;
-	int		output_fd;
+	int		i_fd;
+	int		o_fd;
 	t_redir	*infile;
 	t_redir	*outfile;
 }	t_rdr;
@@ -36,7 +36,7 @@ typedef struct s_rdr
 typedef struct s_cmd
 {
 	char	**args;
-	t_rdr	redirect;
+	t_rdr	rdr;
 	t_cmd	*next;
 }	t_cmd;
 
@@ -56,5 +56,12 @@ typedef struct s_data
 	int		exit_status;
 	bool	is_interactive;
 }	t_data;
+
+typedef struct s_p_and_p
+{
+	pid_t	*pids;
+	int		*pipefd;
+	int		prev_pipefd;
+}	t_pnp;
 
 #endif

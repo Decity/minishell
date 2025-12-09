@@ -3,9 +3,10 @@
    Memcheck:Leak
    ...
    obj:*/libreadline.so.*
+   
 }
 {
- suppress_usr_local_bin
+   suppress_usr_local_bin
    Memcheck:Leak
    ...
    obj:/usr/local/bin*

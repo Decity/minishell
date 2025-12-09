@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dbakker <dbakker@student.42.fr>            +#+  +:+       +#+        */
+/*   By: elie <elie@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/30 15:08:30 by ebelle            #+#    #+#             */
-/*   Updated: 2025/12/09 11:55:03 by dbakker          ###   ########.fr       */
+/*   Updated: 2025/12/09 12:11:53 by elie             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,7 @@ uint8_t	set_input(t_data *data);
 
 // Shell operations
 void	set_redirections(t_data *data);
+void	close_redirection_fds(t_data *data);
 
 // Parsing
 bool	is_redirection(char *str);
@@ -87,22 +88,20 @@ void	close_pipes(int *pipefd, int prev_pipefd, bool is_first, bool is_last);
 void	setup_child_redirections(int *pipefd, int prev_pipefd, bool is_first,
 			bool is_last);
 int		apply_redirections(t_cmd *cmd);
-void	exec_pipeline_child(t_cmd *cmd, t_data *data, int *pipefd,
-			int prev_pipefd, bool is_first, bool is_last);
+void	exec_pipeline_child(t_cmd *cmd, t_data *data, t_pnp *pnp,
+			bool is_first);
 void	wait_for_children(pid_t *pids, size_t count, t_data *data);
 void	cleanup_pipeline(pid_t *pids, size_t count);
 void	handle_fork_error(pid_t *pids, size_t i, int *pipefd, t_data *data);
 void	close_parent_pipes(size_t i, int prev_pipefd, int *pipefd,
 			t_cmd *current);
-void	init_pipeline(t_data *data, pid_t **pids, int **pipefd);
-void	handle_pipe_creation(t_cmd *current, int *pipefd, pid_t *pids,
-			t_data *data, size_t i);
-void	fork_and_execute(t_cmd *current, pid_t *pids, int *pipefd,
-			int prev_pipefd, size_t i, t_data *data);
+void	init_pipeline(t_data *data, t_pnp *pnp);
+void	handle_pipe_creation(t_cmd *current, t_pnp *pnp, t_data *data,
+			size_t i);
+void	fork_and_execute(t_cmd *current, t_pnp *pnp, size_t i, t_data *data);
 
 // Signal handling
 
-extern volatile sig_atomic_t	g_signal;
 void	setup_signals_interactive(void);
 void	setup_signals_executing(void);
 void	restore_signals_default(void);

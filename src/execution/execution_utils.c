@@ -27,9 +27,13 @@ char	*get_executable_path(const char *exec, const t_list *envp)
 	char	**paths;
 	char	*abs_path;
 	char	*slashed_path;
+	char	*path_env;
 	size_t	i;
 
-	paths = ft_split(ft_getenv(envp, "PATH"), ':');
+	path_env = ft_getenv(envp, "PATH");
+	if (path_env == NULL)
+		return (NULL);
+	paths = ft_split(path_env, ':');
 	if (paths == NULL)
 		return (perror("minishell"), NULL);
 	i = 0;
@@ -122,24 +126,26 @@ void	setup_child_redirections(int *pipefd, int prev_pipefd, bool is_first,
  */
 int	apply_redirections(t_cmd *cmd)
 {
-	if (cmd->redirect.input_fd != STDIN_FILENO && cmd->redirect.input_fd != -1)
+	if (cmd->rdr.i_fd != STDIN_FILENO && cmd->rdr.i_fd != -1)
 	{
-		if (dup2(cmd->redirect.input_fd, STDIN_FILENO) == -1)
+		if (dup2(cmd->rdr.i_fd, STDIN_FILENO) == -1)
 		{
 			perror("minishell: dup2");
 			return (FAILURE);
 		}
-		close(cmd->redirect.input_fd);
+		close(cmd->rdr.i_fd);
+		cmd->rdr.i_fd = -1;
 	}
-	if (cmd->redirect.output_fd != STDOUT_FILENO
-		&& cmd->redirect.output_fd != -1)
+	if (cmd->rdr.o_fd != STDOUT_FILENO
+		&& cmd->rdr.o_fd != -1)
 	{
-		if (dup2(cmd->redirect.output_fd, STDOUT_FILENO) == -1)
+		if (dup2(cmd->rdr.o_fd, STDOUT_FILENO) == -1)
 		{
 			perror("minishell: dup2");
 			return (FAILURE);
 		}
-		close(cmd->redirect.output_fd);
+		close(cmd->rdr.o_fd);
+		cmd->rdr.o_fd = -1;
 	}
 	return (SUCCESS);
 }

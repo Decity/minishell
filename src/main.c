@@ -34,6 +34,7 @@ static void	run(t_data *data)
 		exit_cleanup(data, EXIT_FAILURE);
 	set_redirections(data);
 	execution(data);
+	close_redirection_fds(data);
 	remove_heredoc_files(data->command);
 	cleanup_data(data);
 }
@@ -63,6 +64,7 @@ static void	run_command(t_data *data, const char *command)
 	expansion(data);
 	set_redirections(data);
 	execution(data);
+	close_redirection_fds(data);
 	remove_heredoc_files(data->command);
 	cleanup_data(data);
 }
