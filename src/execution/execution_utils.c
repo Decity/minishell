@@ -3,14 +3,26 @@
 /*                                                        :::      ::::::::   */
 /*   execution_utils.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dbakker <dbakker@student.42.fr>            +#+  +:+       +#+        */
+/*   By: elie <elie@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/28 13:56:00 by elie              #+#    #+#             */
-/*   Updated: 2025/12/08 14:42:20 by dbakker          ###   ########.fr       */
+/*   Updated: 2025/12/09 13:48:08 by elie             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+static char	**get_bin_paths(const t_list *envp)
+{
+	char	**paths;
+	char *path_env;
+
+	path_env = ft_getenv(envp, "PATH");
+	if (path_env == NULL)
+		return (NULL);
+	paths = ft_split(path_env, ':');
+	return (paths);
+}
 
 /**
  * @brief Find executable path by searching PATH directories
@@ -27,13 +39,9 @@ char	*get_executable_path(const char *exec, const t_list *envp)
 	char	**paths;
 	char	*abs_path;
 	char	*slashed_path;
-	char	*path_env;
 	size_t	i;
 
-	path_env = ft_getenv(envp, "PATH");
-	if (path_env == NULL)
-		return (NULL);
-	paths = ft_split(path_env, ':');
+	paths = get_bin_paths(envp);
 	if (paths == NULL)
 		return (perror("minishell"), NULL);
 	i = 0;
@@ -74,27 +82,6 @@ size_t	get_cmds_count(t_cmd *commands)
 		current = current->next;
 	}
 	return (count);
-}
-
-/**
- * @brief Close pipe file descriptors
- *
- * Closes previous pipe read end and current pipe both ends if applicable.
- *
- * @param[in] pipefd Current pipe file descriptors
- * @param[in] prev_pipefd Previous pipe read end
- * @param[in] is_first True if first command in pipeline
- * @param[in] is_last True if last command in pipeline
- */
-void	close_pipes(int *pipefd, int prev_pipefd, bool is_first, bool is_last)
-{
-	if (!is_first)
-		close(prev_pipefd);
-	if (!is_last)
-	{
-		close(pipefd[0]);
-		close(pipefd[1]);
-	}
 }
 
 /**

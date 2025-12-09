@@ -6,7 +6,7 @@
 /*   By: elie <elie@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/30 15:08:30 by ebelle            #+#    #+#             */
-/*   Updated: 2025/12/09 12:11:53 by elie             ###   ########.fr       */
+/*   Updated: 2025/12/09 13:26:48 by elie             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -134,6 +134,7 @@ void	minishell_exit(t_data *data);
 
 void	*builtin_export(t_list *list, const char *envvar);
 int		export_print(const t_list *list);
+int		handle_export(t_cmd *cmd, t_data *data);
 // pwd.c
 
 void	*builtin_update_pwd(t_pwd *directory);

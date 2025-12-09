@@ -6,7 +6,7 @@
 /*   By: elie <elie@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/01 09:57:35 by dbakker           #+#    #+#             */
-/*   Updated: 2025/12/01 14:34:14 by elie             ###   ########.fr       */
+/*   Updated: 2025/12/09 13:26:13 by elie             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,4 +30,16 @@ int	export_print(const t_list *list)
 		list = list->next;
 	}
 	return (0);
+}
+
+int	handle_export(t_cmd *cmd, t_data *data)
+{
+	if (cmd->args[1])
+	{
+		if (builtin_export(data->envp, cmd->args[1]) == NULL)
+			return (1);
+		return (0);
+	}
+	else
+		return (export_print(data->envp));
 }

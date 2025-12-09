@@ -3,17 +3,22 @@
 /*                                                        :::      ::::::::   */
 /*   execution_builtins.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dbakker <dbakker@student.42.fr>            +#+  +:+       +#+        */
+/*   By: elie <elie@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/05 15:22:00 by elie              #+#    #+#             */
-/*   Updated: 2025/12/08 14:44:27 by dbakker          ###   ########.fr       */
+/*   Updated: 2025/12/09 13:44:47 by elie             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static int	handle_export(t_cmd *cmd, t_data *data);
 static void	handle_redir_error(int saved_stdin, int saved_stdout, t_data *data);
+
+static void	close_stdin_stdout(int saved_stdin, int saved_stdout)
+{
+	close(saved_stdin);
+	close(saved_stdout);
+}
 
 bool	is_builtin(const char *cmd)
 {
@@ -55,18 +60,6 @@ int	execute_builtin(t_cmd *cmd, t_data *data)
 	return (0);
 }
 
-static int	handle_export(t_cmd *cmd, t_data *data)
-{
-	if (cmd->args[1])
-	{
-		if (builtin_export(data->envp, cmd->args[1]) == NULL)
-			return (1);
-		return (0);
-	}
-	else
-		return (export_print(data->envp));
-}
-
 void	handle_single_builtin(t_cmd *cmd, t_data *data)
 {
 	int	saved_stdin;
@@ -81,23 +74,18 @@ void	handle_single_builtin(t_cmd *cmd, t_data *data)
 	}
 	if (apply_redirections(cmd) == FAILURE)
 	{
-		close(saved_stdin);
-		close(saved_stdout);
+		close_stdin_stdout(saved_stdin, saved_stdout);
 		data->exit_status = 1;
 		return ;
 	}
 	if (ft_strcmp(cmd->args[0], "exit") == 0)
-	{
-		close(saved_stdin);
-		close(saved_stdout);
-	}
+	close_stdin_stdout(saved_stdin, saved_stdout);
 	data->exit_status = execute_builtin(cmd, data);
 	if (ft_strcmp(cmd->args[0], "exit") != 0)
 	{
 		dup2(saved_stdin, STDIN_FILENO);
 		dup2(saved_stdout, STDOUT_FILENO);
-		close(saved_stdin);
-		close(saved_stdout);
+		close_stdin_stdout(saved_stdin, saved_stdout);
 	}
 }
 
