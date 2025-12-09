@@ -6,7 +6,7 @@
 /*   By: dbakker <dbakker@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/15 13:16:57 by dbakker           #+#    #+#             */
-/*   Updated: 2025/12/08 14:12:53 by dbakker          ###   ########.fr       */
+/*   Updated: 2025/12/09 11:23:36 by dbakker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,35 +53,27 @@ static bool	is_env_name(const char *str)
 }
 
 /**
- * @brief Check if @p `envvar` matches the `NAME` in `content` of @p
+ * @brief Check if @p `str_env` matches the `NAME` in `content` of @p
  * @brief `curr_node` and replace its `VALUE`.
  *
  * @param[out]	curr_node	`content` to replace.
- * @param[in]	envvar		The new environmental variable.
+ * @param[in]	str_env		The new environmental variable.
  *
  * @retval New pointer to `content` of @p `curr_node` if both arguments match.
- * @retval Pointer to `content` of @p `curr_node` if neither arguments match.
- * @retval `NULL` on failure.
- *
- * @warning Caller owns free().
+ * @retval Pointer to `content` of @p `curr_node` if both arguments don't match.
  */
-static t_list	*builtin_replace_env(t_list *curr_node, const char *envvar)
+static t_list	*builtin_replace_env(t_list *curr_node, const char *str_env)
 {
 	size_t	len_envvar;
 	size_t	len_cnt;
-	char	*str;
 
-	len_envvar = env_namelen(envvar);
+	len_envvar = env_namelen(str_env);
 	len_cnt = env_namelen(curr_node->content);
-	if (ft_memcmp(curr_node->content, envvar, len_cnt) == 0
+	if (ft_memcmp(curr_node->content, str_env, len_cnt) == 0
 		&& len_envvar == len_cnt)
 	{
-		str = ft_strdup(envvar);
-		if (str == NULL)
-			return (NULL);
 		free(curr_node->content);
-		curr_node->content = str;
-		return (curr_node->content);
+		curr_node->content = (void *)str_env;
 	}
 	return (curr_node->content);
 }
@@ -108,9 +100,7 @@ static t_list	*builtin_iterate_list(t_list *list, const char *str_env)
 	{
 		ptr_old = curr_node->content;
 		ptr_new = builtin_replace_env(curr_node, str_env);
-		if (ptr_new == NULL)
-			return (NULL);
-		else if (ptr_new != ptr_old)
+		if (ptr_new != ptr_old)
 			return (curr_node);
 		curr_node = curr_node->next;
 	}
@@ -153,6 +143,5 @@ void	*builtin_export(t_list *list, const char *envvar)
 	if (str_env == NULL)
 		return (NULL);
 	list = builtin_iterate_list(list, str_env);
-	free(str_env);
 	return (list);
 }

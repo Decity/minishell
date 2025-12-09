@@ -6,7 +6,7 @@
 /*   By: dbakker <dbakker@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/04 10:45:00 by elie              #+#    #+#             */
-/*   Updated: 2025/11/25 15:57:55 by dbakker          ###   ########.fr       */
+/*   Updated: 2025/12/09 11:34:00 by dbakker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,13 +55,10 @@ void	setup_signals_interactive(void)
 	struct sigaction	sa_int;
 	struct sigaction	sa_quit;
 
-	// Setup SIGINT handler
 	sa_int.sa_handler = handle_sigint_interactive;
 	sigemptyset(&sa_int.sa_mask);
 	sa_int.sa_flags = SA_RESTART;
 	sigaction(SIGINT, &sa_int, NULL);
-
-	// Ignore SIGQUIT
 	sa_quit.sa_handler = SIG_IGN;
 	sigemptyset(&sa_quit.sa_mask);
 	sa_quit.sa_flags = 0;
@@ -78,13 +75,10 @@ void	setup_signals_executing(void)
 	struct sigaction	sa_int;
 	struct sigaction	sa_quit;
 
-	// Setup SIGINT handler for execution
 	sa_int.sa_handler = handle_sigint_executing;
 	sigemptyset(&sa_int.sa_mask);
 	sa_int.sa_flags = SA_RESTART;
 	sigaction(SIGINT, &sa_int, NULL);
-
-	// Ignore SIGQUIT
 	sa_quit.sa_handler = SIG_IGN;
 	sigemptyset(&sa_quit.sa_mask);
 	sa_quit.sa_flags = 0;
@@ -103,7 +97,6 @@ void	restore_signals_default(void)
 	sa_default.sa_handler = SIG_DFL;
 	sigemptyset(&sa_default.sa_mask);
 	sa_default.sa_flags = 0;
-
 	sigaction(SIGINT, &sa_default, NULL);
 	sigaction(SIGQUIT, &sa_default, NULL);
 }
