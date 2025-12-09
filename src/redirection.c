@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirection.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ebelle <ebelle@student.42.fr>              +#+  +:+       +#+        */
+/*   By: elie <elie@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/15 09:54:20 by elie              #+#    #+#             */
-/*   Updated: 2025/12/08 17:21:03 by ebelle           ###   ########.fr       */
+/*   Updated: 2025/12/09 10:51:56 by elie             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,12 +17,10 @@
 
 static void	set_redirection_input(t_cmd	*curr_cmd);
 static void	set_redirection_output(t_cmd	*curr_cmd);
-static void	set_rdr_error(t_cmd *curr_cmd, size_t i);
 
 void	set_redirections(t_data *data)
 {
 	t_cmd	*curr_cmd;
-	size_t	i;
 
 	curr_cmd = data->command;
 	while (curr_cmd)
@@ -58,15 +56,6 @@ static void	set_redirection_input(t_cmd	*curr_cmd)
 	}
 }
 
-static void	set_rdr_error(t_cmd *curr_cmd, size_t i)
-{
-	if (curr_cmd->rdr.i_fd == -1)
-	{
-		perror(curr_cmd->rdr.infile[i].file);
-		curr_cmd->rdr.i_fd = -1;
-	}
-}
-
 static void	set_redirection_output(t_cmd	*curr_cmd)
 {
 	size_t	i;
@@ -88,5 +77,36 @@ static void	set_redirection_output(t_cmd	*curr_cmd)
 			curr_cmd->rdr.o_fd = -1;
 		}
 		i++;
+	}
+}
+
+/**
+ * @brief Close all redirection file descriptors in parent process
+ *
+ * After execution completes, close any open file descriptors
+ * that were opened for redirections to prevent FD leaks.
+ *
+ * @param[in,out] data Shell data structure with commands
+ */
+void	close_redirection_fds(t_data *data)
+{
+	t_cmd	*current_cmd;
+
+	current_cmd = data->command;
+	while (current_cmd)
+	{
+		if (current_cmd->rdr.i_fd != STDIN_FILENO
+			&& current_cmd->rdr.i_fd != -1)
+		{
+			close(current_cmd->rdr.i_fd);
+			current_cmd->rdr.i_fd = -1;
+		}
+		if (current_cmd->rdr.o_fd != STDOUT_FILENO
+			&& current_cmd->rdr.o_fd != -1)
+		{
+			close(current_cmd->rdr.o_fd);
+			current_cmd->rdr.o_fd = -1;
+		}
+		current_cmd = current_cmd->next;
 	}
 }

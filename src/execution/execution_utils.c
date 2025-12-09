@@ -27,9 +27,13 @@ char	*get_executable_path(const char *exec, const t_list *envp)
 	char	**paths;
 	char	*abs_path;
 	char	*slashed_path;
+	char	*path_env;
 	size_t	i;
 
-	paths = ft_split(ft_getenv(envp, "PATH"), ':');
+	path_env = ft_getenv(envp, "PATH");
+	if (path_env == NULL)
+		return (NULL);
+	paths = ft_split(path_env, ':');
 	if (paths == NULL)
 		return (perror("minishell"), NULL);
 	i = 0;
@@ -130,6 +134,7 @@ int	apply_redirections(t_cmd *cmd)
 			return (FAILURE);
 		}
 		close(cmd->rdr.i_fd);
+		cmd->rdr.i_fd = -1;
 	}
 	if (cmd->rdr.o_fd != STDOUT_FILENO
 		&& cmd->rdr.o_fd != -1)
@@ -140,6 +145,7 @@ int	apply_redirections(t_cmd *cmd)
 			return (FAILURE);
 		}
 		close(cmd->rdr.o_fd);
+		cmd->rdr.o_fd = -1;
 	}
 	return (SUCCESS);
 }

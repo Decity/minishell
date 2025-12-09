@@ -38,6 +38,7 @@ uint8_t	set_input(t_data *data);
 
 // Shell operations
 void	set_redirections(t_data *data);
+void	close_redirection_fds(t_data *data);
 
 // Parsing
 bool	is_redirection(char *str);

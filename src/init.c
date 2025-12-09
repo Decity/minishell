@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ebelle <ebelle@student.42.fr>              +#+  +:+       +#+        */
+/*   By: elie <elie@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/08 17:15:33 by ebelle            #+#    #+#             */
-/*   Updated: 2025/12/08 17:23:53 by ebelle           ###   ########.fr       */
+/*   Updated: 2025/12/09 12:00:54 by elie             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,13 @@ void	init(t_data *data)
 		setup_signals_interactive();
 }
 
+static void	set_prompt(t_data *data)
+{
+	if (data->exit_status)
+		printf("(╯°□°)╯︵ ┻━┻\n");
+	data->input = readline("( ͡° ͜ʖ ͡°) ");
+}
+
 /**
  * @brief Read input from user or stdin
  *
@@ -52,7 +59,7 @@ uint8_t	set_input(t_data *data)
 	size_t	len;
 
 	if (data->is_interactive)
-		data->input = readline("( ͡° ͜ʖ ͡°) ");
+		set_prompt(data);
 	else
 	{
 		data->input = get_next_line(STDIN_FILENO);
