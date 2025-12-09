@@ -4,8 +4,8 @@ NAME		= minishell
 # Compiler and flags
 CC			= cc
 # CFLAGS		= -Wall -Werror -Wextra -g -fsanitize=address
-CFLAGS = -Wall -Wextra -g
-MAKEFLAGS += --no-print-directory
+CFLAGS 		= -Wall -Wextra -Werror
+MAKEFLAGS 	+= --no-print-directory
 
 # Directories
 SRC_DIR		= src
@@ -14,7 +14,47 @@ INC_DIR		= inc
 LIBFT_DIR	= libft
 
 # Source files
-SRCS		= $(shell find $(SRC_DIR) -name "*.c")
+SRCS		= src/main.c \
+			  src/init.c \
+			  src/redirection.c \
+			  src/signals.c \
+			  src/cleanup.c \
+			  src/builtins/cd.c \
+			  src/builtins/echo.c \
+			  src/builtins/env.c \
+			  src/builtins/exit.c \
+			  src/builtins/export_print.c \
+			  src/builtins/export.c \
+			  src/builtins/pwd.c \
+			  src/builtins/unset.c \
+			  src/execution/execution_binary.c \
+			  src/execution/execution_builtins.c \
+			  src/execution/execution_child.c \
+			  src/execution/execution_pipeline_utils.c \
+			  src/execution/execution_pipeline.c \
+			  src/execution/execution_utils.c \
+			  src/execution/execution.c \
+			  src/expansion/expansion_copy.c \
+			  src/expansion/expansion_remove_quotes.c \
+			  src/expansion/expansion_utils.c \
+			  src/expansion/expansion.c \
+			  src/heredoc/heredoc_expansion_utils.c \
+			  src/heredoc/heredoc_expansion.c \
+			  src/heredoc/heredoc_name_generator.c \
+			  src/heredoc/heredoc_utils.c \
+			  src/heredoc/heredoc.c \
+			  src/parsing/parsing_linked_list.c \
+			  src/parsing/parsing_redirection_in.c \
+			  src/parsing/parsing_redirection_out.c \
+			  src/parsing/parsing_redirection.c \
+			  src/parsing/parsing.c \
+			  src/tokenization/tokenization_normalization_strlen.c \
+			  src/tokenization/tokenization_normalization_utils.c \
+			  src/tokenization/tokenization_normalization.c \
+			  src/tokenization/tokenization_utils.c \
+			  src/tokenization/tokenization_validation_utils.c \
+			  src/tokenization/tokenization_validation.c \
+			  src/tokenization/tokenization.c 
 
 # Object files
 OBJS		= $(patsubst $(SRC_DIR)/%.c,$(OBJ_DIR)/%.o,$(SRCS))
