@@ -6,7 +6,7 @@
 /*   By: elie <elie@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/28 13:56:00 by elie              #+#    #+#             */
-/*   Updated: 2025/12/09 13:48:08 by elie             ###   ########.fr       */
+/*   Updated: 2025/12/09 14:53:40 by elie             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 static char	**get_bin_paths(const t_list *envp)
 {
 	char	**paths;
-	char *path_env;
+	char	*path_env;
 
 	path_env = ft_getenv(envp, "PATH");
 	if (path_env == NULL)
