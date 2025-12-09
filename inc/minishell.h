@@ -6,7 +6,7 @@
 /*   By: elie <elie@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/30 15:08:30 by ebelle            #+#    #+#             */
-/*   Updated: 2025/12/09 10:48:24 by elie             ###   ########.fr       */
+/*   Updated: 2025/12/09 12:11:53 by elie             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ bool	is_redirection(char *str);
 // tokenization_normalization_strlen.c
 
 void	tokenization_update_tokens(const char *str, int8_t *curr_type,
-	int8_t *next_type);
+			int8_t *next_type);
 
 // tokenization.c
 void	tokenize(t_data *data, size_t token_count);
@@ -112,34 +112,37 @@ void	cleanup_data(t_data *data);
 void	full_cleanup(t_data *data);
 void	exit_cleanup(t_data *data, int exit_code);
 
-// Debug
+// BUILTINS
 
-void	debug(t_data *data);
-
-// Built-ins
+// cd.c
 
 int		builtin_cd(t_list *envp, t_pwd *dir, const char *path);
+// echo.c
 
 int		builtin_echo(const char **messages);
+// env.c
 
 size_t	env_namelen(const char *name);
 size_t	env_valuelen(const char *str);
 char	*ft_getenv(const t_list *list, const char *name);
 char	*ft_getnenv(const t_list *list, const char *name, size_t num);
 int		builtin_env_print(const t_list *envp);
+// exit.c
 
-int		builtin_exit(t_data *data, char **args);
 void	minishell_exit(t_data *data);
+// export_print.c
 
 void	*builtin_export(t_list *list, const char *envvar);
 int		export_print(const t_list *list);
+// pwd.c
 
 void	*builtin_update_pwd(t_pwd *directory);
 int		pwd_print(t_pwd directory);
+// unset.c
 
 int		builtin_unset(t_list **head, const char *name);
 
-// Parsing
+// PARSING
 
 // parsing_linked_list.c
 

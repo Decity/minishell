@@ -6,7 +6,7 @@
 /*   By: elie <elie@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/08 17:15:33 by ebelle            #+#    #+#             */
-/*   Updated: 2025/12/09 12:00:54 by elie             ###   ########.fr       */
+/*   Updated: 2025/12/09 12:12:09 by elie             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,18 +72,12 @@ uint8_t	set_input(t_data *data)
 	if (!data->input)
 		exit_cleanup(data, data->exit_status);
 	if (!data->input[0] || ft_strlen(data->input) == 0)
-	{
-		free(data->input);
-		return (FAILURE);
-	}
+		return (free(data->input), FAILURE);
 	len = 0;
 	while (data->input[len] && ft_isspace(data->input[len]))
 		len++;
 	if (data->input[len] == '\0')
-	{
-		free(data->input);
-		return (FAILURE);
-	}
+		return (free(data->input), FAILURE);
 	if (data->is_interactive)
 		add_history(data->input);
 	return (SUCCESS);

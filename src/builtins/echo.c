@@ -6,7 +6,7 @@
 /*   By: dbakker <dbakker@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/17 14:27:44 by dbakker           #+#    #+#             */
-/*   Updated: 2025/12/08 16:26:49 by dbakker          ###   ########.fr       */
+/*   Updated: 2025/12/09 11:41:36 by dbakker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,20 +46,19 @@ static bool	builtin_echo_option_n(const char *message)
  */
 int	builtin_echo(const char **messages)
 {
-	size_t	i;
+	ssize_t	i;
 	bool	n_option;
 
-	i = 0;
+	i = -1;
 	n_option = false;
-	while (messages[i])
+	while (messages[++i])
 	{
 		if (builtin_echo_option_n(messages[i]) == true)
 		{
 			n_option = true;
-			i += 1;
+			continue ;
 		}
-		else
-			break ;
+		break ;
 	}
 	while (messages[i])
 	{
