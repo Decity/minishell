@@ -6,7 +6,7 @@
 /*   By: dbakker <dbakker@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/28 13:56:00 by elie              #+#    #+#             */
-/*   Updated: 2025/12/09 14:33:36 by dbakker          ###   ########.fr       */
+/*   Updated: 2025/12/09 14:42:25 by dbakker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ char	*get_executable_path(const char *exec, const t_list *envp)
 
 	paths = get_bin_paths(envp);
 	if (paths == NULL)
-		return (perror("minishell"), NULL);
+		return (NULL);
 	i = 0;
 	while (paths[i])
 	{
