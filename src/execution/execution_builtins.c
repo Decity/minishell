@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution_builtins.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: elie <elie@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: ebelle <ebelle@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/05 15:22:00 by elie              #+#    #+#             */
-/*   Updated: 2025/12/09 14:25:30 by elie             ###   ########.fr       */
+/*   Updated: 2025/12/09 17:16:24 by ebelle           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ bool	is_builtin(const char *cmd)
 int	execute_builtin(t_cmd *cmd, t_data *data)
 {
 	if (ft_strcmp(cmd->args[0], "echo") == 0)
-		return (builtin_echo((const char **)cmd->args + 1));
+		return (builtin_echo((const char **)cmd->args + 1), data->exit_status);
 	if (ft_strcmp(cmd->args[0], "cd") == 0)
 		return (builtin_cd(data->envp, &data->directory, cmd->args[1]));
 	if (ft_strcmp(cmd->args[0], "pwd") == 0)
@@ -57,7 +57,7 @@ int	execute_builtin(t_cmd *cmd, t_data *data)
 		return (builtin_env_print(data->envp));
 	if (ft_strcmp(cmd->args[0], "exit") == 0)
 		minishell_exit(data);
-	return (0);
+	return (data->exit_status);
 }
 
 void	handle_single_builtin(t_cmd *cmd, t_data *data)

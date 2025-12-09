@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirection.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: elie <elie@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: ebelle <ebelle@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/15 09:54:20 by elie              #+#    #+#             */
-/*   Updated: 2025/12/09 10:51:56 by elie             ###   ########.fr       */
+/*   Updated: 2025/12/09 17:24:02 by ebelle           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,10 @@
 #include <sys/wait.h>
 #include <unistd.h>
 #include <fcntl.h>
+#include <errno.h>
 
-static void	set_redirection_input(t_cmd	*curr_cmd);
-static void	set_redirection_output(t_cmd	*curr_cmd);
+static void	set_redirection_input(t_cmd *curr_cmd, t_data *data);
+static void	set_redirection_output(t_cmd *curr_cmd, t_data *data);
 
 void	set_redirections(t_data *data)
 {
@@ -25,13 +26,14 @@ void	set_redirections(t_data *data)
 	curr_cmd = data->command;
 	while (curr_cmd)
 	{
-		set_redirection_input(curr_cmd);
-		set_redirection_output(curr_cmd);
+		set_redirection_input(curr_cmd, data);
+		set_redirection_output(curr_cmd, data);
+		data->exit_status = errno;
 		curr_cmd = curr_cmd->next;
 	}
 }
 
-static void	set_redirection_input(t_cmd	*curr_cmd)
+static void	set_redirection_input(t_cmd *curr_cmd, t_data *data)
 {
 	size_t	i;
 
@@ -45,6 +47,7 @@ static void	set_redirection_input(t_cmd	*curr_cmd)
 			curr_cmd->rdr.i_fd = open(curr_cmd->rdr.infile[i].file, O_RDONLY);
 			if (curr_cmd->rdr.i_fd == -1)
 				perror(curr_cmd->rdr.infile[i].file);
+
 		}
 		else if (curr_cmd->rdr.infile[i].redir_type == TYPE_REDIRECTION_HEREDOC)
 		{
@@ -54,9 +57,10 @@ static void	set_redirection_input(t_cmd	*curr_cmd)
 		}
 		i++;
 	}
+	data->exit_status = errno;
 }
 
-static void	set_redirection_output(t_cmd	*curr_cmd)
+static void	set_redirection_output(t_cmd *curr_cmd, t_data *data)
 {
 	size_t	i;
 
@@ -78,6 +82,7 @@ static void	set_redirection_output(t_cmd	*curr_cmd)
 		}
 		i++;
 	}
+	data->exit_status = errno;
 }
 
 /**
