@@ -6,7 +6,7 @@
 /*   By: dbakker <dbakker@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/05 14:09:14 by elie              #+#    #+#             */
-/*   Updated: 2025/12/08 14:00:21 by dbakker          ###   ########.fr       */
+/*   Updated: 2025/12/09 11:36:35 by dbakker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@
  */
 void	init(t_data *data)
 {
-	extern const char **environ;
+	extern const char	**environ;
 
 	ft_bzero(data, sizeof(t_data));
 	data->envp = array_to_llist(environ);
@@ -65,18 +65,12 @@ uint8_t	set_input(t_data *data)
 	if (!data->input)
 		exit_cleanup(data, data->exit_status);
 	if (!data->input[0] || ft_strlen(data->input) == 0)
-	{
-		free(data->input);
-		return (FAILURE);
-	}
+		return (free(data->input), FAILURE);
 	len = 0;
 	while (data->input[len] && ft_isspace(data->input[len]))
 		len++;
 	if (data->input[len] == '\0')
-	{
-		free(data->input);
-		return (FAILURE);
-	}
+		return (free(data->input), FAILURE);
 	if (data->is_interactive)
 		add_history(data->input);
 	return (SUCCESS);
