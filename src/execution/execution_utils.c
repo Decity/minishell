@@ -43,7 +43,7 @@ char	*get_executable_path(const char *exec, const t_list *envp)
 
 	paths = get_bin_paths(envp);
 	if (paths == NULL)
-		return (perror("minishell"), NULL);
+		return (NULL);
 	i = 0;
 	while (paths[i])
 	{
