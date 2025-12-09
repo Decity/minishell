@@ -6,7 +6,7 @@
 /*   By: elie <elie@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/05 15:22:00 by elie              #+#    #+#             */
-/*   Updated: 2025/12/09 13:44:47 by elie             ###   ########.fr       */
+/*   Updated: 2025/12/09 14:25:30 by elie             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@ void	handle_single_builtin(t_cmd *cmd, t_data *data)
 		return ;
 	}
 	if (ft_strcmp(cmd->args[0], "exit") == 0)
-	close_stdin_stdout(saved_stdin, saved_stdout);
+		close_stdin_stdout(saved_stdin, saved_stdout);
 	data->exit_status = execute_builtin(cmd, data);
 	if (ft_strcmp(cmd->args[0], "exit") != 0)
 	{
