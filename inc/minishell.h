@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dbakker <dbakker@student.42.fr>            +#+  +:+       +#+        */
+/*   By: elie <elie@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/30 15:08:30 by ebelle            #+#    #+#             */
-/*   Updated: 2025/12/08 14:53:04 by dbakker          ###   ########.fr       */
+/*   Updated: 2025/12/09 10:48:24 by elie             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,12 @@ void	set_redirections(t_data *data);
 // Parsing
 bool	is_redirection(char *str);
 
-/// TOKENIZATION
+// TOKENIZATION
+
+// tokenization_normalization_strlen.c
+
+void	tokenization_update_tokens(const char *str, int8_t *curr_type,
+	int8_t *next_type);
 
 // tokenization.c
 void	tokenize(t_data *data, size_t token_count);
