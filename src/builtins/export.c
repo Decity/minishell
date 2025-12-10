@@ -6,20 +6,11 @@
 /*   By: dbakker <dbakker@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/15 13:16:57 by dbakker           #+#    #+#             */
-/*   Updated: 2025/12/09 11:23:36 by dbakker          ###   ########.fr       */
+/*   Updated: 2025/12/10 23:45:31 by dbakker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-static bool	has_env_value(const char *envvar)
-{
-	if (ft_strchr(envvar, '=') == NULL)
-	{
-		return (false);
-	}
-	return (true);
-}
 
 /**
  * @brief Check if @p `str` only contains allowed characters for environmental
@@ -80,22 +71,22 @@ static t_list	*builtin_replace_env(t_list *curr_node, const char *str_env)
 
 /**
  * @brief Iterate through the linked list and either replace an existing
- * @brief variable, or add @p `str_env` to the end of @p `list`.
+ * @brief variable, or add @p `str_env` to the end of @p `envp`.
  *
- * @param[out]	list	Linked list containing environmental variables.
+ * @param[out]	envp	Linked list containing environmental variables.
  * @param[in]	str_env	String containing a NAME=VALUE pair.
  *
  * @return Pointer to the node added to the list, or `NULL` on failure.
  *
  * @warning Caller owns `free()`.
  */
-static t_list	*builtin_iterate_list(t_list *list, const char *str_env)
+static t_list	*builtin_iterate_list(t_list *envp, const char *str_env)
 {
 	t_list	*curr_node;
 	void	*ptr_old;
 	void	*ptr_new;
 
-	curr_node = list;
+	curr_node = envp;
 	while (curr_node)
 	{
 		ptr_old = curr_node->content;
@@ -107,41 +98,78 @@ static t_list	*builtin_iterate_list(t_list *list, const char *str_env)
 	curr_node = ft_listnew((char *)str_env);
 	if (curr_node == NULL)
 		return (NULL);
-	ft_listadd_back(&list, curr_node);
-	return (ft_listlast(list));
+	ft_listadd_back(&envp, curr_node);
+	return (ft_listlast(envp));
 }
 
 /**
- * @brief Add @p `envvar` to the end of @p `list`.
+ * @brief Add @p `envvar` to the end of @p `envp`.
  *
  * If the `NAME` of @p `envvar` matches that of an already existing
  * environmental variable, and contains `=`, it will instead replace the
  * variable. If allocation for the new environmental variable fails, the current
  * one will remain unchanged.
  *
- * @param[out]	list	Linked list containing all environmental variables.
+ * @param[out]	envp	Linked list containing all environmental variables.
  * @param[in]	envvar	Environmental variable to add to the linked list.
  *
- * @retval Pointer to the node added to the list.
- * @retval Pointer to @p `list`.
- * @retval `NULL` on failure.
+ * @return `0` on success, or `1` on failure.
  *
  * @warning Caller owns `free()`.
  *
  * @note @p `envvar` can only contain alphabetical characters, numbers and
  * @note underscores, but cannot start with numbers.
  */
-void	*builtin_export(t_list *list, const char *envvar)
+int	builtin_export_var(t_list *envp, char *envvar)
 {
 	char	*str_env;
 
 	if (envvar == NULL || is_env_name(envvar) == false)
-		return (NULL);
-	if (has_env_value(envvar) == false)
-		return (list);
+	{
+		ft_putstr_fd("minishell: export: `", STDERR_FILENO);
+		ft_putstr_fd(envvar, STDERR_FILENO);
+		ft_putendl_fd("': not a valid identifier", STDERR_FILENO);
+		return (EXIT_FAILURE);
+	}
 	str_env = ft_strdup(envvar);
 	if (str_env == NULL)
-		return (NULL);
-	list = builtin_iterate_list(list, str_env);
-	return (list);
+		return (EXIT_FAILURE);
+	envp = builtin_iterate_list(envp, str_env);
+	return (EXIT_SUCCESS);
+}
+
+/**
+ * @brief Add an array of @p `args` to the end of @p `envp`.
+ *
+ * If the `NAME` of @p `args` matches that of an already existing
+ * environmental variable, and contains `=`, it will instead replace the
+ * variable. If allocation for the new environmental variable fails, the current
+ * one will remain unchanged.
+ *
+ * @param[out]	envp	Linked list containing all environmental variables.
+ * @param[in]	args	Environmental variable to add to the linked list.
+ *
+ * @return `0` on success, or `1` on failure.
+ *
+ * @warning Caller owns `free()`.
+ *
+ * @note @p `args` can only contain alphabetical characters, numbers and
+ * @note underscores, but cannot start with numbers.
+ */
+int	builtin_export(t_list *envp, char **args)
+{
+	size_t	i;
+	int		exit_code;
+
+	i = 0;
+	exit_code = EXIT_SUCCESS;
+	while (args[i])
+	{
+		if (builtin_export_var(envp, args[i]) == EXIT_FAILURE)
+		{
+			exit_code = EXIT_FAILURE;
+		}
+		i += 1;
+	}
+	return (exit_code);
 }
