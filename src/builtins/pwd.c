@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pwd.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: elie <elie@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: dbakker <dbakker@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/17 10:41:14 by dbakker           #+#    #+#             */
-/*   Updated: 2025/12/01 14:35:08 by elie             ###   ########.fr       */
+/*   Updated: 2025/12/10 15:11:51 by dbakker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@
  *
  * @warning Caller owns `free()`.
  */
-void	*builtin_update_pwd(t_pwd *directory)
+int	builtin_update_pwd(t_pwd *directory)
 {
 	char	*ptr_old_pwd;
 	char	*ptr_pwd;
@@ -29,18 +29,18 @@ void	*builtin_update_pwd(t_pwd *directory)
 	ptr_old_pwd = ft_strdup(directory->pwd);
 	if (ptr_old_pwd == NULL)
 	{
-		return (NULL);
+		return (FAILURE);
 	}
 	free(directory->old_pwd);
 	directory->old_pwd = ptr_old_pwd;
 	ptr_pwd = getcwd(NULL, 0);
 	if (ptr_pwd == NULL)
 	{
-		return (NULL);
+		return (FAILURE);
 	}
 	free(directory->pwd);
 	directory->pwd = ptr_pwd;
-	return (directory);
+	return (SUCCESS);
 }
 
 /**

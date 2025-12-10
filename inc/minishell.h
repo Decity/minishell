@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: elie <elie@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: dbakker <dbakker@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/30 15:08:30 by ebelle            #+#    #+#             */
-/*   Updated: 2025/12/10 10:21:07 by elie             ###   ########.fr       */
+/*   Updated: 2025/12/10 14:47:52 by dbakker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -137,7 +137,7 @@ int		export_print(const t_list *list);
 int		handle_export(t_cmd *cmd, t_data *data);
 // pwd.c
 
-void	*builtin_update_pwd(t_pwd *directory);
+int		builtin_update_pwd(t_pwd *directory);
 int		pwd_print(t_pwd directory);
 // unset.c
 
