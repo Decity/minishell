@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution_builtins.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ebelle <ebelle@student.42.fr>              +#+  +:+       +#+        */
+/*   By: elie <elie@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/05 15:22:00 by elie              #+#    #+#             */
-/*   Updated: 2025/12/09 17:35:59 by ebelle           ###   ########.fr       */
+/*   Updated: 2025/12/10 10:21:07 by elie             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ int	execute_builtin(t_cmd *cmd, t_data *data)
 	if (ft_strcmp(cmd->args[0], "env") == 0)
 		return (data->exit_status = builtin_env_print(data->envp));
 	if (ft_strcmp(cmd->args[0], "exit") == 0)
-		minishell_exit(cmd, data);
+		builtin_exit(cmd, data);
 	return (data->exit_status);
 }
 

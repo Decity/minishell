@@ -6,12 +6,23 @@
 /*   By: elie <elie@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/17 14:29:42 by dbakker           #+#    #+#             */
-/*   Updated: 2025/12/10 09:18:21 by elie             ###   ########.fr       */
+/*   Updated: 2025/12/10 10:21:07 by elie             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+/**
+ * @brief Check if a string represents a valid numeric argument for exit.
+ *
+ * A valid number may optionally start with '+' or '-', followed by one or
+ * more digits. Empty strings or strings with only a sign are invalid.
+ *
+ * @param[in]	str	String to validate.
+ *
+ * @retval true if the string is a valid number.
+ * @retval false if the string is not a valid number.
+ */
 static bool	is_valid_number(const char *str)
 {
 	int	i;
@@ -30,6 +41,16 @@ static bool	is_valid_number(const char *str)
 	return (true);
 }
 
+/**
+ * @brief Check if a numeric string would overflow when parsed.
+ *
+ * Detects if the number would exceed LLONG_MAX during conversion.
+ *
+ * @param[in]	str	Numeric string to check (must be valid number format).
+ *
+ * @retval true if the number would overflow.
+ * @retval false if the number fits in a long long.
+ */
 static bool	is_overflow(const char *str)
 {
 	long long	result;
@@ -49,6 +70,17 @@ static bool	is_overflow(const char *str)
 	return (false);
 }
 
+/**
+ * @brief Parse a numeric string into an exit code (0-255).
+ *
+ * Converts the string to a number and applies modulo 256 to get a valid
+ * exit code. Handles both positive and negative numbers. The result is
+ * always in the range 0-255 to match bash behavior.
+ *
+ * @param[in]	str	Numeric string to parse (must be valid number format).
+ *
+ * @return Exit code in the range 0-255.
+ */
 static int	parse_exit_code(const char *str)
 {
 	long long	result;
@@ -72,7 +104,23 @@ static int	parse_exit_code(const char *str)
 	return ((int)((result * sign) % 256));
 }
 
-void	minishell_exit(t_cmd *cmd, t_data *data)
+/**
+ * @brief Exit the shell with an optional exit code.
+ *
+ * Implements the exit builtin command. Behavior:
+ * - No args: exits with last exit status
+ * - One numeric arg: exits with that code (mod 256)
+ * - Non-numeric arg: prints error and exits with code 2
+ * - Multiple args: prints error, sets exit status to 1, but doesn't exit
+ *
+ * Prints "exit" to stderr before exiting (bash behavior).
+ *
+ * @param[in]		cmd		Command structure containing arguments.
+ * @param[in,out]	data	Shell data containing exit status.
+ *
+ * @note This function may not return if exit conditions are met.
+ */
+void	builtin_exit(t_cmd *cmd, t_data *data)
 {
 	char	**args;
 	int		exit_code;

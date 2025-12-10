@@ -12,6 +12,18 @@
 
 #include "minishell.h"
 
+/**
+ * @brief Validate that a string is a valid environment variable name.
+ *
+ * Valid names must start with a letter or underscore, and contain only
+ * alphanumeric characters and underscores.
+ *
+ * @param[in]	str	String to validate.
+ *
+ * @retval true if the string is a valid variable name.
+ * @retval false if the string is invalid (NULL, empty, starts with digit,
+ *               or contains invalid characters).
+ */
 static bool	is_valid_unset_name(const char *str)
 {
 	size_t	i;
@@ -82,6 +94,19 @@ static int	unset_variable(t_list **head, const char *name)
 	return (0);
 }
 
+/**
+ * @brief Unset one or more environment variables.
+ *
+ * Removes the specified environment variables from the environment list.
+ * Invalid variable names are silently ignored. Matches bash behavior where
+ * unset always returns 0.
+ *
+ * @param[in,out]	head	Pointer to the head of the environment list.
+ * @param[in]		args	Command arguments (args[0] is "unset", args[1+] are
+ *                          variable names to unset).
+ *
+ * @return Always returns 0 (success).
+ */
 int	builtin_unset(t_list **head, char **args)
 {
 	int	i;
