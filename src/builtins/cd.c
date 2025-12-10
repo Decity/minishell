@@ -6,7 +6,7 @@
 /*   By: dbakker <dbakker@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/17 14:30:29 by dbakker           #+#    #+#             */
-/*   Updated: 2025/12/10 15:12:39 by dbakker          ###   ########.fr       */
+/*   Updated: 2025/12/10 15:39:16 by dbakker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,16 +18,19 @@ static int	builtin_update_pwd_env(t_list *envp, t_pwd *dir)
 	char	*old_pwd;
 	char	*export;
 
+	if (ft_getenv(envp, "PWD"))
+	{
+		old_pwd = ft_strjoin("OLDPWD=", dir->old_pwd);
+		export = builtin_export(envp, old_pwd);
+		free(old_pwd);
+		if (export == NULL)
+		{
+			return (FAILURE);
+		}
+	}
 	pwd = ft_strjoin("PWD=", dir->pwd);
 	export = builtin_export(envp, pwd);
 	free(pwd);
-	if (export == NULL)
-	{
-		return (FAILURE);
-	}
-	old_pwd = ft_strjoin("OLDPWD=", dir->old_pwd);
-	export = builtin_export(envp, old_pwd);
-	free(old_pwd);
 	if (export == NULL)
 	{
 		return (FAILURE);
