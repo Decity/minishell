@@ -3,66 +3,30 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dbakker <dbakker@student.42.fr>            +#+  +:+       +#+        */
+/*   By: elie <elie@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/15 13:16:57 by dbakker           #+#    #+#             */
-/*   Updated: 2025/12/09 11:23:36 by dbakker          ###   ########.fr       */
+/*   Updated: 2025/12/10 18:23:13 by elie             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static bool	has_env_value(const char *envvar)
-{
-	if (ft_strchr(envvar, '=') == NULL)
-	{
-		return (false);
-	}
-	return (true);
-}
-
-/**
- * @brief Check if @p `str` only contains allowed characters for environmental
- * @brief `NAME`.
- *
- * Allowed characters are lowercase/uppercase alphabetical characters,
- * digits and underscores, but may not have digits as the first character.
- *
- * @param[in] str String to check.
- *
- * @return `false` if an invalid character is found, `true` otherwise.
- */
-static bool	is_env_name(const char *str)
-{
-	size_t	i;
-
-	i = 0;
-	if (*str == '\0' || ft_isdigit(*str))
-	{
-		return (false);
-	}
-	while (str[i] && str[i] != '=')
-	{
-		if (ft_isalnum(str[i]) == 0 && str[i] != '_')
-		{
-			return (false);
-		}
-		i++;
-	}
-	return (true);
-}
-
 /**
  * @brief Check if @p `str_env` matches the `NAME` in `content` of @p
- * @brief `curr_node` and replace its `VALUE`.
+ * @brief `curr_node` and replace its `VALUE` if str_env contains '='.
+ *
+ * If str_env doesn't contain '=', the existing value is kept 
  *
  * @param[out]	curr_node	`content` to replace.
  * @param[in]	str_env		The new environmental variable.
+ * @param[out]	should_free	Set to true if str_env should be freed by caller.
  *
- * @retval New pointer to `content` of @p `curr_node` if both arguments match.
- * @retval Pointer to `content` of @p `curr_node` if both arguments don't match.
+ * @retval true if names match (variable found).
+ * @retval false if names don't match.
  */
-static t_list	*builtin_replace_env(t_list *curr_node, const char *str_env)
+static bool	builtin_replace_env(t_list *curr_node, const char *str_env,
+		bool *should_free)
 {
 	size_t	len_envvar;
 	size_t	len_cnt;
@@ -72,36 +36,52 @@ static t_list	*builtin_replace_env(t_list *curr_node, const char *str_env)
 	if (ft_memcmp(curr_node->content, str_env, len_cnt) == 0
 		&& len_envvar == len_cnt)
 	{
-		free(curr_node->content);
-		curr_node->content = (void *)str_env;
+		if (ft_strchr(str_env, '='))
+		{
+			free(curr_node->content);
+			curr_node->content = (void *)str_env;
+			*should_free = false;
+		}
+		else
+		{
+			*should_free = true;
+		}
+		return (true);
 	}
-	return (curr_node->content);
+	return (false);
 }
 
 /**
  * @brief Iterate through the linked list and either replace an existing
  * @brief variable, or add @p `str_env` to the end of @p `list`.
  *
- * @param[out]	list	Linked list containing environmental variables.
- * @param[in]	str_env	String containing a NAME=VALUE pair.
+ * If the variable already exists and str_env has no '=', the existing value
+ * is kept and str_env is freed. If the variable doesn't exist and str_env
+ * has no '=', it's added without a value (bash behavior for marking variables
+ * for export).
  *
- * @return Pointer to the node added to the list, or `NULL` on failure.
+ * @param[out]	list	Linked list containing environmental variables.
+ * @param[in]	str_env	String containing a NAME or NAME=VALUE.
+ *
+ * @return Pointer to the node added/modified, or `NULL` on failure.
  *
  * @warning Caller owns `free()`.
  */
 static t_list	*builtin_iterate_list(t_list *list, const char *str_env)
 {
 	t_list	*curr_node;
-	void	*ptr_old;
-	void	*ptr_new;
+	bool	should_free;
 
 	curr_node = list;
 	while (curr_node)
 	{
-		ptr_old = curr_node->content;
-		ptr_new = builtin_replace_env(curr_node, str_env);
-		if (ptr_new != ptr_old)
+		should_free = false;
+		if (builtin_replace_env(curr_node, str_env, &should_free))
+		{
+			if (should_free)
+				free((void *)str_env);
 			return (curr_node);
+		}
 		curr_node = curr_node->next;
 	}
 	curr_node = ft_listnew((char *)str_env);
@@ -115,9 +95,12 @@ static t_list	*builtin_iterate_list(t_list *list, const char *str_env)
  * @brief Add @p `envvar` to the end of @p `list`.
  *
  * If the `NAME` of @p `envvar` matches that of an already existing
- * environmental variable, and contains `=`, it will instead replace the
- * variable. If allocation for the new environmental variable fails, the current
+ * environmental variable, and contains `=`, it will replace the variable.
+ * If allocation for the new environmental variable fails, the current
  * one will remain unchanged.
+ *
+ * If @p `envvar` does not contain `=`, it will be added to the list as
+ * a variable marked for export without a value (bash behavior).
  *
  * @param[out]	list	Linked list containing all environmental variables.
  * @param[in]	envvar	Environmental variable to add to the linked list.
@@ -135,10 +118,8 @@ void	*builtin_export(t_list *list, const char *envvar)
 {
 	char	*str_env;
 
-	if (envvar == NULL || is_env_name(envvar) == false)
+	if (envvar == NULL)
 		return (NULL);
-	if (has_env_value(envvar) == false)
-		return (list);
 	str_env = ft_strdup(envvar);
 	if (str_env == NULL)
 		return (NULL);
