@@ -44,23 +44,18 @@ bool	validate_quotation(char *str)
 	size_t	i;
 	size_t	count;
 
-	quote_type = 0;
 	count = 0;
 	i = 0;
 	while (str[i])
 	{
 		if (get_quote(str[i]))
 		{
-			quote_type = str[i];
+			quote_type = str[i++];
 			count++;
-			i++;
 			while (str[i] && str[i] != quote_type)
 				i++;
 			if (str[i] == quote_type)
-			{
 				count++;
-				quote_type = 0;
-			}
 		}
 		if (str[i])
 			i++;

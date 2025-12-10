@@ -6,7 +6,7 @@
 /*   By: elie <elie@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/28 13:56:00 by elie              #+#    #+#             */
-/*   Updated: 2025/12/09 14:53:40 by elie             ###   ########.fr       */
+/*   Updated: 2025/12/10 10:05:23 by elie             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,21 +120,14 @@ int	apply_redirections(t_cmd *cmd)
 	if (cmd->rdr.i_fd != STDIN_FILENO && cmd->rdr.i_fd != -1)
 	{
 		if (dup2(cmd->rdr.i_fd, STDIN_FILENO) == -1)
-		{
-			perror("minishell: dup2");
-			return (FAILURE);
-		}
+			return (perror("minishell: dup2"), FAILURE);
 		close(cmd->rdr.i_fd);
 		cmd->rdr.i_fd = -1;
 	}
-	if (cmd->rdr.o_fd != STDOUT_FILENO
-		&& cmd->rdr.o_fd != -1)
+	if (cmd->rdr.o_fd != STDOUT_FILENO && cmd->rdr.o_fd != -1)
 	{
 		if (dup2(cmd->rdr.o_fd, STDOUT_FILENO) == -1)
-		{
-			perror("minishell: dup2");
-			return (FAILURE);
-		}
+			return (perror("minishell: dup2"), FAILURE);
 		close(cmd->rdr.o_fd);
 		cmd->rdr.o_fd = -1;
 	}
