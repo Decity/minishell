@@ -44,20 +44,20 @@ bool	is_builtin(const char *cmd)
 int	execute_builtin(t_cmd *cmd, t_data *data)
 {
 	if (ft_strcmp(cmd->args[0], "echo") == 0)
-		return (builtin_echo((const char **)cmd->args + 1), data->exit_status);
+		return (data->exit_status = builtin_echo((const char **)cmd->args + 1));
 	if (ft_strcmp(cmd->args[0], "cd") == 0)
-		return (builtin_cd(data->envp, &data->directory, cmd->args[1]),
-			data->exit_status);
+		return (data->exit_status = builtin_cd(data->envp, &data->directory,
+				cmd->args[1]));
 	if (ft_strcmp(cmd->args[0], "pwd") == 0)
-		return (pwd_print(data->directory), data->exit_status);
+		return (data->exit_status = pwd_print(data->directory));
 	if (ft_strcmp(cmd->args[0], "export") == 0)
 		return (handle_export(cmd, data), data->exit_status);
 	if (ft_strcmp(cmd->args[0], "unset") == 0)
-		return (builtin_unset(&data->envp, cmd->args[1]), data->exit_status);
+		return (data->exit_status = builtin_unset(&data->envp, cmd->args));
 	if (ft_strcmp(cmd->args[0], "env") == 0)
-		return (builtin_env_print(data->envp), data->exit_status);
+		return (data->exit_status = builtin_env_print(data->envp));
 	if (ft_strcmp(cmd->args[0], "exit") == 0)
-		minishell_exit(data);
+		minishell_exit(cmd, data);
 	return (data->exit_status);
 }
 

@@ -113,6 +113,10 @@ void	setup_child_redirections(int *pipefd, int prev_pipefd, bool is_first,
  */
 int	apply_redirections(t_cmd *cmd)
 {
+	if (cmd->rdr.infile && cmd->rdr.i_fd == -1)
+		return (FAILURE);
+	if (cmd->rdr.outfile && cmd->rdr.o_fd == -1)
+		return (FAILURE);
 	if (cmd->rdr.i_fd != STDIN_FILENO && cmd->rdr.i_fd != -1)
 	{
 		if (dup2(cmd->rdr.i_fd, STDIN_FILENO) == -1)
