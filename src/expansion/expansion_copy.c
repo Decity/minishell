@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expansion_copy.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dbakker <dbakker@student.42.fr>            +#+  +:+       +#+        */
+/*   By: elie <elie@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/03 19:38:22 by dbakker           #+#    #+#             */
-/*   Updated: 2025/12/04 12:00:06 by dbakker          ###   ########.fr       */
+/*   Updated: 2025/12/10 08:43:08 by elie             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ static void	expansion_copy_after_variable(char *dest, const char *src)
 }
 
 /**
- * @brief Copy @p `src` to @p `dest, with the first occurence of a variable in
+ * @brief Copy @p `src` to @p `dest` with the first occurence of a variable in
  * @brief @p `src` being substituted for @p `envval`.
  *
  * @return Pointer to @p `dest`.
