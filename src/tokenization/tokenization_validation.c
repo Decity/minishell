@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tokenization_validation.c                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dbakker <dbakker@student.42.fr>            +#+  +:+       +#+        */
+/*   By: elie <elie@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/18 15:25:55 by elie              #+#    #+#             */
-/*   Updated: 2025/12/08 17:42:04 by dbakker          ###   ########.fr       */
+/*   Updated: 2025/12/10 08:35:54 by elie             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,8 @@ bool	validate_quotation(char *str)
 				quote_type = 0;
 			}
 		}
-		i++;
+		if (str[i])
+			i++;
 	}
 	return ((count + 1) % 2);
 }
