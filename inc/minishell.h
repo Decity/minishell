@@ -6,7 +6,7 @@
 /*   By: elie <elie@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/30 15:08:30 by ebelle            #+#    #+#             */
-/*   Updated: 2025/12/09 13:26:48 by elie             ###   ########.fr       */
+/*   Updated: 2025/12/10 10:21:07 by elie             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -129,7 +129,7 @@ char	*ft_getnenv(const t_list *list, const char *name, size_t num);
 int		builtin_env_print(const t_list *envp);
 // exit.c
 
-void	minishell_exit(t_data *data);
+void	builtin_exit(t_cmd *cmd, t_data *data);
 // export_print.c
 
 void	*builtin_export(t_list *list, const char *envvar);
@@ -141,7 +141,7 @@ void	*builtin_update_pwd(t_pwd *directory);
 int		pwd_print(t_pwd directory);
 // unset.c
 
-int		builtin_unset(t_list **head, const char *name);
+int		builtin_unset(t_list **head, char **args);
 
 // PARSING
 

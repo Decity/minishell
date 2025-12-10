@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tokenization_validation.c                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dbakker <dbakker@student.42.fr>            +#+  +:+       +#+        */
+/*   By: elie <elie@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/18 15:25:55 by elie              #+#    #+#             */
-/*   Updated: 2025/12/08 17:42:04 by dbakker          ###   ########.fr       */
+/*   Updated: 2025/12/10 08:35:54 by elie             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,25 +44,21 @@ bool	validate_quotation(char *str)
 	size_t	i;
 	size_t	count;
 
-	quote_type = 0;
 	count = 0;
 	i = 0;
 	while (str[i])
 	{
 		if (get_quote(str[i]))
 		{
-			quote_type = str[i];
+			quote_type = str[i++];
 			count++;
-			i++;
 			while (str[i] && str[i] != quote_type)
 				i++;
 			if (str[i] == quote_type)
-			{
 				count++;
-				quote_type = 0;
-			}
 		}
-		i++;
+		if (str[i])
+			i++;
 	}
 	return ((count + 1) % 2);
 }
