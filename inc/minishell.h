@@ -129,7 +129,7 @@ char	*ft_getnenv(const t_list *list, const char *name, size_t num);
 int		builtin_env_print(const t_list *envp);
 // exit.c
 
-void	minishell_exit(t_data *data);
+void	minishell_exit(t_cmd *cmd, t_data *data);
 // export_print.c
 
 void	*builtin_export(t_list *list, const char *envvar);
@@ -141,7 +141,7 @@ void	*builtin_update_pwd(t_pwd *directory);
 int		pwd_print(t_pwd directory);
 // unset.c
 
-int		builtin_unset(t_list **head, const char *name);
+int		builtin_unset(t_list **head, char **args);
 
 // PARSING
 

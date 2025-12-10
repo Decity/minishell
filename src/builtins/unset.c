@@ -6,11 +6,27 @@
 /*   By: elie <elie@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/14 16:59:49 by dbakker           #+#    #+#             */
-/*   Updated: 2025/12/01 14:41:35 by elie             ###   ########.fr       */
+/*   Updated: 2025/12/10 09:54:51 by elie             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+static bool	is_valid_unset_name(const char *str)
+{
+	size_t	i;
+
+	if (!str || *str == '\0' || ft_isdigit(*str))
+		return (false);
+	i = 0;
+	while (str[i])
+	{
+		if (ft_isalnum(str[i]) == 0 && str[i] != '_')
+			return (false);
+		i++;
+	}
+	return (true);
+}
 
 /**
  * @return `true` if `content` of @p `head` matches @p `name`, false otherwise.
@@ -38,12 +54,13 @@ static bool	unset_head(t_list **head, const char *name)
  * @param[out]	head Head of the linked list.
  * @param[in]	name Environmental variable to delete.
  */
-int	builtin_unset(t_list **head, const char *name)
+static int	unset_variable(t_list **head, const char *name)
 {
 	t_list	*node;
 	t_list	*last;
 
-	if (name == NULL || ft_strchr(name, '=') || unset_head(head, name) == true)
+	if (name == NULL || !is_valid_unset_name(name)
+		|| unset_head(head, name) == true)
 	{
 		return (0);
 	}
@@ -61,6 +78,21 @@ int	builtin_unset(t_list **head, const char *name)
 				return (0);
 			}
 		}
+	}
+	return (0);
+}
+
+int	builtin_unset(t_list **head, char **args)
+{
+	int	i;
+
+	if (!args[1])
+		return (0);
+	i = 1;
+	while (args[i])
+	{
+		unset_variable(head, args[i]);
+		i++;
 	}
 	return (0);
 }
