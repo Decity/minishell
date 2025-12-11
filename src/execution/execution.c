@@ -12,6 +12,27 @@
 
 #include "minishell.h"
 
+bool	is_builtin(const char *cmd)
+{
+	if (!cmd)
+		return (false);
+	if (ft_strcmp(cmd, "echo") == 0)
+		return (true);
+	if (ft_strcmp(cmd, "cd") == 0)
+		return (true);
+	if (ft_strcmp(cmd, "pwd") == 0)
+		return (true);
+	if (ft_strcmp(cmd, "export") == 0)
+		return (true);
+	if (ft_strcmp(cmd, "unset") == 0)
+		return (true);
+	if (ft_strcmp(cmd, "env") == 0)
+		return (true);
+	if (ft_strcmp(cmd, "exit") == 0)
+		return (true);
+	return (false);
+}
+
 void	execution(t_data *data)
 {
 	if (data->is_interactive)

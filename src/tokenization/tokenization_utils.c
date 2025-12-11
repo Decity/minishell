@@ -67,9 +67,11 @@ uint8_t	get_token_type(const char *str)
  */
 uint8_t	get_redirection_type(const char *str)
 {
-	if (!ft_strncmp(str, ">>", 2))
+	if (!str || !str[0])
+		return (0);
+	if (str[1] && !ft_strncmp(str, ">>", 2))
 		return (TYPE_REDIRECTION_APPEND);
-	if (!ft_strncmp(str, "<<", 2))
+	if (str[1] && !ft_strncmp(str, "<<", 2))
 		return (TYPE_REDIRECTION_HEREDOC);
 	if (str[0] == '>')
 		return (TYPE_REDIRECTION_OUT);

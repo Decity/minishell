@@ -12,6 +12,19 @@
 
 #include "minishell.h"
 
+void	skip_quoted_section(char *input, size_t *i)
+{
+	char	quote;
+
+	quote = get_quote(input[*i]);
+	if (quote)
+	{
+		(*i)++;
+		while (input[*i] && input[*i] != quote)
+			(*i)++;
+	}
+}
+
 static int	tokenize_consec(char *str, size_t consecutive,
 	int8_t next)
 {

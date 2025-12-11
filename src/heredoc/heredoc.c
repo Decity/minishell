@@ -115,6 +115,7 @@ static void	*heredoc_create_file(t_cmd *cmd, const t_list *envp)
 				return (NULL);
 			}
 			close(cmd->rdr.infile[i].fd);
+			cmd->rdr.infile[i].fd = -1;
 		}
 		i += 1;
 	}
