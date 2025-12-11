@@ -3,14 +3,35 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: elie <elie@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: dbakker <dbakker@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/08 17:15:33 by ebelle            #+#    #+#             */
-/*   Updated: 2025/12/09 12:12:09 by elie             ###   ########.fr       */
+/*   Updated: 2025/12/11 19:02:18 by dbakker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+static void	*init_setup_head_node()
+{
+	char	*empty_node;
+	t_list	*node;
+
+	empty_node = ft_strdup("");
+	if (empty_node == NULL)
+	{
+		perror("minishell");
+		exit(EXIT_FAILURE);
+	}
+	node = ft_listnew(empty_node);
+	if (node == NULL)
+	{
+		free(empty_node);
+		perror("minishell");
+		exit(EXIT_FAILURE);
+	}
+	return (node);
+}
 
 /**
  * @brief Initialize shell data structure
@@ -23,12 +44,15 @@
 void	init(t_data *data)
 {
 	extern const char	**environ;
+	t_list				*node;
 
+	node = init_setup_head_node();
 	ft_bzero(data, sizeof(t_data));
 	data->envp = array_to_llist(environ);
+	ft_listadd_front(&data->envp, node);
 	data->directory.pwd = getcwd(NULL, 0);
 	data->is_interactive = isatty(STDIN_FILENO);
-	if (data->envp == NULL || data->directory.pwd == NULL)
+	if ((*environ && data->envp == NULL) || data->directory.pwd == NULL)
 	{
 		perror("minishell");
 		exit_cleanup(data, EXIT_FAILURE);

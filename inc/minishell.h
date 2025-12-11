@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: elie <elie@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: dbakker <dbakker@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/30 15:08:30 by ebelle            #+#    #+#             */
-/*   Updated: 2025/12/10 10:21:07 by elie             ###   ########.fr       */
+/*   Updated: 2025/12/11 19:08:11 by dbakker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -135,9 +135,10 @@ int		builtin_env_print(const t_list *envp);
 void	builtin_exit(t_cmd *cmd, t_data *data);
 // export_print.c
 
-void	*builtin_export(t_list *list, const char *envvar);
+int		builtin_export(t_list *envp, char **args);
 int		export_print(const t_list *list);
 int		handle_export(t_cmd *cmd, t_data *data);
+int		builtin_export_var(t_list *envp, char *envvar);
 // pwd.c
 
 void	*builtin_update_pwd(t_pwd *directory);
@@ -145,7 +146,6 @@ int		pwd_print(t_pwd directory);
 // unset.c
 
 int		builtin_unset(t_list **head, char **args);
-
 // PARSING
 
 // parsing_linked_list.c

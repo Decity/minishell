@@ -6,7 +6,7 @@
 /*   By: dbakker <dbakker@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/30 19:00:22 by elie              #+#    #+#             */
-/*   Updated: 2025/12/08 16:04:07 by dbakker          ###   ########.fr       */
+/*   Updated: 2025/12/11 19:09:17 by dbakker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,6 @@
 # define TYPE_REDIRECTION_OUT 7
 # define TYPE_REDIRECTION_APPEND 8
 # define TYPE_REDIRECTION_HEREDOC 9
-
-# define HEREDOC_LIMIT 16
 
 # ifndef HEREDOC_FILENAME_LENGTH
 #  define HEREDOC_FILENAME_LENGTH 16

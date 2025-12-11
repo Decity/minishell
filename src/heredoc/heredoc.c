@@ -6,7 +6,7 @@
 /*   By: dbakker <dbakker@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/12 10:53:02 by dbakker           #+#    #+#             */
-/*   Updated: 2025/12/08 14:49:27 by dbakker          ###   ########.fr       */
+/*   Updated: 2025/12/11 19:07:57 by dbakker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -129,12 +129,6 @@ int	heredoc(t_data *data)
 {
 	t_cmd	*cmd;
 
-	if (count_redir_heredoc((const char **)data->tokens) > HEREDOC_LIMIT)
-	{
-		ft_putendl_fd("minishell: maximum here-document count exceeded",
-			STDERR_FILENO);
-		return (FAILURE);
-	}
 	if (heredoc_init(data->command) == NULL)
 	{
 		perror("minishell");

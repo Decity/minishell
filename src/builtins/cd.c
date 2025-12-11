@@ -3,50 +3,61 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: elie <elie@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: dbakker <dbakker@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/17 14:30:29 by dbakker           #+#    #+#             */
-/*   Updated: 2025/12/11 10:50:55 by elie             ###   ########.fr       */
+/*   Updated: 2025/12/11 18:49:00 by dbakker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static void	*update_oldpwd(t_list *envp, t_pwd *dir, bool pwd_was_set)
+static int	builtin_update_oldpwd_env(t_list *envp, t_pwd *dir)
 {
 	char	*old_pwd;
-	char	*old_pwd_value;
-	char	*export;
+	int		export;
 
-	if (pwd_was_set)
-		old_pwd_value = dir->old_pwd;
+	if (ft_getenv(envp, "PWD"))
+	{
+		old_pwd = ft_strjoin("OLDPWD=", dir->old_pwd);
+		export = builtin_export_var(envp, old_pwd);
+		free(old_pwd);
+		if (export == EXIT_FAILURE)
+		{
+			return (FAILURE);
+		}
+	}
 	else
-		old_pwd_value = "";
-	old_pwd = ft_strjoin("OLDPWD=", old_pwd_value);
-	if (!old_pwd)
-		return (NULL);
-	export = builtin_export(envp, old_pwd);
-	free(old_pwd);
-	if (export == NULL)
-		return (NULL);
-	return (envp);
+	{
+		old_pwd = ft_strjoin("OLDPWD=", "");
+		export = builtin_export_var(envp, old_pwd);
+		free(old_pwd);
+		if (export == EXIT_FAILURE)
+		{
+			return (FAILURE);
+		}
+	}
+	return (SUCCESS);
 }
 
-static void	*builtin_update_pwd_env(t_list *envp, t_pwd *dir)
+static int	builtin_update_pwd_env(t_list *envp, t_pwd *dir)
 {
 	char	*pwd;
-	char	*export;
-	bool	pwd_was_set;
+	int		export;
 
-	pwd_was_set = (ft_getenv(envp, "PWD") != NULL);
+	export = builtin_update_oldpwd_env(envp, dir);
+	if (export == FAILURE)
+	{
+		return (FAILURE);
+	}
 	pwd = ft_strjoin("PWD=", dir->pwd);
-	if (!pwd)
-		return (NULL);
-	export = builtin_export(envp, pwd);
+	export = builtin_export_var(envp, pwd);
 	free(pwd);
-	if (export == NULL)
-		return (NULL);
-	return (update_oldpwd(envp, dir, pwd_was_set));
+	if (export == EXIT_FAILURE)
+	{
+		return (FAILURE);
+	}
+	return (SUCCESS);
 }
 
 /**
@@ -57,19 +68,17 @@ static void	*builtin_update_pwd_env(t_list *envp, t_pwd *dir)
  * @param[out]	dir		Member variables to update.
  * @param[in]	path	Path to go to.
  *
- * @retval `0` on success.
- * @retval `1` on failure.
- * @retval `2` on malloc failure.
+ * @return `0` on success, or `1` on failure.
  */
 int	builtin_cd(t_list *envp, t_pwd *dir, const char *path)
 {
 	if (chdir(path) == 0)
 	{
-		if (builtin_update_pwd(dir) == NULL)
-			return (2);
-		if (builtin_update_pwd_env(envp, dir) == NULL)
-			return (2);
-		return (0);
+		if (builtin_update_pwd(dir) == FAILURE)
+			perror("minishell");
+		if (builtin_update_pwd_env(envp, dir) == FAILURE)
+			perror("minishell");
+		return (EXIT_SUCCESS);
 	}
-	return (1);
+	return (EXIT_FAILURE);
 }

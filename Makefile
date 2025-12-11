@@ -23,6 +23,7 @@ SRCS		= src/main.c \
 			  src/builtins/echo.c \
 			  src/builtins/env.c \
 			  src/builtins/exit.c \
+			  src/builtins/export_utils.c \
 			  src/builtins/export_print.c \
 			  src/builtins/export.c \
 			  src/builtins/pwd.c \
@@ -54,7 +55,7 @@ SRCS		= src/main.c \
 			  src/tokenization/tokenization_utils.c \
 			  src/tokenization/tokenization_validation_utils.c \
 			  src/tokenization/tokenization_validation.c \
-			  src/tokenization/tokenization.c 
+			  src/tokenization/tokenization.c
 
 # Object files
 OBJS		= $(patsubst $(SRC_DIR)/%.c,$(OBJ_DIR)/%.o,$(SRCS))
