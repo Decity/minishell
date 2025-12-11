@@ -102,7 +102,6 @@ static void	print_export_var(const char *env_str)
 	char	*value;
 	size_t	namelen;
 
-	ft_putstr_fd("export ", STDOUT_FILENO);
 	if (ft_strchr(env_str, '='))
 	{
 		namelen = env_namelen(env_str);
