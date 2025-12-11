@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dbakker <dbakker@student.42.fr>            +#+  +:+       +#+        */
+/*   By: elie <elie@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/17 14:30:29 by dbakker           #+#    #+#             */
-/*   Updated: 2025/12/01 09:52:31 by dbakker          ###   ########.fr       */
+/*   Updated: 2025/12/11 09:51:06 by elie             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,19 +17,28 @@ static void	*builtin_update_pwd_env(t_list *envp, t_pwd *dir)
 	char	*pwd;
 	char	*old_pwd;
 	char	*export;
+	char	*old_pwd_value;
+	bool	pwd_was_set;
 
-	if (ft_getenv(envp, "PWD"))
-		pwd = ft_strjoin("PWD", dir->pwd);
+	pwd_was_set = (ft_getenv(envp, "PWD") != NULL);
+	pwd = ft_strjoin("PWD=", dir->pwd);
+	if (!pwd)
+		return (NULL);
 	export = builtin_export(envp, pwd);
-	if (export == NULL)
-		return (free(pwd), NULL);
-	if (ft_getenv(envp, "OLDPWD"))
-		old_pwd = ft_strjoin("OLDPWD", dir->old_pwd);
-	export = builtin_export(envp, old_pwd);
-	if (export == NULL)
-		return (free(old_pwd), NULL);
 	free(pwd);
+	if (export == NULL)
+		return (NULL);
+	if (pwd_was_set)
+		old_pwd_value = dir->old_pwd;
+	else
+		old_pwd_value = "";
+	old_pwd = ft_strjoin("OLDPWD=", old_pwd_value);
+	if (!old_pwd)
+		return (NULL);
+	export = builtin_export(envp, old_pwd);
 	free(old_pwd);
+	if (export == NULL)
+		return (NULL);
 	return (envp);
 }
 
