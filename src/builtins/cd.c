@@ -6,28 +6,18 @@
 /*   By: elie <elie@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/17 14:30:29 by dbakker           #+#    #+#             */
-/*   Updated: 2025/12/11 09:51:06 by elie             ###   ########.fr       */
+/*   Updated: 2025/12/11 10:37:02 by elie             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static void	*builtin_update_pwd_env(t_list *envp, t_pwd *dir)
+static void	*update_oldpwd(t_list *envp, t_pwd *dir, bool pwd_was_set)
 {
-	char	*pwd;
 	char	*old_pwd;
-	char	*export;
 	char	*old_pwd_value;
-	bool	pwd_was_set;
+	char	*export;
 
-	pwd_was_set = (ft_getenv(envp, "PWD") != NULL);
-	pwd = ft_strjoin("PWD=", dir->pwd);
-	if (!pwd)
-		return (NULL);
-	export = builtin_export(envp, pwd);
-	free(pwd);
-	if (export == NULL)
-		return (NULL);
 	if (pwd_was_set)
 		old_pwd_value = dir->old_pwd;
 	else
@@ -40,6 +30,23 @@ static void	*builtin_update_pwd_env(t_list *envp, t_pwd *dir)
 	if (export == NULL)
 		return (NULL);
 	return (envp);
+}
+
+static void	*builtin_update_pwd_env(t_list *envp, t_pwd *dir)
+{
+	char	*pwd;
+	char	*export;
+	bool	pwd_was_set;
+
+	pwd_was_set = (ft_getenv(envp, "PWD") != NULL);
+	pwd = ft_strjoin("PWD=", dir->pwd);
+	if (!pwd)
+		return (NULL);
+	export = builtin_export(envp, pwd);
+	free(pwd);
+	if (export == NULL)
+		return (NULL);
+	return (update_oldpwd(envp, dir, pwd_was_set));
 }
 
 /**
