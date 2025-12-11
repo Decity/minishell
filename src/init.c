@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dbakker <dbakker@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ebelle <ebelle@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/08 17:15:33 by ebelle            #+#    #+#             */
-/*   Updated: 2025/12/11 19:13:58 by dbakker          ###   ########.fr       */
+/*   Updated: 2025/12/11 19:34:55 by ebelle           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static void	*init_setup_head_node()
+static void	*init_setup_head_node(void)
 {
 	char	*empty_node;
 	t_list	*node;
@@ -51,14 +51,12 @@ void	init(t_data *data)
 	data->envp = array_to_llist(environ);
 	ft_listadd_front(&data->envp, node);
 	data->directory.pwd = getcwd(NULL, 0);
-	data->is_interactive = isatty(STDIN_FILENO);
 	if ((*environ && data->envp == NULL) || data->directory.pwd == NULL)
 	{
 		perror("minishell");
 		exit_cleanup(data, EXIT_FAILURE);
 	}
-	if (data->is_interactive)
-		setup_signals_interactive();
+	setup_signals_interactive();
 }
 
 static void	set_prompt(t_data *data)
@@ -82,17 +80,7 @@ uint8_t	set_input(t_data *data)
 {
 	size_t	len;
 
-	if (data->is_interactive)
-		set_prompt(data);
-	else
-	{
-		data->input = get_next_line(STDIN_FILENO);
-		if (!data->input)
-			exit(data->exit_status);
-		len = ft_strlen(data->input);
-		if (len > 0 && data->input[len - 1] == '\n')
-			data->input[len - 1] = '\0';
-	}
+	set_prompt(data);
 	if (!data->input)
 		exit_cleanup(data, data->exit_status);
 	if (!data->input[0] || ft_strlen(data->input) == 0)
@@ -102,7 +90,6 @@ uint8_t	set_input(t_data *data)
 		len++;
 	if (data->input[len] == '\0')
 		return (free(data->input), FAILURE);
-	if (data->is_interactive)
-		add_history(data->input);
+	add_history(data->input);
 	return (SUCCESS);
 }

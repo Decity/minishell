@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   structs.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dbakker <dbakker@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ebelle <ebelle@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/30 18:14:03 by elie              #+#    #+#             */
-/*   Updated: 2025/11/18 14:43:39 by dbakker          ###   ########.fr       */
+/*   Updated: 2025/12/11 19:27:27 by ebelle           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,6 @@ typedef struct s_data
 	t_list	*envp;
 	t_cmd	*command;
 	int		exit_status;
-	bool	is_interactive;
 }	t_data;
 
 typedef struct s_p_and_p
