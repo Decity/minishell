@@ -6,12 +6,16 @@
 /*   By: dbakker <dbakker@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/30 19:00:22 by elie              #+#    #+#             */
-/*   Updated: 2025/12/11 19:09:17 by dbakker          ###   ########.fr       */
+/*   Updated: 2025/12/11 19:14:00 by dbakker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef DEFINITIONS_H
 # define DEFINITIONS_H
+
+# define PROMPT_DEFAULT "( ͡° ͜ʖ ͡°) "
+# define PROMPT_HEREDOC "( ⌐□_□) "
+# define PROMPT_ERROR_EXIT "(╯  °□° )╯︵ ┻━┻\n"
 
 # define FAILURE 0
 # define SUCCESS 1

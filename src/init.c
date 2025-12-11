@@ -6,7 +6,7 @@
 /*   By: dbakker <dbakker@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/08 17:15:33 by ebelle            #+#    #+#             */
-/*   Updated: 2025/12/11 19:02:18 by dbakker          ###   ########.fr       */
+/*   Updated: 2025/12/11 19:13:58 by dbakker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,8 +64,8 @@ void	init(t_data *data)
 static void	set_prompt(t_data *data)
 {
 	if (data->exit_status)
-		printf("(╯°□°)╯︵ ┻━┻\n");
-	data->input = readline("( ͡° ͜ʖ ͡°) ");
+		printf(PROMPT_ERROR_EXIT);
+	data->input = readline(PROMPT_DEFAULT);
 }
 
 /**
