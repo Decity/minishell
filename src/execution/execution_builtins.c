@@ -20,27 +20,6 @@ static void	close_stdin_stdout(int saved_stdin, int saved_stdout)
 	close(saved_stdout);
 }
 
-bool	is_builtin(const char *cmd)
-{
-	if (!cmd)
-		return (false);
-	if (ft_strcmp(cmd, "echo") == 0)
-		return (true);
-	if (ft_strcmp(cmd, "cd") == 0)
-		return (true);
-	if (ft_strcmp(cmd, "pwd") == 0)
-		return (true);
-	if (ft_strcmp(cmd, "export") == 0)
-		return (true);
-	if (ft_strcmp(cmd, "unset") == 0)
-		return (true);
-	if (ft_strcmp(cmd, "env") == 0)
-		return (true);
-	if (ft_strcmp(cmd, "exit") == 0)
-		return (true);
-	return (false);
-}
-
 int	execute_builtin(t_cmd *cmd, t_data *data)
 {
 	if (ft_strcmp(cmd->args[0], "echo") == 0)
@@ -59,6 +38,13 @@ int	execute_builtin(t_cmd *cmd, t_data *data)
 	if (ft_strcmp(cmd->args[0], "exit") == 0)
 		builtin_exit(cmd, data);
 	return (data->exit_status);
+}
+
+static void	restore_stdio(int saved_stdin, int saved_stdout)
+{
+	dup2(saved_stdin, STDIN_FILENO);
+	dup2(saved_stdout, STDOUT_FILENO);
+	close_stdin_stdout(saved_stdin, saved_stdout);
 }
 
 void	handle_single_builtin(t_cmd *cmd, t_data *data)
@@ -80,14 +66,10 @@ void	handle_single_builtin(t_cmd *cmd, t_data *data)
 		return ;
 	}
 	if (ft_strcmp(cmd->args[0], "exit") == 0)
-		close_stdin_stdout(saved_stdin, saved_stdout);
+		restore_stdio(saved_stdin, saved_stdout);
 	data->exit_status = execute_builtin(cmd, data);
 	if (ft_strcmp(cmd->args[0], "exit") != 0)
-	{
-		dup2(saved_stdin, STDIN_FILENO);
-		dup2(saved_stdout, STDOUT_FILENO);
-		close_stdin_stdout(saved_stdin, saved_stdout);
-	}
+		restore_stdio(saved_stdin, saved_stdout);
 }
 
 static void	handle_redir_error(int saved_stdin, int saved_stdout, t_data *data)

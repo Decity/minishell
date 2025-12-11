@@ -16,15 +16,16 @@ static int	tokenization_in_quote(const char *str, int8_t curr_type,
 	int8_t next_type)
 {
 	if (curr_type == TYPE_ARG && (next_type == TYPE_PIPE
-			|| get_redirection_type(str + 1)))
+			|| (str[0] && get_redirection_type(str + 1))))
 		return (1);
 	else if ((curr_type == TYPE_PIPE || get_redirection_type(str))
 		&& next_type == TYPE_ARG)
 		return (1);
-	else if (curr_type == TYPE_PIPE && get_redirection_type(str + 1))
+	else if (curr_type == TYPE_PIPE && str[0] && get_redirection_type(str + 1))
 		return (1);
 	else if ((curr_type == TYPE_SQUOTE || curr_type == TYPE_DQUOTE)
-		&& (next_type == TYPE_PIPE || get_redirection_type(str + 1)))
+		&& (next_type == TYPE_PIPE
+			|| (str[0] && get_redirection_type(str + 1))))
 		return (1);
 	else if ((curr_type == TYPE_PIPE || get_redirection_type(str))
 		&& (next_type == TYPE_SQUOTE || next_type == TYPE_DQUOTE))
@@ -65,9 +66,9 @@ size_t	get_normalized_str_len(const char *str)
 			next = tokenization_append_heredoc(str + i + 1, &i, &len);
 		else
 			len++;
+		i++;
 		if (in_quote == 0)
 			len += tokenization_in_quote(str + i, curr, next);
-		i++;
 	}
 	return (len);
 }

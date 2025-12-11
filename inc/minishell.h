@@ -71,6 +71,9 @@ bool	validate_token_str(char *str);
 bool	has_redirection_target(char *str);
 bool	validate_quotation(char *str);
 
+// tokenization_validation_utils.c
+void	skip_quoted_section(char *input, size_t *i);
+
 /// EXECUTION
 
 char	*get_executable_path(const char *exec, const t_list *envp);

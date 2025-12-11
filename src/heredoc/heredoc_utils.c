@@ -73,7 +73,11 @@ void	remove_heredoc_files(t_cmd *cmd)
 		{
 			if (cmd->rdr.infile[i].redir_type == TYPE_REDIRECTION_HEREDOC)
 			{
-				close(cmd->rdr.infile[i].fd);
+				if (cmd->rdr.infile[i].fd != -1)
+				{
+					close(cmd->rdr.infile[i].fd);
+					cmd->rdr.infile[i].fd = -1;
+				}
 				unlink(cmd->rdr.infile[i].file);
 			}
 			i++;

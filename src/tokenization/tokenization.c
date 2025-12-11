@@ -80,7 +80,7 @@ void	tokenize(t_data *data, size_t token_count)
 	start = 0;
 	while (i < token_count)
 	{
-		while (ft_isspace(input[start]))
+		while (input[start] && ft_isspace(input[start]))
 			start++;
 		end = start;
 		tokenization_quote_matching(input, &end, &quote);
@@ -96,29 +96,22 @@ void	tokenize(t_data *data, size_t token_count)
 static void	tokenization_quote_handling(char *input, size_t *token_count)
 {
 	size_t	i;
-	char	quote;
 
 	i = 0;
-	while (ft_isspace(input[i]))
+	while (input[i] && ft_isspace(input[i]))
 		i++;
 	while (input[i])
 	{
-		quote = get_quote(input[i]);
-		if (quote)
-		{
-			i++;
-			while (input[i] != quote)
-				i++;
-			quote = 0;
-		}
-		else if (input[i] && ft_isspace(input[i]))
+		skip_quoted_section(input, &i);
+		if (input[i] && ft_isspace(input[i]))
 		{
 			while (input[i + 1] && ft_isspace(input[i + 1]))
 				i++;
 			if (input[i + 1] && !ft_isspace(input[i + 1]))
 				(*token_count)++;
 		}
-		i++;
+		if (input[i])
+			i++;
 	}
 }
 
