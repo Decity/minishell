@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dbakker <dbakker@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ebelle <ebelle@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/12 10:53:02 by dbakker           #+#    #+#             */
-/*   Updated: 2025/12/08 14:49:27 by dbakker          ###   ########.fr       */
+/*   Updated: 2025/12/11 18:58:49 by ebelle           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ static t_cmd	*heredoc_readline(const t_cmd *cmd, const t_list *envp,
 
 	while (true != false)
 	{
-		line = readline("(⌐□_□) ");
+		line = readline(PROMPT_HEREDOC);
 		if (line == NULL)
 		{
 			heredoc_print_warning(line_count,

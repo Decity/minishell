@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: elie <elie@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: ebelle <ebelle@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/08 17:15:33 by ebelle            #+#    #+#             */
-/*   Updated: 2025/12/09 12:12:09 by elie             ###   ########.fr       */
+/*   Updated: 2025/12/11 18:59:17 by ebelle           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,8 +40,8 @@ void	init(t_data *data)
 static void	set_prompt(t_data *data)
 {
 	if (data->exit_status)
-		printf("(╯°□°)╯︵ ┻━┻\n");
-	data->input = readline("( ͡° ͜ʖ ͡°) ");
+		printf(PROMPT_ERROR_EXIT);
+	data->input = readline(PROMPT_DEFAULT);
 }
 
 /**
