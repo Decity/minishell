@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   unset.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: elie <elie@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: dbakker <dbakker@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/14 16:59:49 by dbakker           #+#    #+#             */
-/*   Updated: 2025/12/10 09:54:51 by elie             ###   ########.fr       */
+/*   Updated: 2025/12/11 14:41:54 by dbakker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,14 +45,29 @@ static bool	is_valid_unset_name(const char *str)
  */
 static bool	unset_head(t_list **head, const char *name)
 {
-	t_list	*last;
+	const size_t	namelen = ft_strlen(name);
+	const size_t	envlen = env_namelen((*head)->content);
+	t_list			*last;
 
-	if (ft_memcmp((*head)->content, name, env_namelen((*head)->content)) == 0)
+	if (namelen > envlen)
 	{
-		last = (*head);
-		*head = (*head)->next;
-		ft_listdelone(last, free);
-		return (true);
+		if (ft_memcmp((*head)->content, name, namelen) == 0)
+		{
+			last = (*head);
+			*head = (*head)->next;
+			ft_listdelone(last, free);
+			return (true);
+		}
+	}
+	else
+	{
+		if (ft_memcmp((*head)->content, name, envlen) == 0)
+		{
+			last = (*head);
+			*head = (*head)->next;
+			ft_listdelone(last, free);
+			return (true);
+		}
 	}
 	return (false);
 }
@@ -68,14 +83,14 @@ static bool	unset_head(t_list **head, const char *name)
  */
 static int	unset_variable(t_list **head, const char *name)
 {
-	t_list	*node;
-	t_list	*last;
+	const size_t	namelen = ft_strlen(name);
+	size_t			envlen;
+	t_list			*node;
+	t_list			*last;
 
 	if (name == NULL || !is_valid_unset_name(name)
 		|| unset_head(head, name) == true)
-	{
 		return (0);
-	}
 	node = *head;
 	while (node)
 	{
@@ -83,11 +98,12 @@ static int	unset_variable(t_list **head, const char *name)
 		node = node->next;
 		if (node)
 		{
-			if (ft_memcmp(node->content, name, env_namelen(node->content)) == 0)
+			envlen = env_namelen(node->content);
+			if (namelen > envlen)
+				envlen = namelen;
+			if (ft_memcmp(node->content, name, envlen) == 0)
 			{
-				last->next = node->next;
-				ft_listdelone(node, free);
-				return (0);
+				return (last->next = node->next, ft_listdelone(node, free), 0);
 			}
 		}
 	}
