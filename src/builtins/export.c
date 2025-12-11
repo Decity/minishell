@@ -126,3 +126,67 @@ void	*builtin_export(t_list *list, const char *envvar)
 	list = builtin_iterate_list(list, str_env);
 	return (list);
 }
+
+/**
+ * @brief Validate that a string is a valid environment variable identifier.
+ *
+ * @param[in]	str	String to validate (may include "NAME" or "NAME=VALUE").
+ *
+ * @retval true if the identifier (NAME part) is valid.
+ * @retval false if the identifier is invalid.
+ */
+static bool	is_valid_identifier(const char *str)
+{
+	size_t	i;
+
+	i = 0;
+	if (*str == '\0' || ft_isdigit(*str) || *str == '=')
+		return (false);
+	while (str[i] && str[i] != '=')
+	{
+		if (ft_isalnum(str[i]) == 0 && str[i] != '_')
+			return (false);
+		i++;
+	}
+	return (true);
+}
+
+/**
+ * @brief Handle the export builtin command with multiple arguments.
+ *
+ * Behavior:
+ * - No args: prints all environment variables in "export NAME="VALUE"" format
+ * - With args: exports each variable, validates identifiers
+ * - Invalid identifiers print an error but don't stop processing
+ *
+ * @param[in]		cmd		Command structure containing arguments.
+ * @param[in,out]	data	Shell data containing environment and exit status.
+ *
+ * @retval 0 if all operations succeeded.
+ * @retval 1 if any identifier was invalid or export failed.
+ */
+int	handle_export(t_cmd *cmd, t_data *data)
+{
+	int		i;
+	int		exit_status;
+
+	if (!cmd->args[1])
+		return (export_print(data->envp));
+	exit_status = 0;
+	i = 1;
+	while (cmd->args[i])
+	{
+		if (!is_valid_identifier(cmd->args[i]))
+		{
+			ft_putstr_fd("minishell: export: `", STDERR_FILENO);
+			ft_putstr_fd(cmd->args[i], STDERR_FILENO);
+			ft_putendl_fd("': not a valid identifier", STDERR_FILENO);
+			exit_status = 1;
+		}
+		else if (builtin_export(data->envp, cmd->args[i]) == NULL)
+			exit_status = 1;
+		i++;
+	}
+	data->exit_status = exit_status;
+	return (exit_status);
+}
