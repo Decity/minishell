@@ -6,7 +6,7 @@
 /*   By: dbakker <dbakker@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/13 22:47:22 by dbakker           #+#    #+#             */
-/*   Updated: 2025/12/04 11:49:01 by dbakker          ###   ########.fr       */
+/*   Updated: 2025/12/12 12:52:15 by dbakker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,7 @@ char	*ft_getenv(const t_list *list, const char *name)
 	const size_t	namelen = ft_strlen(name);
 	size_t			envlen;
 
+	list = list->next;
 	while (list)
 	{
 		envlen = env_namelen(list->content);
@@ -100,6 +101,7 @@ char	*ft_getenv(const t_list *list, const char *name)
  */
 char	*ft_getnenv(const t_list *list, const char *name, size_t num)
 {
+	list = list->next;
 	while (list)
 	{
 		if (env_namelen(list->content) != num)
