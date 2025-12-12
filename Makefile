@@ -49,6 +49,7 @@ SRCS		= src/main.c \
 			  src/parsing/parsing_redirection_out.c \
 			  src/parsing/parsing_redirection.c \
 			  src/parsing/parsing.c \
+			  src/tokenization/tokenization_normalization_strlen_utils.c \
 			  src/tokenization/tokenization_normalization_strlen.c \
 			  src/tokenization/tokenization_normalization_utils.c \
 			  src/tokenization/tokenization_normalization.c \
