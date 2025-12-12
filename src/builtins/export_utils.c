@@ -6,7 +6,7 @@
 /*   By: dbakker <dbakker@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/11 17:37:23 by dbakker           #+#    #+#             */
-/*   Updated: 2025/12/11 18:49:10 by dbakker          ###   ########.fr       */
+/*   Updated: 2025/12/12 13:14:04 by dbakker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -130,6 +130,10 @@ int	builtin_export_var(t_list *envp, char *envvar)
 		ft_putstr_fd(envvar, STDERR_FILENO);
 		ft_putendl_fd("': not a valid identifier", STDERR_FILENO);
 		return (EXIT_FAILURE);
+	}
+	if (ft_strchr(envvar, '=') == NULL && ft_getenv(envp, envvar))
+	{
+		return (EXIT_SUCCESS);
 	}
 	str_env = ft_strdup(envvar);
 	if (str_env == NULL)
