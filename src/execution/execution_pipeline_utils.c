@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution_pipeline_utils.c                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: elie <elie@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: ebelle <ebelle@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/05 10:30:00 by elie              #+#    #+#             */
-/*   Updated: 2025/12/09 14:53:25 by elie             ###   ########.fr       */
+/*   Updated: 2025/12/12 14:43:32 by ebelle           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,9 +24,15 @@ void	wait_for_children(pid_t *pids, size_t count, t_data *data)
 		if (i == count - 1)
 		{
 			if (WIFEXITED(status))
+			{
 				data->exit_status = WEXITSTATUS(status);
+				g_signal = 0;
+			}
 			else if (WIFSIGNALED(status))
+			{
 				data->exit_status = 128 + WTERMSIG(status);
+				g_signal = 0;
+			}
 		}
 		i++;
 	}

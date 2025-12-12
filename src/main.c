@@ -6,7 +6,7 @@
 /*   By: ebelle <ebelle@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/03 15:32:47 by elie              #+#    #+#             */
-/*   Updated: 2025/12/11 19:34:34 by ebelle           ###   ########.fr       */
+/*   Updated: 2025/12/12 15:58:01 by ebelle           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,8 @@ int	main(void)
 	while (42)
 	{
 		run(&data);
+		if (g_signal == SIGINT)
+			data.exit_status = 130;
 	}
 	return (0);
 }

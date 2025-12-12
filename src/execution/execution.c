@@ -6,7 +6,7 @@
 /*   By: ebelle <ebelle@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/02 12:02:01 by ebelle            #+#    #+#             */
-/*   Updated: 2025/12/11 19:26:10 by ebelle           ###   ########.fr       */
+/*   Updated: 2025/12/12 14:41:22 by ebelle           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,13 @@ void	handle_single_cmd(t_cmd *cmd, t_data *data)
 		execute_child(cmd, data);
 	waitpid(pid, &status, 0);
 	if (WIFEXITED(status))
+	{
 		data->exit_status = WEXITSTATUS(status);
+		g_signal = 0;
+	}
 	else if (WIFSIGNALED(status))
+	{
 		data->exit_status = 128 + WTERMSIG(status);
+		g_signal = 0;
+	}
 }
