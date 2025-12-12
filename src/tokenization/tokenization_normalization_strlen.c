@@ -6,30 +6,37 @@
 /*   By: dbakker <dbakker@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/08 15:31:42 by dbakker           #+#    #+#             */
-/*   Updated: 2025/12/08 15:53:55 by dbakker          ###   ########.fr       */
+/*   Updated: 2025/12/12 16:13:52 by dbakker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+int	tokenization_in_quote_heredoc(const char *str, int8_t curr_type,
+	int8_t next_type);
+int	tokenization_in_quote_append(const char *str, int8_t curr_type,
+	int8_t next_type);
+int	tokenization_in_quote_redirect_out(const char *str, int8_t curr_type,
+	int8_t next_type);
+int	tokenization_in_quote_redirect_in(const char *str, int8_t curr_type,
+	int8_t next_type);
+int	tokenization_in_quote_pipe(const char *str, int8_t curr_type,
+	int8_t next_type);
+
 static int	tokenization_in_quote(const char *str, int8_t curr_type,
 	int8_t next_type)
 {
-	if (curr_type == TYPE_ARG && (next_type == TYPE_PIPE
-			|| (str[0] && get_redirection_type(str + 1))))
+	if (tokenization_in_quote_pipe(str, curr_type, next_type)
+		|| tokenization_in_quote_redirect_in(str, curr_type, next_type)
+		|| tokenization_in_quote_redirect_out(str, curr_type, next_type))
+	{
 		return (1);
-	else if ((curr_type == TYPE_PIPE || get_redirection_type(str))
-		&& next_type == TYPE_ARG)
-		return (1);
-	else if (curr_type == TYPE_PIPE && str[0] && get_redirection_type(str + 1))
-		return (1);
-	else if ((curr_type == TYPE_SQUOTE || curr_type == TYPE_DQUOTE)
-		&& (next_type == TYPE_PIPE
-			|| (str[0] && get_redirection_type(str + 1))))
-		return (1);
-	else if ((curr_type == TYPE_PIPE || get_redirection_type(str))
-		&& (next_type == TYPE_SQUOTE || next_type == TYPE_DQUOTE))
-		return (1);
+	}
+	if (tokenization_in_quote_append(str, curr_type, next_type)
+		|| tokenization_in_quote_heredoc(str, curr_type, next_type))
+	{
+		return (2);
+	}
 	return (0);
 }
 
