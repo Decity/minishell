@@ -71,6 +71,11 @@ bool	validate_token_str(char *str)
 	char	in_quote;
 
 	i = 0;
+	while (str[i] && ft_isspace(str[i]))
+		i++;
+	if (str[i] == '|')
+		return (FAILURE);
+	i = 0;
 	count_consecutive = 0;
 	in_quote = 0;
 	while (str[i])
