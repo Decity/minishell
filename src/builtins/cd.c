@@ -80,5 +80,6 @@ int	builtin_cd(t_list *envp, t_pwd *dir, const char *path)
 			perror("minishell");
 		return (EXIT_SUCCESS);
 	}
+	perror("minishell: cd");
 	return (EXIT_FAILURE);
 }
