@@ -12,19 +12,6 @@
 
 #include "minishell.h"
 
-void	skip_quoted_section(char *input, size_t *i)
-{
-	char	quote;
-
-	quote = get_quote(input[*i]);
-	if (quote)
-	{
-		(*i)++;
-		while (input[*i] && input[*i] != quote)
-			(*i)++;
-	}
-}
-
 static int	tokenize_consec(char *str, size_t consecutive,
 	int8_t next)
 {
@@ -59,6 +46,25 @@ static bool	tokenization_pipe_check(char *str, char in_quote, int8_t curr,
 	return (false);
 }
 
+static bool	validate_token_check(char *str, size_t *count, char *in_quote,
+	int8_t next)
+{
+	int8_t	curr;
+
+	tokenization_update_tokens(str, &curr, &next);
+	tokenization_update_quote(str, in_quote);
+	if (!*in_quote && is_redirection(str))
+	{
+		if (tokenize_consec(str, *count, next) == FAILURE)
+			return (FAILURE);
+	}
+	else if (tokenization_pipe_check(str, *in_quote, curr, next))
+		return (FAILURE);
+	else
+		*count = 0;
+	return (SUCCESS);
+}
+
 /**
  * @brief validates the syntax of redirections and pipes
  */
@@ -66,7 +72,6 @@ bool	validate_token_str(char *str)
 {
 	size_t	i;
 	size_t	count_consecutive;
-	int8_t	curr;
 	int8_t	next;
 	char	in_quote;
 
@@ -80,17 +85,10 @@ bool	validate_token_str(char *str)
 	in_quote = 0;
 	while (str[i])
 	{
-		tokenization_update_tokens(str + i, &curr, &next);
-		tokenization_update_quote(str + i, &in_quote);
-		if (!in_quote && is_redirection(str + i))
-		{
-			if (tokenize_consec(str + i, count_consecutive, next) == FAILURE)
-				return (FAILURE);
-		}
-		else if (tokenization_pipe_check(str + i, in_quote, curr, next))
+		next = 0;
+		if (validate_token_check(str + i, &count_consecutive,
+				&in_quote, next) == FAILURE)
 			return (FAILURE);
-		else
-			count_consecutive = 0;
 		i++;
 	}
 	return (SUCCESS);

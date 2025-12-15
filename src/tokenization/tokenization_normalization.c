@@ -15,18 +15,18 @@
 static int	tokenization_in_quote(const char *str, int8_t curr,
 	int8_t next)
 {
-	if (curr == TYPE_ARG && (next == TYPE_PIPE || get_redirection_type(str)))
+	uint8_t	is_redir_curr;
+	uint8_t	is_redir_next;
+
+	is_redir_curr = get_redirection_type(str - 1);
+	is_redir_next = get_redirection_type(str);
+	if ((curr == TYPE_ARG || curr == TYPE_SQUOTE || curr == TYPE_DQUOTE)
+		&& (next == TYPE_PIPE || is_redir_next))
 		return (' ');
-	else if ((curr == TYPE_PIPE || get_redirection_type(str - 1))
-		&& next == TYPE_ARG)
+	if ((curr == TYPE_PIPE || is_redir_curr)
+		&& (next == TYPE_ARG || next == TYPE_SQUOTE || next == TYPE_DQUOTE))
 		return (' ');
-	else if (curr == TYPE_PIPE && get_redirection_type(str))
-		return (' ');
-	else if ((curr == TYPE_SQUOTE || curr == TYPE_DQUOTE)
-		&& (next == TYPE_PIPE || get_redirection_type(str)))
-		return (' ');
-	else if ((curr == TYPE_PIPE || get_redirection_type(str - 1))
-		&& (next == TYPE_SQUOTE || next == TYPE_DQUOTE))
+	if (curr == TYPE_PIPE && is_redir_next)
 		return (' ');
 	return (0);
 }
