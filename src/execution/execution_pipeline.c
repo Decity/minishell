@@ -6,7 +6,7 @@
 /*   By: dbakker <dbakker@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/05 15:25:00 by elie              #+#    #+#             */
-/*   Updated: 2025/12/08 14:43:44 by dbakker          ###   ########.fr       */
+/*   Updated: 2025/12/14 16:48:51 by dbakker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,7 @@ void	fork_and_execute(t_cmd *current, t_pnp *pnp, size_t i, t_data *data)
 		handle_fork_error(pnp->pids, i, pnp->pipefd, data);
 	if (pnp->pids[i] == 0)
 	{
+		close_redirection_fds(data);
 		free(pnp->pids);
 		exec_pipeline_child(current, data, pnp, i == 0);
 	}
@@ -58,6 +59,7 @@ void	handle_pipeline(t_data *data)
 	t_pnp	pnp;
 	size_t	i;
 
+	ft_memset(&pnp, 0, sizeof(t_pnp));
 	init_pipeline(data, &pnp);
 	current = data->command;
 	i = 0;
