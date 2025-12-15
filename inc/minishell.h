@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dbakker <dbakker@student.42.fr>            +#+  +:+       +#+        */
+/*   By: elie <elie@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/30 15:08:30 by ebelle            #+#    #+#             */
-/*   Updated: 2025/12/11 19:08:11 by dbakker          ###   ########.fr       */
+/*   Updated: 2025/12/15 11:39:01 by elie             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,6 +104,8 @@ void	handle_pipe_creation(t_cmd *current, t_pnp *pnp, t_data *data,
 void	fork_and_execute(t_cmd *current, t_pnp *pnp, size_t i, t_data *data);
 
 // Signal handling
+
+extern volatile sig_atomic_t	g_signal;
 
 void	setup_signals_interactive(void);
 void	setup_signals_executing(void);

@@ -81,8 +81,13 @@ uint8_t	set_input(t_data *data)
 	size_t	len;
 
 	set_prompt(data);
+	if (g_signal == SIGINT)
+	{
+		data->exit_status = 130;
+		g_signal = 0;
+	}
 	if (!data->input)
-		exit_cleanup(data, data->exit_status);
+		exit_cleanup(data, 0);
 	if (!data->input[0] || ft_strlen(data->input) == 0)
 		return (free(data->input), FAILURE);
 	len = 0;
