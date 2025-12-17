@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: elie <elie@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: dbakker <dbakker@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/30 15:08:30 by ebelle            #+#    #+#             */
-/*   Updated: 2025/12/17 12:38:31 by elie             ###   ########.fr       */
+/*   Updated: 2025/12/17 13:54:55 by dbakker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,14 +45,13 @@ bool	is_redirection(char *str);
 
 // TOKENIZATION
 
-void	tokenize_cleanup_and_exit(t_data *data, size_t i);
-
 // tokenization_normalization_strlen.c
 
 void	tokenization_update_tokens(const char *str, int8_t *curr_type,
 			int8_t *next_type);
 
 // tokenization.c
+
 void	tokenize(t_data *data, size_t token_count);
 size_t	set_tokens(t_data *data);
 size_t	count_tokens(char *input);

@@ -6,7 +6,7 @@
 /*   By: dbakker <dbakker@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/18 15:18:05 by elie              #+#    #+#             */
-/*   Updated: 2025/12/08 16:28:58 by dbakker          ###   ########.fr       */
+/*   Updated: 2025/12/17 13:49:04 by dbakker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ char	*normalize_whitespace(const char *str)
 
 	new_str = ft_calloc(get_normalized_str_len(str) + 1, sizeof(char));
 	if (new_str == NULL)
-		return (NULL);
+		return (perror("minishell"), NULL);
 	tokenization_normalize(new_str, str);
 	return (new_str);
 }

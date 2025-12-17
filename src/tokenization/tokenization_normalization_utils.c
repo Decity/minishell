@@ -6,7 +6,7 @@
 /*   By: dbakker <dbakker@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/08 15:43:17 by dbakker           #+#    #+#             */
-/*   Updated: 2025/12/08 15:53:40 by dbakker          ###   ########.fr       */
+/*   Updated: 2025/12/17 13:56:54 by dbakker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,22 +30,4 @@ void	skip_quoted_section(char *input, size_t *i)
 		while (input[*i] && input[*i] != quote)
 			(*i)++;
 	}
-}
-
-/**
- * @brief Frees all tokens up to index @p `i` and calls exit_cleanup
- */
-void	tokenize_cleanup_and_exit(t_data *data, size_t i)
-{
-	size_t	j;
-
-	j = 0;
-	while (j < i)
-	{
-		free(data->tokens[j]);
-		j++;
-	}
-	free(data->tokens);
-	data->tokens = NULL;
-	exit_cleanup(data, data->exit_status);
 }

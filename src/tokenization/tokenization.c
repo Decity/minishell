@@ -6,7 +6,7 @@
 /*   By: dbakker <dbakker@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/03 15:20:17 by elie              #+#    #+#             */
-/*   Updated: 2025/12/08 18:30:16 by dbakker          ###   ########.fr       */
+/*   Updated: 2025/12/17 13:55:39 by dbakker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,14 +27,12 @@ size_t	set_tokens(t_data *data)
 	if (validate_quotation(data->input) == FAILURE)
 	{
 		ft_putendl_fd("minishell: failed to validate quotes.", STDERR_FILENO);
-		data->exit_status = 2;
-		return (FAILURE);
+		return (data->exit_status = 2, FAILURE);
 	}
 	if (validate_token_str(data->input) == FAILURE)
 	{
 		ft_putendl_fd("minishell: failed to valdiate syntax", STDERR_FILENO);
-		data->exit_status = 2;
-		return (FAILURE);
+		return (data->exit_status = 2, FAILURE);
 	}
 	old_input = data->input;
 	data->input = normalize_whitespace(data->input);
@@ -89,7 +87,10 @@ void	tokenize(t_data *data, size_t token_count)
 		tokenization_quote_matching(input, &end, &quote);
 		data->tokens[i] = ft_strndup(&input[start], end - start);
 		if (data->tokens[i] == NULL)
-			tokenize_cleanup_and_exit(data, i);
+		{
+			perror("minishell");
+			exit_cleanup(data, i);
+		}
 		start = end;
 		i++;
 	}
