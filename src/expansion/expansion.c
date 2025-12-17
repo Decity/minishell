@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expansion.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dbakker <dbakker@student.42.fr>            +#+  +:+       +#+        */
+/*   By: elie <elie@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/08 18:09:32 by elie              #+#    #+#             */
-/*   Updated: 2025/12/08 14:49:49 by dbakker          ###   ########.fr       */
+/*   Updated: 2025/12/17 12:51:19 by elie             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -150,6 +150,7 @@ char	**expand_arguments(char **args, t_data *data)
 		args[i] = expansion_remove_quotation(tmp);
 		if (args[i] == NULL)
 		{
+			free(tmp);
 			free_array(&args);
 			return (NULL);
 		}

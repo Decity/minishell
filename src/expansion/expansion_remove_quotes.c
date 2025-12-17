@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expansion_remove_quotes.c                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dbakker <dbakker@student.42.fr>            +#+  +:+       +#+        */
+/*   By: elie <elie@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/08 18:11:34 by elie              #+#    #+#             */
-/*   Updated: 2025/12/04 12:13:46 by dbakker          ###   ########.fr       */
+/*   Updated: 2025/12/17 12:51:49 by elie             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,6 @@ char	*expansion_remove_quotation(char *str)
 	strret = ft_calloc(ft_strlen(str) + 1, sizeof(char));
 	if (strret == NULL)
 	{
-		free(str);
 		return (NULL);
 	}
 	expansion_copy_woquote(strret, str);
