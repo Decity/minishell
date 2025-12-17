@@ -6,7 +6,7 @@
 /*   By: elie <elie@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/30 15:08:30 by ebelle            #+#    #+#             */
-/*   Updated: 2025/12/15 11:39:01 by elie             ###   ########.fr       */
+/*   Updated: 2025/12/17 12:38:31 by elie             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,8 @@ void	close_redirection_fds(t_data *data);
 bool	is_redirection(char *str);
 
 // TOKENIZATION
+
+void	tokenize_cleanup_and_exit(t_data *data, size_t i);
 
 // tokenization_normalization_strlen.c
 
