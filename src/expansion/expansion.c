@@ -73,6 +73,7 @@ char	*expand_string(char *arg, size_t idx, const t_data *data)
 	strret = ft_calloc(new_strlen, sizeof(char));
 	if (strret == NULL)
 	{
+		free(envval);
 		return (NULL);
 	}
 	expansion_copy(strret, arg, envval);
@@ -135,14 +136,21 @@ char	*expand_variables(char *arg, t_data *data)
 char	**expand_arguments(char **args, t_data *data)
 {
 	size_t	i;
+	char	*tmp;
 
 	i = 0;
 	while (args[i])
 	{
-		args[i] = expand_variables(args[i], data);
-		args[i] = expansion_remove_quotation(args[i]);
+		tmp = expand_variables(args[i], data);
+		if (tmp == NULL)
+		{
+			free_array(&args);
+			return (NULL);
+		}
+		args[i] = expansion_remove_quotation(tmp);
 		if (args[i] == NULL)
 		{
+			free_array(&args);
 			return (NULL);
 		}
 		i += 1;

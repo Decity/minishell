@@ -68,6 +68,7 @@ char	*expansion_remove_quotation(char *str)
 	strret = ft_calloc(ft_strlen(str) + 1, sizeof(char));
 	if (strret == NULL)
 	{
+		free(str);
 		return (NULL);
 	}
 	expansion_copy_woquote(strret, str);

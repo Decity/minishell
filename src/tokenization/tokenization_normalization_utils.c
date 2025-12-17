@@ -31,3 +31,21 @@ void	skip_quoted_section(char *input, size_t *i)
 			(*i)++;
 	}
 }
+
+/**
+ * @brief Frees all tokens up to index @p `i` and calls exit_cleanup
+ */
+void	tokenize_cleanup_and_exit(t_data *data, size_t i)
+{
+	size_t	j;
+
+	j = 0;
+	while (j < i)
+	{
+		free(data->tokens[j]);
+		j++;
+	}
+	free(data->tokens);
+	data->tokens = NULL;
+	exit_cleanup(data, data->exit_status);
+}

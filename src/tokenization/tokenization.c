@@ -22,6 +22,7 @@
 size_t	set_tokens(t_data *data)
 {
 	size_t	token_count;
+	char	*old_input;
 
 	if (validate_quotation(data->input) == FAILURE)
 	{
@@ -35,7 +36,9 @@ size_t	set_tokens(t_data *data)
 		data->exit_status = 2;
 		return (FAILURE);
 	}
+	old_input = data->input;
 	data->input = normalize_whitespace(data->input);
+	free(old_input);
 	if (!data->input)
 		exit_cleanup(data, data->exit_status);
 	token_count = count_tokens(data->input);
@@ -86,7 +89,7 @@ void	tokenize(t_data *data, size_t token_count)
 		tokenization_quote_matching(input, &end, &quote);
 		data->tokens[i] = ft_strndup(&input[start], end - start);
 		if (data->tokens[i] == NULL)
-			exit_cleanup(data, data->exit_status);
+			tokenize_cleanup_and_exit(data, i);
 		start = end;
 		i++;
 	}
